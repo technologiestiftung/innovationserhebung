@@ -25,3 +25,15 @@ The following steps are not required but recommended. This will allow you to ins
 ```
 INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
 ```
+
+### Run tailwind watcher
+
+1. Move to the root directory
+2. Run `tailwindcss init`
+3. From now on you can start the tailwind watcher from the root directory via `tailwindcss -i app/styles/main.css -o app/static/css/main.css --watch`
+
+### Run server in development mode
+
+1. After setting up the project according to the past two chapters. Run `$ chmod +x run_dev.sh
+` from your root directory to give the bash file executale permission.
+2. Now you should be able to start a development server via `./run_dev.sh
