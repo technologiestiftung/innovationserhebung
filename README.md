@@ -36,4 +36,4 @@ INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
 
 1. After setting up the project according to the past two chapters. Run `$ chmod +x run_dev.sh
 ` from your root directory to give the bash file executale permission.
-2. Now you should be able to start a development server via `./run_dev.sh
+2. Now you should be able to start a development server via `./run_dev.sh`
