@@ -1,11 +1,14 @@
 from bokeh.embed import server_document
 from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.gzip import GZipMiddleware
+import panel as pn
 from sliders.pn_app import create_app
 
-import panel as pn
-
 app = FastAPI()
+app.mount("/static", StaticFiles(directory="static"), name="static")
+app.add_middleware(GZipMiddleware)
 templates = Jinja2Templates(directory="templates")
 
 @app.get("/")
