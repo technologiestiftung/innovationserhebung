@@ -3,10 +3,8 @@ from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.gzip import GZipMiddleware
-
-from sliders.pn_app import createApp
-
 import panel as pn
+from sliders.pn_app import create_app
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -19,6 +17,6 @@ async def bkapp_page(request: Request):
     return templates.TemplateResponse("base.html", {"request": request, "script": script})
 
 
-pn.serve({'/app': createApp},
+pn.serve({'/app': create_app},
         port=5000, allow_websocket_origin=["127.0.0.1:8000"],
          address="127.0.0.1", show=False)
