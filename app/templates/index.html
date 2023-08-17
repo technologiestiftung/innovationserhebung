@@ -1,5 +1,11 @@
 {% extends 'base.html' %} {% block content %}
 <div id="app" class="max-w-4xl mx-auto p-4">
-  {% include "components/hero.html" %} {{ script|safe }}
+  {% include "components/hero.html" %} 
+  {{ script|safe }} 
+  {% for section in translations.get("sections", []) %} 
+    {% with section=section %}
+      {% include "components/section.html" %}
+    {% endwith %}
+  {% endfor %}
 </div>
 {% endblock %}

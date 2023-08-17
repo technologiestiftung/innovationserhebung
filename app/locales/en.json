@@ -1,4 +1,14 @@
 {
   "title": "Innovation Survey",
-  "disclaimer": "Data from 10 years of innovation survey as of innovation survey 2013"
+  "disclaimer": "Data from 10 years of innovation survey as of innovation survey 2013",
+  "sections": [
+    {
+      "section-title": "Survey 1",
+      "section-description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda soluta sed consequatur rem saepe dolores voluptates recusandae explicabo officiis"
+    },
+    {
+      "section-title": "Survey 2",
+      "section-description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda soluta sed consequatur rem saepe dolores voluptates recusandae explicabo officiis"
+    }
+  ]
 }
