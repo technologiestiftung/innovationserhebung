@@ -551,6 +551,10 @@ video {
   margin-top: 0px;
 }
 
+.block {
+  display: block;
+}
+
 .max-w-4xl {
   max-width: 56rem;
 }
