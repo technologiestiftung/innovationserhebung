@@ -1,6 +1,9 @@
+from abc import ABC, abstractmethod
 from collections import defaultdict
+import json
 from openpyxl import load_workbook
 import pandas as pd
+
 
 # TODO:
 #   1/ Refactor in classes, probably using Strategy or Template Method
@@ -52,7 +55,13 @@ mapping_units = {
 }
 
 
-def import_excel(file_path):
+
+class Importer(ABC):
+    pass
+
+
+
+def load_excel(file_path):
     workbook = load_workbook(filename=file_path, data_only=True)
     sheets_data = {}
 
@@ -72,31 +81,47 @@ def import_excel(file_path):
     return sheets_data
 
 
-def rec_dd():
-    return defaultdict(rec_dd)
+def init_nested_dict():
+    """
+    Initialize a default dictionary recursively,
+    i.e., a nested dictionary with an arbitrary number of levels
+    and where keys are created automatically if missing.
+
+    :return: defaultdict, a nested dictionary
+    """
+    return defaultdict(init_nested_dict)
 
 
-def extract_data(sheets):
-    extracted = rec_dd()
+class DataParser(ABC):
+    def parse_data(self, sheets):
+        extracted = init_nested_dict()
 
-    for sheet_key in sheets:
-        basis, year, area = sheet_key.split("_")
-        df = sheets[sheet_key]
+        # Step 1
+        for sheet_key in sheets:
+            basis, year, area = sheet_key.split("_")
+            df = sheets[sheet_key]
 
-        # Get row for a specific branch
-        for branch in mapping_branches:
-            row = df.loc[df["Wirtschaftsgliederung"] == branch]
-            if not row.empty:
+            # Step 2
+            # Get row for a specific branch
+            for branch in mapping_branches:
+                row = df.loc[df["Wirtschaftsgliederung"] == branch]
+                if not row.empty:
 
-                # Extract a certain value from the row
-                for unit in mapping_units:
-                    if unit in row:
-                        value = row.iloc[0][unit]
-                        extracted[area][mapping_branches[branch]][mapping_units[unit]][year] = value
+                    # Extract a certain value from the row
+                    for unit in mapping_units:
+                        if unit in row:
+                            value = row.iloc[0][unit]
+                            extracted[area][mapping_branches[branch]][mapping_units[unit]][year] = value
 
-    return extracted
+        return extracted
 
-sheets = import_excel(excel_file)
-extracted_data = extract_data(sheets)
 
-print(extracted_data)
+class BasisDataParser(DataParser):
+    def dummy_method(self):
+        pass
+
+
+sheets = load_excel(excel_file)
+extracted_data = DataParser().parse_data(sheets)
+
+#print(json.dumps(extracted_data, indent=4))
