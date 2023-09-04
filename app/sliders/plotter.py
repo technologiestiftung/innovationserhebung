@@ -224,11 +224,12 @@ class InteractiveLinePlotter(Plotter):
 
         # Add interactivity
         self.filters.param.watch(self.update, "value")
+        self.filters_single_choice.param.watch(self.update, "value")
 
     def update(self, event):
         # Define the callback function for the filter
         selected_lines = self.filters.value
-        single_choice_dict = self.raw_data[self.config["filters"]["single_choice_default"]]
+        single_choice_dict = self.raw_data[self.filters_single_choice.value]
 
         filtered_data = {
             "x": single_choice_dict["x"],

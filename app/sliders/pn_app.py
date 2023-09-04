@@ -23,10 +23,18 @@ line_data = {
 }
 
 interactive_line_data = {
-    'x': [1, 2, 3, 4, 5],
-    'line1': [5, 8, 6, 10, 7],
-    'line2': [3, 5, 9, 6, 4],
-    'line3': [8, 4, 2, 7, 9]
+    "anzahl": {
+        "x": [1, 2, 3, 4, 5],
+        "nahrung": [5, 8, 6, 10, 7],
+        "pharma": [3, 5, 9, 6, 4],
+        "textil": [8, 4, 2, 7, 9]
+    },
+    "umsatz": {
+        "x": [1, 2, 3, 4, 5],
+        "nahrung": [6, 9, 7, 11, 8],
+        "pharma": [4, 6, 10, 7, 5],
+        "textil": [9, 5, 3, 8, 10]
+    }
 }
 
 bar_data = {"x": ["A", "B", "C", "D"],
@@ -67,6 +75,7 @@ def create_app():
     gspec[0:1, 1:2] = pie_plotter_2.plot
     gspec[1:2, 0:2] = bubble_plotter.plot
     gspec[2:3, 0:2] = interactive_line_plotter.plot
-    gspec[3:4, 0:2] = interactive_line_plotter.filters
+    gspec[3:4, 0:1] = interactive_line_plotter.filters
+    gspec[3:4, 1:2] = interactive_line_plotter.filters_single_choice
 
     return gspec.servable()
