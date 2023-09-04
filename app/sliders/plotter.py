@@ -190,12 +190,12 @@ class InteractiveLinePlotter(Plotter):
 
         self.config = config
 
-        self.filters = None
+        self.filters_multi_choice = None
         self.filters_single_choice = None
 
     def fit_data(self):
         # Create widgets
-        self.filters = panel.widgets.CheckBoxGroup(
+        self.filters_multi_choice = panel.widgets.CheckBoxGroup(
             name="Select branches", options=self.config["filters"]["multi_choice"]
         )
 
@@ -223,12 +223,12 @@ class InteractiveLinePlotter(Plotter):
             self.plot.line(x="x", y=line_name, source=self.fitted_data, color=colors[i], legend_label=line_name)
 
         # Add interactivity
-        self.filters.param.watch(self.update, "value")
+        self.filters_multi_choice.param.watch(self.update, "value")
         self.filters_single_choice.param.watch(self.update, "value")
 
     def update(self, event):
         # Define the callback function for the filter
-        selected_lines = self.filters.value
+        selected_lines = self.filters_multi_choice.value
         single_choice_dict = self.raw_data[self.filters_single_choice.value]
 
         filtered_data = {

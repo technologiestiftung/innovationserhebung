@@ -75,7 +75,7 @@ def create_app():
     gspec[0:1, 1:2] = pie_plotter_2.plot
     gspec[1:2, 0:2] = bubble_plotter.plot
     gspec[2:3, 0:2] = interactive_line_plotter.plot
-    gspec[3:4, 0:1] = interactive_line_plotter.filters
+    gspec[3:4, 0:1] = interactive_line_plotter.filters_multi_choice
     gspec[3:4, 1:2] = interactive_line_plotter.filters_single_choice
 
     return gspec.servable()
