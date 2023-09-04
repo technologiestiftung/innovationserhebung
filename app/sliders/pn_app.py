@@ -60,6 +60,7 @@ def create_app():
     interactive_line_plotter = plotter_factory.create_plotter("line_interactive", interactive_line_data)
     interactive_line_plotter.fit_data()
     interactive_line_plotter.create_plot()
+    interactive_line_plotter.create_filters()
 
     line_plotter = plotter_factory.create_plotter("line", line_data)
     line_plotter.fit_data()

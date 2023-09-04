@@ -163,7 +163,9 @@ class LinePlotter(Plotter):
         self.plot.legend.label_text_font_size = self.config["label_text_font_size"]
 
 
-# TODO: Set a fixed scale so it doesn't shrink/grow automatically with updates
+# TODO:
+#  - Set a fixed scale so it doesn't shrink/grow automatically with updates
+#  - Move config to another file and give it a more appropriate format
 class InteractiveLinePlotter(Plotter):
     def __init__(self, raw_data):
         super().__init__(raw_data)
@@ -195,6 +197,24 @@ class InteractiveLinePlotter(Plotter):
         self.filters_single_choice = None
 
     def fit_data(self):
+        # Create initial data source
+        keys = ["x"] + self.config["filters"]["multi_choice_default"]
+        single_choice_dict = self.raw_data[self.config["filters"]["single_choice_default"]]
+        initial_data = {k: single_choice_dict[k]
+                        for k in keys}
+
+        self.fitted_data = ColumnDataSource(initial_data)
+
+    def create_plot(self):
+        # Create a Bokeh figure
+        self.plot = figure(**self.config["general"])
+
+        # Add lines to the plot
+        colors = Category10[10]
+        for i, line_name in enumerate(self.config["filters"]["multi_choice"]):
+            self.plot.line(x="x", y=line_name, source=self.fitted_data, color=colors[i], legend_label=line_name)
+
+    def create_filters(self):
         # Create widgets
         self.filters_multi_choice = panel.widgets.CheckBoxGroup(
             name="Select branches",
@@ -205,25 +225,6 @@ class InteractiveLinePlotter(Plotter):
         self.filters_single_choice = panel.widgets.RadioBoxGroup(
             name="Select unit", options=self.config["filters"]["single_choice"]
         )
-
-        # Create initial data source
-        keys = ["x"] + self.config["filters"]["multi_choice_default"]
-        single_choice_dict = self.raw_data[self.config["filters"]["single_choice_default"]]
-        initial_data = {k: single_choice_dict[k]
-                        for k in keys}
-
-        self.fitted_data = ColumnDataSource(initial_data)
-
-    def create_plot(self):
-        # TODO: Initial plot should be a subset of the multi choice
-        #   and the boxes of those categories in the subset should be checked
-        # Create a Bokeh figure
-        self.plot = figure(**self.config["general"])
-
-        # Add lines to the plot
-        colors = Category10[10]
-        for i, line_name in enumerate(self.config["filters"]["multi_choice"]):
-            self.plot.line(x="x", y=line_name, source=self.fitted_data, color=colors[i], legend_label=line_name)
 
         # Add interactivity
         self.filters_multi_choice.param.watch(self.update, "value")
