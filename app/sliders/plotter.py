@@ -32,7 +32,6 @@ class Plotter(ABC):
         self.raw_data = raw_data  # TODO: Refactor so input is already a DF (comes from Importer)
         self.fitted_data = None
         self.plot = None
-        self.filters = None
         self.config = None
 
     @abstractmethod
@@ -181,45 +180,63 @@ class InteractiveLinePlotter(Plotter):
             },
             "legend_title": "Legend",
             "label_text_font_size": "12pt",
-            "initial_lines": ["line1", "line2", "line3"]
+            "filters": {
+                "single_choice": ["anzahl", "umsatz"],
+                "single_choice_default": "anzahl",
+                "multi_choice": ["nahrung", "pharma", "textil"],
+                "multi_choice_default": ["nahrung", "pharma"]
+            }
         }
 
         self.config = config
 
-    def fit_data(self):
-        self.raw_data = pd.DataFrame(self.raw_data)
+        self.filters = None
+        self.filters_single_choice = None
 
+    def fit_data(self):
         # Create widgets
-        self.filters = panel.widgets.MultiChoice(
-            name='Select Lines', options=self.config["initial_lines"]
+        self.filters = panel.widgets.CheckBoxGroup(
+            name="Select branches", options=self.config["filters"]["multi_choice"]
+        )
+
+        self.filters_single_choice = panel.widgets.RadioBoxGroup(
+            name="Select unit", options=self.config["filters"]["single_choice"]
         )
 
         # Create initial data source
-        initial_data = self.raw_data[['x'] + self.config["initial_lines"]]
+        keys = ["x"] + self.config["filters"]["multi_choice"]
+        single_choice_dict = self.raw_data[self.config["filters"]["single_choice_default"]]
+        initial_data = {k: single_choice_dict[k]
+                        for k in keys}
+
         self.fitted_data = ColumnDataSource(initial_data)
 
     def create_plot(self):
+        # TODO: Initial plot should be a subset of the multi choice
+        #   and the boxes of those categories in the subset should be checked
         # Create a Bokeh figure
         self.plot = figure(**self.config["general"])
 
         # Add lines to the plot
         colors = Category10[10]
-        for i, line_name in enumerate(self.config["initial_lines"]):
-            self.plot.line(x='x', y=line_name, source=self.fitted_data, color=colors[i], legend_label=line_name)
+        for i, line_name in enumerate(self.config["filters"]["multi_choice"]):
+            self.plot.line(x="x", y=line_name, source=self.fitted_data, color=colors[i], legend_label=line_name)
 
         # Add interactivity
-        self.filters.param.watch(self.update, 'value')
+        self.filters.param.watch(self.update, "value")
 
     def update(self, event):
         # Define the callback function for the filter
         selected_lines = self.filters.value
-        filtered_df = self.raw_data[['x'] + selected_lines]
+        single_choice_dict = self.raw_data[self.config["filters"]["single_choice_default"]]
+
+        filtered_data = {
+            "x": single_choice_dict["x"],
+            **{line_name: single_choice_dict[line_name] for line_name in selected_lines}
+        }
 
         # Update the existing ColumnDataSource with new data
-        self.fitted_data.data = {
-            'x': filtered_df['x'],
-            **{line_name: filtered_df[line_name] for line_name in selected_lines}
-        }
+        self.fitted_data.data = filtered_data
 
 
 class PiePlotter(Plotter):
