@@ -9,6 +9,7 @@ from bokeh.plotting import figure
 from bokeh.transform import cumsum, linear_cmap
 import panel
 
+# TODO: Get rid of DF conversion as an intermediate step, following the interactive line plot example
 
 PLOT_TYPES = {
     "bar": "BarPlotter",
@@ -196,7 +197,9 @@ class InteractiveLinePlotter(Plotter):
     def fit_data(self):
         # Create widgets
         self.filters_multi_choice = panel.widgets.CheckBoxGroup(
-            name="Select branches", options=self.config["filters"]["multi_choice"]
+            name="Select branches",
+            options=self.config["filters"]["multi_choice"],
+            value=self.config["filters"]["multi_choice_default"]
         )
 
         self.filters_single_choice = panel.widgets.RadioBoxGroup(
@@ -204,7 +207,7 @@ class InteractiveLinePlotter(Plotter):
         )
 
         # Create initial data source
-        keys = ["x"] + self.config["filters"]["multi_choice"]
+        keys = ["x"] + self.config["filters"]["multi_choice_default"]
         single_choice_dict = self.raw_data[self.config["filters"]["single_choice_default"]]
         initial_data = {k: single_choice_dict[k]
                         for k in keys}
