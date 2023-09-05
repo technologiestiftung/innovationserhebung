@@ -30,10 +30,15 @@ class PlotterFactory:
 
 class Plotter(ABC):
     def __init__(self, raw_data):
-        self.raw_data = raw_data  # TODO: Refactor so input is already a DF (comes from Importer)
+        self.raw_data = raw_data
         self.fitted_data = None
         self.plot = None
         self.config = None
+
+    def generate(self):
+        self.fit_data()
+        self.create_plot()
+        self.create_filters()
 
     @abstractmethod
     def fit_data(self):
@@ -41,6 +46,9 @@ class Plotter(ABC):
 
     @abstractmethod
     def create_plot(self):
+        pass
+
+    def create_filters(self):
         pass
 
 
@@ -195,7 +203,6 @@ class InteractiveLinePlotter(Plotter):
         }
 
         self.config = config
-
         self.filters_multi_choice = None
         self.filters_single_choice_1 = None
         self.filters_single_choice_2 = None
@@ -238,11 +245,11 @@ class InteractiveLinePlotter(Plotter):
         )
 
         # Add interactivity
-        self.filters_multi_choice.param.watch(self.update, "value")
-        self.filters_single_choice_1.param.watch(self.update, "value")
-        self.filters_single_choice_2.param.watch(self.update, "value")
+        self.filters_multi_choice.param.watch(self.update_filters, "value")
+        self.filters_single_choice_1.param.watch(self.update_filters, "value")
+        self.filters_single_choice_2.param.watch(self.update_filters, "value")
 
-    def update(self, event):
+    def update_filters(self, event):
         # Define the callback function for the filter
         selected_lines = self.filters_multi_choice.value
         single_choice_dict = self.raw_data[self.filters_single_choice_1.value][self.filters_single_choice_2.value]

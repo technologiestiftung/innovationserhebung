@@ -65,29 +65,22 @@ def create_app():
     plotter_factory = PlotterFactory()
 
     pie_plotter = plotter_factory.create_plotter("pie", pie_data)
-    pie_plotter.fit_data()
-    pie_plotter.create_plot()
+    pie_plotter.generate()
 
     pie_plotter_2 = plotter_factory.create_plotter("pie", pie_data)
-    pie_plotter_2.fit_data()
-    pie_plotter_2.create_plot()
+    pie_plotter_2.generate()
 
     bubble_plotter = plotter_factory.create_plotter("bubble", bubble_data)
-    bubble_plotter.fit_data()
-    bubble_plotter.create_plot()
+    bubble_plotter.generate()
 
     interactive_line_plotter = plotter_factory.create_plotter("line_interactive", interactive_line_data)
-    interactive_line_plotter.fit_data()
-    interactive_line_plotter.create_plot()
-    interactive_line_plotter.create_filters()
+    interactive_line_plotter.generate()
 
     line_plotter = plotter_factory.create_plotter("line", line_data)
-    line_plotter.fit_data()
-    line_plotter.create_plot()
+    line_plotter.generate()
 
     bar_plotter = plotter_factory.create_plotter("bar", bar_data)
-    bar_plotter.fit_data()
-    bar_plotter.create_plot()
+    bar_plotter.generate()
 
     gspec = GridSpec(width=800, height=1000)
 
