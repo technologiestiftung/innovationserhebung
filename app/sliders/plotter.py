@@ -116,8 +116,6 @@ class LinePlotter(Plotter):
         self.plot.legend.label_text_font_size = self.config["label_text_font_size"]
 
 
-# TODO:
-#  - Set a fixed scale so it doesn't shrink/grow automatically with updates
 class InteractiveLinePlotter(Plotter):
     def __init__(self, raw_data, config):
         super().__init__(raw_data, config)
