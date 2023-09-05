@@ -1,6 +1,7 @@
+import yaml
+
 import numpy as np
 from panel.layout.gridstack import GridSpec
-import yaml
 
 from .plotter import PlotterFactory
 
@@ -59,7 +60,14 @@ bar_data = {"x": ["A", "B", "C", "D"],
 }
 
 
+# TODO: Move to another module
 def import_config(config_file):
+    """
+    Import default plot configurations from a YAML file.
+
+    :param config_file: str, path to the YAML config file
+    :return: dict, default configurations
+    """
     with open(config_file, "r") as f:
         config = yaml.load(f, Loader=yaml.FullLoader)
 

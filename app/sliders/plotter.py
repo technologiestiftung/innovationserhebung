@@ -7,6 +7,7 @@ from bokeh.plotting import figure
 from bokeh.transform import cumsum, linear_cmap
 import panel
 
+# TODO: Allow default config to be overriden
 
 PLOT_TYPES = {
     "bar": "BarPlotter",
@@ -20,60 +21,110 @@ PLOT_TYPES = {
 class PlotterFactory:
     @staticmethod
     def create_plotter(plot_type, raw_data, config):
+        """
+        Create a plotter for a specific plot type.
+
+        :param plot_type: str, type of plot
+        :param raw_data: dict, data to plot
+        :param config: dict, default configuration
+        :return: a plotter instance of the specified type
+        """
         class_name = PLOT_TYPES[plot_type]
         cls = globals()[class_name]
+
         return cls(raw_data, config[plot_type])
 
 
 class Plotter(ABC):
     def __init__(self, raw_data, config):
+        """
+        Initialize a plotter.
+
+        :param raw_data: dict, data to plot
+        :param config: dict, default configuration
+        """
         self.raw_data = raw_data
         self.config = config
         self.fitted_data = None
         self.plot = None
 
     def generate(self):
+        """
+        Run the necessary steps for creating a plot.
+        """
         self.fit_data()
         self.create_plot()
         self.create_filters()
 
     @abstractmethod
     def fit_data(self):
+        """
+        Abstract method to prepare data for the plot.
+        To be overriden by subclasses.
+        """
         pass
 
     @abstractmethod
     def create_plot(self):
+        """
+        Abstract method to create the plot.
+        To be overriden by subclasses.
+        """
         pass
 
     def create_filters(self):
+        """
+        Create interactive filters for the plot.
+        To be overriden by plotter subclasses which include interactive filters.
+        """
         pass
 
 
 class BarPlotter(Plotter):
     def __init__(self, raw_data, config):
-        # Create some example data
+        """
+        Initialize a plotter for creating bar charts.
+
+        :param raw_data: dict, data to plot
+        :param config: dict, default configuration
+        """
         super().__init__(raw_data, config)
 
     def fit_data(self):
+        """
+        Prepare data.
+        """
         self.fitted_data = ColumnDataSource(data=self.raw_data)
 
     def create_plot(self):
+        """
+        Create plot.
+        """
         # Create the figure
         self.plot = figure(x_range=self.fitted_data.data["x"], **self.config["general"])
 
-        # Add vertical bars to the figure using the ColumnDataSource
+        # Add vertical bars to the figure
         self.plot.vbar(x="x", top="y", source=self.fitted_data, **self.config["vbar"])
 
-        # Show the legend
+        # Show legends
         self.plot.legend.title = self.config["legend_title"]
         self.plot.legend.label_text_font_size = self.config["label_text_font_size"]
 
 
 class BubblePlotter(Plotter):
     def __init__(self, raw_data, config):
+        """
+        Initialize a plotter for creating bubble charts.
+
+        :param raw_data: dict, data to plot
+        :param config: dict, default configuration
+        """
         super().__init__(raw_data, config)
 
     def fit_data(self):
+        """
+        Prepare data.
+        """
         source = ColumnDataSource(data={"x": self.raw_data["x"],
                                         "y": self.raw_data["y"],
                                         "size": self.raw_data["size"],
@@ -81,6 +132,9 @@ class BubblePlotter(Plotter):
         self.fitted_data = source
 
     def create_plot(self):
+        """
+        Create plot.
+        """
         # Create the figure
         self.plot = figure(**self.config["figure"])
 
@@ -95,26 +149,43 @@ class BubblePlotter(Plotter):
 
 class LinePlotter(Plotter):
     def __init__(self, raw_data, config):
+        """
+        Initialize a plotter for creating line charts.
+
+        :param raw_data: dict, data to plot
+        :param config: dict, default configuration
+        """
         super().__init__(raw_data, config)
 
     def fit_data(self):
-        # Create a ColumnDataSource for the data
+        """
+        Prepare data.
+        """
         self.fitted_data = ColumnDataSource(data=self.raw_data)
 
     def create_plot(self):
+        """
+        Create plot.
+        """
         # Create the figure
         self.plot = figure(**self.config["general"])
 
         # Add a line glyph to the figure
         self.plot.line(x="x", y="y", source=self.fitted_data, **self.config["line"])
 
-        # Show the legend
+        # Show legends
         self.plot.legend.title = self.config["legend_title"]
         self.plot.legend.label_text_font_size = self.config["label_text_font_size"]
 
 
 class InteractiveLinePlotter(Plotter):
     def __init__(self, raw_data, config):
+        """
+        Initialize a plotter for creating interactive line charts.
+
+        :param raw_data: dict, data to plot
+        :param config: dict, default configuration
+        """
         super().__init__(raw_data, config)
 
         self.filters_multi_choice = None
@@ -122,18 +193,25 @@ class InteractiveLinePlotter(Plotter):
         self.filters_single_choice_2 = None
 
     def fit_data(self):
-        # Create initial data source
+        """
+        Prepare data.
+        """
+        # Extract data using the single choice filters
         single_choice_dict = (self.raw_data[self.config["filters"]["single_choice_1_default"]]
                                            [self.config["filters"]["single_choice_2_default"]])
 
+        # Get a subset of the lines selected with the multi choice filters
         selected_lines = ["x"] + self.config["filters"]["multi_choice_default"]
-
         initial_data = {line: single_choice_dict[line]
                         for line in selected_lines}
 
+        # Transform data to the ColumDataSource format required by Bokeh
         self.fitted_data = ColumnDataSource(initial_data)
 
     def create_plot(self):
+        """
+        Create plot.
+        """
         # Create a Bokeh figure
         self.plot = figure(**self.config["general"])
 
@@ -143,13 +221,10 @@ class InteractiveLinePlotter(Plotter):
             self.plot.line(x="x", y=line_name, source=self.fitted_data, color=colors[i], legend_label=line_name)
 
     def create_filters(self):
-        # Create widgets
-        self.filters_multi_choice = panel.widgets.CheckBoxGroup(
-            name="Select branches",
-            options=self.config["filters"]["multi_choice"],
-            value=self.config["filters"]["multi_choice_default"]
-        )
-
+        """
+        Create interactive filters.
+        """
+        # Create single choice filters
         self.filters_single_choice_1 = panel.widgets.RadioBoxGroup(
             name="Select unit", options=self.config["filters"]["single_choice_1"]
         )
@@ -158,13 +233,25 @@ class InteractiveLinePlotter(Plotter):
             name="Select unit", options=self.config["filters"]["single_choice_2"]
         )
 
+        # Create multi choice filters
+        self.filters_multi_choice = panel.widgets.CheckBoxGroup(
+            name="Select branches",
+            options=self.config["filters"]["multi_choice"],
+            value=self.config["filters"]["multi_choice_default"]
+        )
+
         # Add interactivity
         self.filters_multi_choice.param.watch(self.update_filters, "value")
         self.filters_single_choice_1.param.watch(self.update_filters, "value")
         self.filters_single_choice_2.param.watch(self.update_filters, "value")
 
     def update_filters(self, event):
-        # Define the callback function for the filter
+        """
+        Update data and plot whenever the user changes the filters.
+
+        :param event: an event object that triggers the update
+        """
+        # Re select data based on new selection of filters
         selected_lines = self.filters_multi_choice.value
         single_choice_dict = self.raw_data[self.filters_single_choice_1.value][self.filters_single_choice_2.value]
 
@@ -179,28 +266,40 @@ class InteractiveLinePlotter(Plotter):
 
 class PiePlotter(Plotter):
     def __init__(self, raw_data, config):
+        """
+        Initialize a plotter for creating pie charts.
+
+        :param raw_data: dict, data to plot
+        :param config: dict, default configuration
+        """
         super().__init__(raw_data, config)
 
     def fit_data(self):
+        """
+        Prepare data.
+        """
         x_values = self.raw_data["x"]
         y_values = self.raw_data["y"]
 
+        # Calculate area for each category in the pie chart
         total = sum(y_values)
         angles = [2 * pi * (y / total) for y in y_values]
         colors = Category20c[len(x_values)]
 
-        data = {
-            "x": x_values,
-            "y": y_values,
-            "angle": angles,
-            "color": colors,
-        }
-
+        # Transform data to the ColumDataSource format required by Bokeh
+        data = {"x": x_values,
+                "y": y_values,
+                "angle": angles,
+                "color": colors}
         source = ColumnDataSource(data)
 
         self.fitted_data = source
 
     def create_plot(self):
+        """
+        Create plot.
+        """
+        # Create a Bokeh figure
         plot = figure(**self.config["general"])
 
         plot.wedge(**self.config["wedge"],
