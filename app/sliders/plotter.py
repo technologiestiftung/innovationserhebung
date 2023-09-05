@@ -1,15 +1,12 @@
 from abc import abstractmethod, ABC
 from math import pi
 
-import pandas as pd
-
 from bokeh.models import ColumnDataSource, ColorBar
 from bokeh.palettes import Category10, Category20c, Viridis256
 from bokeh.plotting import figure
 from bokeh.transform import cumsum, linear_cmap
 import panel
 
-# TODO: Get rid of DF conversion as an intermediate step, following the interactive line plot example
 
 PLOT_TYPES = {
     "bar": "BarPlotter",
@@ -185,12 +182,21 @@ class PiePlotter(Plotter):
         super().__init__(raw_data, config)
 
     def fit_data(self):
+        x_values = self.raw_data["x"]
+        y_values = self.raw_data["y"]
 
-        df = pd.DataFrame(self.raw_data)
-        df["angle"] = df["y"] / df["y"].sum() * 2 * pi
-        df["color"] = Category20c[len(self.raw_data["x"])]
+        total = sum(y_values)
+        angles = [2 * pi * (y / total) for y in y_values]
+        colors = Category20c[len(x_values)]
 
-        source = ColumnDataSource(df)
+        data = {
+            "x": x_values,
+            "y": y_values,
+            "angle": angles,
+            "color": colors,
+        }
+
+        source = ColumnDataSource(data)
 
         self.fitted_data = source
 
