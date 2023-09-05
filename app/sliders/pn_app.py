@@ -1,4 +1,5 @@
 import numpy as np
+import panel
 from panel.layout.gridstack import GridSpec
 
 from .plotter import PlotterFactory
@@ -23,19 +24,37 @@ line_data = {
 }
 
 interactive_line_data = {
-    "anzahl": {
-        "x": [1, 2, 3, 4, 5],
-        "nahrung": [5, 8, 6, 10, 7],
-        "pharma": [3, 5, 9, 6, 4],
-        "textil": [8, 4, 2, 7, 9]
+    "ber": {
+        "anzahl": {
+            "x": [1, 2, 3, 4, 5],
+            "nahrung": [5, 8, 6, 10, 7],
+            "pharma": [3, 5, 9, 6, 4],
+            "textil": [8, 4, 2, 7, 9]
+        },
+        "umsatz": {
+            "x": [1, 2, 3, 4, 5],
+            "nahrung": [6, 9, 7, 11, 8],
+            "pharma": [4, 6, 10, 7, 5],
+            "textil": [9, 5, 3, 8, 10]
+        }
     },
-    "umsatz": {
-        "x": [1, 2, 3, 4, 5],
-        "nahrung": [6, 9, 7, 11, 8],
-        "pharma": [4, 6, 10, 7, 5],
-        "textil": [9, 5, 3, 8, 10]
+    "de": {
+        "anzahl": {
+            "x": [1, 2, 3, 4, 5],
+            "nahrung": [6, 9, 7, 11, 8],
+            "pharma": [4, 6, 10, 7, 5],
+            "textil": [9, 5, 3, 8, 10]
+        },
+        "umsatz": {
+            "x": [1, 2, 3, 4, 5],
+            "nahrung": [7, 10, 8, 12, 9],
+            "pharma": [5, 7, 11, 8, 6],
+            "textil": [10, 6, 4, 9, 11]
+        }
     }
 }
+
+
 
 bar_data = {"x": ["A", "B", "C", "D"],
             "y": [15, 40, 25, 30]
@@ -77,6 +96,7 @@ def create_app():
     gspec[1:2, 0:2] = bubble_plotter.plot
     gspec[2:3, 0:2] = interactive_line_plotter.plot
     gspec[3:4, 0:1] = interactive_line_plotter.filters_multi_choice
-    gspec[3:4, 1:2] = interactive_line_plotter.filters_single_choice
+    gspec[4:5, 0:1] = interactive_line_plotter.filters_single_choice_1
+    gspec[4:5, 1:2] = interactive_line_plotter.filters_single_choice_2
 
     return gspec.servable()

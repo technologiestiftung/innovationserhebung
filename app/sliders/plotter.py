@@ -185,8 +185,10 @@ class InteractiveLinePlotter(Plotter):
             "legend_title": "Legend",
             "label_text_font_size": "12pt",
             "filters": {
-                "single_choice": ["anzahl", "umsatz"],
-                "single_choice_default": "anzahl",
+                "single_choice_1": ["ber", "de"],
+                "single_choice_1_default": "ber",
+                "single_choice_2": ["anzahl", "umsatz"],
+                "single_choice_2_default": "anzahl",
                 "multi_choice": ["nahrung", "pharma", "textil"],
                 "multi_choice_default": ["nahrung", "pharma"]
             }
@@ -195,14 +197,18 @@ class InteractiveLinePlotter(Plotter):
         self.config = config
 
         self.filters_multi_choice = None
-        self.filters_single_choice = None
+        self.filters_single_choice_1 = None
+        self.filters_single_choice_2 = None
 
     def fit_data(self):
         # Create initial data source
-        keys = ["x"] + self.config["filters"]["multi_choice_default"]
-        single_choice_dict = self.raw_data[self.config["filters"]["single_choice_default"]]
-        initial_data = {k: single_choice_dict[k]
-                        for k in keys}
+        single_choice_dict = (self.raw_data[self.config["filters"]["single_choice_1_default"]]
+                                           [self.config["filters"]["single_choice_2_default"]])
+
+        selected_lines = ["x"] + self.config["filters"]["multi_choice_default"]
+
+        initial_data = {line: single_choice_dict[line]
+                        for line in selected_lines}
 
         self.fitted_data = ColumnDataSource(initial_data)
 
@@ -223,22 +229,27 @@ class InteractiveLinePlotter(Plotter):
             value=self.config["filters"]["multi_choice_default"]
         )
 
-        self.filters_single_choice = panel.widgets.RadioBoxGroup(
-            name="Select unit", options=self.config["filters"]["single_choice"]
+        self.filters_single_choice_1 = panel.widgets.RadioBoxGroup(
+            name="Select unit", options=self.config["filters"]["single_choice_1"]
+        )
+
+        self.filters_single_choice_2 = panel.widgets.RadioBoxGroup(
+            name="Select unit", options=self.config["filters"]["single_choice_2"]
         )
 
         # Add interactivity
         self.filters_multi_choice.param.watch(self.update, "value")
-        self.filters_single_choice.param.watch(self.update, "value")
+        self.filters_single_choice_1.param.watch(self.update, "value")
+        self.filters_single_choice_2.param.watch(self.update, "value")
 
     def update(self, event):
         # Define the callback function for the filter
         selected_lines = self.filters_multi_choice.value
-        single_choice_dict = self.raw_data[self.filters_single_choice.value]
+        single_choice_dict = self.raw_data[self.filters_single_choice_1.value][self.filters_single_choice_2.value]
 
         filtered_data = {
             "x": single_choice_dict["x"],
-            **{line_name: single_choice_dict[line_name] for line_name in selected_lines}
+            **{line: single_choice_dict[line] for line in selected_lines}
         }
 
         # Update the existing ColumnDataSource with new data
