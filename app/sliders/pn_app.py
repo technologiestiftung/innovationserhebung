@@ -1,6 +1,6 @@
 import numpy as np
-import panel
 from panel.layout.gridstack import GridSpec
+import yaml
 
 from .plotter import PlotterFactory
 
@@ -54,32 +54,40 @@ interactive_line_data = {
     }
 }
 
-
-
 bar_data = {"x": ["A", "B", "C", "D"],
             "y": [15, 40, 25, 30]
 }
 
 
+def import_config(config_file):
+    with open(config_file, "r") as f:
+        config = yaml.load(f, Loader=yaml.FullLoader)
+
+    return config
+
+
 def create_app():
+    # TODO: Get rid of hardcoded path
+    config = import_config("/Users/guadaluperomero/innovationserhebung/app/sliders/config.yaml")
+
     plotter_factory = PlotterFactory()
 
-    pie_plotter = plotter_factory.create_plotter("pie", pie_data)
+    pie_plotter = plotter_factory.create_plotter("pie", pie_data, config)
     pie_plotter.generate()
 
-    pie_plotter_2 = plotter_factory.create_plotter("pie", pie_data)
+    pie_plotter_2 = plotter_factory.create_plotter("pie", pie_data, config)
     pie_plotter_2.generate()
 
-    bubble_plotter = plotter_factory.create_plotter("bubble", bubble_data)
+    bubble_plotter = plotter_factory.create_plotter("bubble", bubble_data, config)
     bubble_plotter.generate()
 
-    interactive_line_plotter = plotter_factory.create_plotter("line_interactive", interactive_line_data)
+    interactive_line_plotter = plotter_factory.create_plotter("line_interactive", interactive_line_data, config)
     interactive_line_plotter.generate()
 
-    line_plotter = plotter_factory.create_plotter("line", line_data)
+    line_plotter = plotter_factory.create_plotter("line", line_data, config)
     line_plotter.generate()
 
-    bar_plotter = plotter_factory.create_plotter("bar", bar_data)
+    bar_plotter = plotter_factory.create_plotter("bar", bar_data, config)
     bar_plotter.generate()
 
     gspec = GridSpec(width=800, height=1000)

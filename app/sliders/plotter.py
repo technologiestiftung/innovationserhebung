@@ -22,18 +22,18 @@ PLOT_TYPES = {
 
 class PlotterFactory:
     @staticmethod
-    def create_plotter(plot_type, raw_data):
+    def create_plotter(plot_type, raw_data, config):
         class_name = PLOT_TYPES[plot_type]
         cls = globals()[class_name]
-        return cls(raw_data)
+        return cls(raw_data, config[plot_type])
 
 
 class Plotter(ABC):
-    def __init__(self, raw_data):
+    def __init__(self, raw_data, config):
         self.raw_data = raw_data
+        self.config = config
         self.fitted_data = None
         self.plot = None
-        self.config = None
 
     def generate(self):
         self.fit_data()
@@ -53,27 +53,9 @@ class Plotter(ABC):
 
 
 class BarPlotter(Plotter):
-    def __init__(self, raw_data):
+    def __init__(self, raw_data, config):
         # Create some example data
-        super().__init__(raw_data)
-
-        config = {
-            "general": {
-                "title": "Simple Bar Chart",
-                "x_axis_label": "Categories",
-                "y_axis_label": "Values"
-            },
-            "vbar": {
-                "width": 0.5,
-                "legend_label": "Values",
-                "line_color": "blue",
-                "fill_color": "blue"
-            },
-            "legend_title": "Legend",
-            "label_text_font_size": "12pt"
-        }
-
-        self.config = config
+        super().__init__(raw_data, config)
 
     def fit_data(self):
         self.fitted_data = ColumnDataSource(data=self.raw_data)
@@ -91,28 +73,8 @@ class BarPlotter(Plotter):
 
 
 class BubblePlotter(Plotter):
-    def __init__(self, raw_data):
-        super().__init__(raw_data)
-
-        config = {
-            "figure": {
-                "title": "Simple Bubble Plot",
-                "toolbar_location": None
-            },
-            "linear_cmap": {
-                "field_name": "color",
-                "palette": Viridis256
-            },
-            "circle": {
-                "legend_field": "color"
-            },
-            "color_bar": {
-                "width": 8,
-                "location": (0, 0)
-            }
-        }
-
-        self.config = config
+    def __init__(self, raw_data, config):
+        super().__init__(raw_data, config)
 
     def fit_data(self):
         source = ColumnDataSource(data={"x": self.raw_data["x"],
@@ -135,25 +97,8 @@ class BubblePlotter(Plotter):
 
 
 class LinePlotter(Plotter):
-    def __init__(self, raw_data):
-        super().__init__(raw_data)
-
-        config = {
-            "general": {
-                "title": "Simple Line Chart",
-                "x_axis_label": "X-axis",
-                "y_axis_label": "Y-axis"
-            },
-            "line": {
-                "line_width": 2,
-                "legend_label": "Line",
-                "line_color": "blue"
-            },
-            "legend_title": "Legend",
-            "label_text_font_size": "12pt"
-        }
-
-        self.config = config
+    def __init__(self, raw_data, config):
+        super().__init__(raw_data, config)
 
     def fit_data(self):
         # Create a ColumnDataSource for the data
@@ -173,36 +118,10 @@ class LinePlotter(Plotter):
 
 # TODO:
 #  - Set a fixed scale so it doesn't shrink/grow automatically with updates
-#  - Move config to another file and give it a more appropriate format
 class InteractiveLinePlotter(Plotter):
-    def __init__(self, raw_data):
-        super().__init__(raw_data)
+    def __init__(self, raw_data, config):
+        super().__init__(raw_data, config)
 
-        config = {
-            "general": {
-                "title": "Interactive Line Chart",
-                "x_axis_label": "X-axis",
-                "y_axis_label": "Y-axis",
-                "toolbar_location": None,
-            },
-            "line": {
-                "line_width": 2,
-                "legend_label": "Line",
-                "line_color": "blue"
-            },
-            "legend_title": "Legend",
-            "label_text_font_size": "12pt",
-            "filters": {
-                "single_choice_1": ["ber", "de"],
-                "single_choice_1_default": "ber",
-                "single_choice_2": ["anzahl", "umsatz"],
-                "single_choice_2_default": "anzahl",
-                "multi_choice": ["nahrung", "pharma", "textil"],
-                "multi_choice_default": ["nahrung", "pharma"]
-            }
-        }
-
-        self.config = config
         self.filters_multi_choice = None
         self.filters_single_choice_1 = None
         self.filters_single_choice_2 = None
@@ -264,34 +183,8 @@ class InteractiveLinePlotter(Plotter):
 
 
 class PiePlotter(Plotter):
-    def __init__(self, raw_data):
-        super().__init__(raw_data)
-
-        config = {
-            "general": {
-                "height": 350,
-                "title": "Pie Chart",
-                "toolbar_location": None,
-                "tools": "hover",
-                "tooltips": "@x: @y",
-                "x_range": (-0.5, 1.0)
-            },
-            "wedge": {
-                "x": 0,
-                "y": 1,
-                "radius": 0.4,
-                "start_angle": cumsum("angle", include_zero=True),
-                "end_angle": cumsum("angle"),
-                "line_color": "white",
-                "fill_color": "color",
-                "legend_field": "x"
-            },
-            "axis_label": None,
-            "visible": False,
-            "grid_line_color": None
-        }
-
-        self.config = config
+    def __init__(self, raw_data, config):
+        super().__init__(raw_data, config)
 
     def fit_data(self):
 
@@ -306,7 +199,10 @@ class PiePlotter(Plotter):
     def create_plot(self):
         plot = figure(**self.config["general"])
 
-        plot.wedge(**self.config["wedge"], source=self.fitted_data)
+        plot.wedge(**self.config["wedge"],
+                   source=self.fitted_data,
+                   start_angle=cumsum("angle", include_zero=True),
+                   end_angle=cumsum("angle"))
         plot.axis.axis_label = self.config["axis_label"]
         plot.axis.visible = self.config["visible"]
         plot.grid.grid_line_color = self.config["grid_line_color"]
