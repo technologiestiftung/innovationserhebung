@@ -174,7 +174,8 @@ class InteractiveLinePlotter(Plotter):
             "general": {
                 "title": "Interactive Line Chart",
                 "x_axis_label": "X-axis",
-                "y_axis_label": "Y-axis"
+                "y_axis_label": "Y-axis",
+                "toolbar_location": None,
             },
             "line": {
                 "line_width": 2,
