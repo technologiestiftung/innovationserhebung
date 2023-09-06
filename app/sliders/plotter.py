@@ -7,8 +7,6 @@ from bokeh.plotting import figure
 from bokeh.transform import cumsum, linear_cmap
 import panel
 
-# TODO: Allow default config to be overriden
-
 PLOT_TYPES = {
     "bar": "BarPlotter",
     "bubble": "BubblePlotter",
@@ -183,54 +181,53 @@ class InteractiveLinePlotter(Plotter):
         """
         Initialize a plotter for creating interactive line charts.
 
+
         :param raw_data: dict, data to plot
         :param config: dict, default configuration
         """
         super().__init__(raw_data, config)
 
         self.filters_multi_choice = None
-        self.filters_single_choice_1 = None
-        self.filters_single_choice_2 = None
+        self.filters_single_choice = None
 
     def fit_data(self):
         """
         Prepare data.
         """
-        # Extract data using the single choice filters
-        single_choice_dict = (self.raw_data[self.config["filters"]["single_choice_1_default"]]
-                                           [self.config["filters"]["single_choice_2_default"]])
+        self.fitted_data = {}
 
-        # Get a subset of the lines selected with the multi choice filters
-        selected_lines = ["x"] + self.config["filters"]["multi_choice_default"]
-        initial_data = {line: single_choice_dict[line]
-                        for line in selected_lines}
+        for code in self.config["plot_codes"]:
+            # Extract data using the single choice filters
+            single_choice_dict = (self.raw_data[code][self.config["filters"]["single_choice_default"]])
 
-        # Transform data to the ColumDataSource format required by Bokeh
-        self.fitted_data = ColumnDataSource(initial_data)
+            # Get a subset of the lines selected with the multi choice filters
+            selected_lines = ["x"] + self.config["filters"]["multi_choice_default"]
+            initial_data = {line: single_choice_dict[line]
+                            for line in selected_lines}
+
+            self.fitted_data[code] = ColumnDataSource(initial_data)
 
     def create_plot(self):
         """
-        Create plot.
+        Create plot(s).
         """
-        # Create a Bokeh figure
-        self.plot = figure(**self.config["general"])
+        self.plot = {}
 
-        # Add lines to the plot
-        colors = Category10[10]
-        for i, line_name in enumerate(self.config["filters"]["multi_choice"]):
-            self.plot.line(x="x", y=line_name, source=self.fitted_data, color=colors[i], legend_label=line_name)
+        for code in self.config["plot_codes"]:
+            # Create a Bokeh figure
+            self.plot[code] = figure(**self.config["general"])
+
+            # Add lines to the plot
+            colors = Category10[10]
+            for i, line_name in enumerate(self.config["filters"]["multi_choice"]):
+                self.plot[code].line(x="x", y=line_name, source=self.fitted_data[code], color=colors[i], legend_label=line_name)
 
     def create_filters(self):
         """
         Create interactive filters.
         """
-        # Create single choice filters
-        self.filters_single_choice_1 = panel.widgets.RadioBoxGroup(
-            name="Select unit", options=self.config["filters"]["single_choice_1"]
-        )
-
-        self.filters_single_choice_2 = panel.widgets.RadioBoxGroup(
-            name="Select unit", options=self.config["filters"]["single_choice_2"]
+        self.filters_single_choice = panel.widgets.RadioBoxGroup(
+            name="Select unit", options=self.config["filters"]["single_choice"]
         )
 
         # Create multi choice filters
@@ -242,8 +239,7 @@ class InteractiveLinePlotter(Plotter):
 
         # Add interactivity
         self.filters_multi_choice.param.watch(self.update_filters, "value")
-        self.filters_single_choice_1.param.watch(self.update_filters, "value")
-        self.filters_single_choice_2.param.watch(self.update_filters, "value")
+        self.filters_single_choice.param.watch(self.update_filters, "value")
 
     def update_filters(self, event):
         """
@@ -251,17 +247,18 @@ class InteractiveLinePlotter(Plotter):
 
         :param event: an event object that triggers the update
         """
-        # Re select data based on new selection of filters
-        selected_lines = self.filters_multi_choice.value
-        single_choice_dict = self.raw_data[self.filters_single_choice_1.value][self.filters_single_choice_2.value]
+        for code in self.config["plot_codes"]:
+            # Re select data based on new selection of filters
+            selected_lines = self.filters_multi_choice.value
+            single_choice_dict = self.raw_data[code][self.filters_single_choice.value]
 
-        filtered_data = {
-            "x": single_choice_dict["x"],
-            **{line: single_choice_dict[line] for line in selected_lines}
-        }
+            filtered_data = {
+                "x": single_choice_dict["x"],
+                **{line: single_choice_dict[line] for line in selected_lines}
+            }
 
-        # Update the existing ColumnDataSource with new data
-        self.fitted_data.data = filtered_data
+            # Update the existing ColumnDataSource with new data
+            self.fitted_data[code].data = filtered_data
 
 
 class PiePlotter(Plotter):

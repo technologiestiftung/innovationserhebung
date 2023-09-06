@@ -39,10 +39,10 @@ line_custom:
   legend_title: Legend
   label_text_font_size: 12pt
 
-basis_ber:
+basis_custom:
   plot_type: line_interactive
   general:
-    title: Berlin Basis Chart
+    title: Basis Chart
     x_axis_label: X-axis
     y_axis_label: Y-axis
     toolbar_location: null
@@ -53,15 +53,14 @@ basis_ber:
     line_color: blue
   legend_title: Legend
   label_text_font_size: 12pt
+  plot_codes:
+    - ber
+    - de
   filters:
-    single_choice_1:
-      - ber
-      - de
-    single_choice_1_default: ber
-    single_choice_2:
+    single_choice:
       - anzahl
       - umsatz
-    single_choice_2_default: anzahl
+    single_choice_default: anzahl
     multi_choice:
       - nahrung
       - pharma

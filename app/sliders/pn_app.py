@@ -116,7 +116,6 @@ class ConfigImporter:
 
 
 def create_app():
-    # TODO: Get rid of hardcoded path
     config_importer = ConfigImporter()
     config = config_importer.get_config()
 
@@ -131,7 +130,7 @@ def create_app():
     bubble_plotter = plotter_factory.create_plotter("bubble", bubble_data, config["bubble_custom"])
     bubble_plotter.generate()
 
-    interactive_line_plotter = plotter_factory.create_plotter("line_interactive", interactive_line_data, config["basis_ber"])
+    interactive_line_plotter = plotter_factory.create_plotter("line_interactive", interactive_line_data, config["basis_custom"])
     interactive_line_plotter.generate()
 
     line_plotter = plotter_factory.create_plotter("line", line_data, config["line_custom"])
@@ -145,9 +144,9 @@ def create_app():
     gspec[0:1, 0:1] = pie_plotter.plot
     gspec[0:1, 1:2] = pie_plotter_2.plot
     gspec[1:2, 0:2] = bubble_plotter.plot
-    gspec[2:3, 0:2] = interactive_line_plotter.plot
+    gspec[2:3, 0:1] = interactive_line_plotter.plot["ber"]
+    gspec[2:3, 1:2] = interactive_line_plotter.plot["de"]
     gspec[3:4, 0:1] = interactive_line_plotter.filters_multi_choice
-    gspec[4:5, 0:1] = interactive_line_plotter.filters_single_choice_1
-    gspec[4:5, 1:2] = interactive_line_plotter.filters_single_choice_2
+    gspec[3:4, 1:2] = interactive_line_plotter.filters_single_choice
 
     return gspec.servable()
