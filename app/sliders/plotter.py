@@ -26,13 +26,13 @@ class PlotterFactory:
 
         :param plot_type: str, type of plot
         :param raw_data: dict, data to plot
-        :param config: dict, default configuration
+        :param config: dict, configuration for the plot
         :return: a plotter instance of the specified type
         """
         class_name = PLOT_TYPES[plot_type]
         cls = globals()[class_name]
 
-        return cls(raw_data, config[plot_type])
+        return cls(raw_data, config)
 
 
 class Plotter(ABC):
