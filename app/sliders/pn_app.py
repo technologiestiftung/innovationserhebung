@@ -1,3 +1,4 @@
+import os
 import yaml
 
 import numpy as np
@@ -61,14 +62,17 @@ bar_data = {"x": ["A", "B", "C", "D"],
 
 
 # TODO: Move to another module
-def import_config(config_file):
+def import_config(config_filename):
     """
     Import default plot configurations from a YAML file.
 
-    :param config_file: str, path to the YAML config file
+    :param config_filename: str, name of the YAML config file
     :return: dict, default configurations
     """
-    with open(config_file, "r") as f:
+    current_dir = os.path.dirname(__file__)
+    config_path = os.path.join(current_dir, config_filename)
+
+    with open(config_path, "r") as f:
         config = yaml.load(f, Loader=yaml.FullLoader)
 
     return config
@@ -76,7 +80,7 @@ def import_config(config_file):
 
 def create_app():
     # TODO: Get rid of hardcoded path
-    config = import_config("/Users/guadaluperomero/innovationserhebung/app/sliders/config.yaml")
+    config = import_config("config.yaml")
 
     plotter_factory = PlotterFactory()
 
