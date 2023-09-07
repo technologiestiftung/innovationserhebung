@@ -49,22 +49,6 @@ line_interactive:
     line_color: blue
   legend_title: Legend
   label_text_font_size: 12pt
-  filters:
-    single_choice_1:
-      - ber
-      - de
-    single_choice_1_default: ber
-    single_choice_2:
-      - anzahl
-      - umsatz
-    single_choice_2_default: anzahl
-    multi_choice:
-      - nahrung
-      - pharma
-      - textil
-    multi_choice_default:
-      - nahrung
-      - pharma
 
 pie:
   general:
