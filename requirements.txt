@@ -26,7 +26,7 @@ pydantic==2.1.1
 pydantic_core==2.4.0
 pytailwindcss==0.2.0
 python-dateutil==2.8.2
-pytz==2023.3
+pytz==2023.3.post1
 pyviz-comms==2.3.2
 PyYAML==6.0.1
 requests==2.31.0
