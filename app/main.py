@@ -32,7 +32,7 @@ async def bkapp_page(request: Request, language: Language = None):
     request.app.extra["funky_bubble_chart"] = server_document('http://127.0.0.1:5000/funky_bubble_chart')
 
     script = server_document('http://127.0.0.1:5000/app')
-    return templates.TemplateResponse("index.html", {"request": request, "script": script, "translations": translations})   
+    return templates.TemplateResponse("index.html", {"request": request, "script": script, "translations": translations})
 
 
 

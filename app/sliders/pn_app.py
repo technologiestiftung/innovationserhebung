@@ -3,6 +3,7 @@ import yaml
 
 import numpy as np
 from panel.layout.gridstack import GridSpec
+from panel.layout.flex import FlexBox
 
 from .plotter import PlotterFactory
 
@@ -131,10 +132,7 @@ def get_pizza_chart():
     pie_plotter_2 = plotter_factory.create_plotter("pie", pie_data, config["pie_custom"])
     pie_plotter_2.generate()
 
-    pizza_chart = GridSpec(sizing_mode='stretch_both', min_height=350)
-
-    pizza_chart[0:1, 0:1] = pie_plotter.plot
-    pizza_chart[0:1, 1:2] = pie_plotter_2.plot
+    pizza_chart = FlexBox(*[pie_plotter.plot, pie_plotter_2.plot ],flex_direction='row', flex_wrap='wrap', justify_content='space-between')
 
     return pizza_chart.servable()
 
