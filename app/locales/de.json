@@ -1,0 +1,14 @@
+{
+  "title": "Innovationserhebung",
+  "disclaimer": "Daten aus 10 Jahre Innovationserhebung ab Innovationserhebung 2013",
+  "sections": [
+    {
+      "section-title": "Erhebung 1",
+      "section-description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda soluta sed consequatur rem saepe dolores voluptates recusandae explicabo officiis"
+    },
+    {
+      "section-title": "Erhebung 2",
+      "section-description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda soluta sed consequatur rem saepe dolores voluptates recusandae explicabo officiis"
+    }
+  ]
+}
