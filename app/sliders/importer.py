@@ -4,124 +4,170 @@ import json
 from openpyxl import load_workbook
 import pandas as pd
 
+from mapping import mapping_branches, mapping_employees_n, mapping_units
+
 
 # TODO:
-#   1/ Refactor in classes, probably using Strategy or Template Method
-#   2/ Separate code in appropriate modules
-#   3/ Handle entries by size of companies (branches) inside import_excel()
-#   4/ Document properly
+#   1/ Refactor once I add other parsers.
+#      Parsers should inherit from abstract class.
+#      Importer should remain generic and parse types of data as wished.
+#   2/ Move filepaths to another file
 
 
-excel_file = "basisdaten_clean.xlsx"
-
-mapping_branches = {
-    "Nahrung/Getränke/Tabak": "nahrung",
-    "Pharma/Chemie/Kunststoff": "pharma",
-    "Textil/Chemie/Kunststoff": "pharma",
-    "Holz/Papier/Druck": "holz",
-    "Metall/Glas/Steinwaren": "metall",
-    "Elektroindustrie/Instrumententechnik": "elektroindustrie",
-    "Maschinen-/Fahrzeugbau": "fahrzeugbau",
-    "sonstige Konsumgüter": "sonstige_konsumgüter",
-    "Energie/Wasser/Entsorgung": "energie",
-    "Verlage/Film/Rundfunk/Telekommunikation": "telekommunikation",
-    "Software/Datenverarbeitung": "software",
-    "Finanzdienstleistungen": "finanz",
-    "Unternehmensberatung": "unternehmensberatung",
-    "Architektur-/Ingenieurbüros/techn. Labore": "architektur",
-    "Forschung und Entwicklung": "forschung",
-    "Kreativdienstleistungen": "kreativ",
-    "Industrie": "industrie",
-    "Dienstleistungen": "dienstleistungen",
-    "Insgesamt": "insgesamt",
-    "Beschäftigte_5_9": "beschaeftigte_5_9",
-    "Beschäftigte_10_19": "beschaeftigte_10_19",
-    "Beschäftigte_20_49": "beschaeftigte_20_49",
-    "Beschäftigte_50_249": "beschaeftigte_50_249",
-    "Beschäftigte_250_999": "beschaeftigte_250_999",
-    "Beschäftigte_1000": "beschaeftigte_1000",
-}
-
-mapping_units = {
-    "Anzahl der Unternehmen insgesamt": "anzahl_unternehmen_insgesamt",
-    "Anzahl der innovations-aktiven Unternehmen": "anzahl_innovative_unternehmen",
-    "Anzahl der Innovatoren": "anzahl_innovatoren",
-    "Anzahl Beschäftigte": "anzahl_beschaeftigte",
-    "Umsatz in Mio. €": "umsatz_mio",
-    "Umsatz mit Produktneu-heiten in Mio. €": "umsatz_mio_produkt",
-    "Umsatz mit Marktneu-heiten in Mio. €": "umsatz_mio_markt",
-    "Innovations-ausgaben in Mio. €": "innovations_ausgaben_mio",
-    "FuE-Ausgaben in Mio. €": "fue_ausgaben_mio",
-}
+excel_file = "../data/basisdaten_clean.xlsx"
+outfile_path = "../data/outfile.json"
 
 
+class DataImporter:
+    def import_data(self, filepath):
+        """
+        Main method of the class.
+        Import the data from an Excel file.
 
-class Importer(ABC):
-    pass
+        :param filepath: str, path to the Excel file containing the data to parse
+        """
+        sheets = self.load_excel(filepath)
+        data_parser = BasisDataParser()
+        output = data_parser.parse(sheets)
+        self.save_to_json(output, outfile_path)
+
+    def load_excel(self, filepath):
+        """
+        Load Excel and convert to pandas DataFrames.
+
+        :param filepath: str, path to the Excel file containing the data to parse
+        :return: dict, where keys are names of sheets and values are pandas DataFrames
+        """
+        workbook = load_workbook(filename=filepath, data_only=True)
+        sheets_data = {}
+
+        for sheet_name in workbook.sheetnames:
+            sheet = workbook[sheet_name]
+
+            data = sheet.values
+            columns = next(data)[0:]
+            df = pd.DataFrame(data, columns=columns)
+
+            # Remove rows and columns with empty values
+            df = df.dropna(axis="index", how="all")
+            df = df.dropna(axis="columns", how="all")
+
+            sheets_data[sheet_name] = df
+
+        return sheets_data
+
+    def save_to_json(self, parsed_data, outfile_path):
+        """
+        Save data to JSON file.
+
+        :param parsed_data: dict, parsed data
+        :param outfile_path: str, path to the JSON file where to save the data
+        """
+        with open(outfile_path, "w") as outfile:
+            json.dump(parsed_data, outfile)
 
 
+class BasisDataParser:
+    def parse(self, sheets):
+        """
+        Main method of the class.
+        Parse Basis data step by step.
 
-def load_excel(file_path):
-    workbook = load_workbook(filename=file_path, data_only=True)
-    sheets_data = {}
+        :param sheets: dict, where keys are names of sheets and values are pandas DataFrames
+        :return: dict, with the shape {years: [y1, y2, ...], branch1: [b1, b2, ...]}
+        """
+        # Extract basis data
+        data = self.extract(sheets)
 
-    for sheet_name in workbook.sheetnames:
-        sheet = workbook[sheet_name]
+        # Validate and reshape the extracted data
+        for area in data:
+            for unit in data[area]:
+                data[area][unit] = self.reshape(data[area][unit])
 
-        data = sheet.values
-        columns = next(data)[0:]
-        df = pd.DataFrame(data, columns=columns)
+        return data
 
-        # Remove rows and columns with empty values
-        df = df.dropna(axis="index", how="all")
-        df = df.dropna(axis="columns", how="all")
+    def extract(self, sheets):
+        """
+        Extract Basis data.
 
-        sheets_data[sheet_name] = df
+        :param sheets: dict, where keys are names of sheets and values are pandas DataFrames
+        :return: nested dict, with the following shape {area: {unit: {branch: {year: value}}}}
+        """
+        extracted = self.init_nested_dict()
 
-    return sheets_data
-
-
-def init_nested_dict():
-    """
-    Initialize a default dictionary recursively,
-    i.e., a nested dictionary with an arbitrary number of levels
-    and where keys are created automatically if missing.
-
-    :return: defaultdict, a nested dictionary
-    """
-    return defaultdict(init_nested_dict)
-
-
-class DataParser(ABC):
-    def parse_data(self, sheets):
-        extracted = init_nested_dict()
-
-        # Step 1
         for sheet_key in sheets:
             basis, year, area = sheet_key.split("_")
             df = sheets[sheet_key]
 
-            # Step 2
-            # Get row for a specific branch
             for branch in mapping_branches:
+                # Add the number of employees to those branches which refer to the company size
+                df["Wirtschaftsgliederung"] = df.apply(self.apply_mapping, axis=1)
+
+                # Process each row
                 row = df.loc[df["Wirtschaftsgliederung"] == branch]
                 if not row.empty:
 
-                    # Extract a certain value from the row
+                    # Extract value for each certain unit from the row
                     for unit in mapping_units:
                         if unit in row:
                             value = row.iloc[0][unit]
-                            extracted[area][mapping_branches[branch]][mapping_units[unit]][year] = value
+                            extracted[area][mapping_units[unit]][mapping_branches[branch]][year] = value
 
         return extracted
 
+    def reshape(self, input_dict):
+        """
+        Validate and reshape the extracted Basis data for a specific area and unit.
 
-class BasisDataParser(DataParser):
-    def dummy_method(self):
-        pass
+        :param input_dict: nested dict, with the shape {branch: {year: value}}
+        :return: dict, with the shape {years: [y1, y2, ...], branch1: [b1, b2, ...]}
+        """
+        # Make an ordered list of all years that are present in the dataset
+        years = []
+        for branch in input_dict:
+            for year in input_dict[branch].keys():
+                if year not in years:
+                    years.append(year)
+
+        # Check that all inner dictionaries contain all the years and reshape them
+        output_dict = {"jahre": years}
+        for branch in input_dict:
+            branch_datapoints = []
+            for year in years:
+                if year in input_dict[branch]:
+                    branch_datapoints.append(input_dict[branch][year])
+                else:
+                    raise Exception  # TODO: Make more specific exception
+            output_dict[branch] = branch_datapoints
+
+        return output_dict
+
+    def apply_mapping(self, row):
+        """
+        Helper function.
+        Apply conditional mapping to rows aggregating companies by size,
+        so the name specifies the number of employees.
+
+        :param row: pandas.DataFrame, a data row
+        :return: pandas.DataFrame, a data row after applying the mapping
+        """
+        if row["Wirtschaftsgliederung"] == "Beschäftigte":
+            return mapping_employees_n.get(row["Nr. der Klas-\nsifikation"], row["Wirtschaftsgliederung"])
+        else:
+            return row["Wirtschaftsgliederung"]
+
+    def init_nested_dict(self):
+        """
+        Helper function.
+        Initialize a default dictionary recursively,
+        i.e., a nested dictionary with an arbitrary number of levels
+        and where keys are created automatically if missing.
+
+        :return: defaultdict, a nested dictionary
+        """
+        return defaultdict(self.init_nested_dict)
 
 
-sheets = load_excel(excel_file)
-extracted_data = DataParser().parse_data(sheets)
-
-#print(json.dumps(extracted_data, indent=4))
+# TODO: These two lines are for testing purposes. Remove later.
+data_importer = DataImporter()
+data_importer.import_data(excel_file)
