@@ -18,7 +18,7 @@ mdit-py-plugins==0.4.0
 mdurl==0.1.2
 numpy==1.25.2
 packaging==23.1
-pandas==2.0.3
+pandas==2.1.0
 panel==1.2.1
 param==1.13.0
 Pillow==10.0.0
