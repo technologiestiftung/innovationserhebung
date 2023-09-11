@@ -4,6 +4,9 @@
   </h2>
   <p>{{ section.get("section-description", "") }}</p>
   <div class="border-solid border-4 border-sky-500 my-4 p-8">
-    Here will be a chart
+    {% set chart_id = section.get("chart-id", "") %}
+    {% if chart_id in request.app.extra %}
+      {{ request.app.extra[chart_id]|safe }}
+    {% endif %}
   </div>
 </section>

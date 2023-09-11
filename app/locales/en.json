@@ -4,11 +4,18 @@
   "sections": [
     {
       "section-title": "Survey 1",
-      "section-description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda soluta sed consequatur rem saepe dolores voluptates recusandae explicabo officiis"
+      "section-description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda soluta sed consequatur rem saepe dolores voluptates recusandae explicabo officiis",
+      "chart-id": "base_chart"
     },
     {
       "section-title": "Survey 2",
-      "section-description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda soluta sed consequatur rem saepe dolores voluptates recusandae explicabo officiis"
+      "section-description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda soluta sed consequatur rem saepe dolores voluptates recusandae explicabo officiis",
+      "chart-id": "pizza_chart"
+    },
+    {
+      "section-title": "Survey 2",
+      "section-description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda soluta sed consequatur rem saepe dolores voluptates recusandae explicabo officiis",
+      "chart-id": "funky_bubble_chart"
     }
   ]
 }
