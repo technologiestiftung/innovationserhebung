@@ -115,7 +115,11 @@ class ConfigImporter:
                 default_config[key] = value
 
 
+# TODO: For now this functions is obsolete but it might be useful in the future
 def create_app():
+    return
+
+def get_pizza_chart():
     config_importer = ConfigImporter()
     config = config_importer.get_config()
 
@@ -127,8 +131,19 @@ def create_app():
     pie_plotter_2 = plotter_factory.create_plotter("pie", pie_data, config["pie_custom"])
     pie_plotter_2.generate()
 
-    bubble_plotter = plotter_factory.create_plotter("bubble", bubble_data, config["bubble_custom"])
-    bubble_plotter.generate()
+    pizza_chart = GridSpec(sizing_mode='stretch_both', min_height=350)
+
+    pizza_chart[0:1, 0:1] = pie_plotter.plot
+    pizza_chart[0:1, 1:2] = pie_plotter_2.plot
+
+    return pizza_chart.servable()
+
+
+def get_base_chart():
+    config_importer = ConfigImporter()
+    config = config_importer.get_config()
+
+    plotter_factory = PlotterFactory()
 
     interactive_line_plotter = plotter_factory.create_plotter("line_interactive", interactive_line_data, config["basis_custom"])
     interactive_line_plotter.generate()
@@ -136,17 +151,26 @@ def create_app():
     line_plotter = plotter_factory.create_plotter("line", line_data, config["line_custom"])
     line_plotter.generate()
 
-    bar_plotter = plotter_factory.create_plotter("bar", bar_data, config["bar_custom"])
-    bar_plotter.generate()
+    base_chart = GridSpec(sizing_mode='stretch_both', min_height=800)
 
-    gspec = GridSpec(width=800, height=1000)
+    base_chart[0:3, 0:2] = interactive_line_plotter.plot["ber"]
+    base_chart[3:6, 0:2] = interactive_line_plotter.plot["de"]
+    base_chart[6:7, 0:1] = interactive_line_plotter.filters_multi_choice
+    base_chart[6:7, 1:2] = interactive_line_plotter.filters_single_choice
+    
 
-    gspec[0:1, 0:1] = pie_plotter.plot
-    gspec[0:1, 1:2] = pie_plotter_2.plot
-    gspec[1:2, 0:2] = bubble_plotter.plot
-    gspec[2:3, 0:1] = interactive_line_plotter.plot["ber"]
-    gspec[2:3, 1:2] = interactive_line_plotter.plot["de"]
-    gspec[3:4, 0:1] = interactive_line_plotter.filters_multi_choice
-    gspec[3:4, 1:2] = interactive_line_plotter.filters_single_choice
+    return base_chart.servable()
 
-    return gspec.servable()
+def get_funky_bubble_chart():
+    config_importer = ConfigImporter()
+    config = config_importer.get_config()
+
+    plotter_factory = PlotterFactory()
+
+    bubble_plotter = plotter_factory.create_plotter("bubble", bubble_data, config["bubble_custom"])
+    bubble_plotter.generate()
+
+    funky_bubbleplot = GridSpec(sizing_mode='stretch_both', min_height=350)
+    funky_bubbleplot[0:1, 0:2] = bubble_plotter.plot
+
+    return funky_bubbleplot.servable()
