@@ -1,13 +1,16 @@
 import json
+import logging
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 def load_translation(language):
     primary_language = language.split(",")[0].split(";")[0].split("-")[0]
-    print(f"Primary: {primary_language}")
     translations = {}
     try:
         with open(f"locales/{primary_language}.json", "r", encoding="utf-8") as f:
             translations = json.load(f)
     except FileNotFoundError:
         pass
-    print(f"Loaded translations for {language}: {translations}")
+    logger.info(f"Loaded translations for {language}")
     return translations

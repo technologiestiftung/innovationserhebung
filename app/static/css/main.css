@@ -556,28 +556,12 @@ video {
   margin-top: 0px;
 }
 
-.mt-8 {
-  margin-top: 2rem;
-}
-
 .block {
   display: block;
 }
 
 .max-w-4xl {
   max-width: 56rem;
-}
-
-.border {
-  border-width: 1px;
-}
-
-.border-2 {
-  border-width: 2px;
-}
-
-.border-8 {
-  border-width: 8px;
 }
 
 .border-4 {
