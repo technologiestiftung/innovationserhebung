@@ -21,7 +21,7 @@ app.add_middleware(GZipMiddleware)
 templates = Jinja2Templates(directory="templates")
 
 @app.get("/")
-@app.get("/{language}/")
+# @app.get("/{language}/")
 async def bkapp_page(request: Request, language: Language = None):
     if language is None:
         language = request.headers.get("accept-language", "de")
