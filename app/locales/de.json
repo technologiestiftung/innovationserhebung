@@ -1,23 +1,27 @@
 {
-  "title": "Innovationserhebung",
   "disclaimer": "Daten aus 10 Jahre Innovationserhebung ab Innovationserhebung 2013",
+  "hero": {
+    "title": "Innovationsmonitor der Stadt Berlin",
+    "subTitle": "Innovationsverhalten der Berliner Wirtschaft von 2012 – 2023",
+    "imageAlt": "Logo der Technologiestiftung Berlin"
+  },
   "sections": [
     {
       "id": "section_1",
       "title": "Erhebung 1",
-      "section-description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda soluta sed consequatur rem saepe dolores voluptates recusandae explicabo officiis",
+      "sectionDescription": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda soluta sed consequatur rem saepe dolores voluptates recusandae explicabo officiis",
       "chart-id": "base_chart"
     },
     {
       "id": "section_2",
       "title": "Erhebung 2",
-      "section-description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda soluta sed consequatur rem saepe dolores voluptates recusandae explicabo officiis",
+      "sectionDescription": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda soluta sed consequatur rem saepe dolores voluptates recusandae explicabo officiis",
       "chart-id": "pizza_chart"
     },
     {
       "id": "section_3",
       "title": "Erhebung 3",
-      "section-description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda soluta sed consequatur rem saepe dolores voluptates recusandae explicabo officiis",
+      "sectionDescription": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda soluta sed consequatur rem saepe dolores voluptates recusandae explicabo officiis",
       "chart-id": "funky_bubble_chart"
     }
   ]

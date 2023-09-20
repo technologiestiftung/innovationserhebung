@@ -1,14 +1,15 @@
-<div class="hero-section">
-  <h1 class="pt-4 pb-2 font-bold text-3xl">{{ translations.get("title") }}</h1>
-  <h2 class="font-bold leading-tight text-2xl mt-0 mb-2 text-pink-500">
-    {{ translations.get("disclaimer") }}
-  </h2>
-  <p class="py-4">
-    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda soluta
-    sed consequatur rem saepe dolores voluptates recusandae explicabo officiis
-    ipsa nesciunt, aliquid placeat dolor consectetur ullam tenetur impedit eaque
-    quam quas esse facilis voluptate ducimus voluptatem. Itaque dolores
-    similique, eaque animi magni, quaerat consectetur sit suscipit quas nam
-    molestias culpa.
-  </p>
+<div
+  class="hero-section fixed top-0 left-0 bg-corporate-blue text-white w-screen h-3/5 -z-10 py-8 px-16"
+>
+  <div class="w-full h-full max-w-4xl mx-auto flex flex-col justify-between">
+    <img
+      class="w-44 self-end"
+      src="{{ url_for('static', path='images/TSB-Logo-outline-weiss.svg') }}"
+      alt="{{ translations.hero.imageAlt }}"
+    />
+    <div class="w-80">
+      <h1 class="pt-4 pb-2 font-bold">{{ translations.hero.title }}</h1>
+      <h2 class="">{{ translations.hero.subTitle }}</h2>
+    </div>
+  </div>
 </div>
