@@ -1,5 +1,6 @@
 {% extends 'base.html' %} {% block content %}
 <div id="app" class="max-w-4xl mx-auto p-4">
+  {% include "components/navigation/index.html" %} 
   {% include "components/hero.html" %} 
   {% for section in translations.get("sections", []) %} 
     {% with section=section %}
