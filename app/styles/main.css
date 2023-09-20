@@ -2,10 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --width-hero: 28.75rem;
+  }
+}
+
 h1 {
   font-size: 2rem;
+  line-height: 2.5rem;
 }
 
 h2 {
   font-size: 1.125rem;
+  line-height: 1.5rem;
 }
