@@ -1,9 +1,12 @@
 {% extends 'base.html' %} {% block content %}
-<div id="app" class="max-w-4xl mx-auto">
+<div
+  id="app"
+  class="max-w-4xl mx-auto desktop:max-w-none desktop:mx-none desktop:flex"
+>
   {# {% include "components/navigation/index.html" %} #} {% include
   "components/hero.html" %}
   <div
-    class="page-wrapper mt-[60vh] bg-white w-screen px-16 w-full absolute left-0 shadow-top"
+    class="page-wrapper mt-[60vh] bg-white w-screen w-full absolute left-0 shadow-top desktop:mt-0 desktop:relative desktop:ml-hero px-mobile tablet:px-desktop"
   >
     <div class="w-full max-w-4xl mx-auto">
       {% for section in translations.get("sections", []) %} {% with

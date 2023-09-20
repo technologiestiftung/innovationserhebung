@@ -434,6 +434,10 @@ video {
   display: none;
 }
 
+:root {
+  --width-hero: 28.75rem;
+}
+
 *, ::before, ::after {
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
@@ -659,14 +663,18 @@ video {
   padding: 2rem;
 }
 
-.px-16 {
-  padding-left: 4rem;
-  padding-right: 4rem;
+.px-mobile {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
 
-.py-8 {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+.py-10 {
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+
+.pb-0 {
+  padding-bottom: 0px;
 }
 
 .pb-2 {
@@ -709,8 +717,64 @@ video {
 
 h1 {
   font-size: 2rem;
+  line-height: 2.5rem;
 }
 
 h2 {
   font-size: 1.125rem;
+  line-height: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .tablet\:px-desktop {
+    padding-left: 4.75rem;
+    padding-right: 4.75rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .desktop\:relative {
+    position: relative;
+  }
+
+  .desktop\:mb-16 {
+    margin-bottom: 4rem;
+  }
+
+  .desktop\:ml-hero {
+    margin-left: var(--width-hero);
+  }
+
+  .desktop\:mt-0 {
+    margin-top: 0px;
+  }
+
+  .desktop\:flex {
+    display: flex;
+  }
+
+  .desktop\:h-full {
+    height: 100%;
+  }
+
+  .desktop\:max-w-hero {
+    max-width: var(--width-hero);
+  }
+
+  .desktop\:max-w-none {
+    max-width: none;
+  }
+
+  .desktop\:justify-start {
+    justify-content: flex-start;
+  }
+
+  .desktop\:self-center {
+    align-self: center;
+  }
+
+  .desktop\:px-desktop {
+    padding-left: 4.75rem;
+    padding-right: 4.75rem;
+  }
 }

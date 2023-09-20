@@ -1,14 +1,16 @@
 <div
-  class="hero-section fixed top-0 left-0 bg-corporate-blue text-white w-screen h-3/5 -z-10 py-8 px-16"
+  class="hero-section fixed top-0 left-0 bg-corporate-blue text-white w-screen h-3/5 -z-10 py-10 px-mobile tablet:px-desktop desktop:max-w-hero desktop:h-full"
 >
-  <div class="w-full h-full max-w-4xl mx-auto flex flex-col justify-between">
+  <div
+    class="w-full h-full max-w-4xl mx-auto flex flex-col justify-between desktop:justify-start"
+  >
     <img
-      class="w-44 self-end"
+      class="w-44 self-end desktop:mb-16"
       src="{{ url_for('static', path='images/TSB-Logo-outline-weiss.svg') }}"
       alt="{{ translations.hero.imageAlt }}"
     />
-    <div class="w-80">
-      <h1 class="pt-4 pb-2 font-bold">{{ translations.hero.title }}</h1>
+    <div class="w-80 desktop:self-center">
+      <h1 class="pt-4 pb-2 font-bold pb-0">{{ translations.hero.title }}</h1>
       <h2 class="">{{ translations.hero.subTitle }}</h2>
     </div>
   </div>
