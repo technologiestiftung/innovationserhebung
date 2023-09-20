@@ -21,7 +21,8 @@ in the command line.
 pyenv virtualenv 3.11.4 innovationserhebung
 ```
 4. Activate the environment with 
-```shellpyenv activate innovationserhebung
+```shell
+pyenv activate innovationserhebung
 ```
 
 ### Run the APP
@@ -60,6 +61,7 @@ tailwindcss -i app/styles/main.css -o app/static/css/main.css --watch
 $ chmod +x run_dev.sh
 ```
 from your root directory to give the bash file executale permission.
+
 2. Now you should be able to start a development server via 
 ```shell
 ./run_dev.sh
