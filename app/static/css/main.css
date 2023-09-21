@@ -737,6 +737,10 @@ h2 {
     position: relative;
   }
 
+  .desktop\:z-0 {
+    z-index: 0;
+  }
+
   .desktop\:mb-16 {
     margin-bottom: 4rem;
   }
