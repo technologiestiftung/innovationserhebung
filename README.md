@@ -25,22 +25,34 @@ pyenv virtualenv 3.11.4 innovationserhebung
 pyenv activate innovationserhebung
 ```
 
-### Run the APP
+### Install requirements
 
-1. Move to the `/app` directory.
-2. Install the required libraries with the command line 
+Install the required libraries with the command line 
 ```shell
 pip install -r requirements.txt
 ```
-3. Run the server with the command line 
+### Run the APP
+
+1. Move to the `/app` directory.
+2. Run the server with the command line 
 ```shell
 uvicorn main:app --reload
 ```
-4. Your terminal should show something like: 
+3. Your terminal should show something like: 
 
 ```
 INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
 ```
+
+
+### Use tailwindcss and prettier-plugin-jinja-template
+
+1. If u want to work on the html templating files as well it would be useful to install tailwind, prettier and use the prettier-plugin-jinja-template as well.
+
+```shell
+npm install
+```
+
 
 ### Run tailwind watcher
 
@@ -65,12 +77,4 @@ from your root directory to give the bash file executale permission.
 2. Now you should be able to start a development server via 
 ```shell
 ./run_dev.sh
-```
-
-### Use prettier-plugin-jinja-template
-
-1. If u want to work on the html templating files as well it it useful to install prettier and use the prettier-plugin-jinja-template as well.
-
-```shell
-npm install
 ```
