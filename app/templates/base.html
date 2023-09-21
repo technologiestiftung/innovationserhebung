@@ -6,12 +6,12 @@
             href="{{ url_for('static', path='/css/main.css') }}"
             rel="stylesheet"
         />
+    </head>
+    <body class=" bg-corporate-blue">
+        {% block content %}{% endblock %}
         <script
             type="text/javascript"
             src="{{ url_for('static', path='/js/index.js') }}"
         ></script>
-    </head>
-    <body class=" bg-corporate-blue">
-        {% block content %}{% endblock %}
     </body>
 </html>
