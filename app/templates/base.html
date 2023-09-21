@@ -1,14 +1,17 @@
-<!DOCTYPE html>
+<!doctype html>
 <html class="scroll-smooth">
-  <head>
-    <title>Innovationserhebung</title>
-    <link
-      href="{{ url_for('static', path='/css/main.css') }}"
-      rel="stylesheet"
-    />
-    <script type="text/javascript" src={{ url_for('static', path='/js/index.js') }}></script>
-  </head>
-  <body>
-    {% block content %} {% endblock %}
-  </body>
+    <head>
+        <title>Innovationserhebung</title>
+        <link
+            href="{{ url_for('static', path='/css/main.css') }}"
+            rel="stylesheet"
+        />
+        <script
+            type="text/javascript"
+            src="{{ url_for('static', path='/js/index.js') }}"
+        ></script>
+    </head>
+    <body class=" bg-corporate-blue">
+        {% block content %}{% endblock %}
+    </body>
 </html>

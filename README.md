@@ -66,3 +66,11 @@ from your root directory to give the bash file executale permission.
 ```shell
 ./run_dev.sh
 ```
+
+### Use prettier-plugin-jinja-template
+
+1. If u want to work on the html templating files as well it it useful to install prettier and use the prettier-plugin-jinja-template as well.
+
+```shell
+npm install
+```
