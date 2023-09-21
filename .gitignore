@@ -3,4 +3,4 @@ __pycache__/
 **/.db
 .python-version
 node_modules
-package-lock.json
+.vscode

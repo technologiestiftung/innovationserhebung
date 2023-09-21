@@ -772,9 +772,4 @@ h2 {
   .desktop\:self-center {
     align-self: center;
   }
-
-  .desktop\:px-desktop {
-    padding-left: 4.75rem;
-    padding-right: 4.75rem;
-  }
 }
