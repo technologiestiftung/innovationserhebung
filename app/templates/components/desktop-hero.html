@@ -44,28 +44,21 @@
                 </div>
             </div>
         </div>
-        <div class="right w-hero h-full">
-            Here is some nav
+        <div class="right w-hero h-full flex flex-col justify-between">
+            {% include "components/navigation/desktop-nav.html" %}
             <div
                 data-toggle="close-desktop-nav"
                 class="w-full shadow-bottom max-w-full"
             >
-                <div class="px-9 py-4 flex justify-between font-bold">
-                    <div class="flex cursor-pointer">
-                        <img
-                            class="w-4 mr-6"
-                            src="{{ url_for('static', path='images/align-left.svg') }}"
-                            alt="{{ translations.nav.alignIconAlt }}"
-                        />
-                        <h1 class="font-bold text-sm w-full">
-                            {{ translations.nav.label }}
-                        </h1>
-                    </div>
+                <div class="px-9 py-4 flex cursor-pointer font-bold">
                     <img
-                        class="w-4 cursor-pointer"
+                        class="w-4 mr-6 rotate-180"
                         src="{{ url_for('static', path='images/arrow-right.svg') }}"
                         alt="{{ translations.nav.alignIconAlt }}"
                     />
+                    <span class="font-bold text-sm w-full">
+                        {{ translations.nav.backLabel }}
+                    </span>
                 </div>
             </div>
         </div>

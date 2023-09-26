@@ -1,15 +1,16 @@
 {
     "disclaimer": "Daten aus 10 Jahre Innovationserhebung ab Innovationserhebung 2013",
     "hero": {
+        "imageAlt": "Logo der Technologiestiftung Berlin",
         "title": "Innovationsmonitor der Stadt Berlin",
-        "subTitle": "Innovationsverhalten der Berliner Wirtschaft von 2012 – 2023",
-        "imageAlt": "Logo der Technologiestiftung Berlin"
+        "subTitle": "Innovationsverhalten der Berliner Wirtschaft von 2012 – 2023"
     },
     "nav": {
-        "label": "Inhaltsverzeichnis",
         "alignIconAlt": "Inhaltsverzeichnis",
-        "subHeader_1": "Allgemeine Zahlen",
-        "internalLink": "Interner Link"
+        "backLabel": "Zurück",
+        "internalLink": "Interner Link",
+        "label": "Inhaltsverzeichnis",
+        "subHeader_1": "Allgemeine Zahlen"
     },
     "sections": [
         {
