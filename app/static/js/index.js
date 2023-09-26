@@ -28,15 +28,38 @@ sections.forEach((section) => {
 const updateNavigationView = (inViewId) => {
     navElements.forEach((navElement) => {
         const sectionId = navElement.getAttribute("data-section-id")
-        const link = navElement.querySelector("a")
-        if (link) {
+        const linkText = navElement.querySelector("span")
+        if (linkText) {
             if (sectionId === inViewId) {
-                link.innerHTML = `<strong>${link.textContent}</strong>`
+                linkText.innerHTML = `<strong>${linkText.textContent}</strong>`
             } else {
-                link.innerHTML = link.textContent
+                linkText.innerHTML = linkText.textContent
             }
         }
     })
 }
 
 updateNavigationView(inViewId)
+
+document.addEventListener("DOMContentLoaded", () => {
+    const accordionToggle = document.querySelector("[data-toggle='accordion']")
+    const scrollTopButton = document.getElementById("scroll-top-button")
+    const closeAccordionButton = document.querySelector(
+        "[data-toggle='accordionCloseOnly']",
+    )
+    const accordionList = document.getElementById("accordion-list")
+
+    if (accordionToggle && accordionList && scrollTopButton) {
+        accordionToggle.addEventListener("click", function () {
+            accordionList.classList.toggle("max-h-screen")
+            scrollTopButton.classList.toggle("translate-x-full")
+        })
+    }
+
+    if (closeAccordionButton && accordionList) {
+        closeAccordionButton.addEventListener("click", function () {
+            accordionList.classList.remove("max-h-screen")
+            scrollTopButton.classList.remove("translate-x-full")
+        })
+    }
+})

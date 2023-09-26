@@ -1,28 +1,34 @@
 {
-  "disclaimer": "Daten aus 10 Jahre Innovationserhebung ab Innovationserhebung 2013",
-  "hero": {
-    "title": "Innovationsmonitor der Stadt Berlin",
-    "subTitle": "Innovationsverhalten der Berliner Wirtschaft von 2012 – 2023",
-    "imageAlt": "Logo der Technologiestiftung Berlin"
-  },
-  "sections": [
-    {
-      "id": "section_1",
-      "title": "Erhebung 1",
-      "sectionDescription": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda soluta sed consequatur rem saepe dolores voluptates recusandae explicabo officiis",
-      "chart-id": "base_chart"
+    "disclaimer": "Daten aus 10 Jahre Innovationserhebung ab Innovationserhebung 2013",
+    "hero": {
+        "title": "Innovationsmonitor der Stadt Berlin",
+        "subTitle": "Innovationsverhalten der Berliner Wirtschaft von 2012 – 2023",
+        "imageAlt": "Logo der Technologiestiftung Berlin"
     },
-    {
-      "id": "section_2",
-      "title": "Erhebung 2",
-      "sectionDescription": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda soluta sed consequatur rem saepe dolores voluptates recusandae explicabo officiis",
-      "chart-id": "pizza_chart"
+    "nav": {
+        "label": "Inhaltsverzeichnis",
+        "alignIconAlt": "Inhaltsverzeichnis",
+        "subHeader_1": "Allgemeine Zahlen",
+        "internalLink": "Interner Link"
     },
-    {
-      "id": "section_3",
-      "title": "Erhebung 3",
-      "sectionDescription": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda soluta sed consequatur rem saepe dolores voluptates recusandae explicabo officiis",
-      "chart-id": "funky_bubble_chart"
-    }
-  ]
+    "sections": [
+        {
+            "id": "section_1",
+            "title": "Erhebung 1",
+            "sectionDescription": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda soluta sed consequatur rem saepe dolores voluptates recusandae explicabo officiis",
+            "chart-id": "base_chart"
+        },
+        {
+            "id": "section_2",
+            "title": "Erhebung 2",
+            "sectionDescription": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda soluta sed consequatur rem saepe dolores voluptates recusandae explicabo officiis",
+            "chart-id": "pizza_chart"
+        },
+        {
+            "id": "section_3",
+            "title": "Erhebung 3",
+            "sectionDescription": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda soluta sed consequatur rem saepe dolores voluptates recusandae explicabo officiis",
+            "chart-id": "funky_bubble_chart"
+        }
+    ]
 }
