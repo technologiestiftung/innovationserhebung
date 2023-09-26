@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
         accordionToggle.addEventListener("click", () => {
             accordionList.classList.toggle("max-h-screen")
             scrollTopButton.classList.toggle("translate-x-full")
+            closeAccordionButton.classList.toggle("hidden")
         })
     }
 
@@ -21,6 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
         closeAccordionButton.addEventListener("click", () => {
             accordionList.classList.remove("max-h-screen")
             scrollTopButton.classList.remove("translate-x-full")
+            closeAccordionButton.classList.add("hidden")
         })
     }
     if (accordionList && navLinkClick) {
@@ -28,6 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
             link.addEventListener("click", () => {
                 accordionList.classList.remove("max-h-screen")
                 scrollTopButton.classList.remove("translate-x-full")
+                closeAccordionButton.classList.add("hidden")
             })
         })
     }
