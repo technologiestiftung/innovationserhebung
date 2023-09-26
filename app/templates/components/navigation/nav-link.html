@@ -1,3 +1,10 @@
-<li class="nav-element" data-section-id="{{ section.id }}">
-    <a href="#{{ section.id }}">{{ section.title }}</a>
+<li class="nav-element pb-6" data-section-id="{{ section.id }}">
+    <a class=" flex justify-between" href="#{{ section.id }}">
+        <span>{{ section.title }}</span>
+        <img
+            class="w-4 mr-6"
+            src="{{ url_for('static', path='images/arrow-right.svg') }}"
+            alt="{{ translations.nav.internalLink }}"
+        />
+    </a>
 </li>
