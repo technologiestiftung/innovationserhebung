@@ -1,0 +1,73 @@
+<div
+    class="hero-section hidden fixed top-0 left-0 bg-corporate-blue text-white h-screen max-w-hero overflow-hidden desktop:flex"
+>
+    <div
+        id="slider"
+        class="slider w-2x-hero h-full translate-x-0 flex ease-in duration-300 {% if false %}-translate-x-1/2{% endif %}"
+    >
+        <div class="left h-full w-hero flex flex-col justify-between">
+            <div
+                class="w-full px-desktop max-w-4xl pt-10 mx-auto flex flex-col justify-start"
+            >
+                <img
+                    class="w-44 self-end desktop:mb-16"
+                    src="{{ url_for('static', path='images/TSB-Logo-outline-weiss.svg') }}"
+                    alt="{{ translations.hero.imageAlt }}"
+                />
+                <div class="w-80 self-center">
+                    <h1 class="pt-4 pb-2 font-bold">
+                        {{ translations.hero.title }}
+                    </h1>
+                    <h2>{{ translations.hero.subTitle }}</h2>
+                </div>
+            </div>
+            <div
+                data-toggle="open-desktop-nav"
+                class="w-full shadow-bottom max-w-full"
+            >
+                <div class="px-9 py-4 flex justify-between font-bold">
+                    <div class="flex cursor-pointer">
+                        <img
+                            class="w-4 mr-6"
+                            src="{{ url_for('static', path='images/align-left.svg') }}"
+                            alt="{{ translations.nav.alignIconAlt }}"
+                        />
+                        <h1 class="font-bold text-sm w-full">
+                            {{ translations.nav.label }}
+                        </h1>
+                    </div>
+                    <img
+                        class="w-4 cursor-pointer"
+                        src="{{ url_for('static', path='images/arrow-right.svg') }}"
+                        alt="{{ translations.nav.alignIconAlt }}"
+                    />
+                </div>
+            </div>
+        </div>
+        <div class="right w-hero h-full">
+            Here is some nav
+            <div
+                data-toggle="close-desktop-nav"
+                class="w-full shadow-bottom max-w-full"
+            >
+                <div class="px-9 py-4 flex justify-between font-bold">
+                    <div class="flex cursor-pointer">
+                        <img
+                            class="w-4 mr-6"
+                            src="{{ url_for('static', path='images/align-left.svg') }}"
+                            alt="{{ translations.nav.alignIconAlt }}"
+                        />
+                        <h1 class="font-bold text-sm w-full">
+                            {{ translations.nav.label }}
+                        </h1>
+                    </div>
+                    <img
+                        class="w-4 cursor-pointer"
+                        src="{{ url_for('static', path='images/arrow-right.svg') }}"
+                        alt="{{ translations.nav.alignIconAlt }}"
+                    />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

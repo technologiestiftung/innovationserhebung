@@ -62,4 +62,21 @@ document.addEventListener("DOMContentLoaded", () => {
             scrollTopButton.classList.remove("translate-x-full")
         })
     }
+
+    const openDesktopNav = document.querySelector(
+        "[data-toggle='open-desktop-nav']",
+    )
+    const closeDesktopNav = document.querySelector(
+        "[data-toggle='close-desktop-nav']",
+    )
+    const navSlider = document.getElementById("slider")
+
+    if (openDesktopNav && closeDesktopNav && navSlider) {
+        openDesktopNav.addEventListener("click", function () {
+            navSlider.classList.add("-translate-x-1/2")
+        })
+        closeDesktopNav.addEventListener("click", function () {
+            navSlider.classList.remove("-translate-x-1/2")
+        })
+    }
 })
