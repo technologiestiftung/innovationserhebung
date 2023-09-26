@@ -7,7 +7,6 @@ const handleIntersection = (entries) => {
         if (entry.isIntersecting) {
             const sectionId = entry.target.getAttribute("id")
             inViewId = sectionId
-            console.log("inViewId", inViewId)
             updateNavigationView(inViewId)
         }
     })
@@ -48,6 +47,9 @@ document.addEventListener("DOMContentLoaded", () => {
         "[data-toggle='accordionCloseOnly']",
     )
     const accordionList = document.getElementById("accordion-list")
+    const navLinkClick = document.querySelectorAll(
+        "[data-toggle='click-nav-link']",
+    )
 
     if (accordionToggle && accordionList && scrollTopButton) {
         accordionToggle.addEventListener("click", function () {
@@ -62,6 +64,14 @@ document.addEventListener("DOMContentLoaded", () => {
             scrollTopButton.classList.remove("translate-x-full")
         })
     }
+    if (accordionList && navLinkClick) {
+        Array.apply(null, navLinkClick).forEach((link) => {
+            link.addEventListener("click", function () {
+                accordionList.classList.remove("max-h-screen")
+                scrollTopButton.classList.remove("translate-x-full")
+            })
+        })
+    }
 
     const openDesktopNav = document.querySelector(
         "[data-toggle='open-desktop-nav']",
@@ -69,9 +79,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const closeDesktopNav = document.querySelector(
         "[data-toggle='close-desktop-nav']",
     )
+
     const navSlider = document.getElementById("slider")
 
-    if (openDesktopNav && closeDesktopNav && navSlider) {
+    if (openDesktopNav && closeDesktopNav && navSlider && navLinkClick) {
         openDesktopNav.addEventListener("click", function () {
             navSlider.classList.add("-translate-x-1/2")
         })
