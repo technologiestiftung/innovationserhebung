@@ -41,6 +41,10 @@ module.exports = {
             translate: {
                 "x-full": "100%",
             },
+            width: {
+                "2x-hero": "calc(2 * var(--width-hero))",
+                hero: "var(--width-hero)",
+            },
         },
         purge: "app/static/**/*.js",
     },
