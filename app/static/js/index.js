@@ -12,16 +12,19 @@ const handleIntersection = (entries) => {
     })
 }
 
-const observerOptions = {
+const navPositionObserverOptions = {
     root: null, // Use the viewport as the root
     rootMargin: "0px",
     threshold: 0.2,
 }
 
-const observer = new IntersectionObserver(handleIntersection, observerOptions)
+const navPositionObserver = new IntersectionObserver(
+    handleIntersection,
+    navPositionObserverOptions,
+)
 
 sections.forEach((section) => {
-    observer.observe(section)
+    navPositionObserver.observe(section)
 })
 
 const updateNavigationView = (inViewId) => {
@@ -39,6 +42,34 @@ const updateNavigationView = (inViewId) => {
 }
 
 updateNavigationView(inViewId)
+
+const showNavObserverOptions = {
+    root: null, // Use the viewport as the root
+    rootMargin: "0px",
+    threshold: 0,
+}
+
+const mobileNavElement = document.getElementById("mobile-nav")
+const navVisibleAnchor = document.getElementById("nav-visible-anchor")
+
+const handleNavVisibility = (entries) => {
+    entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            mobileNavElement.classList.add("translate-y-full")
+        } else {
+            mobileNavElement.classList.remove("translate-y-full")
+        }
+    })
+}
+
+const showNavObserver = new IntersectionObserver(
+    handleNavVisibility,
+    showNavObserverOptions,
+)
+
+showNavObserver.observe(navVisibleAnchor)
+
+handleNavVisibility([navVisibleAnchor])
 
 document.addEventListener("DOMContentLoaded", () => {
     const accordionToggle = document.querySelector("[data-toggle='accordion']")
@@ -82,7 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const navSlider = document.getElementById("slider")
 
-    if (openDesktopNav && closeDesktopNav && navSlider && navLinkClick) {
+    if (openDesktopNav && closeDesktopNav && navSlider) {
         openDesktopNav.addEventListener("click", function () {
             navSlider.classList.add("-translate-x-1/2")
         })
