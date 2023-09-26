@@ -12,8 +12,16 @@ module.exports = {
                 "corporate-blue": "#1E3791",
                 "corporate-blue-light": "#495DA5",
             },
+            fontSize: {
+                h1: "2rem",
+                h2: "1.125rem",
+            },
+            lineHeight: {
+                h1: "2.5rem",
+                h2: "1.5rem",
+            },
             margin: {
-                "60vh": "60vh",
+                "3/5": "60vh",
                 hero: "var(--width-hero)",
             },
             maxWidth: {
@@ -29,14 +37,6 @@ module.exports = {
             screens: {
                 desktop: "1280px",
                 tablet: "768px",
-            },
-            fontSize: {
-                h1: "2rem",
-                h2: "1.125rem",
-            },
-            lineHeight: {
-                h1: "2.5rem",
-                h2: "1.5rem",
             },
             translate: {
                 "x-full": "100%",
