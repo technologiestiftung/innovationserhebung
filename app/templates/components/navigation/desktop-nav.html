@@ -1,1 +1,13 @@
-<div class="hidden dektop:block"></div>
+<ul
+    id="accordion-list"
+    class="h-full px-mobile py-7 overflow-scroll max-w-hero"
+>
+    <li class="border-b border-corporate-blue-light text-bold mb-6">
+        <h3 class="font-bold">{{ translations.nav.subHeader_1 }}</h3>
+    </li>
+    {% for section in translations.get("sections", []) %}
+        {% with section=section %}
+            {% include "components/navigation/nav-link.html" %}
+        {% endwith %}
+    {% endfor %}
+</ul>
