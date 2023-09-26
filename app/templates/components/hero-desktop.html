@@ -3,7 +3,7 @@
 >
     <div
         id="slider"
-        class="slider w-2x-hero h-full translate-x-0 flex ease-in duration-300 {% if false %}-translate-x-1/2{% endif %}"
+        class="w-2x-hero h-full translate-x-0 flex ease-in duration-300 {% if false %}-translate-x-1/2{% endif %}"
     >
         <div class="left h-full w-hero flex flex-col justify-between">
             <div
@@ -22,11 +22,11 @@
                 </div>
             </div>
             <div
-                data-toggle="open-desktop-nav"
-                class="w-full shadow-bottom max-w-full"
+                data-toggle="open-nav-desktop"
+                class="w-full shadow-bottom max-w-full cursor-pointer"
             >
                 <div class="px-9 py-4 flex justify-between font-bold">
-                    <div class="flex cursor-pointer">
+                    <div class="flex ">
                         <img
                             class="w-4 mr-6"
                             src="{{ url_for('static', path='images/align-left.svg') }}"
@@ -37,7 +37,7 @@
                         </h1>
                     </div>
                     <img
-                        class="w-4 cursor-pointer"
+                        class="w-4"
                         src="{{ url_for('static', path='images/arrow-right.svg') }}"
                         alt="{{ translations.nav.alignIconAlt }}"
                     />
@@ -45,12 +45,12 @@
             </div>
         </div>
         <div class="right w-hero h-full flex flex-col justify-between">
-            {% include "components/navigation/desktop-nav.html" %}
+            {% include "components/navigation/nav-desktop.html" %}
             <div
-                data-toggle="close-desktop-nav"
-                class="w-full shadow-bottom max-w-full"
+                data-toggle="close-nav-desktop"
+                class="w-full shadow-bottom max-w-full cursor-pointer"
             >
-                <div class="px-9 py-4 flex cursor-pointer font-bold">
+                <div class="px-9 py-4 flex font-bold">
                     <img
                         class="w-4 mr-6 rotate-180"
                         src="{{ url_for('static', path='images/arrow-right.svg') }}"
