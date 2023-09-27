@@ -1,32 +1,32 @@
 {% extends 'base.html' %}
 {% block content %}
+  <div
+    id="app"
+    class="max-w-4xl mx-auto desktop:max-w-none desktop:mx-none desktop:flex"
+  >
+    {% include "components/navigation/nav-mobile.html" %}
+    {%
+      include
+      "components/hero-mobile.html"
+    %}
+    {%
+      include
+      "components/hero-desktop.html"
+    %}
     <div
-        id="app"
-        class="max-w-4xl mx-auto desktop:max-w-none desktop:mx-none desktop:flex"
+      class="page-wrapper mt-3/5 bg-white w-screen w-full absolute left-0 shadow-top desktop:mt-0 desktop:relative desktop:ml-hero px-mobile tablet:px-desktop"
     >
-        {% include "components/navigation/nav-mobile.html" %}
-        {%
-            include
-            "components/hero-mobile.html"
-        %}
-        {%
-            include
-            "components/hero-desktop.html"
-        %}
-        <div
-            class="page-wrapper mt-3/5 bg-white w-screen w-full absolute left-0 shadow-top desktop:mt-0 desktop:relative desktop:ml-hero px-mobile tablet:px-desktop"
-        >
-            <div class="w-full max-w-4xl mx-auto">
-                <span id="nav-visible-anchor"></span>
-                {% for section in translations.get("sections", []) %}
-                    {%
-                        with
-                        section=section
-                    %}
-                        {% include "components/section.html" %}
-                    {% endwith %}
-                {% endfor %}
-            </div>
-        </div>
+      <div class="w-full max-w-4xl mx-auto">
+        <span id="nav-visible-anchor"></span>
+        {% for section in translations.get("sections", []) %}
+          {%
+            with
+            section=section
+          %}
+            {% include "components/section.html" %}
+          {% endwith %}
+        {% endfor %}
+      </div>
     </div>
+  </div>
 {% endblock %}

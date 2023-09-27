@@ -1,16 +1,16 @@
 {% set section_id = section.get("id", "") %}
 <section class="my-4" id="{{ section_id }}">
-    <h2 class="text-2xl mt-0 mb-2 text-pink-500">
-        {{ section.get("title", "") }}
-    </h2>
-    <p>{{ section.get("sectionDescription", "") }}</p>
-    <div class="my-4">
-        {% set chart_id = section.get("chart-id", "") %}
-        {%
-            if chart_id in
-            request.app.extra
-        %}
-            {{ request.app.extra[chart_id]|safe }}
-        {% endif %}
-    </div>
+  <h2 class="text-2xl mt-0 mb-2 text-pink-500">
+    {{ section.get("title", "") }}
+  </h2>
+  <p>{{ section.get("sectionDescription", "") }}</p>
+  <div class="my-4">
+    {% set chart_id = section.get("chart-id", "") %}
+    {%
+      if chart_id in
+      request.app.extra
+    %}
+      {{ request.app.extra[chart_id]|safe }}
+    {% endif %}
+  </div>
 </section>

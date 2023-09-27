@@ -1,66 +1,68 @@
 <div
-    class="hero-section hidden fixed top-0 left-0 bg-corporate-blue text-white h-screen max-w-hero overflow-hidden desktop:flex"
+  class="hero-section hidden fixed top-0 left-0 bg-corporate-blue text-white h-screen max-w-hero overflow-hidden desktop:flex"
 >
-    <div
-        id="slider"
-        class="w-2x-hero h-full translate-x-0 flex ease-in duration-300 {% if false %}-translate-x-1/2{% endif %}"
-    >
-        <div class="left h-full w-hero flex flex-col justify-between">
-            <div
-                class="w-full px-desktop max-w-4xl pt-10 mx-auto flex flex-col justify-start"
-            >
-                <img
-                    class="w-44 self-end desktop:mb-16"
-                    src="{{ url_for('static', path='images/TSB-Logo-outline-weiss.svg') }}"
-                    alt="{{ translations.hero.imageAlt }}"
-                />
-                <div class="w-80 self-center">
-                    <h1 class="pt-4 pb-2 font-bold">
-                        {{ translations.hero.title }}
-                    </h1>
-                    <h2>{{ translations.hero.subTitle }}</h2>
-                </div>
-            </div>
-            <div
-                data-toggle="open-nav-desktop"
-                class="w-full shadow-bottom max-w-full cursor-pointer"
-            >
-                <div class="px-9 py-4 flex justify-between font-bold">
-                    <div class="flex ">
-                        <img
-                            class="w-4 mr-6"
-                            src="{{ url_for('static', path='images/align-left.svg') }}"
-                            alt="{{ translations.nav.alignIconAlt }}"
-                        />
-                        <h1 class="font-bold text-sm w-full">
-                            {{ translations.nav.label }}
-                        </h1>
-                    </div>
-                    <img
-                        class="w-4"
-                        src="{{ url_for('static', path='images/arrow-right.svg') }}"
-                        alt="{{ translations.nav.alignIconAlt }}"
-                    />
-                </div>
-            </div>
+  <div
+    id="slider"
+    class="w-2x-hero h-full flex ease-in duration-300 {% if false %}-translate-x-1/2{% endif %}"
+  >
+    <div class="left h-full w-hero flex flex-col justify-between">
+      <div
+        class="w-full px-desktop max-w-4xl pt-10 mx-auto flex flex-col justify-start"
+      >
+        <img
+          class="w-44 self-end desktop:mb-16"
+          src="{{ url_for('static', path='images/TSB-Logo-outline-weiss.svg') }}"
+          alt="{{ translations.hero.imageAlt }}"
+        />
+        <div class="w-80 self-center">
+          <h1 class="pt-4 pb-2 font-bold">{{ translations.hero.title }}</h1>
+          <p class="text-h2 leading-h2">{{ translations.hero.subTitle }}</p>
         </div>
-        <div class="right w-hero h-full flex flex-col justify-between">
-            {% include "components/navigation/nav-desktop.html" %}
-            <div
-                data-toggle="close-nav-desktop"
-                class="w-full shadow-bottom max-w-full cursor-pointer"
-            >
-                <div class="px-9 py-4 flex font-bold">
-                    <img
-                        class="w-4 mr-6 rotate-180"
-                        src="{{ url_for('static', path='images/arrow-right.svg') }}"
-                        alt="{{ translations.nav.alignIconAlt }}"
-                    />
-                    <span class="font-bold text-sm w-full">
-                        {{ translations.nav.backLabel }}
-                    </span>
-                </div>
-            </div>
+      </div>
+      <button
+        type="button"
+        data-toggle="open-nav-desktop"
+        aria-expanded="false"
+        aria-controls="slider"
+        class="w-full shadow-bottom max-w-full cursor-pointer"
+      >
+        <div class="px-9 py-4 flex justify-between font-bold">
+          <div class="flex ">
+            <img
+              class="w-4 mr-6"
+              src="{{ url_for('static', path='images/align-left.svg') }}"
+              alt="{{ translations.nav.alignIconAlt }}"
+            />
+            <p class="font-bold text-sm w-full">{{ translations.nav.label }}</p>
+          </div>
+          <img
+            class="w-4"
+            src="{{ url_for('static', path='images/arrow-right.svg') }}"
+            alt="{{ translations.nav.alignIconAlt }}"
+          />
         </div>
+      </button>
     </div>
+    <div class="right w-hero h-full flex flex-col justify-between">
+      <nav>{% include "components/navigation/nav-desktop.html" %}</nav>
+      <button
+        type="button"
+        aria-expanded="false"
+        aria-controls="slider"
+        data-toggle="close-nav-desktop"
+        class="w-full shadow-bottom max-w-full cursor-pointer"
+      >
+        <div class="px-9 py-4 flex font-bold">
+          <img
+            class="w-4 mr-6 rotate-180"
+            src="{{ url_for('static', path='images/arrow-right.svg') }}"
+            alt="{{ translations.nav.alignIconAlt }}"
+          />
+          <span class="font-bold text-sm text-left w-full">
+            {{ translations.nav.backLabel }}
+          </span>
+        </div>
+      </button>
+    </div>
+  </div>
 </div>
