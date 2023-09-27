@@ -1,25 +1,25 @@
 <!doctype html>
 <html class="scroll-smooth">
-    <head>
-        <title>Innovationserhebung</title>
-        <link
-            href="{{ url_for('static', path='/css/main.css') }}"
-            rel="stylesheet"
-        />
-    </head>
-    <body class=" bg-corporate-blue">
-        {% block content %}{% endblock %}
-        <script
-            type="text/javascript"
-            src="{{ url_for('static', path='/js/hide-nav-on-top-scroll.js') }}"
-        ></script>
-        <script
-            type="text/javascript"
-            src="{{ url_for('static', path='/js/highlight-nav-links.js') }}"
-        ></script>
-        <script
-            type="text/javascript"
-            src="{{ url_for('static', path='/js/interactive-nav.js') }}"
-        ></script>
-    </body>
+  <head>
+    <title>Innovationserhebung</title>
+    <link
+      href="{{ url_for('static', path='/css/main.css') }}"
+      rel="stylesheet"
+    />
+  </head>
+  <body class=" bg-corporate-blue">
+    {% block content %}{% endblock %}
+    <script
+      type="text/javascript"
+      src="{{ url_for('static', path='/js/hide-nav-on-top-scroll.js') }}"
+    ></script>
+    <script
+      type="text/javascript"
+      src="{{ url_for('static', path='/js/highlight-nav-links.js') }}"
+    ></script>
+    <script
+      type="text/javascript"
+      src="{{ url_for('static', path='/js/interactive-nav.js') }}"
+    ></script>
+  </body>
 </html>

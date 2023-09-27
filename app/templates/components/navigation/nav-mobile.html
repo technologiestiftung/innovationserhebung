@@ -1,41 +1,54 @@
-<div
-    id="nav-mobile"
-    class="navigation bottom-0 left-0 fixed bg-corporate-blue translate-y-0 transition-all duration-300 text-white w-full desktop:hidden z-10 {% if false %}translate-y-full{% endif %}"
+<nav
+  id="nav-mobile"
+  class="navigation bottom-0 left-0 fixed bg-corporate-blue translate-y-0 transition-all duration-300 text-white w-full desktop:hidden z-10 {% if false %}translate-y-full{% endif %}"
 >
-    <div class="w-full shadow-bottom">
-        <div
-            class="toggle mx-auto px-mobile py-4 max-w-4xl h-full flex justify-between font-bold"
-        >
-            <div data-toggle="accordion" class="flex cursor-pointer">
-                <img
-                    class="w-4 mr-6"
-                    src="{{ url_for('static', path='images/align-left.svg') }}"
-                    alt="{{ translations.nav.alignIconAlt }}"
-                />
-                <span class="font-bold text-sm w-full">
-                    {{ translations.nav.label }}
-                </span>
-            </div>
-            <img
-                data-toggle="accordionCloseOnly"
-                class="w-4 cursor-pointer hidden"
-                src="{{ url_for('static', path='images/x-circle.svg') }}"
-                alt="{{ translations.nav.alignIconAlt }}"
-            />
-        </div>
-    </div>
-    <ul
-        id="accordion-list"
-        class="h-full max-h-0 px-mobile overflow-scroll max-w-4xl mx-auto tablet:px-16 transition-all duration-300 {% if false %}max-h-screen{% endif %}"
+  <div class="w-full shadow-bottom">
+    <div
+      class="toggle mx-auto px-mobile py-4 max-w-4xl h-full flex justify-between font-bold"
     >
-        <li class="border-b border-corporate-blue-light pt-4 mb-6">
-            <h3 class="font-bold">{{ translations.nav.subHeader_1 }}</h3>
-        </li>
-        {% for section in translations.get("sections", []) %}
-            {% with section=section %}
-                {% include "components/navigation/nav-link.html" %}
-            {% endwith %}
-        {% endfor %}
+      <button
+        data-toggle="accordion"
+        class="flex cursor-pointer"
+        aria-expanded="false"
+        aria-controls="accordion-list"
+      >
+        <img
+          class="w-4 mr-6"
+          src="{{ url_for('static', path='images/align-left.svg') }}"
+          alt="{{ translations.nav.alignIconAlt }}"
+        />
+        <span class="font-bold text-sm w-full">
+          {{ translations.nav.label }}
+        </span>
+      </button>
+      <button
+        data-toggle="accordionCloseOnly"
+        class="flex cursor-pointer hidden"
+        aria-label="{{ translations.nav.closeNav }}"
+        aria-expanded="false"
+        aria-controls="accordion-list"
+      >
+        <img
+          class="w-4"
+          src="{{ url_for('static', path='images/x-circle.svg') }}"
+        />
+      </button>
+    </div>
+  </div>
+  <div
+    id="accordion-list"
+    class="h-full max-h-0 px-mobile overflow-scroll max-w-4xl mx-auto tablet:px-16 transition-all duration-300 {% if false %}max-h-screen{% endif %}"
+  >
+    <div class="border-b border-corporate-blue-light pt-4 mb-6">
+      <span class="font-bold">{{ translations.nav.subHeader_1 }}</span>
+    </div>
+    <ul>
+      {% for section in translations.get("sections", []) %}
+        {% with section=section %}
+          {% include "components/navigation/nav-link.html" %}
+        {% endwith %}
+      {% endfor %}
     </ul>
-    {% include "components/navigation/scroll-top-button.html" %}
-</div>
+  </div>
+  {% include "components/navigation/scroll-top-button.html" %}
+</nav>

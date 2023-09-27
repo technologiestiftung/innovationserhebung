@@ -47,7 +47,7 @@ INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
 
 ### Use tailwindcss and prettier-plugin-jinja-template
 
-1. If u want to work on the html templating files as well it would be useful to install tailwind, prettier and use the prettier-plugin-jinja-template as well.
+1. If you want to work on the html templating files as well it would be useful to install tailwind, prettier and use the prettier-plugin-jinja-template as well.
 
 ```shell
 npm install
@@ -57,13 +57,9 @@ npm install
 ### Run tailwind watcher
 
 1. Move to the root directory
-2. Run 
+2. From now on you can start the tailwind watcher from the root directory via 
 ```shell
-tailwindcss init
-```
-3. From now on you can start the tailwind watcher from the root directory via 
-```shell
-tailwindcss -i app/styles/main.css -o app/static/css/main.css --watch
+npm run dev:tailwind
 ```
 
 ### Run server in development mode
@@ -72,9 +68,10 @@ tailwindcss -i app/styles/main.css -o app/static/css/main.css --watch
 ```shell
 $ chmod +x run_dev.sh
 ```
-from your root directory to give the bash file executale permission.
+from your root directory to give the bash file executable permission.
 
 2. Now you should be able to start a development server via 
 ```shell
 ./run_dev.sh
 ```
+This also runs the tailwind watcher

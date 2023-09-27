@@ -1,14 +1,14 @@
 <li
-    class="nav-element pb-6"
-    data-section-id="{{ section.id }}"
-    data-toggle="click-nav-link"
+  class="nav-element pb-6"
+  data-section-id="{{ section.id }}"
+  data-toggle="click-nav-link"
 >
-    <a class=" flex justify-between" href="#{{ section.id }}">
-        <span>{{ section.title }}</span>
-        <img
-            class="w-4 mr-6"
-            src="{{ url_for('static', path='images/arrow-right.svg') }}"
-            alt="{{ translations.nav.internalLink }}"
-        />
-    </a>
+  <a class=" flex justify-between" href="#{{ section.id }}">
+    <span>{{ section.title }}</span>
+    <img
+      class="w-4 mr-6"
+      src="{{ url_for('static', path='images/arrow-right.svg') }}"
+      alt="{{ translations.nav.internalLink }}"
+    />
+  </a>
 </li>
