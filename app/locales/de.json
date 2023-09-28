@@ -19,6 +19,7 @@
       "id": "section_1",
       "title": "Erhebung 1",
       "sectionDescription": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda soluta sed consequatur rem saepe dolores voluptates recusandae explicabo officiis",
+      "toggleText": "Zusammensetzung der FuE-Ausgaben in ",
       "chart-ids": ["base_chart_ber", "base_chart_ger"]
     },
     {
