@@ -3,6 +3,8 @@
   <select
     id="{{ section_id }}_toggle"
     class="bg-white text-center font-bold border-b-2 border-corporate-blue inline"
+    aria-controls="{{ section_id }}_ber {{ section_id }}_ger"
+    aria-label="Schalte um zwischen Berlin und Deutschland"
   >
     <option value="{{ section_id }}_ber">Berlin</option>
     <option value="{{ section_id }}_ger">Deutschland</option>
