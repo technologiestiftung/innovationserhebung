@@ -1,13 +1,12 @@
-<p>
-  Zusammensetzung der FuE-Ausgaben in
+<p class="text-corporate-blue text-center text-h2">
+  {{ toggleText }}
   <select
     id="{{ section_id }}_toggle"
-    class="bg-white text-center font-bold text-corporate-blue border-b-2 border-corporate-blue"
+    class="bg-white text-center font-bold border-b-2 border-corporate-blue inline"
   >
     <option value="{{ section_id }}_ber">Berlin</option>
     <option value="{{ section_id }}_ger">Deutschland</option>
   </select>
-  <p>ID: {{ section_id }}</p>
 </p>
 <div id="{{ section_id }}_ber" class="">
   {{ request.app.extra[chart_ids[0]]|safe }}

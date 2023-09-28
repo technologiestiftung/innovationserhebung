@@ -9,7 +9,9 @@
     {% if chart_ids|length > 1 %}
       {% with chart_ids=chart_ids %}
         {% with section_id=section_id %}
-          {% include "components/chart-toggle.html" %}
+          {% with toggleText=section.get("toggleText", "") %}
+            {% include "components/chart-toggle.html" %}
+          {% endwith %}
         {% endwith %}
       {% endwith %}
     {% else %}
