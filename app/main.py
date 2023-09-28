@@ -21,11 +21,12 @@ app.add_middleware(GZipMiddleware)
 templates = Jinja2Templates(directory="templates")
 
 @app.get("/")
-# @app.get("/{language}/")
+@app.get("/{language}/")
 async def bkapp_page(request: Request, language: Language = None):
     if language is None:
         language = request.headers.get("accept-language", "de")
-    translations = load_translation(language)
+    # translations = load_translation(language)
+    translations = load_translation("de")
 
     request.app.extra["pizza_chart"] = server_document('http://127.0.0.1:5000/pizza_chart')
     request.app.extra["base_chart"] = server_document('http://127.0.0.1:5000/base_chart')
