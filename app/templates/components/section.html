@@ -5,12 +5,20 @@
   </h2>
   <p>{{ section.get("sectionDescription", "") }}</p>
   <div class="my-4">
-    {% set chart_id = section.get("chart-id", "") %}
-    {%
-      if chart_id in
-      request.app.extra
-    %}
-      {{ request.app.extra[chart_id]|safe }}
+    {% set chart_ids = section.get("chart-ids", []) %}
+    {% if chart_ids|length > 1 %}
+      {% with chart_ids=chart_ids %}
+        {% with section_id=section_id %}
+          {% include "components/chart-toggle.html" %}
+        {% endwith %}
+      {% endwith %}
+    {% else %}
+      {%
+        if chart_ids[0] in
+        request.app.extra
+      %}
+        {{ request.app.extra[chart_ids[0]]|safe }}
+      {% endif %}
     {% endif %}
   </div>
 </section>

@@ -19,19 +19,19 @@
       "id": "section_1",
       "title": "Erhebung 1",
       "sectionDescription": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda soluta sed consequatur rem saepe dolores voluptates recusandae explicabo officiis",
-      "chart-id": "base_chart"
+      "chart-ids": ["base_chart_ber", "base_chart_ger"]
     },
     {
       "id": "section_2",
       "title": "Erhebung 2",
       "sectionDescription": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda soluta sed consequatur rem saepe dolores voluptates recusandae explicabo officiis",
-      "chart-id": "pizza_chart"
+      "chart-ids": ["pizza_chart"]
     },
     {
       "id": "section_3",
       "title": "Erhebung 3",
       "sectionDescription": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda soluta sed consequatur rem saepe dolores voluptates recusandae explicabo officiis",
-      "chart-id": "funky_bubble_chart"
+      "chart-ids": ["funky_bubble_chart"]
     }
   ]
 }
