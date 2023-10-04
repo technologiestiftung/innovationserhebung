@@ -1,7 +1,7 @@
 from abc import abstractmethod, ABC
 from math import pi
 
-from bokeh.models import ColumnDataSource, ColorBar
+from bokeh.models import ColumnDataSource, ColorBar, Label
 from bokeh.palettes import Category10, Category20c, Viridis256
 from bokeh.plotting import figure
 from bokeh.transform import cumsum, linear_cmap
@@ -13,6 +13,7 @@ PLOT_TYPES = {
     "line": "LinePlotter",
     "line_interactive": "InteractiveLinePlotter",
     "pie": "PiePlotter",
+    "pie_interactive": "InteractivePiePlotter",
 }
 
 
@@ -308,3 +309,133 @@ class PiePlotter(Plotter):
         plot.grid.grid_line_color = self.config["grid_line_color"]
 
         self.plot = plot
+
+
+class InteractivePiePlotter(Plotter):
+    def __init__(self, raw_data, config):
+        """
+        Initialize a plotter for creating interactive pie charts.
+
+        :param raw_data: dict, data to plot
+        :param config: dict, default configuration
+        """
+        super().__init__(raw_data, config)
+
+        self.filters_single_choice = None
+        self.filters_single_choice_highlight = None
+        self.center_label = None
+
+    def fit_data(self):
+        """
+        Prepare data.
+        """
+        self.fitted_data = {}
+
+        for code in self.config["plot_codes"]:
+            # Extract data using the single choice filters
+            single_choice_dict = (self.raw_data[code][self.config["filters"]["single_choice_default"]])
+
+            # Get x and y values
+            x_values = single_choice_dict["x"]
+            y_values = single_choice_dict["y"]
+
+            # Calculate area for each category in the pie chart
+            total = sum(y_values)
+            angles = [2 * pi * (y / total) for y in y_values]
+            colors = Category20c[len(x_values)]
+
+            # Transform data to the ColumnDataSource format required by Bokeh
+            initial_data = {"x": x_values,
+                            "y": y_values,
+                            "angle": angles,
+                            "color": colors}
+
+            self.fitted_data[code] = ColumnDataSource(initial_data)
+
+    def create_plot(self):
+        """
+        Create plot.
+        """
+        self.plot = {}
+
+        for code in self.config["plot_codes"]:
+            # Create a Bokeh figure
+            plot = figure(**self.config["general"])
+
+            plot.annular_wedge(
+                x=0,
+                y=0,
+                inner_radius=0.2,
+                outer_radius=0.35,
+                start_angle=cumsum("angle", include_zero=True),
+                end_angle=cumsum("angle"),
+                line_color="white",
+                fill_color="color",
+                legend_field="x",
+                source=self.fitted_data[code],
+            )
+
+            # Add a label in the center
+            self.center_label = Label(
+                x=0,
+                y=0,
+                text=self.config["filters"]["single_choice_highlight_default"],
+                text_align="center",
+                text_baseline="middle",
+                text_font_size="14pt",
+            )
+            plot.add_layout(self.center_label)
+
+            plot.axis.axis_label = self.config["axis_label"]
+            plot.axis.visible = self.config["visible"]
+            plot.grid.grid_line_color = self.config["grid_line_color"]
+
+            self.plot[code] = plot
+
+    def create_filters(self):
+        """
+        Create interactive filters.
+        """
+        # Create single choice filter
+        self.filters_single_choice = panel.widgets.RadioBoxGroup(
+            name="Select unit", options=self.config["filters"]["single_choice"]
+        )
+
+        # Create single choice highlight filter
+        self.filters_single_choice_highlight = panel.widgets.RadioBoxGroup(
+            name="Select unit", options=self.config["filters"]["single_choice_highlight"]
+        )
+
+        # Add interactivity
+        self.filters_single_choice.param.watch(self.update_filters, "value")
+        self.filters_single_choice_highlight.param.watch(self.update_filters, "value")
+
+    def update_filters(self, event):
+        """
+        Update data and plot whenever the user changes the filters.
+
+        :param event: an event object that triggers the update
+        """
+        for code in self.config["plot_codes"]:
+            # Extract data using the single choice filters
+            single_choice_dict = (self.raw_data[code][self.filters_single_choice.value])
+
+            # Get x and y values
+            x_values = single_choice_dict["x"]
+            y_values = single_choice_dict["y"]
+
+            # Calculate area for each category in the pie chart
+            total = sum(y_values)
+            angles = [2 * pi * (y / total) for y in y_values]
+            colors = Category20c[len(x_values)]
+
+            # Transform data to the ColumnDataSource format required by Bokeh
+            filtered_data = {"x": x_values,
+                            "y": y_values,
+                            "angle": angles,
+                            "color": colors}
+
+            self.fitted_data[code].data = filtered_data
+
+            # Update the center label text with the value from single_choice_highlight
+            self.center_label.text = self.filters_single_choice_highlight.value

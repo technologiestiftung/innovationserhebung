@@ -14,6 +14,29 @@ pie_data = {
     "y": [157, 93, 89, 63, 44]
 }
 
+pie_data_2 = {
+    "ber": {
+        "2010": {
+            "x": ["wirtschaft", "hochschulen", "staat"],
+            "y": [1952, 1380, 1803]
+        },
+        "2020": {
+            "x": ["wirtschaft", "hochschulen", "staat"],
+            "y": [1552, 1280, 1703]
+        },
+    },
+    "de": {
+        "2010": {
+            "x": ["wirtschaft", "hochschulen", "staat"],
+            "y": [1952, 1380, 1803]
+        },
+        "2020": {
+            "x": ["wirtschaft", "hochschulen", "staat"],
+            "y": [1552, 1280, 1703]
+        },
+    },
+}
+
 n = 20
 x = np.random.rand(n)
 y = np.random.rand(n)
@@ -126,13 +149,15 @@ def get_pizza_chart():
 
     plotter_factory = PlotterFactory()
 
-    pie_plotter = plotter_factory.create_plotter("pie", pie_data, config["pie_custom"])
+    pie_plotter = plotter_factory.create_plotter("pie_interactive", pie_data_2, config["pie_custom"])
     pie_plotter.generate()
 
-    pie_plotter_2 = plotter_factory.create_plotter("pie", pie_data, config["pie_custom"])
-    pie_plotter_2.generate()
+#    pie_plotter_2 = plotter_factory.create_plotter("pie", pie_data, config["pie_custom"])
+#    pie_plotter_2.generate()
 
-    pizza_chart = FlexBox(*[pie_plotter.plot, pie_plotter_2.plot ],flex_direction='row', flex_wrap='wrap', justify_content='space-between')
+    pizza_chart = FlexBox(*[pie_plotter.plot["ber"], pie_plotter.plot["de"],
+                            pie_plotter.filters_single_choice, pie_plotter.filters_single_choice_highlight],
+                          flex_direction='row', flex_wrap='wrap', justify_content='space-between')
 
     return pizza_chart.servable()
 
