@@ -11,6 +11,7 @@ module.exports = {
       colors: {
         "corporate-blue": "#1E3791",
         "corporate-blue-light": "#495DA5",
+        "light-gray": "#EBECF0",
       },
       fontSize: {
         h1: "2rem",

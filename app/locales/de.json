@@ -1,18 +1,26 @@
 {
   "disclaimer": "Daten aus 10 Jahre Innovationserhebung ab Innovationserhebung 2013",
+  "general": {
+    "for": "für"
+  },
   "hero": {
     "imageAlt": "Logo der Technologiestiftung Berlin",
     "title": "Innovationsmonitor der Stadt Berlin",
     "subTitle": "Innovationsverhalten der Berliner Wirtschaft von 2012 – 2023"
   },
   "nav": {
-    "alignIconAlt": "Inhaltsverzeichnis",
+    "tableOfContents": "Inhaltsverzeichnis",
     "backLabel": "Zurück",
     "closeNav": "Inhaltsverzeichnis schließen",
     "internalLink": "Interner Link",
     "label": "Inhaltsverzeichnis",
     "scrollTop": "Zum Start der Seite gehen",
     "subHeader_1": "Allgemeine Zahlen"
+  },
+  "chartToggle": {
+    "ariaLabel": "Schalte um zwischen Berlin und Deutschland",
+    "berlin": "Berlin",
+    "germany": "Deutschland"
   },
   "sections": [
     {

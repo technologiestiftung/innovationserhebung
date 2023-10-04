@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const allSections = document.querySelectorAll("section")
-  const sectionIds = Array.apply(null, allSections).map((section) =>
+  const sectionIds = Array.from(allSections).map((section) =>
     section.getAttribute("id"),
   )
   const sectionMeta = sectionIds
@@ -22,14 +22,12 @@ document.addEventListener("DOMContentLoaded", () => {
   sectionMeta.forEach((section) => {
     section.toggle.addEventListener("change", () => {
       const locations = ["ber", "ger"]
+      const SUFFIX_LENGTH = "ber".length
       const selectedChartId = section.toggle.value
-      const activeChartLocation = selectedChartId.slice(
-        -3,
-        selectedChartId.length,
-      )
-      const inactiveChartLocation = locations.filter(
+      const activeChartLocation = selectedChartId.slice(-SUFFIX_LENGTH)
+      const inactiveChartLocation = locations.find(
         (location) => location !== activeChartLocation,
-      )[0]
+      )
       section.charts[activeChartLocation].classList.remove("hidden")
       section.charts[inactiveChartLocation].classList.add("hidden")
     })
