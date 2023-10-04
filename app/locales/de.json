@@ -1,5 +1,8 @@
 {
-  "disclaimer": "Daten aus 10 Jahre Innovationserhebung ab Innovationserhebung 2013",
+  "introSection": {
+    "title": "Einleitung",
+    "disclaimer": "Die Innovationserhebung Berlin wird seit 2012 vom Zentrum für Europäische Wirtschaftsforschung (ZEW) im Auftrag der Technologiestiftung Berlin durchgeführt. Sie hat zum Ziel, die Innovationsaktivitäten der Unternehmen in Berlin im jeweiligen Berichtsjahr in einer national und international vergleichbaren Form zu erheben. Hierzu wurde die Innovationserhebung Berlin als Zusatzerhebung zur Deutschen Innovationserhebung konzipiert. Die Deutsche Innovationserhebung wird vom ZEW jährlich im Auftrag des Bundesforschungsministeriums durchgeführt. Die Deutsche Innovationserhebung ist gleichzeitig der Beitrag Deutschlands zu den Community Innovation Surveys (CIS) der Europäischen Kommission, die zweijährlich unter Koordination des Statistischen Amts der Europäischen Kommission durchgeführt wird. Die Erhebung in ungeraden Jahren sind CIS-Erhebungen. Für die Innovationserhebung Berlin kommt dieselbe Erhebungsmethode im Hinblick auf Erhebungsinstrument (Fragebogen), Datenaufbereitung und Datenauswertung wie in der Deutschen Innovationserhebung zum Einsatz. Somit ist eine vollständige Vergleichbarkeit der Ergebnisse gewährleistet."
+  },
   "general": {
     "for": "für"
   },
