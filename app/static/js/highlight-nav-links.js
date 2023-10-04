@@ -14,7 +14,7 @@ const handleIntersection = (entries) => {
 const navPositionObserverOptions = {
   root: null,
   rootMargin: "0px",
-  threshold: 0.2,
+  threshold: 0,
 }
 
 const navPositionObserver = new IntersectionObserver(
