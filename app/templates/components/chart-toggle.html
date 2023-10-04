@@ -2,17 +2,33 @@
   {{ toggleText }}
   <select
     id="{{ section_id }}_toggle"
-    class="bg-white text-center font-bold border-b-2 border-corporate-blue inline"
+    class="bg-white font-bold border-b-2 border-corporate-blue inline cursor-pointer hover:bg-light-gray"
     aria-controls="{{ section_id }}_ber {{ section_id }}_ger"
-    aria-label="Schalte um zwischen Berlin und Deutschland"
+    aria-label="{{ translations.chartToggle.ariaLabel }}"
   >
-    <option value="{{ section_id }}_ber">Berlin</option>
-    <option value="{{ section_id }}_ger">Deutschland</option>
+    <option value="{{ section_id }}_ber">
+      {{ translations.chartToggle.berlin }}
+    </option>
+    <option value="{{ section_id }}_ger">
+      {{ translations.chartToggle.germany }}
+    </option>
   </select>
 </p>
-<div id="{{ section_id }}_ber" class="">
-  {{ request.app.extra[chart_ids[0]]|safe }}
+<div id="{{ section_id }}_ber" class="mb-16">
+  <figure>
+    {{ request.app.extra[chart_ids[0]]|safe }}
+    <figcaption class="text-sm">
+      {{ section_title }} {{ translations.general.for }}
+      {{ translations.chartToggle.berlin }}
+    </figcaption>
+  </figure>
 </div>
 <div id="{{ section_id }}_ger" class="hidden">
-  {{ request.app.extra[chart_ids[1]]|safe }}
+  <figure>
+    {{ request.app.extra[chart_ids[1]]|safe }}
+    <figcaption class="text-sm">
+      {{ section_title }} {{ translations.general.for }}
+      {{ translations.chartToggle.germany }}
+    </figcaption>
+  </figure>
 </div>

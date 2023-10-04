@@ -173,9 +173,9 @@ def get_base_chart_ger():
 
     base_chart = GridSpec(sizing_mode='stretch_both', min_height=600)
 
-    base_chart[0:3, 0:2] = interactive_line_plotter.plot["de"]
-    base_chart[3:4, 0:1] = interactive_line_plotter.filters_multi_choice
-    base_chart[3:4, 1:2] = interactive_line_plotter.filters_single_choice
+    base_chart[0:6, 0:2] = interactive_line_plotter.plot["de"]
+    base_chart[6:7, 0:1] = interactive_line_plotter.filters_multi_choice
+    base_chart[6:7, 1:2] = interactive_line_plotter.filters_single_choice
     
 
     return base_chart.servable()
@@ -194,9 +194,9 @@ def get_base_chart_ber():
 
     base_chart = GridSpec(sizing_mode='stretch_both', min_height=600)
 
-    base_chart[0:3, 0:2] = interactive_line_plotter.plot["ber"]
-    base_chart[3:4, 0:1] = interactive_line_plotter.filters_multi_choice
-    base_chart[3:4, 1:2] = interactive_line_plotter.filters_single_choice
+    base_chart[0:6, 0:2] = interactive_line_plotter.plot["ber"]
+    base_chart[6:7, 0:1] = interactive_line_plotter.filters_multi_choice
+    base_chart[6:7, 1:2] = interactive_line_plotter.filters_single_choice
     return base_chart.servable()
 
 def get_funky_bubble_chart():

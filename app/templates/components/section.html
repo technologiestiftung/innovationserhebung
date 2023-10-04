@@ -9,8 +9,10 @@
     {% if chart_ids|length > 1 %}
       {% with chart_ids=chart_ids %}
         {% with section_id=section_id %}
-          {% with toggleText=section.get("toggleText", "") %}
-            {% include "components/chart-toggle.html" %}
+          {% with section_title=section.get("title", "") %}
+            {% with toggleText=section.get("toggleText", "") %}
+              {% include "components/chart-toggle.html" %}
+            {% endwith %}
           {% endwith %}
         {% endwith %}
       {% endwith %}
@@ -19,7 +21,12 @@
         if chart_ids[0] in
         request.app.extra
       %}
-        {{ request.app.extra[chart_ids[0]]|safe }}
+        <figure>
+          {{ request.app.extra[chart_ids[0]]|safe }}
+          <figcaption class="text-sm">
+            {{ section.get("title", "") }}
+          </figcaption>
+        </figure>
       {% endif %}
     {% endif %}
   </div>

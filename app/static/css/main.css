@@ -614,6 +614,14 @@ video {
   margin-top: 60vh;
 }
 
+.mb-8 {
+  margin-bottom: 2rem;
+}
+
+.mb-16 {
+  margin-bottom: 4rem;
+}
+
 .block {
   display: block;
 }
@@ -763,18 +771,6 @@ video {
 
 .scroll-smooth {
   scroll-behavior: smooth;
-}
-
-.whitespace-pre {
-  white-space: pre;
-}
-
-.whitespace-pre-line {
-  white-space: pre-line;
-}
-
-.whitespace-pre-wrap {
-  white-space: pre-wrap;
 }
 
 .border-b {
@@ -947,6 +943,11 @@ h1 {
 h2 {
   font-size: 1.125rem;
   line-height: 1.5rem;
+}
+
+.hover\:bg-light-gray:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(235 236 240 / var(--tw-bg-opacity));
 }
 
 @media (min-width: 768px) {
