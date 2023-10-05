@@ -44,9 +44,7 @@
     </div>
     <ul>
       {% for section in translations.get("sections", []) %}
-        {% with section=section %}
-          {% include "components/navigation/nav-link.html" %}
-        {% endwith %}
+        {% include "components/navigation/nav-link.html" with context %}
       {% endfor %}
     </ul>
   </div>

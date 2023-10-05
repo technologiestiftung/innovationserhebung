@@ -3,8 +3,6 @@
 </div>
 <ul id="accordion-list" class="h-full px-mobile overflow-scroll max-w-hero">
   {% for section in translations.get("sections", []) %}
-    {% with section=section %}
-      {% include "components/navigation/nav-link.html" %}
-    {% endwith %}
+    {% include "components/navigation/nav-link.html" with context %}
   {% endfor %}
 </ul>

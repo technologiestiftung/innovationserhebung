@@ -2,9 +2,7 @@
   <h1 class="pt-4 pb-2 font-bold text-3xl">Navigation</h1>
   <ul>
     {% for section in translations.get("sections", []) %}
-      {% with section=section %}
-        {% include "components/navigation/nav-link.html" %}
-      {% endwith %}
+      {% include "components/navigation/nav-link.html" with context %}
     {% endfor %}
   </ul>
 </nav>

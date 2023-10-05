@@ -6,29 +6,19 @@
     </h2>
     <p>{{ section.get("sectionDescription", "") }}</p>
     <div class="my-4">
-      {% set chart_ids = section.get("chart-ids", []) %}
+      {% set chart_ids = section.get("chartIds", []) %}
+      {% set filter_id = section.get("chartFilterId", "") %}
+      {% set section_title=section.get("title", "") %}
+      {% set toggleText=section.get("toggleText", "") %}
       {% if chart_ids|length > 1 %}
-        {% with chart_ids=chart_ids %}
-          {% with section_id=section_id %}
-            {% with section_title=section.get("title", "") %}
-              {% with toggleText=section.get("toggleText", "") %}
-                {% include "components/chart-toggle.html" %}
-              {% endwith %}
-            {% endwith %}
-          {% endwith %}
-        {% endwith %}
-      {% else %}
-        {%
-          if chart_ids[0] in
-          request.app.extra
-        %}
-          <figure>
-            {{ request.app.extra[chart_ids[0]]|safe }}
-            <figcaption class="text-sm">
-              {{ section.get("title", "") }}
-            </figcaption>
-          </figure>
-        {% endif %}
+        {% include "components/chart-toggle.html" with context %}
+      {% elif chart_ids and chart_ids[0] in request.app.extra %}
+        <figure>
+          {{ request.app.extra[chart_ids[0]]|safe }}
+          <figcaption class="text-sm">
+            {{ section.get("title", "") }}
+          </figcaption>
+        </figure>
       {% endif %}
     </div>
   </divclass>
