@@ -53,52 +53,59 @@ class Plotter(ABC):
         """
         self.fit_data()
         self.create_plot()
-        self.create_filters()
 
     @abstractmethod
     def fit_data(self):
         """
-        Abstract method to prepare data for the plot.
-        To be overriden by subclasses.
+        Prepare data.
         """
         pass
 
     @abstractmethod
     def create_plot(self):
         """
-        Abstract method to create the plot.
-        To be overriden by subclasses.
+        Create plot.
         """
         pass
 
+
+class InteractivePlotter(Plotter):
+    def __init__(self, raw_data, config):
+        super().__init__(raw_data, config)
+
+    def generate(self):
+        """
+        Run the necessary steps for creating a plot.
+        """
+        self.fit_data()
+        self.create_plot()
+        self.create_filters()
+
+    @abstractmethod
     def create_filters(self):
         """
-        Create interactive filters for the plot.
-        To be overriden by plotter subclasses which include interactive filters.
+        Create interactive filters.
+        """
+        pass
+
+    @abstractmethod
+    def update_filters(self, event):
+        """
+        Update data and plot whenever the user changes the filters.
+
+        :param event: an event object that triggers the update
         """
         pass
 
 
 class BarPlotter(Plotter):
     def __init__(self, raw_data, config):
-        """
-        Initialize a plotter for creating bar charts.
-
-        :param raw_data: dict, data to plot
-        :param config: dict, default configuration
-        """
         super().__init__(raw_data, config)
 
     def fit_data(self):
-        """
-        Prepare data.
-        """
         self.fitted_data = ColumnDataSource(data=self.raw_data)
 
     def create_plot(self):
-        """
-        Create plot.
-        """
         # Create the figure
         self.plot = figure(x_range=self.fitted_data.data["x"], **self.config["general"])
 
@@ -112,18 +119,9 @@ class BarPlotter(Plotter):
 
 class BubblePlotter(Plotter):
     def __init__(self, raw_data, config):
-        """
-        Initialize a plotter for creating bubble charts.
-
-        :param raw_data: dict, data to plot
-        :param config: dict, default configuration
-        """
         super().__init__(raw_data, config)
 
     def fit_data(self):
-        """
-        Prepare data.
-        """
         source = ColumnDataSource(data={"x": self.raw_data["x"],
                                         "y": self.raw_data["y"],
                                         "size": self.raw_data["size"],
@@ -131,9 +129,6 @@ class BubblePlotter(Plotter):
         self.fitted_data = source
 
     def create_plot(self):
-        """
-        Create plot.
-        """
         # Create the figure
         self.plot = figure(**self.config["figure"])
 
@@ -148,24 +143,12 @@ class BubblePlotter(Plotter):
 
 class LinePlotter(Plotter):
     def __init__(self, raw_data, config):
-        """
-        Initialize a plotter for creating line charts.
-
-        :param raw_data: dict, data to plot
-        :param config: dict, default configuration
-        """
         super().__init__(raw_data, config)
 
     def fit_data(self):
-        """
-        Prepare data.
-        """
         self.fitted_data = ColumnDataSource(data=self.raw_data)
 
     def create_plot(self):
-        """
-        Create plot.
-        """
         # Create the figure
         self.plot = figure(**self.config["general"])
 
@@ -177,24 +160,14 @@ class LinePlotter(Plotter):
         self.plot.legend.label_text_font_size = self.config["label_text_font_size"]
 
 
-class InteractiveLinePlotter(Plotter):
+class InteractiveLinePlotter(InteractivePlotter):
     def __init__(self, raw_data, config):
-        """
-        Initialize a plotter for creating interactive line charts.
-
-
-        :param raw_data: dict, data to plot
-        :param config: dict, default configuration
-        """
         super().__init__(raw_data, config)
 
         self.filters_multi_choice = None
         self.filters_single_choice = None
 
     def fit_data(self):
-        """
-        Prepare data.
-        """
         self.fitted_data = {}
 
         for code in self.config["plot_codes"]:
@@ -209,9 +182,6 @@ class InteractiveLinePlotter(Plotter):
             self.fitted_data[code] = ColumnDataSource(initial_data)
 
     def create_plot(self):
-        """
-        Create plot(s).
-        """
         self.plot = {}
 
         for code in self.config["plot_codes"]:
@@ -224,9 +194,6 @@ class InteractiveLinePlotter(Plotter):
                 self.plot[code].line(x="x", y=line_name, source=self.fitted_data[code], color=colors[i], legend_label=line_name)
 
     def create_filters(self):
-        """
-        Create interactive filters.
-        """
         self.filters_single_choice = panel.widgets.RadioBoxGroup(
             name="Select unit", options=self.config["filters"]["single_choice"]
         )
@@ -243,11 +210,6 @@ class InteractiveLinePlotter(Plotter):
         self.filters_single_choice.param.watch(self.update_filters, "value")
 
     def update_filters(self, event):
-        """
-        Update data and plot whenever the user changes the filters.
-
-        :param event: an event object that triggers the update
-        """
         for code in self.config["plot_codes"]:
             # Re select data based on new selection of filters
             selected_lines = self.filters_multi_choice.value
@@ -264,12 +226,6 @@ class InteractiveLinePlotter(Plotter):
 
 class PiePlotter(Plotter):
     def __init__(self, raw_data, config):
-        """
-        Initialize a plotter for creating pie charts.
-
-        :param raw_data: dict, data to plot
-        :param config: dict, default configuration
-        """
         super().__init__(raw_data, config)
 
     def fit_data(self):
@@ -294,9 +250,6 @@ class PiePlotter(Plotter):
         self.fitted_data = source
 
     def create_plot(self):
-        """
-        Create plot.
-        """
         # Create a Bokeh figure
         plot = figure(**self.config["general"])
 
@@ -311,14 +264,8 @@ class PiePlotter(Plotter):
         self.plot = plot
 
 
-class InteractivePiePlotter(Plotter):
+class InteractivePiePlotter(InteractivePlotter):
     def __init__(self, raw_data, config):
-        """
-        Initialize a plotter for creating interactive pie charts.
-
-        :param raw_data: dict, data to plot
-        :param config: dict, default configuration
-        """
         super().__init__(raw_data, config)
 
         self.filters_single_choice = None
@@ -327,9 +274,6 @@ class InteractivePiePlotter(Plotter):
         self.inner_rings = {}
 
     def fit_data(self):
-        """
-        Prepare data.
-        """
         self.fitted_data = {}
 
         for code in self.config["plot_codes"]:
@@ -354,9 +298,6 @@ class InteractivePiePlotter(Plotter):
             self.fitted_data[code] = ColumnDataSource(initial_data)
 
     def create_plot(self):
-        """
-        Create plot.
-        """
         self.plot = {}
 
         for code in self.config["plot_codes"]:
@@ -397,7 +338,7 @@ class InteractivePiePlotter(Plotter):
 
             plot.add_layout(self.center_labels[code])
 
-            # Create an inner annular wedge with a single color
+            # Create an inner ring with the color of the highlighted category
             inner_radius = 0.17
             outer_radius = 0.21
 
@@ -415,7 +356,7 @@ class InteractivePiePlotter(Plotter):
             self.inner_rings[code] = inner_ring
             plot.add_glyph(inner_ring)
 
-            # Add general labels
+            # Add other labels
             plot.axis.axis_label = self.config["axis_label"]
             plot.axis.visible = self.config["visible"]
             plot.grid.grid_line_color = self.config["grid_line_color"]
@@ -423,9 +364,6 @@ class InteractivePiePlotter(Plotter):
             self.plot[code] = plot
 
     def create_filters(self):
-        """
-        Create interactive filters.
-        """
         # Create single choice filter
         self.filters_single_choice = panel.widgets.RadioButtonGroup(
             name="Select unit", options=self.config["filters"]["single_choice"]
@@ -441,11 +379,6 @@ class InteractivePiePlotter(Plotter):
         self.filters_single_choice_highlight.param.watch(self.update_filters, "value")
 
     def update_filters(self, event):
-        """
-        Update data and plot whenever the user changes the filters.
-
-        :param event: an event object that triggers the update
-        """
         for code in self.config["plot_codes"]:
             # Extract data using the single choice filters
             single_choice_dict = (self.raw_data[code][self.filters_single_choice.value])
@@ -467,8 +400,7 @@ class InteractivePiePlotter(Plotter):
 
             self.fitted_data[code].data = filtered_data
 
-            # Update the center label text with the value from single_choice_highlight
-            # Add a label in the center
+            # Update the center label to match the highlighted category
             highlight_category = self.filters_single_choice_highlight.value
             for key, value, color in zip(self.raw_data[code][self.filters_single_choice.value]["x"],
                                          self.raw_data[code][self.filters_single_choice.value]["y"],

@@ -152,9 +152,6 @@ def get_pizza_chart():
     pie_plotter = plotter_factory.create_plotter("pie_interactive", pie_data_2, config["pie_custom"])
     pie_plotter.generate()
 
-#    pie_plotter_2 = plotter_factory.create_plotter("pie", pie_data, config["pie_custom"])
-#    pie_plotter_2.generate()
-
     pizza_chart = FlexBox(*[pie_plotter.plot["ber"], pie_plotter.plot["de"],
                             pie_plotter.filters_single_choice, pie_plotter.filters_single_choice_highlight],
                           flex_direction='row', flex_wrap='wrap', justify_content='space-between')
