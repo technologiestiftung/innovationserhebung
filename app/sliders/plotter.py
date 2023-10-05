@@ -427,7 +427,7 @@ class InteractivePiePlotter(Plotter):
         Create interactive filters.
         """
         # Create single choice filter
-        self.filters_single_choice = panel.widgets.RadioBoxGroup(
+        self.filters_single_choice = panel.widgets.RadioButtonGroup(
             name="Select unit", options=self.config["filters"]["single_choice"]
         )
 
