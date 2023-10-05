@@ -1,7 +1,7 @@
 from abc import abstractmethod, ABC
 from math import pi
 
-from bokeh.models import ColumnDataSource, ColorBar, Label
+from bokeh.models import AnnularWedge, ColumnDataSource, ColorBar, Label
 from bokeh.palettes import Category10, Category20c, Viridis256
 from bokeh.plotting import figure
 from bokeh.transform import cumsum, linear_cmap
@@ -324,6 +324,7 @@ class InteractivePiePlotter(Plotter):
         self.filters_single_choice = None
         self.filters_single_choice_highlight = None
         self.center_labels = {}
+        self.inner_rings = {}
 
     def fit_data(self):
         """
@@ -369,7 +370,7 @@ class InteractivePiePlotter(Plotter):
                 outer_radius=0.35,
                 start_angle=cumsum("angle", include_zero=True),
                 end_angle=cumsum("angle"),
-                line_color="white",
+                line_color=None,
                 fill_color="color",
                 legend_field="x",
                 source=self.fitted_data[code],
@@ -377,10 +378,12 @@ class InteractivePiePlotter(Plotter):
 
             # Add a label in the center
             highlight_category = self.config["filters"]["single_choice_highlight_default"]
-            for key, value in zip(self.raw_data[code][self.config["filters"]["single_choice_default"]]["x"],
-                                  self.raw_data[code][self.config["filters"]["single_choice_default"]]["y"]):
+            for key, value, color in zip(self.raw_data[code][self.config["filters"]["single_choice_default"]]["x"],
+                                         self.raw_data[code][self.config["filters"]["single_choice_default"]]["y"],
+                                         self.fitted_data[code].data["color"]):
                 if key == highlight_category:
                     label_text = f"{str(value)} Mio €\n{highlight_category}"
+                    highlight_color = color
                     break
 
             self.center_labels[code] = Label(
@@ -394,6 +397,25 @@ class InteractivePiePlotter(Plotter):
 
             plot.add_layout(self.center_labels[code])
 
+            # Create an inner annular wedge with a single color
+            inner_radius = 0.17
+            outer_radius = 0.21
+
+            inner_ring = AnnularWedge(
+                x=0,
+                y=0,
+                inner_radius=inner_radius,
+                outer_radius=outer_radius,
+                start_angle=0,
+                end_angle=2*pi,
+                line_color=None,
+                fill_color=highlight_color,
+            )
+
+            self.inner_rings[code] = inner_ring
+            plot.add_glyph(inner_ring)
+
+            # Add general labels
             plot.axis.axis_label = self.config["axis_label"]
             plot.axis.visible = self.config["visible"]
             plot.grid.grid_line_color = self.config["grid_line_color"]
@@ -448,8 +470,10 @@ class InteractivePiePlotter(Plotter):
             # Update the center label text with the value from single_choice_highlight
             # Add a label in the center
             highlight_category = self.filters_single_choice_highlight.value
-            for key, value in zip(self.raw_data[code][self.filters_single_choice.value]["x"],
-                                  self.raw_data[code][self.filters_single_choice.value]["y"]):
+            for key, value, color in zip(self.raw_data[code][self.filters_single_choice.value]["x"],
+                                         self.raw_data[code][self.filters_single_choice.value]["y"],
+                                         colors):
                 if key == highlight_category:
                     self.center_labels[code].text = f"{str(value)} Mio €\n{highlight_category}"
+                    self.inner_rings[code].fill_color = color
                     break
