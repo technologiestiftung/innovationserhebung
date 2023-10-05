@@ -137,7 +137,28 @@ def get_pizza_chart():
     return pizza_chart.servable()
 
 
-def get_base_chart():
+def create_base_chart():
+    config_importer = ConfigImporter()
+    config = config_importer.get_config()
+
+    plotter_factory = PlotterFactory()
+
+    interactive_line_plotter = plotter_factory.create_plotter("line_interactive", interactive_line_data, config["basis_custom"])    
+    interactive_line_plotter.generate()
+
+    base_chart_ger = GridSpec(sizing_mode='stretch_both', min_height=400)
+    base_chart_ger[0:6, 0:2] = interactive_line_plotter.plot["de"]
+    base_chart_ger[6:7, 0:1] = interactive_line_plotter.filters_multi_choice
+    base_chart_ger[6:7, 1:2] = interactive_line_plotter.filters_single_choice
+
+    base_chart_ber = GridSpec(sizing_mode='stretch_both', min_height=400)
+    base_chart_ber[0:6, 0:2] = interactive_line_plotter.plot["ber"]
+    base_chart_ber[6:7, 0:1] = interactive_line_plotter.filters_multi_choice
+    base_chart_ber[6:7, 1:2] = interactive_line_plotter.filters_single_choice
+    return base_chart_ger.servable(), base_chart_ber.servable()
+
+
+def get_base_chart_ber():
     config_importer = ConfigImporter()
     config = config_importer.get_config()
 
@@ -146,17 +167,11 @@ def get_base_chart():
     interactive_line_plotter = plotter_factory.create_plotter("line_interactive", interactive_line_data, config["basis_custom"])
     interactive_line_plotter.generate()
 
-    line_plotter = plotter_factory.create_plotter("line", line_data, config["line_custom"])
-    line_plotter.generate()
+    base_chart = GridSpec(sizing_mode='stretch_both', min_height=600)
 
-    base_chart = GridSpec(sizing_mode='stretch_both', min_height=800)
-
-    base_chart[0:3, 0:2] = interactive_line_plotter.plot["ber"]
-    base_chart[3:6, 0:2] = interactive_line_plotter.plot["de"]
+    base_chart[0:6, 0:2] = interactive_line_plotter.plot["ber"]
     base_chart[6:7, 0:1] = interactive_line_plotter.filters_multi_choice
     base_chart[6:7, 1:2] = interactive_line_plotter.filters_single_choice
-    
-
     return base_chart.servable()
 
 def get_base_chart_ger():
@@ -168,33 +183,9 @@ def get_base_chart_ger():
     interactive_line_plotter = plotter_factory.create_plotter("line_interactive", interactive_line_data, config["basis_custom"])
     interactive_line_plotter.generate()
 
-    line_plotter = plotter_factory.create_plotter("line", line_data, config["line_custom"])
-    line_plotter.generate()
-
     base_chart = GridSpec(sizing_mode='stretch_both', min_height=600)
 
     base_chart[0:6, 0:2] = interactive_line_plotter.plot["de"]
-    base_chart[6:7, 0:1] = interactive_line_plotter.filters_multi_choice
-    base_chart[6:7, 1:2] = interactive_line_plotter.filters_single_choice
-    
-
-    return base_chart.servable()
-
-def get_base_chart_ber():
-    config_importer = ConfigImporter()
-    config = config_importer.get_config()
-
-    plotter_factory = PlotterFactory()
-
-    interactive_line_plotter = plotter_factory.create_plotter("line_interactive", interactive_line_data, config["basis_custom"])
-    interactive_line_plotter.generate()
-
-    line_plotter = plotter_factory.create_plotter("line", line_data, config["line_custom"])
-    line_plotter.generate()
-
-    base_chart = GridSpec(sizing_mode='stretch_both', min_height=600)
-
-    base_chart[0:6, 0:2] = interactive_line_plotter.plot["ber"]
     base_chart[6:7, 0:1] = interactive_line_plotter.filters_multi_choice
     base_chart[6:7, 1:2] = interactive_line_plotter.filters_single_choice
     return base_chart.servable()
