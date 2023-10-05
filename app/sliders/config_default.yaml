@@ -68,3 +68,22 @@ pie:
   axis_label: null
   visible: false
   grid_line_color: null
+
+pie_interactive:
+  general:
+    height: 350
+    title: Pie Chart
+    toolbar_location: null
+    tools: hover
+    tooltips: '@x: @y'
+    x_range: [-0.5, 1.0]
+  wedge:
+    x: 0
+    y: 1
+    radius: 0.4
+    line_color: white
+    fill_color: color
+    legend_field: x
+  axis_label: null
+  visible: false
+  grid_line_color: null
