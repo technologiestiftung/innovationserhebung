@@ -2,5 +2,9 @@ __pycache__/
 **/.DS_Store
 **/.db
 .python-version
+
 node_modules
 .vscode
+
+/data
+

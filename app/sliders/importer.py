@@ -14,8 +14,8 @@ from mapping import mapping_branches, mapping_employees_n, mapping_units
 #   2/ Move filepaths to another file
 
 
-excel_file = "../data/basisdaten_clean.xlsx"
-outfile_path = "../data/outfile.json"
+excel_file = "data/basisdaten_clean.xlsx"
+outfile_path = "data/outfile.json"
 
 
 class DataImporter:
@@ -27,8 +27,9 @@ class DataImporter:
         :param filepath: str, path to the Excel file containing the data to parse
         """
         sheets = self.load_excel(filepath)
-        data_parser = BasisDataParser()
-        output = data_parser.parse(sheets)
+        base_data_parser = BasisDataParser()
+
+        output = {'base': base_data_parser.parse(sheets)}
         self.save_to_json(output, outfile_path)
 
     def load_excel(self, filepath):
@@ -66,6 +67,7 @@ class DataImporter:
         with open(outfile_path, "w") as outfile:
             json.dump(parsed_data, outfile)
 
+# TODO: DonutDataParser
 
 class BasisDataParser:
     def parse(self, sheets):
@@ -97,21 +99,22 @@ class BasisDataParser:
 
         for sheet_key in sheets:
             basis, year, area = sheet_key.split("_")
-            df = sheets[sheet_key]
+            if basis == "basis":
+                df = sheets[sheet_key]
 
-            for branch in mapping_branches:
-                # Add the number of employees to those branches which refer to the company size
-                df["Wirtschaftsgliederung"] = df.apply(self.apply_mapping, axis=1)
+                for branch in mapping_branches:
+                    # Add the number of employees to those branches which refer to the company size
+                    df["Wirtschaftsgliederung"] = df.apply(self.apply_mapping, axis=1)
 
-                # Process each row
-                row = df.loc[df["Wirtschaftsgliederung"] == branch]
-                if not row.empty:
+                    # Process each row
+                    row = df.loc[df["Wirtschaftsgliederung"] == branch]
+                    if not row.empty:
 
-                    # Extract value for each certain unit from the row
-                    for unit in mapping_units:
-                        if unit in row:
-                            value = row.iloc[0][unit]
-                            extracted[area][mapping_units[unit]][mapping_branches[branch]][year] = value
+                        # Extract value for each certain unit from the row
+                        for unit in mapping_units:
+                            if unit in row:
+                                value = row.iloc[0][unit]
+                                extracted[area][mapping_units[unit]][mapping_branches[branch]][year] = value
 
         return extracted
 
