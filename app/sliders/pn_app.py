@@ -18,11 +18,11 @@ pie_data_2 = {
     "ber": {
         "2010": {
             "x": ["wirtschaft", "hochschulen", "staat"],
-            "y": [1952, 1380, 1803]
+            "y": [952, 380, 803]
         },
         "2020": {
             "x": ["wirtschaft", "hochschulen", "staat"],
-            "y": [1552, 1280, 1703]
+            "y": [552, 280, 703]
         },
     },
     "de": {

@@ -323,7 +323,7 @@ class InteractivePiePlotter(Plotter):
 
         self.filters_single_choice = None
         self.filters_single_choice_highlight = None
-        self.center_label = None
+        self.center_labels = {}
 
     def fit_data(self):
         """
@@ -376,15 +376,23 @@ class InteractivePiePlotter(Plotter):
             )
 
             # Add a label in the center
-            self.center_label = Label(
+            highlight_category = self.config["filters"]["single_choice_highlight_default"]
+            for key, value in zip(self.raw_data[code][self.config["filters"]["single_choice_default"]]["x"],
+                                  self.raw_data[code][self.config["filters"]["single_choice_default"]]["y"]):
+                if key == highlight_category:
+                    label_text = f"{str(value)} Mio €\n{highlight_category}"
+                    break
+
+            self.center_labels[code] = Label(
                 x=0,
                 y=0,
-                text=self.config["filters"]["single_choice_highlight_default"],
+                text=label_text,
                 text_align="center",
                 text_baseline="middle",
                 text_font_size="14pt",
             )
-            plot.add_layout(self.center_label)
+
+            plot.add_layout(self.center_labels[code])
 
             plot.axis.axis_label = self.config["axis_label"]
             plot.axis.visible = self.config["visible"]
@@ -431,11 +439,17 @@ class InteractivePiePlotter(Plotter):
 
             # Transform data to the ColumnDataSource format required by Bokeh
             filtered_data = {"x": x_values,
-                            "y": y_values,
-                            "angle": angles,
-                            "color": colors}
+                             "y": y_values,
+                             "angle": angles,
+                             "color": colors}
 
             self.fitted_data[code].data = filtered_data
 
             # Update the center label text with the value from single_choice_highlight
-            self.center_label.text = self.filters_single_choice_highlight.value
+            # Add a label in the center
+            highlight_category = self.filters_single_choice_highlight.value
+            for key, value in zip(self.raw_data[code][self.filters_single_choice.value]["x"],
+                                  self.raw_data[code][self.filters_single_choice.value]["y"]):
+                if key == highlight_category:
+                    self.center_labels[code].text = f"{str(value)} Mio €\n{highlight_category}"
+                    break
