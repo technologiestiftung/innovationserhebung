@@ -4,6 +4,8 @@ from collections import defaultdict
 import json
 from openpyxl import load_workbook
 import pandas as pd
+# import logging
+# logging.basicConfig(level=logging.INFO)
 
 from mapping import mapping_branches, mapping_employees_n, mapping_units, mapping_fue
 
@@ -30,10 +32,12 @@ class DataImporter:
         sheets = self.load_excel(filepath)
         base_data_parser = BasisDataParser()
         fue_data_parser = FUEDataParser()
+        shares_data_parser = SharesDataParser()
 
         output = {
             'base': base_data_parser.parse(sheets),
-            'fue-expenses': fue_data_parser.parse(sheets)
+            'fue-expenses': fue_data_parser.parse(sheets),
+            'shares': shares_data_parser.parse(sheets)
             }
         self.save_to_json(output, outfile_path)
 
@@ -216,6 +220,45 @@ class FUEDataParser:
         :return: defaultdict, a nested dictionary
         """
         return defaultdict(self.init_nested_dict)
+    
+class SharesDataParser:
+    def parse(self, sheets):
+        data = self.extract(sheets)
+
+        return data
+    
+    def extract(self, sheets):
+        """
+        Extract Fue Expenses data.
+
+        :param sheets: dict, where keys are names of sheets and values are pandas DataFrames
+        :return: nested dict, with the following shape {area: {year: {x: unit[], y: value[]}}}
+        """
+        extracted = self.init_nested_dict()
+        for sheet_key in sheets:
+            basis, _, area = sheet_key.split("_")
+            if basis == "anteile":
+                df = sheets[sheet_key]
+                years = list(df)
+                years.pop(0)
+                for year in years:
+                    extracted[area][str(year)] = {"x": [], "y": []}
+                    for _, row in df.iterrows():
+                        extracted[area][str(year)]['x'].append(row["Branche"])
+                        extracted[area][str(year)]['y'].append(round(row[year],1))
+        return extracted
+    
+    def init_nested_dict(self):
+        """
+        Helper function.
+        Initialize a default dictionary recursively,
+        i.e., a nested dictionary with an arbitrary number of levels
+        and where keys are created automatically if missing.
+
+        :return: defaultdict, a nested dictionary
+        """
+        return defaultdict(self.init_nested_dict)
+        
 
 
 # TODO: These two lines are for testing purposes. Remove later.

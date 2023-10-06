@@ -6,6 +6,8 @@ from panel.layout.gridstack import GridSpec
 from panel.layout.flex import FlexBox
 
 from .plotter import PlotterFactory
+# import logging
+# logging.basicConfig(level=logging.INFO)
 
 
 # Create some random data - TODO: To be deleted later
@@ -68,28 +70,76 @@ pie_data_2 = {
       }
     }
   }
-# pie_data_2 = {
-#     "ber": {
-#         "2010": {
-#             "x": ["wirtschaft", "hochschulen", "staat"],
-#             "y": [952, 380, 803]
-#         },
-#         "2020": {
-#             "x": ["wirtschaft", "hochschulen", "staat"],
-#             "y": [552, 280, 703]
-#         },
-#     },
-#     "de": {
-#         "2010": {
-#             "x": ["wirtschaft", "hochschulen", "staat"],
-#             "y": [1952, 1380, 1803]
-#         },
-#         "2020": {
-#             "x": ["wirtschaft", "hochschulen", "staat"],
-#             "y": [1552, 1280, 1703]
-#         },
-#     },
-# }
+shares_data = {
+    "ber": {
+      "2012": {
+        "x": [
+          "Maschinen-/Fahrzeugbau",
+          "Elektroindustrie/Instrumententechnik",
+          "Pharma/Chemie/Kunststoff",
+          "Software/Datenverarbeitung",
+          "restliche Branchen"
+        ],
+        "y": [
+          14.1,
+          30.4,
+          31.0,
+          7.2,
+          31.4
+        ]
+      },
+      "2021": {
+        "x": [
+          "Maschinen-/Fahrzeugbau",
+          "Elektroindustrie/Instrumententechnik",
+          "Pharma/Chemie/Kunststoff",
+          "Software/Datenverarbeitung",
+          "restliche Branchen"
+        ],
+        "y": [
+          18.4,
+          20.8,
+          25.0,
+          12.3,
+          42.0
+        ]
+      }
+    },
+    "de": {
+      "2012": {
+        "x": [
+          "Maschinen-/Fahrzeugbau",
+          "Elektroindustrie/Instrumententechnik",
+          "Pharma/Chemie/Kunststoff",
+          "Software/Datenverarbeitung",
+          "restliche Branchen"
+        ],
+        "y": [
+          49.9,
+          16.0,
+          15.2,
+          5.2,
+          13.8
+        ]
+      },
+      "2021": {
+        "x": [
+          "Maschinen-/Fahrzeugbau",
+          "Elektroindustrie/Instrumententechnik",
+          "Pharma/Chemie/Kunststoff",
+          "Software/Datenverarbeitung",
+          "restliche Branchen"
+        ],
+        "y": [
+          44.9,
+          15.0,
+          14.1,
+          9.1,
+          16.9
+        ]
+      }
+    }
+  }
 
 n = 20
 x = np.random.rand(n)
@@ -158,8 +208,8 @@ class ConfigImporter:
             plot_type = plot_config_custom["plot_type"]
             plot_config_default = config_default[plot_type]
 
-            self.override_values(plot_config_default, plot_config_custom)
-            config_result[plot_name] = plot_config_default
+            overwritten_config = self.override_values(plot_config_default, plot_config_custom)
+            config_result[plot_name] = overwritten_config
 
         return config_result
 
@@ -186,31 +236,45 @@ class ConfigImporter:
         :param default_config: dict, default configuration for a plot type
         :param custom_config: dict, custom configuration for a plot
         """
+
+        overwritten_config = default_config.copy()
         for key, value in custom_config.items():
-            if isinstance(value, dict) and key in default_config and isinstance(default_config[key], dict):
-                self.override_values(default_config[key], value)
+            if isinstance(value, dict) and key in overwritten_config and isinstance(default_config[key], dict):
+                self.override_values(overwritten_config[key], value)
             else:
-                default_config[key] = value
+                overwritten_config[key] = value
+        return overwritten_config
 
 
-# TODO: For now this functions is obsolete but it might be useful in the future
-def create_app():
-    return
-
-def get_pizza_chart():
+def get_fue_chart():
     config_importer = ConfigImporter()
     config = config_importer.get_config()
 
     plotter_factory = PlotterFactory()
 
-    pie_plotter = plotter_factory.create_plotter("pie_interactive", pie_data_2, config["pie_custom"])
+    pie_plotter = plotter_factory.create_plotter("pie_interactive", pie_data_2, config["donut_fue"])
     pie_plotter.generate()
 
-    pizza_chart = FlexBox(*[pie_plotter.plot["ber"], pie_plotter.plot["de"],
+    fue_chart = FlexBox(*[pie_plotter.plot["ber"], pie_plotter.plot["de"],
                             pie_plotter.filters_single_choice, pie_plotter.filters_single_choice_highlight],
                           flex_direction='row', flex_wrap='wrap', justify_content='space-between')
 
-    return pizza_chart.servable()
+    return fue_chart.servable()
+
+def get_shares_chart():
+    config_importer = ConfigImporter()
+    config = config_importer.get_config()
+
+    plotter_factory = PlotterFactory()
+
+    pie_plotter = plotter_factory.create_plotter("pie_interactive", shares_data, config["donut_shares"])
+    pie_plotter.generate()
+
+    shares_chart = FlexBox(*[pie_plotter.plot["ber"], pie_plotter.plot["de"],
+                            pie_plotter.filters_single_choice, pie_plotter.filters_single_choice_highlight],
+                          flex_direction='row', flex_wrap='wrap', justify_content='space-between')
+
+    return shares_chart.servable()
 
 
 def get_base_chart():

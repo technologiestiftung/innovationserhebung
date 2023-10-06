@@ -28,22 +28,37 @@
   "sections": [
     {
       "id": "section_1",
-      "title": "Erhebung 1",
+      "title": "Basisdaten",
       "sectionDescription": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda soluta sed consequatur rem saepe dolores voluptates recusandae explicabo officiis",
       "toggleText": "Zusammensetzung der FuE-Ausgaben in ",
-      "chart-ids": ["base_chart_ber", "base_chart_ger"]
+      "chart-ids": [
+        "base_chart_ber",
+        "base_chart_ger"
+      ]
     },
     {
       "id": "section_2",
-      "title": "Erhebung 2",
+      "title": "FuE-Ausgaben",
       "sectionDescription": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda soluta sed consequatur rem saepe dolores voluptates recusandae explicabo officiis",
-      "chart-ids": ["pizza_chart"]
+      "chart-ids": [
+        "fue_chart"
+      ]
     },
     {
       "id": "section_3",
+      "title": "Anteile-Ausgaben",
+      "sectionDescription": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda soluta sed consequatur rem saepe dolores voluptates recusandae explicabo officiis",
+      "chart-ids": [
+        "shares_chart"
+      ]
+    },
+    {
+      "id": "section_4",
       "title": "Erhebung 3",
       "sectionDescription": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda soluta sed consequatur rem saepe dolores voluptates recusandae explicabo officiis",
-      "chart-ids": ["funky_bubble_chart"]
+      "chart-ids": [
+        "funky_bubble_chart"
+      ]
     }
   ]
 }
