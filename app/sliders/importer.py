@@ -1,10 +1,11 @@
 from abc import ABC, abstractmethod
+import os
 from collections import defaultdict
 import json
 from openpyxl import load_workbook
 import pandas as pd
 
-from mapping import mapping_branches, mapping_employees_n, mapping_units
+from mapping import mapping_branches, mapping_employees_n, mapping_units, mapping_fue
 
 
 # TODO:
@@ -28,8 +29,12 @@ class DataImporter:
         """
         sheets = self.load_excel(filepath)
         base_data_parser = BasisDataParser()
+        fue_data_parser = FUEDataParser()
 
-        output = {'base': base_data_parser.parse(sheets)}
+        output = {
+            'base': base_data_parser.parse(sheets),
+            'fue-expenses': fue_data_parser.parse(sheets)
+            }
         self.save_to_json(output, outfile_path)
 
     def load_excel(self, filepath):
@@ -64,10 +69,11 @@ class DataImporter:
         :param parsed_data: dict, parsed data
         :param outfile_path: str, path to the JSON file where to save the data
         """
+        # Replaces the old outfile if it exists
+        if os.path.exists(outfile_path):
+            os.remove(outfile_path)
         with open(outfile_path, "w") as outfile:
             json.dump(parsed_data, outfile)
-
-# TODO: DonutDataParser
 
 class BasisDataParser:
     def parse(self, sheets):
@@ -115,7 +121,6 @@ class BasisDataParser:
                             if unit in row:
                                 value = row.iloc[0][unit]
                                 extracted[area][mapping_units[unit]][mapping_branches[branch]][year] = value
-
         return extracted
 
     def reshape(self, input_dict):
@@ -159,6 +164,48 @@ class BasisDataParser:
         else:
             return row["Wirtschaftsgliederung"]
 
+    def init_nested_dict(self):
+        """
+        Helper function.
+        Initialize a default dictionary recursively,
+        i.e., a nested dictionary with an arbitrary number of levels
+        and where keys are created automatically if missing.
+
+        :return: defaultdict, a nested dictionary
+        """
+        return defaultdict(self.init_nested_dict)
+    
+
+class FUEDataParser:
+    def parse(self, sheets):
+        data = self.extract(sheets)
+
+        return data
+    
+    def extract(self, sheets):
+        """
+        Extract Fue Expenses data.
+
+        :param sheets: dict, where keys are names of sheets and values are pandas DataFrames
+        :return: nested dict, with the following shape {area: {year: {x: unit[], y: value[]}}}
+        """
+        extracted = self.init_nested_dict()
+        relevant_years = [2011, 2020]
+        for sheet_key in sheets:
+            basis, _, area = sheet_key.split("_")
+            if basis == "fue":
+                df = sheets[sheet_key]
+                row = df.loc[df["Jahr"].isin(relevant_years)]
+
+                for year in relevant_years:
+                    extracted[area][str(year)] = {"x": [], "y": []}
+                    for unit in mapping_fue:
+                        value = row.iloc[0][unit]
+                        # I used the original key from the spredsheet here, so it get's displayed properly in the Graph.
+                        extracted[area][str(year)]["x"].append(unit)
+                        extracted[area][str(year)]["y"].append(value)
+        return extracted
+    
     def init_nested_dict(self):
         """
         Helper function.

@@ -16,26 +16,80 @@ pie_data = {
 
 pie_data_2 = {
     "ber": {
-        "2010": {
-            "x": ["wirtschaft", "hochschulen", "staat"],
-            "y": [952, 380, 803]
-        },
-        "2020": {
-            "x": ["wirtschaft", "hochschulen", "staat"],
-            "y": [552, 280, 703]
-        },
+      "2011": {
+        "x": [
+          "Wirtschaft",
+          "Hochschulen",
+          "Staat"
+        ],
+        "y": [
+          1402.0,
+          950.0,
+          1257.0
+        ]
+      },
+      "2020": {
+        "x": [
+          "Wirtschaft",
+          "Hochschulen",
+          "Staat"
+        ],
+        "y": [
+          1402.0,
+          950.0,
+          1257.0
+        ]
+      }
     },
     "de": {
-        "2010": {
-            "x": ["wirtschaft", "hochschulen", "staat"],
-            "y": [1952, 1380, 1803]
-        },
-        "2020": {
-            "x": ["wirtschaft", "hochschulen", "staat"],
-            "y": [1552, 1280, 1703]
-        },
-    },
-}
+      "2011": {
+        "x": [
+          "Wirtschaft",
+          "Hochschulen",
+          "Staat"
+        ],
+        "y": [
+          51077.0,
+          13518.0,
+          10974.0
+        ]
+      },
+      "2020": {
+        "x": [
+          "Wirtschaft",
+          "Hochschulen",
+          "Staat"
+        ],
+        "y": [
+          51077.0,
+          13518.0,
+          10974.0
+        ]
+      }
+    }
+  }
+# pie_data_2 = {
+#     "ber": {
+#         "2010": {
+#             "x": ["wirtschaft", "hochschulen", "staat"],
+#             "y": [952, 380, 803]
+#         },
+#         "2020": {
+#             "x": ["wirtschaft", "hochschulen", "staat"],
+#             "y": [552, 280, 703]
+#         },
+#     },
+#     "de": {
+#         "2010": {
+#             "x": ["wirtschaft", "hochschulen", "staat"],
+#             "y": [1952, 1380, 1803]
+#         },
+#         "2020": {
+#             "x": ["wirtschaft", "hochschulen", "staat"],
+#             "y": [1552, 1280, 1703]
+#         },
+#     },
+# }
 
 n = 20
 x = np.random.rand(n)

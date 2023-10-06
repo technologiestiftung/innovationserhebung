@@ -76,11 +76,11 @@ pie_custom:
     - de
   filters:
     single_choice:
-      - "2010"
+      - "2011"
       - "2020"
-    single_choice_default: "2010"
+    single_choice_default: "2011"
     single_choice_highlight:
-      - wirtschaft
-      - hochschulen
-      - staat
-    single_choice_highlight_default: wirtschaft
+      - Wirtschaft
+      - Hochschulen
+      - Staat
+    single_choice_highlight_default: Wirtschaft
