@@ -1,13 +1,16 @@
 from abc import ABC, abstractmethod
-import os
 from collections import defaultdict
 import json
 from openpyxl import load_workbook
 import pandas as pd
-# import logging
-# logging.basicConfig(level=logging.INFO)
+import logging
+import sys
+sys.path.append('/app/sliders/config_importer')
 
-from mapping import mapping_branches, mapping_employees_n, mapping_units, mapping_fue
+from config_importer import ConfigImporter
+logging.basicConfig(level=logging.INFO)
+
+from mapping import mapping_branches, mapping_employees_n, mapping_units
 
 
 # TODO:
@@ -19,6 +22,17 @@ from mapping import mapping_branches, mapping_employees_n, mapping_units, mappin
 
 excel_file = "data/basisdaten_clean.xlsx"
 outfile_path = "data/outfile.json"
+
+def init_nested_dict():
+    """
+    Helper function.
+    Initialize a default dictionary recursively,
+    i.e., a nested dictionary with an arbitrary number of levels
+    and where keys are created automatically if missing.
+
+    :return: defaultdict, a nested dictionary
+    """
+    return defaultdict(init_nested_dict)
 
 
 class DataImporter:
@@ -73,9 +87,7 @@ class DataImporter:
         :param parsed_data: dict, parsed data
         :param outfile_path: str, path to the JSON file where to save the data
         """
-        # Replaces the old outfile if it exists
-        if os.path.exists(outfile_path):
-            os.remove(outfile_path)
+
         with open(outfile_path, "w") as outfile:
             json.dump(parsed_data, outfile)
 
@@ -105,11 +117,11 @@ class BasisDataParser:
         :param sheets: dict, where keys are names of sheets and values are pandas DataFrames
         :return: nested dict, with the following shape {area: {unit: {branch: {year: value}}}}
         """
-        extracted = self.init_nested_dict()
+        extracted = init_nested_dict()
 
         for sheet_key in sheets:
-            basis, year, area = sheet_key.split("_")
-            if basis == "basis":
+            if "basis" in sheet_key:
+                basis, year, area = sheet_key.split("_")
                 df = sheets[sheet_key]
 
                 for branch in mapping_branches:
@@ -167,25 +179,21 @@ class BasisDataParser:
             return mapping_employees_n.get(row["Nr. der Klas-\nsifikation"], row["Wirtschaftsgliederung"])
         else:
             return row["Wirtschaftsgliederung"]
-
-    def init_nested_dict(self):
-        """
-        Helper function.
-        Initialize a default dictionary recursively,
-        i.e., a nested dictionary with an arbitrary number of levels
-        and where keys are created automatically if missing.
-
-        :return: defaultdict, a nested dictionary
-        """
-        return defaultdict(self.init_nested_dict)
     
 
 class FUEDataParser:
     def parse(self, sheets):
+        self.config = self.get_config('donut_fue')
         data = self.extract(sheets)
 
         return data
     
+    def get_config(self, chart_name):
+        config_importer = ConfigImporter()
+        config = config_importer.get_config()
+
+        return config[chart_name]
+
     def extract(self, sheets):
         """
         Extract Fue Expenses data.
@@ -193,33 +201,24 @@ class FUEDataParser:
         :param sheets: dict, where keys are names of sheets and values are pandas DataFrames
         :return: nested dict, with the following shape {area: {year: {x: unit[], y: value[]}}}
         """
-        extracted = self.init_nested_dict()
-        relevant_years = [2011, 2020]
+        extracted = init_nested_dict()
+        relevant_years = self.config['filters']['single_choice']
+        branches = self.config['filters']['single_choice_highlight']
+
         for sheet_key in sheets:
-            basis, _, area = sheet_key.split("_")
-            if basis == "fue":
+            if "fue_ausgaben" in sheet_key:
+                fue, ausgaben, area = sheet_key.split("_")
                 df = sheets[sheet_key]
-                row = df.loc[df["Jahr"].isin(relevant_years)]
 
                 for year in relevant_years:
-                    extracted[area][str(year)] = {"x": [], "y": []}
-                    for unit in mapping_fue:
-                        value = row.iloc[0][unit]
-                        # I used the original key from the spredsheet here, so it get's displayed properly in the Graph.
-                        extracted[area][str(year)]["x"].append(unit)
-                        extracted[area][str(year)]["y"].append(value)
+                    extracted[area][year] = {"x": [], "y": []}
+                    for branch in branches:
+                        row = df.loc[df["Jahr"] == int(year)]
+                        value = row.iloc[0][branch]
+                        extracted[area][year]["x"].append(branch)
+                        extracted[area][year]["y"].append(value)
         return extracted
     
-    def init_nested_dict(self):
-        """
-        Helper function.
-        Initialize a default dictionary recursively,
-        i.e., a nested dictionary with an arbitrary number of levels
-        and where keys are created automatically if missing.
-
-        :return: defaultdict, a nested dictionary
-        """
-        return defaultdict(self.init_nested_dict)
     
 class SharesDataParser:
     def parse(self, sheets):
@@ -234,7 +233,7 @@ class SharesDataParser:
         :param sheets: dict, where keys are names of sheets and values are pandas DataFrames
         :return: nested dict, with the following shape {area: {year: {x: unit[], y: value[]}}}
         """
-        extracted = self.init_nested_dict()
+        extracted = init_nested_dict()
         for sheet_key in sheets:
             basis, _, area = sheet_key.split("_")
             if basis == "anteile":
@@ -247,17 +246,7 @@ class SharesDataParser:
                         extracted[area][str(year)]['x'].append(row["Branche"])
                         extracted[area][str(year)]['y'].append(round(row[year],1))
         return extracted
-    
-    def init_nested_dict(self):
-        """
-        Helper function.
-        Initialize a default dictionary recursively,
-        i.e., a nested dictionary with an arbitrary number of levels
-        and where keys are created automatically if missing.
 
-        :return: defaultdict, a nested dictionary
-        """
-        return defaultdict(self.init_nested_dict)
         
 
 

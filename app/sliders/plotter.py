@@ -7,6 +7,9 @@ from bokeh.plotting import figure
 from bokeh.transform import cumsum, linear_cmap
 import panel
 
+import logging
+logging.basicConfig(level=logging.INFO)
+
 PLOT_TYPES = {
     "bar": "BarPlotter",
     "bubble": "BubblePlotter",
@@ -275,6 +278,7 @@ class InteractivePiePlotter(InteractivePlotter):
 
     def fit_data(self):
         self.fitted_data = {}
+        logging.info(f"Interactive plotter created: {self.config}")
 
         for code in self.config["plot_codes"]:
             # Extract data using the single choice filters

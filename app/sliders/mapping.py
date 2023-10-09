@@ -46,9 +46,3 @@ mapping_units = {
     "Innovations-ausgaben in Mio. €": "innovations_ausgaben_mio",
     "FuE-Ausgaben in Mio. €": "fue_ausgaben_mio",
 }
-
-mapping_fue = [
-  "Wirtschaft",
-  "Hochschulen",
-  "Staat",
-]
