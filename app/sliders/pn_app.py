@@ -1,12 +1,8 @@
-import os
-import yaml
-
 import numpy as np
 from panel.layout.gridstack import GridSpec
 from panel.layout.flex import FlexBox
 
-from app.sliders.config_importer import ConfigImporter
-
+from .config_importer import ConfigImporter
 from .plotter import PlotterFactory
 # import logging
 # logging.basicConfig(level=logging.INFO)
