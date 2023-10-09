@@ -7,137 +7,29 @@ from .plotter import PlotterFactory
 # import logging
 # logging.basicConfig(level=logging.INFO)
 
+import os
+import json
+
+def import_data(chart_id):
+    """
+    Main method of the class.
+    Import the data from a generated JSON file.
+    """
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    outfile_path = os.path.join(current_dir, "../../data/outfile.json")
+
+    with open(outfile_path, 'r') as f:
+        chart_data = json.load(f)
+  
+    return chart_data[chart_id]
+
+
 
 # Create some random data - TODO: To be deleted later
 pie_data = {
     "x": ["United States", "United Kingdom", "Japan", "China", "Germany"],
     "y": [157, 93, 89, 63, 44]
 }
-
-pie_data_2 = {
-    "ber": {
-      "2011": {
-        "x": [
-          "Wirtschaft",
-          "Hochschulen",
-          "Staat"
-        ],
-        "y": [
-          1402.0,
-          950.0,
-          1257.0
-        ]
-      },
-      "2020": {
-        "x": [
-          "Wirtschaft",
-          "Hochschulen",
-          "Staat"
-        ],
-        "y": [
-          1402.0,
-          950.0,
-          1257.0
-        ]
-      }
-    },
-    "de": {
-      "2011": {
-        "x": [
-          "Wirtschaft",
-          "Hochschulen",
-          "Staat"
-        ],
-        "y": [
-          51077.0,
-          13518.0,
-          10974.0
-        ]
-      },
-      "2020": {
-        "x": [
-          "Wirtschaft",
-          "Hochschulen",
-          "Staat"
-        ],
-        "y": [
-          51077.0,
-          13518.0,
-          10974.0
-        ]
-      }
-    }
-  }
-shares_data = {
-    "ber": {
-      "2012": {
-        "x": [
-          "Maschinen-/Fahrzeugbau",
-          "Elektroindustrie/Instrumententechnik",
-          "Pharma/Chemie/Kunststoff",
-          "Software/Datenverarbeitung",
-          "restliche Branchen"
-        ],
-        "y": [
-          14.1,
-          30.4,
-          31.0,
-          7.2,
-          31.4
-        ]
-      },
-      "2021": {
-        "x": [
-          "Maschinen-/Fahrzeugbau",
-          "Elektroindustrie/Instrumententechnik",
-          "Pharma/Chemie/Kunststoff",
-          "Software/Datenverarbeitung",
-          "restliche Branchen"
-        ],
-        "y": [
-          18.4,
-          20.8,
-          25.0,
-          12.3,
-          42.0
-        ]
-      }
-    },
-    "de": {
-      "2012": {
-        "x": [
-          "Maschinen-/Fahrzeugbau",
-          "Elektroindustrie/Instrumententechnik",
-          "Pharma/Chemie/Kunststoff",
-          "Software/Datenverarbeitung",
-          "restliche Branchen"
-        ],
-        "y": [
-          49.9,
-          16.0,
-          15.2,
-          5.2,
-          13.8
-        ]
-      },
-      "2021": {
-        "x": [
-          "Maschinen-/Fahrzeugbau",
-          "Elektroindustrie/Instrumententechnik",
-          "Pharma/Chemie/Kunststoff",
-          "Software/Datenverarbeitung",
-          "restliche Branchen"
-        ],
-        "y": [
-          44.9,
-          15.0,
-          14.1,
-          9.1,
-          16.9
-        ]
-      }
-    }
-  }
 
 n = 20
 x = np.random.rand(n)
@@ -188,12 +80,13 @@ bar_data = {"x": ["A", "B", "C", "D"],
 
 
 def get_fue_chart():
+    chart_data = import_data("fue-expenses")
     config_importer = ConfigImporter()
     config = config_importer.get_config()
 
     plotter_factory = PlotterFactory()
 
-    pie_plotter = plotter_factory.create_plotter("pie_interactive", pie_data_2, config["donut_fue"])
+    pie_plotter = plotter_factory.create_plotter("pie_interactive", chart_data, config["donut_fue"])
     pie_plotter.generate()
 
     fue_chart = FlexBox(*[pie_plotter.plot["ber"], pie_plotter.plot["de"],
@@ -203,12 +96,13 @@ def get_fue_chart():
     return fue_chart.servable()
 
 def get_shares_chart():
+    chart_data = import_data("shares")
     config_importer = ConfigImporter()
     config = config_importer.get_config()
 
     plotter_factory = PlotterFactory()
 
-    pie_plotter = plotter_factory.create_plotter("pie_interactive", shares_data, config["donut_shares"])
+    pie_plotter = plotter_factory.create_plotter("pie_interactive", chart_data, config["donut_shares"])
     pie_plotter.generate()
 
     shares_chart = FlexBox(*[pie_plotter.plot["ber"], pie_plotter.plot["de"],
@@ -219,6 +113,8 @@ def get_shares_chart():
 
 
 def get_base_chart():
+    # TODO: Import real data and adjust plotter accordingly
+    chart_data = import_data("base")
     config_importer = ConfigImporter()
     config = config_importer.get_config()
 

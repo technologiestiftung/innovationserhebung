@@ -278,7 +278,6 @@ class InteractivePiePlotter(InteractivePlotter):
 
     def fit_data(self):
         self.fitted_data = {}
-        logging.info(f"Interactive plotter created: {self.config}")
 
         for code in self.config["plot_codes"]:
             # Extract data using the single choice filters
