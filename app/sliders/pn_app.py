@@ -120,11 +120,8 @@ def get_base_chart():
 
     plotter_factory = PlotterFactory()
 
-    interactive_line_plotter = plotter_factory.create_plotter("line_interactive", interactive_line_data, config["basis_custom"])
+    interactive_line_plotter = plotter_factory.create_plotter("line_interactive", chart_data, config["basis_custom"])
     interactive_line_plotter.generate()
-
-    line_plotter = plotter_factory.create_plotter("line", line_data, config["line_custom"])
-    line_plotter.generate()
 
     base_chart = GridSpec(sizing_mode='stretch_both', min_height=800)
 
@@ -137,16 +134,14 @@ def get_base_chart():
     return base_chart.servable()
 
 def get_base_chart_ger():
+    chart_data = import_data("base")
     config_importer = ConfigImporter()
     config = config_importer.get_config()
 
     plotter_factory = PlotterFactory()
 
-    interactive_line_plotter = plotter_factory.create_plotter("line_interactive", interactive_line_data, config["basis_custom"])
+    interactive_line_plotter = plotter_factory.create_plotter("line_interactive", chart_data, config["basis_custom"])
     interactive_line_plotter.generate()
-
-    line_plotter = plotter_factory.create_plotter("line", line_data, config["line_custom"])
-    line_plotter.generate()
 
     base_chart = GridSpec(sizing_mode='stretch_both', min_height=600)
 
@@ -158,16 +153,14 @@ def get_base_chart_ger():
     return base_chart.servable()
 
 def get_base_chart_ber():
+    chart_data = import_data("base")
     config_importer = ConfigImporter()
     config = config_importer.get_config()
 
     plotter_factory = PlotterFactory()
 
-    interactive_line_plotter = plotter_factory.create_plotter("line_interactive", interactive_line_data, config["basis_custom"])
+    interactive_line_plotter = plotter_factory.create_plotter("line_interactive", chart_data, config["basis_custom"])
     interactive_line_plotter.generate()
-
-    line_plotter = plotter_factory.create_plotter("line", line_data, config["line_custom"])
-    line_plotter.generate()
 
     base_chart = GridSpec(sizing_mode='stretch_both', min_height=600)
 

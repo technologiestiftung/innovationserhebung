@@ -110,7 +110,7 @@ class BarPlotter(Plotter):
 
     def create_plot(self):
         # Create the figure
-        self.plot = figure(x_range=self.fitted_data.data["x"], **self.config["general"])
+        self.plot = figure(x_range=self.fitted_data.data["jahre"], **self.config["general"])
 
         # Add vertical bars to the figure
         self.plot.vbar(x="x", top="y", source=self.fitted_data, **self.config["vbar"])
@@ -156,7 +156,7 @@ class LinePlotter(Plotter):
         self.plot = figure(**self.config["general"])
 
         # Add a line glyph to the figure
-        self.plot.line(x="x", y="y", source=self.fitted_data, **self.config["line"])
+        self.plot.line(x="jahre", y="y", source=self.fitted_data, **self.config["line"])
 
         # Show legends
         self.plot.legend.title = self.config["legend_title"]
@@ -178,7 +178,7 @@ class InteractiveLinePlotter(InteractivePlotter):
             single_choice_dict = (self.raw_data[code][self.config["filters"]["single_choice_default"]])
 
             # Get a subset of the lines selected with the multi choice filters
-            selected_lines = ["x"] + self.config["filters"]["multi_choice_default"]
+            selected_lines = ["jahre"] + self.config["filters"]["multi_choice_default"]
             initial_data = {line: single_choice_dict[line]
                             for line in selected_lines}
 
@@ -194,7 +194,9 @@ class InteractiveLinePlotter(InteractivePlotter):
             # Add lines to the plot
             colors = Category10[10]
             for i, line_name in enumerate(self.config["filters"]["multi_choice"]):
-                self.plot[code].line(x="x", y=line_name, source=self.fitted_data[code], color=colors[i], legend_label=line_name)
+                logging.info(f'Adding line {line_name}')
+                self.plot[code].line(x="jahre", y=line_name, source=self.fitted_data[code], color=colors[i], legend_label=line_name)
+            logging.info(self.plot)
 
     def create_filters(self):
         self.filters_single_choice = panel.widgets.RadioBoxGroup(
@@ -219,7 +221,7 @@ class InteractiveLinePlotter(InteractivePlotter):
             single_choice_dict = self.raw_data[code][self.filters_single_choice.value]
 
             filtered_data = {
-                "x": single_choice_dict["x"],
+                "x": single_choice_dict["jahre"],
                 **{line: single_choice_dict[line] for line in selected_lines}
             }
 

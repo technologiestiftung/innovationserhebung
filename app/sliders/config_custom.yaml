@@ -58,16 +58,17 @@ basis_custom:
     - de
   filters:
     single_choice:
-      - anzahl
-      - umsatz
-    single_choice_default: anzahl
+      - anzahl_unternehmen_insgesamt
+      - umsatz_mio
+    single_choice_default: anzahl_unternehmen_insgesamt
     multi_choice:
       - nahrung
       - pharma
-      - textil
+      - metall
     multi_choice_default:
       - nahrung
       - pharma
+      - metall
 
 donut_shares:
   plot_type: pie_interactive
