@@ -2,6 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'ClanPro';
+  src: url('/fonts/clan/ClanWebPro-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ClanPro';
+  src: url('/fonts/clan/ClanWebPro-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Source Serif';
+  src: url('/fonts/source-serif/SourceSerif4-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Source Serif';
+  src: url('/fonts/source-serif/SourceSerif4-Medium.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: 'ClanPro', sans-serif;
+}
+
 @layer utilities {
   h1 {
     @apply text-h1 leading-h1;

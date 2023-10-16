@@ -3,6 +3,10 @@ module.exports = {
   content: ["app/templates/**/*.html"],
   jit: true,
   theme: {
+    fontFamily: {
+      clan: ['ClanPro', 'sans-serif'],
+      source: ['Source Serif', 'serif']
+    },
     extend: {
       boxShadow: {
         top: "0px -8px 24px 0px rgba(0, 0, 0, 0.32)",

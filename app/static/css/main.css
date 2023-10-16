@@ -654,6 +654,10 @@ video {
   max-height: 100vh;
 }
 
+.min-h-screen {
+  min-height: 100vh;
+}
+
 .w-2x-hero {
   width: calc(2 * var(--width-hero));
 }
@@ -743,6 +747,10 @@ video {
 
 .flex-col {
   flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
 }
 
 .justify-start {
@@ -885,6 +893,10 @@ video {
   text-align: center;
 }
 
+.font-source {
+  font-family: Source Serif, serif;
+}
+
 .text-2xl {
   font-size: 1.5rem;
   line-height: 2rem;
@@ -910,6 +922,10 @@ video {
 
 .leading-h2 {
   line-height: 1.5rem;
+}
+
+.leading-10 {
+  line-height: 2.5rem;
 }
 
 .text-corporate-blue {
@@ -960,6 +976,50 @@ h1 {
 h2 {
   font-size: 1.125rem;
   line-height: 1.5rem;
+}
+
+@font-face {
+  font-family: 'ClanPro';
+
+  src: url('/fonts/clan/ClanWebPro-Bold.woff') format('woff');
+
+  font-weight: bold;
+
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ClanPro';
+
+  src: url('/fonts/clan/ClanWebPro-Regular.woff') format('woff');
+
+  font-weight: normal;
+
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Source Serif';
+
+  src: url('/fonts/source-serif/SourceSerif4-Bold.ttf') format('truetype');
+
+  font-weight: bold;
+
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Source Serif';
+
+  src: url('/fonts/source-serif/SourceSerif4-Medium.ttf') format('truetype');
+
+  font-weight: normal;
+
+  font-style: normal;
+}
+
+body {
+  font-family: 'ClanPro', sans-serif;
 }
 
 .hover\:bg-light-gray:hover {
