@@ -885,6 +885,10 @@ video {
   padding-top: 1.75rem;
 }
 
+.pb-10 {
+  padding-bottom: 2.5rem;
+}
+
 .text-left {
   text-align: left;
 }
@@ -916,16 +920,25 @@ video {
   line-height: 1.25rem;
 }
 
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
 .font-bold {
   font-weight: 700;
+}
+
+.leading-10 {
+  line-height: 2.5rem;
 }
 
 .leading-h2 {
   line-height: 1.5rem;
 }
 
-.leading-10 {
-  line-height: 2.5rem;
+.leading-4 {
+  line-height: 1rem;
 }
 
 .text-corporate-blue {
@@ -1020,6 +1033,18 @@ h2 {
 
 body {
   font-family: 'ClanPro', sans-serif;
+}
+
+.even\:border-hidden:nth-child(even) {
+  border-style: hidden;
+}
+
+.first-of-type\:border-hidden:first-of-type {
+  border-style: hidden;
+}
+
+.first-of-type\:border-none:first-of-type {
+  border-style: none;
 }
 
 .hover\:bg-light-gray:hover {

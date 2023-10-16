@@ -1,17 +1,23 @@
-{% set section_id = section.get("id", "") %}
-<section class="py-8 border-t border-corporate-gray-20" id="{{ section_id }}">
+{% set section_id = section.id %}
+{% set section_type = section.type %}
+<section class="py-8 border-t border-corporate-gray-20 first-of-type:border-hidden" id="{{ section_id }}">
+  {% if section_type == "quote" %}
+    {% set section = section %}
+    {% include "components/quote-section.html" %}
+  {% else %}
   <div class="desktop:px-12">
-    <h2 class="text-2xl mt-0 mb-2 text-corporate-blue">
-      {{ section.get("title", "") }}
+    <h2 class="text-sm font-bold mt-0 mb-2 text-corporate-blue pb-10">
+      {{ section.title }}
     </h2>
-    <p>{{ section.get("sectionDescription", "") }}</p>
+    <h3 class="text-corporate-blue text-2xl leading-10 pb-10">{{ section.disclaimer }}Hello</h3>
+    <p class="font-source">{{ section.sectionDescription | safe }}</p>
     <div class="my-4">
       {% set chart_ids = section.get("chart-ids", []) %}
       {% if chart_ids|length > 1 %}
         {% with chart_ids=chart_ids %}
           {% with section_id=section_id %}
-            {% with section_title=section.get("title", "") %}
-              {% with toggleText=section.get("toggleText", "") %}
+            {% with section_title=section.title %}
+              {% with toggleText=section.toggleText %}
                 {% include "components/chart-toggle.html" %}
               {% endwith %}
             {% endwith %}
@@ -31,5 +37,6 @@
         {% endif %}
       {% endif %}
     </div>
+    {% endif %}
   </divclass>
 </section>
