@@ -1,6 +1,6 @@
 <section class="pb-8 desktop:px-12">
-  <h2 class="text-2xl mb-2 text-corporate-blue">
+  {# <h2 class="text-2xl mb-2 text-corporate-blue">
     {{ translations.introSection.title }}
-  </h2>
-  <p>{{ translations.introSection.disclaimer }}</p>
+  </h2> #}
+  <p class="text-corporate-blue">{{ translations.introSection.disclaimer | safe }}</p>
 </section>
