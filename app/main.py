@@ -35,18 +35,18 @@ async def bkapp_page(request: Request, language: Language = None):
     request.app.extra["base_chart_ber"] = server_document('http://127.0.0.1:5000/base_chart_ber')
     request.app.extra["funky_bubble_chart"] = server_document('http://127.0.0.1:5000/funky_bubble_chart')
 
-    script = server_document('http://127.0.0.1:5000/app')
+    script = server_document("http://127.0.0.1:5000/app")
     return templates.TemplateResponse("index.html", {"request": request, "script": script, "translations": translations})
 
 
 
 pn.serve({
-    '/fue_chart': get_fue_chart, 
-    '/shares_chart': get_shares_chart, 
-    '/base_chart': get_base_chart, 
-    '/base_chart_ger': get_base_chart_ger,
-    '/base_chart_ber': get_base_chart_ber,
-    '/funky_bubble_chart': get_funky_bubble_chart
+    "/fue_chart": get_fue_chart,
+    "/shares_chart": get_shares_chart,
+    "/base_chart": get_base_chart,
+    "/base_chart_ger": get_base_chart_ger,
+    "/base_chart_ber": get_base_chart_ber,
+    "/funky_bubble_chart": get_funky_bubble_chart
     },
         port=5000, allow_websocket_origin=["127.0.0.1:8000"],
          address="127.0.0.1", show=False)

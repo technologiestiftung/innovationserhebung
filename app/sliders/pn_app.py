@@ -1,28 +1,15 @@
+import json
+
 import numpy as np
 from panel.layout.gridstack import GridSpec
 from panel.layout.flex import FlexBox
 
 from .config_importer import ConfigImporter
 from .plotter import PlotterFactory
-# import logging
-# logging.basicConfig(level=logging.INFO)
 
-import os
-import json
 
-def import_data(chart_id):
-    """
-    Main method of the class.
-    Import the data from a generated JSON file.
-    """
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    outfile_path = os.path.join(current_dir, "../../data/outfile.json")
-
-    with open(outfile_path, 'r') as f:
-        chart_data = json.load(f)
-  
-    return chart_data[chart_id]
-
+with open("data/outfile.json", "r") as f:
+    data = json.load(f)
 
 
 # Create some random data - TODO: To be deleted later
@@ -80,7 +67,7 @@ bar_data = {"x": ["A", "B", "C", "D"],
 
 
 def get_fue_chart():
-    chart_data = import_data("fue-expenses")
+    chart_data = data["fue-expenses"]
     config_importer = ConfigImporter()
     config = config_importer.get_config()
 
@@ -90,13 +77,13 @@ def get_fue_chart():
     pie_plotter.generate()
 
     fue_chart = FlexBox(*[pie_plotter.plot["ber"], pie_plotter.plot["de"],
-                            pie_plotter.filters_single_choice, pie_plotter.filters_single_choice_highlight],
-                          flex_direction='row', flex_wrap='wrap', justify_content='space-between')
+                          pie_plotter.filters_single_choice, pie_plotter.filters_single_choice_highlight],
+                          flex_direction="row", flex_wrap="wrap", justify_content="space-between")
 
     return fue_chart.servable()
 
 def get_shares_chart():
-    chart_data = import_data("shares")
+    chart_data = data["shares"]
     config_importer = ConfigImporter()
     config = config_importer.get_config()
 
@@ -107,14 +94,14 @@ def get_shares_chart():
 
     shares_chart = FlexBox(*[pie_plotter.plot["ber"], pie_plotter.plot["de"],
                             pie_plotter.filters_single_choice, pie_plotter.filters_single_choice_highlight],
-                          flex_direction='row', flex_wrap='wrap', justify_content='space-between')
+                          flex_direction="row", flex_wrap="wrap", justify_content="space-between")
 
     return shares_chart.servable()
 
 
 def get_base_chart():
     # TODO: Import real data and adjust plotter accordingly
-    chart_data = import_data("base")
+    chart_data = data["base"]
     config_importer = ConfigImporter()
     config = config_importer.get_config()
 
@@ -126,7 +113,7 @@ def get_base_chart():
     line_plotter = plotter_factory.create_plotter("line", line_data, config["line_custom"])
     line_plotter.generate()
 
-    base_chart = GridSpec(sizing_mode='stretch_both', min_height=800)
+    base_chart = GridSpec(sizing_mode="stretch_both", min_height=800)
 
     base_chart[0:3, 0:2] = interactive_line_plotter.plot["ber"]
     base_chart[3:6, 0:2] = interactive_line_plotter.plot["de"]
@@ -148,7 +135,7 @@ def get_base_chart_ger():
     line_plotter = plotter_factory.create_plotter("line", line_data, config["line_custom"])
     line_plotter.generate()
 
-    base_chart = GridSpec(sizing_mode='stretch_both', min_height=600)
+    base_chart = GridSpec(sizing_mode="stretch_both", min_height=600)
 
     base_chart[0:6, 0:2] = interactive_line_plotter.plot["de"]
     base_chart[6:7, 0:1] = interactive_line_plotter.filters_multi_choice
@@ -169,7 +156,7 @@ def get_base_chart_ber():
     line_plotter = plotter_factory.create_plotter("line", line_data, config["line_custom"])
     line_plotter.generate()
 
-    base_chart = GridSpec(sizing_mode='stretch_both', min_height=600)
+    base_chart = GridSpec(sizing_mode="stretch_both", min_height=600)
 
     base_chart[0:6, 0:2] = interactive_line_plotter.plot["ber"]
     base_chart[6:7, 0:1] = interactive_line_plotter.filters_multi_choice
@@ -185,7 +172,7 @@ def get_funky_bubble_chart():
     bubble_plotter = plotter_factory.create_plotter("bubble", bubble_data, config["bubble_custom"])
     bubble_plotter.generate()
 
-    funky_bubbleplot = GridSpec(sizing_mode='stretch_both', min_height=350)
+    funky_bubbleplot = GridSpec(sizing_mode="stretch_both", min_height=350)
     funky_bubbleplot[0:1, 0:2] = bubble_plotter.plot
 
     return funky_bubbleplot.servable()

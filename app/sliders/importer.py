@@ -5,7 +5,7 @@ from openpyxl import load_workbook
 import pandas as pd
 import logging
 import sys
-sys.path.append('/app/sliders/config_importer')
+sys.path.append("/app/sliders/config_importer")
 
 from config_importer import ConfigImporter
 logging.basicConfig(level=logging.INFO)
@@ -49,9 +49,9 @@ class DataImporter:
         shares_data_parser = SharesDataParser()
 
         output = {
-            'base': base_data_parser.parse(sheets),
-            'fue-expenses': fue_data_parser.parse(sheets),
-            'shares': shares_data_parser.parse(sheets)
+            "base": base_data_parser.parse(sheets),
+            "fue-expenses": fue_data_parser.parse(sheets),
+            "shares": shares_data_parser.parse(sheets)
             }
         self.save_to_json(output, outfile_path)
 
@@ -183,7 +183,7 @@ class BasisDataParser:
 
 class FUEDataParser:
     def parse(self, sheets):
-        self.config = self.get_config('donut_fue')
+        self.config = self.get_config("donut_fue")
         data = self.extract(sheets)
 
         return data
@@ -202,8 +202,8 @@ class FUEDataParser:
         :return: nested dict, with the following shape {area: {year: {x: unit[], y: value[]}}}
         """
         extracted = init_nested_dict()
-        relevant_years = self.config['filters']['single_choice']
-        branches = self.config['filters']['single_choice_highlight']
+        relevant_years = self.config["filters"]["single_choice"]
+        branches = self.config["filters"]["single_choice_highlight"]
 
         for sheet_key in sheets:
             if "fue_ausgaben" in sheet_key:
@@ -243,8 +243,8 @@ class SharesDataParser:
                 for year in years:
                     extracted[area][str(year)] = {"x": [], "y": []}
                     for _, row in df.iterrows():
-                        extracted[area][str(year)]['x'].append(row["Branche"])
-                        extracted[area][str(year)]['y'].append(round(row[year],1))
+                        extracted[area][str(year)]["x"].append(row["Branche"])
+                        extracted[area][str(year)]["y"].append(round(row[year],1))
         return extracted
 
         
