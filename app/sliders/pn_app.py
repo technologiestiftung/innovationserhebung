@@ -1,40 +1,34 @@
-import os
-import yaml
-
 import numpy as np
 from panel.layout.gridstack import GridSpec
 from panel.layout.flex import FlexBox
 
+from .config_importer import ConfigImporter
 from .plotter import PlotterFactory
+# import logging
+# logging.basicConfig(level=logging.INFO)
+
+import os
+import json
+
+def import_data(chart_id):
+    """
+    Main method of the class.
+    Import the data from a generated JSON file.
+    """
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    outfile_path = os.path.join(current_dir, "../../data/outfile.json")
+
+    with open(outfile_path, 'r') as f:
+        chart_data = json.load(f)
+  
+    return chart_data[chart_id]
+
 
 
 # Create some random data - TODO: To be deleted later
 pie_data = {
     "x": ["United States", "United Kingdom", "Japan", "China", "Germany"],
     "y": [157, 93, 89, 63, 44]
-}
-
-pie_data_2 = {
-    "ber": {
-        "2010": {
-            "x": ["wirtschaft", "hochschulen", "staat"],
-            "y": [952, 380, 803]
-        },
-        "2020": {
-            "x": ["wirtschaft", "hochschulen", "staat"],
-            "y": [552, 280, 703]
-        },
-    },
-    "de": {
-        "2010": {
-            "x": ["wirtschaft", "hochschulen", "staat"],
-            "y": [1952, 1380, 1803]
-        },
-        "2020": {
-            "x": ["wirtschaft", "hochschulen", "staat"],
-            "y": [1552, 1280, 1703]
-        },
-    },
 }
 
 n = 20
@@ -85,81 +79,42 @@ bar_data = {"x": ["A", "B", "C", "D"],
 }
 
 
-# TODO: Move ConfigImporter to another module
-class ConfigImporter:
-    def get_config(self):
-        """
-        Create a config dictionary based on default and custom values.
-
-        :return: dict, resulting configuration file
-        """
-        # Load config files
-        config_default = self.load_config_file("config_default.yaml")
-        config_custom = self.load_config_file("config_custom.yaml")
-
-        config_result = {}
-        # Override default values with custom values for each plot
-        for plot_name in config_custom:
-            plot_config_custom = config_custom[plot_name]
-            plot_type = plot_config_custom["plot_type"]
-            plot_config_default = config_default[plot_type]
-
-            self.override_values(plot_config_default, plot_config_custom)
-            config_result[plot_name] = plot_config_default
-
-        return config_result
-
-    def load_config_file(self, filename):
-        """
-        Load a config file.
-
-        :param filename: str, name of the YAML config file
-        :return: dict, containing config settings
-        """
-        current_dir = os.path.dirname(__file__)
-        config_path = os.path.join(current_dir, filename)
-
-        with open(config_path, "r") as f:
-            config = yaml.load(f, Loader=yaml.FullLoader)
-
-        return config
-
-    def override_values(self, default_config, custom_config):
-        """
-        Override default values with custom values of a plot configuration.
-        Implemented as a recursive function.
-
-        :param default_config: dict, default configuration for a plot type
-        :param custom_config: dict, custom configuration for a plot
-        """
-        for key, value in custom_config.items():
-            if isinstance(value, dict) and key in default_config and isinstance(default_config[key], dict):
-                self.override_values(default_config[key], value)
-            else:
-                default_config[key] = value
-
-
-# TODO: For now this functions is obsolete but it might be useful in the future
-def create_app():
-    return
-
-def get_pizza_chart():
+def get_fue_chart():
+    chart_data = import_data("fue-expenses")
     config_importer = ConfigImporter()
     config = config_importer.get_config()
 
     plotter_factory = PlotterFactory()
 
-    pie_plotter = plotter_factory.create_plotter("pie_interactive", pie_data_2, config["pie_custom"])
+    pie_plotter = plotter_factory.create_plotter("pie_interactive", chart_data, config["donut_fue"])
     pie_plotter.generate()
 
-    pizza_chart = FlexBox(*[pie_plotter.plot["ber"], pie_plotter.plot["de"],
+    fue_chart = FlexBox(*[pie_plotter.plot["ber"], pie_plotter.plot["de"],
                             pie_plotter.filters_single_choice, pie_plotter.filters_single_choice_highlight],
                           flex_direction='row', flex_wrap='wrap', justify_content='space-between')
 
-    return pizza_chart.servable()
+    return fue_chart.servable()
+
+def get_shares_chart():
+    chart_data = import_data("shares")
+    config_importer = ConfigImporter()
+    config = config_importer.get_config()
+
+    plotter_factory = PlotterFactory()
+
+    pie_plotter = plotter_factory.create_plotter("pie_interactive", chart_data, config["donut_shares"])
+    pie_plotter.generate()
+
+    shares_chart = FlexBox(*[pie_plotter.plot["ber"], pie_plotter.plot["de"],
+                            pie_plotter.filters_single_choice, pie_plotter.filters_single_choice_highlight],
+                          flex_direction='row', flex_wrap='wrap', justify_content='space-between')
+
+    return shares_chart.servable()
 
 
 def get_base_chart():
+    # TODO: Import real data and adjust plotter accordingly
+    chart_data = import_data("base")
     config_importer = ConfigImporter()
     config = config_importer.get_config()
 
