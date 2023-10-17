@@ -1,14 +1,14 @@
 import numpy as np
-from panel.layout.gridstack import GridSpec
-from panel.layout.flex import FlexBox
-
-from .config_importer import ConfigImporter
-from .plotter import PlotterFactory
-# import logging
-# logging.basicConfig(level=logging.INFO)
-
 import os
 import json
+
+from panel.layout.gridstack import GridSpec
+from panel.layout.flex import FlexBox
+from .config_importer import ConfigImporter
+from .plotter import PlotterFactory
+
+# import logging
+# logging.basicConfig(level=logging.INFO)
 
 def import_data(chart_id):
     """

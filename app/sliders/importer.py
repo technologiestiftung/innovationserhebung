@@ -1,16 +1,17 @@
-from abc import ABC, abstractmethod
-from collections import defaultdict
-import json
-from openpyxl import load_workbook
 import pandas as pd
 import logging
 import sys
-sys.path.append('/app/sliders/config_importer')
+import json
 
+from abc import ABC, abstractmethod
+from collections import defaultdict
+from openpyxl import load_workbook
 from config_importer import ConfigImporter
-logging.basicConfig(level=logging.INFO)
-
 from mapping import mapping_branches, mapping_employees_n, mapping_units
+
+
+sys.path.append('/app/sliders/config_importer')
+logging.basicConfig(level=logging.INFO)
 
 
 # TODO:
@@ -33,6 +34,12 @@ def init_nested_dict():
     :return: defaultdict, a nested dictionary
     """
     return defaultdict(init_nested_dict)
+
+def get_config(chart_name):
+    config_importer = ConfigImporter()
+    config = config_importer.get_config()
+
+    return config[chart_name]
 
 
 class DataImporter:
@@ -183,16 +190,10 @@ class BasisDataParser:
 
 class FUEDataParser:
     def parse(self, sheets):
-        self.config = self.get_config('donut_fue')
+        self.config = get_config('donut_fue')
         data = self.extract(sheets)
 
         return data
-    
-    def get_config(self, chart_name):
-        config_importer = ConfigImporter()
-        config = config_importer.get_config()
-
-        return config[chart_name]
 
     def extract(self, sheets):
         """
