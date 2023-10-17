@@ -17,6 +17,13 @@
 }
 
 @font-face {
+  font-family: 'ClanPro';
+  src: url('/fonts/clan/ClanWebPro-News.woff') format('woff');
+  font-weight: thin;
+  font-style: normal;
+}
+
+@font-face {
   font-family: 'Source Serif';
   src: url('/fonts/source-serif/SourceSerif4-Bold.ttf') format('truetype');
   font-weight: bold;
