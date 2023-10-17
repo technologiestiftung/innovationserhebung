@@ -24,6 +24,14 @@ logging.basicConfig(level=logging.INFO)
 excel_file = "data/basisdaten_clean.xlsx"
 outfile_path = "data/outfile.json"
 
+PARSER_TYPES = {
+    "base": "BasisDataParser",
+    "fue": "FUEDataParser",
+    "growth": "GrowthDataParser",
+    "shares": "SharesDataParser",
+}
+
+
 def init_nested_dict():
     """
     Helper function.
@@ -37,23 +45,23 @@ def init_nested_dict():
 
 
 class DataImporter:
-    def import_data(self, filepath):
+    def import_data(self, data_file, config_file):
         """
         Main method of the class.
         Import the data from an Excel file.
 
         :param filepath: str, path to the Excel file containing the data to parse
         """
-        sheets = self.load_excel(filepath)
-        base_data_parser = BasisDataParser()
-        fue_data_parser = FUEDataParser()
-        shares_data_parser = SharesDataParser()
+        sheets = self.load_excel(data_file)
+        config_importer = ConfigImporter()
+        config = config_importer.get_config()  # TODO: Make config part of this class?
 
-        output = {
-            "base": base_data_parser.parse(sheets),
-            "fue-expenses": fue_data_parser.parse(sheets),
-            "shares": shares_data_parser.parse(sheets)
-            }
+        output = {}
+        for plot in config:
+            parser_name = PARSER_TYPES[config[plot]["parser_type"]]
+            cls = globals()[parser_name]
+            output[plot] = cls().parse(sheets, config)
+
         self.save_to_json(output, outfile_path)
 
     def load_excel(self, filepath):
@@ -92,8 +100,16 @@ class DataImporter:
         with open(outfile_path, "w") as outfile:
             json.dump(parsed_data, outfile)
 
-class BasisDataParser:
-    def parse(self, sheets):
+
+# TODO: Separate parsers in different file
+class DataParser(ABC):
+    @abstractmethod
+    def parse(self, sheets, config):
+        pass
+
+
+class BasisDataParser(DataParser):
+    def parse(self, sheets, config):
         """
         Main method of the class.
         Parse Basis data step by step.
@@ -155,7 +171,7 @@ class BasisDataParser:
                     years.append(year)
 
         # Check that all inner dictionaries contain all the years and reshape them
-        output_dict = {"jahre": years}
+        output_dict = {"jahre": [int(year) for year in years]}
         for branch in input_dict:
             branch_datapoints = []
             for year in years:
@@ -182,20 +198,18 @@ class BasisDataParser:
             return row["Wirtschaftsgliederung"]
     
 
-class FUEDataParser:
-    def parse(self, sheets):
-        self.config = self.get_config("donut_fue")
-        data = self.extract(sheets)
+class FUEDataParser(DataParser):
+    # TODO:
+    #  Simplify these two functions
+    #  Check if there is too much duplicate with shares parser
+    #  Write docstrings
+    def parse(self, sheets, config):
+        config = config["fue_pie_interactive"]  # TODO: Should not be hardcoded
+        data = self.extract(sheets, config)
 
         return data
-    
-    def get_config(self, chart_name):
-        config_importer = ConfigImporter()
-        config = config_importer.get_config()
 
-        return config[chart_name]
-
-    def extract(self, sheets):
+    def extract(self, sheets, config):
         """
         Extract Fue Expenses data.
 
@@ -203,8 +217,8 @@ class FUEDataParser:
         :return: nested dict, with the following shape {area: {year: {x: unit[], y: value[]}}}
         """
         extracted = init_nested_dict()
-        relevant_years = self.config["filters"]["single_choice"]
-        branches = self.config["filters"]["single_choice_highlight"]
+        relevant_years = config["filters"]["single_choice"]
+        branches = config["filters"]["single_choice_highlight"]
 
         for sheet_key in sheets:
             if "fue_ausgaben" in sheet_key:
@@ -221,8 +235,8 @@ class FUEDataParser:
         return extracted
     
     
-class SharesDataParser:
-    def parse(self, sheets):
+class SharesDataParser(DataParser):
+    def parse(self, sheets, config):
         data = self.extract(sheets)
 
         return data
@@ -245,12 +259,15 @@ class SharesDataParser:
                     extracted[area][str(year)] = {"x": [], "y": []}
                     for _, row in df.iterrows():
                         extracted[area][str(year)]["x"].append(row["Branche"])
-                        extracted[area][str(year)]["y"].append(round(row[year],1))
+                        extracted[area][str(year)]["y"].append(round(row[year], 1))
         return extracted
 
-        
+
+class GrowthDataParser:
+    def parse(self, sheets, config):
+        return {}
 
 
 # TODO: These two lines are for testing purposes. Remove later.
 data_importer = DataImporter()
-data_importer.import_data(excel_file)
+data_importer.import_data(excel_file, "config_file")

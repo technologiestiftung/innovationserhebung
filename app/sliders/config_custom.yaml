@@ -1,18 +1,5 @@
-bar_custom:
-  plot_type: bar
-  general:
-    title: Simple Bar Chart
-    x_axis_label: Categories
-    y_axis_label: Values
-  vbar:
-    width: 0.5
-    legend_label: Values
-    line_color: blue
-    fill_color: blue
-  legend_title: Legend
-  label_text_font_size: 12pt
-
-bubble_custom:
+growth_bubble:
+  parser_type: growth
   plot_type: bubble
   figure:
     title: Simple Bubble Plot
@@ -26,20 +13,8 @@ bubble_custom:
     width: 8
     location: [0, 0]
 
-line_custom:
-  plot_type: line
-  general:
-    title: Simple Line Chart
-    x_axis_label: X-axis
-    y_axis_label: Y-axis
-  line:
-    line_width: 2
-    legend_label: Line
-    line_color: blue
-  legend_title: Legend
-  label_text_font_size: 12pt
-
-basis_custom:
+base_line_interactive:
+  parser_type: base
   plot_type: line_interactive
   general:
     title: Basis Chart
@@ -69,7 +44,8 @@ basis_custom:
       - nahrung
       - pharma
 
-donut_shares:
+shares_pie_interactive:
+  parser_type: shares
   plot_type: pie_interactive
   plot_codes:
     - ber
@@ -87,7 +63,8 @@ donut_shares:
       - restliche Branchen
     single_choice_highlight_default: Maschinen-/Fahrzeugbau
 
-donut_fue:
+fue_pie_interactive:
+  parser_type: fue
   plot_type: pie_interactive
   plot_codes:
     - ber
@@ -102,4 +79,3 @@ donut_fue:
       - Hochschulen
       - Staat
     single_choice_highlight_default: Wirtschaft
-
