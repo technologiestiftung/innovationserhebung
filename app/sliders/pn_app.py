@@ -7,8 +7,8 @@ from panel.layout.flex import FlexBox
 from .config_importer import ConfigImporter
 from .plotter import PlotterFactory
 
-# import logging
-# logging.basicConfig(level=logging.INFO)
+import logging
+logging.basicConfig(level=logging.INFO)
 
 def import_data(chart_id):
     """
@@ -97,6 +97,7 @@ def get_fue_chart():
 
 def get_shares_chart():
     chart_data = import_data("shares")
+    logging.info(f"SHARES: {chart_data}")
     config_importer = ConfigImporter()
     config = config_importer.get_config()
 
@@ -105,9 +106,14 @@ def get_shares_chart():
     pie_plotter = plotter_factory.create_plotter("pie_interactive", chart_data, config["donut_shares"])
     pie_plotter.generate()
 
+    pie_plotter.plot["ber"].css_classes.append('ber-shares-plot')
+    pie_plotter.plot["de"].css_classes.append('ber-shares-plot')
+
+
     shares_chart = FlexBox(*[pie_plotter.plot["ber"], pie_plotter.plot["de"],
                             pie_plotter.filters_single_choice, pie_plotter.filters_single_choice_highlight],
-                          flex_direction='row', flex_wrap='wrap', justify_content='space-between')
+                          flex_direction='column', justify_content='space-between')
+
 
     return shares_chart.servable()
 
