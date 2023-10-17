@@ -1,16 +1,17 @@
 from abc import ABC, abstractmethod
 from collections import defaultdict
 import json
-from openpyxl import load_workbook
-import pandas as pd
 import logging
 import sys
-sys.path.append("/app/sliders/config_importer")
+
+from openpyxl import load_workbook
+import pandas as pd
 
 from config_importer import ConfigImporter
-logging.basicConfig(level=logging.INFO)
-
 from mapping import mapping_branches, mapping_employees_n, mapping_units
+
+sys.path.append("/app/sliders/config_importer")
+logging.basicConfig(level=logging.INFO)
 
 
 # TODO:
