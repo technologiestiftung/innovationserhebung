@@ -1,5 +1,5 @@
 <p class="text-corporate-blue text-center text-h2">
-  {{ toggleText }}
+  {{ chart.toggleText }}
   <select
     id="{{ section_id }}_toggle"
     class="bg-white font-bold border-b-2 border-corporate-blue inline cursor-pointer hover:bg-light-gray"
@@ -16,19 +16,10 @@
 </p>
 <div id="{{ section_id }}_ber" class="mb-16">
   <figure>
-    {{ request.app.extra[chart_ids[0]]|safe }}
+    {{ request.app.extra[chart.id]|safe }}
     <figcaption class="text-sm">
       {{ section_title }} {{ translations.general.for }}
       {{ translations.chartToggle.berlin }}
-    </figcaption>
-  </figure>
-</div>
-<div id="{{ section_id }}_ger" class="hidden">
-  <figure>
-    {{ request.app.extra[chart_ids[1]]|safe }}
-    <figcaption class="text-sm">
-      {{ section_title }} {{ translations.general.for }}
-      {{ translations.chartToggle.germany }}
     </figcaption>
   </figure>
 </div>
