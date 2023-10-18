@@ -7,9 +7,9 @@ import panel as pn
 from sliders.pn_app import get_bar_chart, get_base_chart, get_base_chart_ger, get_base_chart_ber, get_funky_bubble_chart, get_fue_chart, get_shares_chart
 from utils.translation import load_translation
 from enum import Enum
-import logging
+# import logging
 
-logging.basicConfig(level=logging.INFO)
+# logging.basicConfig(level=logging.INFO)
 
 
 class Language(str, Enum):
