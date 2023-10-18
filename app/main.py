@@ -4,12 +4,12 @@ from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.gzip import GZipMiddleware
 import panel as pn
-from sliders.pn_app import get_base_chart, get_base_chart_ger, get_base_chart_ber, get_funky_bubble_chart, get_fue_chart, get_shares_chart
+from sliders.pn_app import get_base_chart, get_fue_chart, get_shares_chart
 from utils.translation import load_translation
 from enum import Enum
-import logging
+# import logging
 
-logging.basicConfig(level=logging.INFO)
+# logging.basicConfig(level=logging.INFO)
 
 class Language(str, Enum):
     en = "en"
@@ -32,9 +32,6 @@ async def bkapp_page(request: Request, language: Language = None):
     request.app.extra["fue_chart"] = server_document('http://127.0.0.1:5000/fue_chart')
     request.app.extra["shares_chart"] = server_document('http://127.0.0.1:5000/shares_chart')
     request.app.extra["base_chart"] = server_document('http://127.0.0.1:5000/base_chart')
-    request.app.extra["base_chart_ger"] = server_document('http://127.0.0.1:5000/base_chart_ger')
-    request.app.extra["base_chart_ber"] = server_document('http://127.0.0.1:5000/base_chart_ber')
-    request.app.extra["funky_bubble_chart"] = server_document('http://127.0.0.1:5000/funky_bubble_chart')
 
     script = server_document('http://127.0.0.1:5000/app')
     return templates.TemplateResponse("index.html", {"request": request, "script": script, "translations": translations, "language_code": language_code})
@@ -46,9 +43,6 @@ pn.serve({
     '/fue_chart': get_fue_chart, 
     '/shares_chart': get_shares_chart, 
     '/base_chart': get_base_chart, 
-    '/base_chart_ger': get_base_chart_ger,
-    '/base_chart_ber': get_base_chart_ber,
-    '/funky_bubble_chart': get_funky_bubble_chart
     },
         port=5000, allow_websocket_origin=["127.0.0.1:8000"],
          address="127.0.0.1", show=False)
