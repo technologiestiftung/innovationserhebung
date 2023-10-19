@@ -16,10 +16,8 @@
       {% if charts %}
         {% with charts=charts %}
           {% for chart in charts %}
-            {% with section_id=section_id %}
-              {% with chart = chart %}
-                {% include "components/chart-toggle.html" %}
-              {% endwith %}
+            {% with chart = chart %}
+              {% include "components/chart-toggle.html" %}
             {% endwith %}
           {% endfor %}
         {% endwith %}

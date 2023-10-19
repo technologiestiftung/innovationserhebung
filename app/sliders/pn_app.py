@@ -23,7 +23,9 @@ def import_data(chart_id):
   
     return chart_data[chart_id]
 
-
+def add_classes_to_plot(plot_obj, chart_id):
+    for locale in ["ber", "de"]:
+        plot_obj.plot[locale].css_classes.append('chart_' + chart_id + '_' + locale)
 
 # Create some random data - TODO: To be deleted later
 pie_data = {
@@ -79,45 +81,6 @@ bar_data = {"x": ["A", "B", "C", "D"],
 }
 
 
-def get_fue_chart():
-    chart_data = import_data("fue-expenses")
-    config_importer = ConfigImporter()
-    config = config_importer.get_config()
-
-    plotter_factory = PlotterFactory()
-
-    pie_plotter = plotter_factory.create_plotter("pie_interactive", chart_data, config["donut_fue"])
-    pie_plotter.generate()
-
-    fue_chart = FlexBox(*[pie_plotter.plot["ber"], pie_plotter.plot["de"],
-                            pie_plotter.filters_single_choice, pie_plotter.filters_single_choice_highlight],
-                          flex_direction='row', flex_wrap='wrap', justify_content='space-between')
-
-    return fue_chart.servable()
-
-def get_shares_chart():
-    chart_data = import_data("shares")
-    logging.info(f"SHARES: {chart_data}")
-    config_importer = ConfigImporter()
-    config = config_importer.get_config()
-
-    plotter_factory = PlotterFactory()
-
-    pie_plotter = plotter_factory.create_plotter("pie_interactive", chart_data, config["donut_shares"])
-    pie_plotter.generate()
-
-    pie_plotter.plot["ber"].css_classes.append('ber-shares-plot')
-    pie_plotter.plot["de"].css_classes.append('ber-shares-plot')
-
-
-    shares_chart = FlexBox(*[pie_plotter.plot["ber"], pie_plotter.plot["de"],
-                            pie_plotter.filters_single_choice, pie_plotter.filters_single_choice_highlight],
-                          flex_direction='column', justify_content='space-between')
-
-
-    return shares_chart.servable()
-
-
 def get_base_chart():
     # TODO: Import real data and adjust plotter accordingly
     chart_data = import_data("base")
@@ -129,69 +92,47 @@ def get_base_chart():
     interactive_line_plotter = plotter_factory.create_plotter("line_interactive", interactive_line_data, config["basis_custom"])
     interactive_line_plotter.generate()
 
-    line_plotter = plotter_factory.create_plotter("line", line_data, config["line_custom"])
-    line_plotter.generate()
+    add_classes_to_plot(interactive_line_plotter, "base")
 
-    base_chart = GridSpec(sizing_mode='stretch_both', min_height=800)
-
-    base_chart[0:3, 0:2] = interactive_line_plotter.plot["ber"]
-    base_chart[3:6, 0:2] = interactive_line_plotter.plot["de"]
-    base_chart[6:7, 0:1] = interactive_line_plotter.filters_multi_choice
-    base_chart[6:7, 1:2] = interactive_line_plotter.filters_single_choice
-    
+    base_chart = FlexBox(*[interactive_line_plotter.plot["ber"], interactive_line_plotter.plot["de"], interactive_line_plotter.filters_multi_choice, interactive_line_plotter.filters_single_choice],
+                          flex_direction='column', justify_content='space-between')
 
     return base_chart.servable()
 
-def get_base_chart_ger():
+def get_fue_chart():
+    chart_data = import_data("fue-expenses")
     config_importer = ConfigImporter()
     config = config_importer.get_config()
 
     plotter_factory = PlotterFactory()
 
-    interactive_line_plotter = plotter_factory.create_plotter("line_interactive", interactive_line_data, config["basis_custom"])
-    interactive_line_plotter.generate()
+    pie_plotter = plotter_factory.create_plotter("pie_interactive", chart_data, config["donut_fue"])
+    pie_plotter.generate()
 
-    line_plotter = plotter_factory.create_plotter("line", line_data, config["line_custom"])
-    line_plotter.generate()
+    add_classes_to_plot(pie_plotter, "fue")
 
-    base_chart = GridSpec(sizing_mode='stretch_both', min_height=600)
+    fue_chart = FlexBox(*[pie_plotter.plot["ber"], pie_plotter.plot["de"],
+                            pie_plotter.filters_single_choice, pie_plotter.filters_single_choice_highlight],
+                          flex_direction='row', flex_wrap='wrap', justify_content='space-between')
 
-    base_chart[0:6, 0:2] = interactive_line_plotter.plot["de"]
-    base_chart[6:7, 0:1] = interactive_line_plotter.filters_multi_choice
-    base_chart[6:7, 1:2] = interactive_line_plotter.filters_single_choice
-    
+    return fue_chart.servable()
 
-    return base_chart.servable()
-
-def get_base_chart_ber():
+def get_shares_chart():
+    chart_data = import_data("shares")
     config_importer = ConfigImporter()
     config = config_importer.get_config()
 
     plotter_factory = PlotterFactory()
 
-    interactive_line_plotter = plotter_factory.create_plotter("line_interactive", interactive_line_data, config["basis_custom"])
-    interactive_line_plotter.generate()
+    pie_plotter = plotter_factory.create_plotter("pie_interactive", chart_data, config["donut_shares"])
+    pie_plotter.generate()
 
-    line_plotter = plotter_factory.create_plotter("line", line_data, config["line_custom"])
-    line_plotter.generate()
+    add_classes_to_plot(pie_plotter, "shares")
 
-    base_chart = GridSpec(sizing_mode='stretch_both', min_height=600)
+    shares_chart = FlexBox(*[pie_plotter.plot["ber"], pie_plotter.plot["de"],
+                            pie_plotter.filters_single_choice, pie_plotter.filters_single_choice_highlight],
+                          flex_direction='column', justify_content='space-between')
 
-    base_chart[0:6, 0:2] = interactive_line_plotter.plot["ber"]
-    base_chart[6:7, 0:1] = interactive_line_plotter.filters_multi_choice
-    base_chart[6:7, 1:2] = interactive_line_plotter.filters_single_choice
-    return base_chart.servable()
 
-def get_funky_bubble_chart():
-    config_importer = ConfigImporter()
-    config = config_importer.get_config()
+    return shares_chart.servable()
 
-    plotter_factory = PlotterFactory()
-
-    bubble_plotter = plotter_factory.create_plotter("bubble", bubble_data, config["bubble_custom"])
-    bubble_plotter.generate()
-
-    funky_bubbleplot = GridSpec(sizing_mode='stretch_both', min_height=350)
-    funky_bubbleplot[0:1, 0:2] = bubble_plotter.plot
-
-    return funky_bubbleplot.servable()

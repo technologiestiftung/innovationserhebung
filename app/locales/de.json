@@ -37,7 +37,7 @@
       "disclaimer": "Innovationsausgaben sowie Ausgaben für Forschung und Entwicklung: Tendenzen aus den Vorjahren setzen sich fort.",
       "charts": [
         {
-          "id": "base_chart",
+          "id": "base",
           "chartDescription": "Hier in unserem Chart der Basisdaten können Sie sich die Daten nach Belieben zusammenstellen. Wählen sie Größen wie <strong>Branchen, Beschäftigungsgröße</strong> oder <strong>Technologieklasse</strong> und vergleichen verschiedene Kennzahlen und Ausgabengrößen. <br><br>Um die Daten besser in Kontext setzen zu können haben Sie die Wahl die Daten aus Berlin mit dem deckungsgleich aufgebauten Datensatz über bundesweite Innovationsunternehmen zu vergleichen.",
           "toggleText": "Zusammensetzung der FuE-Ausgaben in "
         }
@@ -54,7 +54,7 @@
       "disclaimer": "Weiterhin kommen gute zwei Drittel der Mittel aus öffentlicher Hand.",
       "charts": [
         {
-          "id": "fue_chart",
+          "id": "fue",
           "chartDescription": "Bei der <strong>Mittelherkunft</strong> ist wenig Bewegung: Während weiterhin ungefähr ein Drittel der Mittel aus der Wirtschaft selber kommen, fördert die öffentliche Hand die restlichen zwei Drittel der gesamten Ausgaben. <br><br>Während <strong>Verteilung</strong> der kleinste Anteil in den Hochschulen und der größte Teil in der Wirtschaft ausgegeben wird, befindet sich die Höhe der Ausgaben ungefähr in der selben Dimension, so dass man hier keinen eindeutigen Forschungsschwerpunkt ausmachen kann.",
           "toggleText": "Zusammensetzung der FuE-Ausgaben in "
         }
@@ -67,7 +67,7 @@
       "disclaimer": "Die Softwareindustrie hat ihren Anteil mehr als verdoppelt und ist jetzt zweitgrößter Träger der Industrieforschung",
       "charts": [
         {
-          "id": "shares_chart",
+          "id": "shares",
           "chartDescription": "Spitzenreiter in <strong>Berlin</strong> bleibt hingegen weiterhin ungeschlagen die Pharmaziebranche. Keine andere Branche ist derart aktiv in der deutschen Forschungslandschaft.In den hier nicht weiter aufgeschlüsselten restlichen Branchen sind vor allem die Bereiche der Medien und der Finanzdienstleistungen verantwortlich für den moderaten Anstieg zwischen den Jahrzehnten. <br><br>Im <strong>bundesweiten</strong> Vergleich dominiert weiterhin ganz klar der Maschinen- und Fahrzeugbau im Bereich der Industrieforschung. Aber auch hier konnte die Softwarebranche ihre Anteile signifikant ausbauen.",
           "toggleText": "Anteile der Industrieforschung in "
         }

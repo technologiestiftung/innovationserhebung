@@ -29,9 +29,10 @@ async def bkapp_page(request: Request, language: Language = None):
     # translations = load_translation(language_code)
     translations = load_translation("de")
 
-    request.app.extra["fue_chart"] = server_document('http://127.0.0.1:5000/fue_chart')
-    request.app.extra["shares_chart"] = server_document('http://127.0.0.1:5000/shares_chart')
-    request.app.extra["base_chart"] = server_document('http://127.0.0.1:5000/base_chart')
+    # "key" in request.app.extra["key"] has to be the same value as the chart.id in de.json
+    request.app.extra["fue"] = server_document('http://127.0.0.1:5000/fue_chart')
+    request.app.extra["shares"] = server_document('http://127.0.0.1:5000/shares_chart')
+    request.app.extra["base"] = server_document('http://127.0.0.1:5000/base_chart')
 
     script = server_document('http://127.0.0.1:5000/app')
     return templates.TemplateResponse("index.html", {"request": request, "script": script, "translations": translations, "language_code": language_code})

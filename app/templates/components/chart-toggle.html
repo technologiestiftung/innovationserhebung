@@ -1,20 +1,20 @@
 <p class="text-corporate-blue text-center text-h2">
   {{ chart.toggleText }}
   <select
-    id="{{ section_id }}_toggle"
+    id="{{ chart.id }}_toggle"
     class="bg-white font-bold border-b-2 border-corporate-blue inline cursor-pointer hover:bg-light-gray"
-    aria-controls="{{ section_id }}_ber {{ section_id }}_ger"
+    aria-controls="{{ chart.id }}_ber {{ chart.id }}_ger"
     aria-label="{{ translations.chartToggle.ariaLabel }}"
   >
-    <option value="{{ section_id }}_ber">
+    <option value="{{ chart.id }}_ber">
       {{ translations.chartToggle.berlin }}
     </option>
-    <option value="{{ section_id }}_ger">
+    <option value="{{ chart.id }}_ger">
       {{ translations.chartToggle.germany }}
     </option>
   </select>
 </p>
-<div id="{{ section_id }}_ber" class="mb-16">
+<div id="{{ chart.id }}" class="chart-wrapper mb-16">
   <figure>
     {{ request.app.extra[chart.id]|safe }}
     <figcaption class="text-sm">
