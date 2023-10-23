@@ -1,6 +1,4 @@
-
 import json
-import logging
 import sys
 
 from openpyxl import load_workbook
@@ -9,10 +7,11 @@ import pandas as pd
 from config_importer import ConfigImporter
 from parser import DataParserFactory
 
-# TODO: Move filepaths to another file
+# TODO:
+#   1/ Organize file paths
+#   2/ Organize loggers
 
 sys.path.append("/app/sliders/config_importer")
-logging.basicConfig(level=logging.INFO)
 
 excel_file = "data/basisdaten_clean.xlsx"
 outfile_path = "data/outfile.json"
@@ -74,7 +73,7 @@ class DataImporter:
         """
 
         with open(outfile_path, "w") as outfile:
-            json.dump(parsed_data, outfile)
+            json.dump(parsed_data, outfile, ensure_ascii=False)
 
 
 # TODO: These two lines are for testing purposes. Remove later.

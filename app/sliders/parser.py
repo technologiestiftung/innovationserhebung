@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from collections import defaultdict
 
-from mapping import mapping_branches, mapping_employees_n, mapping_units
+from mapping import branch_groups, mapping_branches, mapping_employees_n, mapping_units
 
 
 PARSER_TYPES = {
@@ -90,6 +90,7 @@ class BasisDataParser(DataParser):
                             if unit in row:
                                 value = row.iloc[0][unit]
                                 extracted[area][mapping_units[unit]][mapping_branches[branch]][year] = value
+
         return extracted
 
     def reshape(self, input_dict):
@@ -165,6 +166,7 @@ class FUEDataParser(DataParser):
                         value = row.iloc[0][branch]
                         extracted[area][year]["x"].append(branch)
                         extracted[area][year]["y"].append(value)
+
         return extracted
 
 
@@ -198,6 +200,51 @@ class SharesDataParser(DataParser):
         return extracted
 
 
-class GrowthDataParser:
+class GrowthDataParser(DataParser):
     def parse(self, sheets, config):
-        return {}
+        data = self.extract(sheets)
+
+        return data
+
+    def extract(self, sheets):
+        """
+        Extract shares data.
+
+        :param sheets: dict, where keys are names of sheets and values are pandas DataFrames
+        :return: nested dict, with the following shape:
+            {area: {
+                group: {
+                    "labels": [l1, l2, ...],
+                    "expenses": [e1, e2, ...],
+                    "growth": [g1, g2, ...],
+                    "sales": [s1, s2, ...],
+            }}}
+        """
+        extracted = init_nested_dict()
+        for sheet_key in sheets:
+            if "relevanzbubbles" in sheet_key:
+                relevanzbubbles, area = sheet_key.split("_")
+                df = sheets[sheet_key]
+
+                for _, row in df.iterrows():
+                    branch = row["Wirtschaftsgliederung"]
+                    if branch in branch_groups:
+                        group = branch_groups[branch]
+
+                        if "labels" not in extracted[area][group]:
+                            extracted[area][group]["labels"] = []
+                        extracted[area][group]["labels"].append(branch)
+
+                        if "expenses" not in extracted[area][group]:
+                            extracted[area][group]["expenses"] = []
+                        extracted[area][group]["expenses"].append(row["FuE-Ausgaben 2021"])
+
+                        if "growth" not in extracted[area][group]:
+                            extracted[area][group]["growth"] = []
+                        extracted[area][group]["growth"].append(row["Wachstum FuE-Ausgaben 2018-2021"])
+
+                        if "sales" not in extracted[area][group]:
+                            extracted[area][group]["sales"] = []
+                        extracted[area][group]["sales"].append(row["Umsatz mit Produktneuheiten in Mio. €"])
+
+        return extracted
