@@ -127,8 +127,8 @@ class BubblePlotter(Plotter):
     def fit_data(self):
         source = ColumnDataSource(data={"x": self.raw_data["x"],
                                         "y": self.raw_data["y"],
-                                        "size": self.raw_data["size"],
-                                        "color": self.raw_data["color"]})
+                                        "z": self.scale_values(self.raw_data["z"]),
+                                        "color": [n for n in range(len(self.raw_data["x"]))]})
         self.fitted_data = source
 
     def create_plot(self):
@@ -136,12 +136,27 @@ class BubblePlotter(Plotter):
         self.plot = figure(**self.config["figure"])
 
         # Add circles to the plot
-        mapper = linear_cmap(field_name="color", palette=Viridis256, low=min(self.fitted_data.data["color"]), high=max(self.fitted_data.data["color"]))
-        self.plot.circle(x="x", y="y", size="size", color=mapper, source=self.fitted_data, **self.config["circle"])
+        mapper = linear_cmap(field_name="color", palette=Viridis256, low=0, high=20)
+        self.plot.circle(x="x", y="y", size="z", color=mapper, source=self.fitted_data, **self.config["circle"])
 
         # Add color bar
         color_bar = ColorBar(color_mapper=mapper["transform"], **self.config["color_bar"])
         self.plot.add_layout(color_bar, "right")
+
+    def scale_values(self, values, max_value=150):
+        """
+        Helper function.
+        Scale values of a list so that they don't exceed a maximum.
+
+        :param values: list, containing integers
+        :param max_value: int, maximum that the values shouldn't exceed
+        :return: list, scaled values
+        """
+        max_val = max(values)
+        scaling_factor = max_value / max_val if max_val > max_value else 1.0
+        scaled_values = [x * scaling_factor for x in values]
+
+        return scaled_values
 
 
 class LinePlotter(Plotter):

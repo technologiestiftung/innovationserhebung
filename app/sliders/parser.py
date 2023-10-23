@@ -3,6 +3,8 @@ from collections import defaultdict
 
 from mapping import branch_groups, mapping_branches, mapping_employees_n, mapping_units
 
+# TODO: Make keys more generic (x, y, z)
+
 
 PARSER_TYPES = {
     "base": "BasisDataParser",
@@ -215,9 +217,9 @@ class GrowthDataParser(DataParser):
             {area: {
                 group: {
                     "labels": [l1, l2, ...],
-                    "expenses": [e1, e2, ...],
-                    "growth": [g1, g2, ...],
-                    "sales": [s1, s2, ...],
+                    "x": [x1, x2, ...],
+                    "y": [y1, y2, ...],
+                    "z": [z1, z2, ...],
             }}}
         """
         extracted = init_nested_dict()
@@ -235,16 +237,16 @@ class GrowthDataParser(DataParser):
                             extracted[area][group]["labels"] = []
                         extracted[area][group]["labels"].append(branch)
 
-                        if "expenses" not in extracted[area][group]:
-                            extracted[area][group]["expenses"] = []
-                        extracted[area][group]["expenses"].append(row["FuE-Ausgaben 2021"])
+                        if "x" not in extracted[area][group]:
+                            extracted[area][group]["x"] = []
+                        extracted[area][group]["x"].append(row["FuE-Ausgaben 2021"])
 
-                        if "growth" not in extracted[area][group]:
-                            extracted[area][group]["growth"] = []
-                        extracted[area][group]["growth"].append(row["Wachstum FuE-Ausgaben 2018-2021"])
+                        if "y" not in extracted[area][group]:
+                            extracted[area][group]["y"] = []
+                        extracted[area][group]["y"].append(row["Wachstum FuE-Ausgaben 2018-2021"])
 
-                        if "sales" not in extracted[area][group]:
-                            extracted[area][group]["sales"] = []
-                        extracted[area][group]["sales"].append(row["Umsatz mit Produktneuheiten in Mio. €"])
+                        if "z" not in extracted[area][group]:
+                            extracted[area][group]["z"] = []
+                        extracted[area][group]["z"].append(row["Umsatz mit Produktneuheiten in Mio. €"])
 
         return extracted

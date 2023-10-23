@@ -7,6 +7,9 @@ from panel.layout.flex import FlexBox
 from .config_importer import ConfigImporter
 from .plotter import PlotterFactory
 
+# TODO: Refactoring
+#   1/ ConfigImporter and PlotterFactory should be processed only once
+#   2/ Think alternative to functions for individual plots, since it's not reused and it's not very idiomatic
 
 with open("data/outfile.json", "r") as f:
     data = json.load(f)
@@ -22,8 +25,7 @@ n = 20
 x = np.random.rand(n)
 y = np.random.rand(n)
 size = np.random.randint(10, 100, n)
-color = np.random.randint(0, 256, n)
-bubble_data = {"x": x, "y": y, "size": size, "color": color}
+bubble_data = {"x": x, "y": y, "size": size}
 
 line_data = {
     "x": [1, 2, 3, 4, 5],
@@ -166,12 +168,14 @@ def get_base_chart_ber():
 
 
 def get_funky_bubble_chart():
+    chart_data = data["growth_bubble"]["ber"]["individual"]
+
     config_importer = ConfigImporter()
     config = config_importer.get_config()
 
     plotter_factory = PlotterFactory()
 
-    bubble_plotter = plotter_factory.create_plotter("bubble", bubble_data, config["growth_bubble"])
+    bubble_plotter = plotter_factory.create_plotter("bubble", chart_data, config["growth_bubble"])
     bubble_plotter.generate()
 
     funky_bubbleplot = GridSpec(sizing_mode="stretch_both", min_height=350)
