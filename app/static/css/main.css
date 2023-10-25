@@ -1006,7 +1006,7 @@ h2 {
 @font-face {
   font-family: 'ClanPro';
 
-  src: url('/fonts/clan/ClanWebPro-Bold.woff') format('woff');
+  src: url('/static/fonts/ClanWebPro-Bold.woff') format('woff');
 
   font-weight: bold;
 
@@ -1016,7 +1016,7 @@ h2 {
 @font-face {
   font-family: 'ClanPro';
 
-  src: url('/fonts/clan/ClanWebPro-Regular.woff') format('woff');
+  src: url('/static/fonts/ClanWebPro-News.woff') format('woff');
 
   font-weight: normal;
 
@@ -1026,7 +1026,7 @@ h2 {
 @font-face {
   font-family: 'ClanPro';
 
-  src: url('/fonts/clan/ClanWebPro-News.woff') format('woff');
+  src: url('/static/fonts/ClanWebPro-Book.woff') format('woff');
 
   font-weight: thin;
 
@@ -1036,7 +1036,7 @@ h2 {
 @font-face {
   font-family: 'Source Serif';
 
-  src: url('/fonts/source-serif/SourceSerif4-Bold.ttf') format('truetype');
+  src: url('/static/fonts/SourceSerif4-Bold.ttf.woff2') format('woff2');
 
   font-weight: bold;
 
@@ -1046,7 +1046,7 @@ h2 {
 @font-face {
   font-family: 'Source Serif';
 
-  src: url('/fonts/source-serif/SourceSerif4-Medium.ttf') format('truetype');
+  src: url('/static/fonts/SourceSerif4-Regular.ttf.woff2') format('woff2');
 
   font-weight: normal;
 
