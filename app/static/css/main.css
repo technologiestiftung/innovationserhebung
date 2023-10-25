@@ -796,6 +796,11 @@ video {
   scroll-behavior: smooth;
 }
 
+.hyphens-auto {
+  -webkit-hyphens: auto;
+          hyphens: auto;
+}
+
 .border-b {
   border-bottom-width: 1px;
 }
