@@ -25,7 +25,8 @@ templates = Jinja2Templates(directory="templates")
 async def bkapp_page(request: Request, language: Language = None):
     if language is None:
         language = request.headers.get("accept-language", "de")
-    # translations = load_translation(language)
+    language_code = get_language_code(language)
+    # translations = load_translation(language_code)
     translations = load_translation("de")
 
     request.app.extra["fue_chart"] = server_document('http://127.0.0.1:5000/fue_chart')
@@ -36,9 +37,10 @@ async def bkapp_page(request: Request, language: Language = None):
     request.app.extra["funky_bubble_chart"] = server_document('http://127.0.0.1:5000/funky_bubble_chart')
 
     script = server_document('http://127.0.0.1:5000/app')
-    return templates.TemplateResponse("index.html", {"request": request, "script": script, "translations": translations})
+    return templates.TemplateResponse("index.html", {"request": request, "script": script, "translations": translations, "language_code": language_code})
 
-
+def get_language_code(language: Language | str):
+    return type(language) is str and language[:2] or language.value
 
 pn.serve({
     '/fue_chart': get_fue_chart, 
