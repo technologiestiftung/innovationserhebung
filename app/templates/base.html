@@ -1,13 +1,14 @@
 <!doctype html>
-<html class="scroll-smooth">
+<html class="scroll-smooth" lang="{{ language_code }}">
   <head>
     <title>Innovationserhebung</title>
     <link
       href="{{ url_for('static', path='/css/main.css') }}"
       rel="stylesheet"
     />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
   </head>
-  <body class=" bg-corporate-blue">
+  <body class="bg-corporate-blue hyphens-auto">
     {% block content %}{% endblock %}
     <script
       type="text/javascript"

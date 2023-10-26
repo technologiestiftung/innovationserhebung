@@ -4,7 +4,9 @@
 <ul id="accordion-list" class="h-full px-mobile overflow-scroll max-w-hero">
   {% for section in translations.get("sections", []) %}
     {% with section=section %}
-      {% include "components/navigation/nav-link.html" %}
+      {% if section.id %}
+        {% include "components/navigation/nav-link.html" %}
+      {% endif %}
     {% endwith %}
   {% endfor %}
 </ul>

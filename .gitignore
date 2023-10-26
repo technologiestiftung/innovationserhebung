@@ -7,4 +7,6 @@ node_modules
 .vscode
 
 /data
+/app/static/fonts/*
+!/app/static/fonts/.gitkeep
 
