@@ -1,8 +1,8 @@
 from abc import abstractmethod, ABC
 from math import pi
 
-from bokeh.models import AnnularWedge, ColumnDataSource, ColorBar, Label
-from bokeh.palettes import Category10, Category20c, Viridis256
+from bokeh.models import AnnularWedge, ColumnDataSource, Label, LabelSet, Legend, LegendItem
+from bokeh.palettes import Category10, Category20, Category20c, Paired, TolRainbow, Turbo256
 from bokeh.plotting import figure
 from bokeh.transform import cumsum, linear_cmap
 import panel
@@ -128,7 +128,8 @@ class BubblePlotter(Plotter):
         source = ColumnDataSource(data={"x": self.raw_data["x"],
                                         "y": self.raw_data["y"],
                                         "z": self.scale_values(self.raw_data["z"]),
-                                        "color": [n for n in range(len(self.raw_data["x"]))]})
+                                        "color": [n for n in range(len(self.raw_data["x"]))],
+                                        "labels": self.raw_data["labels"]})
         self.fitted_data = source
 
     def create_plot(self):
@@ -136,12 +137,11 @@ class BubblePlotter(Plotter):
         self.plot = figure(**self.config["figure"])
 
         # Add circles to the plot
-        mapper = linear_cmap(field_name="color", palette=Viridis256, low=0, high=20)
-        self.plot.circle(x="x", y="y", size="z", color=mapper, source=self.fitted_data, **self.config["circle"])
+        mapper = linear_cmap(field_name="color", palette=Category20[20], low=0, high=20)
+        self.plot.circle(x="x", y="y", size="z", color=mapper, source=self.fitted_data, legend_group="labels")
 
-        # Add color bar
-        color_bar = ColorBar(color_mapper=mapper["transform"], **self.config["color_bar"])
-        self.plot.add_layout(color_bar, "right")
+        # Set the position of the legend
+        self.plot.add_layout(self.plot.legend[0], "right")
 
     def scale_values(self, values, max_value=150):
         """

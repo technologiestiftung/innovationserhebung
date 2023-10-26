@@ -7,8 +7,6 @@ growth_bubble:
   linear_cmap:
     field_name: color
     palette: Viridis256
-  circle:
-    legend_field: color
   color_bar:
     width: 8
     location: [0, 0]
