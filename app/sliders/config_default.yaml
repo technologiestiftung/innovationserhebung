@@ -1,4 +1,4 @@
-bar:
+bar_interactive:
   general:
     title: Simple Bar Chart
     x_axis_label: Categories

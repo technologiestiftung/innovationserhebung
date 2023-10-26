@@ -7,7 +7,8 @@ from mapping import branch_groups, mapping_branches, mapping_employees_n, mappin
 
 
 PARSER_TYPES = {
-    "base": "BasisDataParser",
+    "base": "BaseDataParser",
+    "coop": "CoopDataParser",
     "fue": "FUEDataParser",
     "growth": "GrowthDataParser",
     "shares": "SharesDataParser",
@@ -53,7 +54,7 @@ class DataParser(ABC):
         pass
 
 
-class BasisDataParser(DataParser):
+class BaseDataParser(DataParser):
     def parse(self, sheets, config):
         # Extract basis data
         data = self.extract(sheets)
@@ -137,6 +138,38 @@ class BasisDataParser(DataParser):
             return row["Wirtschaftsgliederung"]
 
 
+class CoopDataParser(DataParser):
+    def parse(self, sheets, config):
+        data = self.extract(sheets, config["coop_partner"])  # TODO: The key should be configurable
+
+        return data
+
+    def extract(self, sheets, config):
+        """
+        Extract cooperation data.
+
+        :param sheets: dict, where keys are names of sheets and values are pandas DataFrames
+        :return: nested dict, with the following shape:
+            {area: {year: {criteria: {"x": [branch1, branch2, ...], "y": [value1, value2, ...]}}}}
+        """
+        extracted = init_nested_dict()
+        for sheet_key in sheets:
+            if "coop" in sheet_key:
+                coop, partner, year, area = sheet_key.split("_")
+                df = sheets[sheet_key]
+
+                for _, row in df.iterrows():
+                    branch = row["Branche"]
+                    if branch in branch_groups and branch_groups[branch] == "individual":
+                        for criteria in config["filters"]["single_choice_2"]:
+                            if criteria not in extracted[area][year]:
+                                extracted[area][year][criteria] = {"x": [], "y": []}
+                            extracted[area][year][criteria]["x"].append(branch)
+                            extracted[area][year][criteria]["y"].append(row[criteria])
+
+        return extracted
+
+
 class FUEDataParser(DataParser):
     def parse(self, sheets, config):
         config = config["fue_pie_interactive"]
@@ -168,36 +201,6 @@ class FUEDataParser(DataParser):
                         value = row.iloc[0][branch]
                         extracted[area][year]["x"].append(branch)
                         extracted[area][year]["y"].append(value)
-
-        return extracted
-
-
-class SharesDataParser(DataParser):
-    def parse(self, sheets, config):
-        data = self.extract(sheets)
-
-        return data
-
-    def extract(self, sheets):
-        """
-        Extract shares data.
-
-        :param sheets: dict, where keys are names of sheets and values are pandas DataFrames
-        :return: nested dict, with the following shape:
-            {area: {year: {"x": [branch1, branch2, ...], "y": [value1, value2, ...]}}}
-        """
-        extracted = init_nested_dict()
-        for sheet_key in sheets:
-            if "anteile" in sheet_key:
-                anteile, branchen, area = sheet_key.split("_")
-                df = sheets[sheet_key]
-
-                years = list(df)[1:]
-                for year in years:
-                    extracted[area][str(year)] = {"x": [], "y": []}
-                    for _, row in df.iterrows():
-                        extracted[area][str(year)]["x"].append(row["Branche"])
-                        extracted[area][str(year)]["y"].append(round(row[year], 1))
 
         return extracted
 
@@ -248,5 +251,35 @@ class GrowthDataParser(DataParser):
                         if "z" not in extracted[area][group]:
                             extracted[area][group]["z"] = []
                         extracted[area][group]["z"].append(row["Umsatz mit Produktneuheiten in Mio. €"])
+
+        return extracted
+
+
+class SharesDataParser(DataParser):
+    def parse(self, sheets, config):
+        data = self.extract(sheets)
+
+        return data
+
+    def extract(self, sheets):
+        """
+        Extract shares data.
+
+        :param sheets: dict, where keys are names of sheets and values are pandas DataFrames
+        :return: nested dict, with the following shape:
+            {area: {year: {"x": [branch1, branch2, ...], "y": [value1, value2, ...]}}}
+        """
+        extracted = init_nested_dict()
+        for sheet_key in sheets:
+            if "anteile" in sheet_key:
+                anteile, branchen, area = sheet_key.split("_")
+                df = sheets[sheet_key]
+
+                years = list(df)[1:]
+                for year in years:
+                    extracted[area][str(year)] = {"x": [], "y": []}
+                    for _, row in df.iterrows():
+                        extracted[area][str(year)]["x"].append(row["Branche"])
+                        extracted[area][str(year)]["y"].append(round(row[year], 1))
 
         return extracted

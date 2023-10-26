@@ -77,3 +77,24 @@ fue_pie_interactive:
       - Hochschulen
       - Staat
     single_choice_highlight_default: Wirtschaft
+
+coop_partner:
+  parser_type: coop
+  plot_type: bar_interactive
+  plot_codes:
+    - ber
+    - de
+  filters:
+    single_choice:
+      - "2012"
+      - "2020"
+    single_choice_default: "2012"
+    single_choice_2:
+      - insgesamt
+      - Hochschulen
+      - staatl. Forschung
+      - Kunden (privatwirtschaftl.)
+      - Lieferanten
+      - Wettbewerber
+    single_choice_default_2: insgesamt
+
