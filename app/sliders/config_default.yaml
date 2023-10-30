@@ -1,14 +1,10 @@
 bar_interactive:
   general:
     title: Simple Bar Chart
-    x_axis_label: Categories
+    toolbar_location: null
     y_axis_label: Values
   vbar:
     width: 0.5
-    legend_label: Values
-    line_color: blue
-    fill_color: blue
-  legend_title: Legend
   label_text_font_size: 12pt
 
 bubble:

@@ -1,8 +1,8 @@
 from abc import abstractmethod, ABC
 from math import pi
 
-from bokeh.models import AnnularWedge, ColumnDataSource, Label, LabelSet, Legend, LegendItem
-from bokeh.palettes import Category10, Category20, Category20c, Paired, TolRainbow, Turbo256
+from bokeh.models import AnnularWedge, ColumnDataSource, Label
+from bokeh.palettes import Category10, Category20, Category20c
 from bokeh.plotting import figure
 from bokeh.transform import cumsum, linear_cmap
 import panel
@@ -12,6 +12,7 @@ logging.basicConfig(level=logging.INFO)
 
 PLOT_TYPES = {
     "bar": "BarPlotter",
+    "bar_interactive": "InteractiveBarPlotter",
     "bubble": "BubblePlotter",
     "line": "LinePlotter",
     "line_interactive": "InteractiveLinePlotter",
@@ -106,6 +107,13 @@ class BarPlotter(Plotter):
         super().__init__(raw_data, config)
 
     def fit_data(self):
+        # Define colors
+        self.raw_data["color"] = Category20[len(self.raw_data["x"])]
+
+        # Split long x-axis in more than one line
+        for i, label in enumerate(self.raw_data["x"]):
+            self.raw_data["x"][i] = "/\n".join(label.split("/"))
+
         self.fitted_data = ColumnDataSource(data=self.raw_data)
 
     def create_plot(self):
@@ -113,11 +121,37 @@ class BarPlotter(Plotter):
         self.plot = figure(x_range=self.fitted_data.data["x"], **self.config["general"])
 
         # Add vertical bars to the figure
-        self.plot.vbar(x="x", top="y", source=self.fitted_data, **self.config["vbar"])
+        self.plot.vbar(x="x", top="y", source=self.fitted_data, color="color",
+                       **self.config["vbar"])
 
-        # Show legends
-        self.plot.legend.title = self.config["legend_title"]
-        self.plot.legend.label_text_font_size = self.config["label_text_font_size"]
+        # Rotate x-axis labels
+        self.plot.xaxis.major_label_orientation = pi/2
+
+
+class InteractiveBarPlotter(Plotter):
+    def __init__(self, raw_data, config):
+        super().__init__(raw_data, config)
+
+    def fit_data(self):
+        # Define colors
+        self.raw_data["color"] = Category20[len(self.raw_data["x"])]
+
+        # Split long x-axis in more than one line
+        for i, label in enumerate(self.raw_data["x"]):
+            self.raw_data["x"][i] = "/\n".join(label.split("/"))
+
+        self.fitted_data = ColumnDataSource(data=self.raw_data)
+
+    def create_plot(self):
+        # Create the figure
+        self.plot = figure(x_range=self.fitted_data.data["x"], **self.config["general"])
+
+        # Add vertical bars to the figure
+        self.plot.vbar(x="x", top="y", source=self.fitted_data, color="color",
+                       **self.config["vbar"])
+
+        # Rotate x-axis labels
+        self.plot.xaxis.major_label_orientation = pi/2
 
 
 class BubblePlotter(Plotter):

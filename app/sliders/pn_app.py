@@ -182,3 +182,20 @@ def get_funky_bubble_chart():
     funky_bubbleplot[0:1, 0:2] = bubble_plotter.plot
 
     return funky_bubbleplot.servable()
+
+
+def get_bar_chart():
+    chart_data = data["coop_partner"]["ber"]["2012"]["insgesamt"]
+
+    config_importer = ConfigImporter()
+    config = config_importer.get_config()
+
+    plotter_factory = PlotterFactory()
+
+    bar_plotter = plotter_factory.create_plotter("bar_interactive", chart_data, config["coop_partner"])
+    bar_plotter.generate()
+
+    barplot = GridSpec(sizing_mode="stretch_both", min_height=350)
+    barplot[0:1, 0:2] = bar_plotter.plot
+
+    return barplot.servable()
