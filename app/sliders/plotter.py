@@ -136,18 +136,21 @@ class InteractiveBarPlotter(InteractivePlotter):
         self.filters_single_choice_2 = None
 
     def fit_data(self):
+        for code in self.config["plot_codes"]:
+            for choice in self.config["filters"]["single_choice"]:
+                for choice_2 in self.config["filters"]["single_choice_2"]:
+                    x_values = self.raw_data[code][choice][choice_2]["x"]
+                    # Define color palette
+                    self.raw_data[code][choice][choice_2]["color"] = Category20[len(x_values)]
+                    # Split long x-axis in more than one line
+                    for i, label in enumerate(x_values):
+                        self.raw_data[code][choice][choice_2]["x"][i] = "/\n".join(label.split("/"))
+
         self.fitted_data = {}
         for code in self.config["plot_codes"]:
             single_choice_dict = (self.raw_data[code][
                                   self.config["filters"]["single_choice_default"]][
                                   self.config["filters"]["single_choice_2_default"]])
-
-            # Define colors
-            single_choice_dict["color"] = Category20[len(single_choice_dict["x"])]
-
-            # Split long x-axis in more than one line
-            for i, label in enumerate(single_choice_dict["x"]):
-                single_choice_dict["x"][i] = "/\n".join(label.split("/"))
 
             self.fitted_data[code] = ColumnDataSource(data=single_choice_dict)
 
@@ -187,16 +190,6 @@ class InteractiveBarPlotter(InteractivePlotter):
             single_choice_dict = (self.raw_data[code][
                                   self.filters_single_choice.value][
                                   self.filters_single_choice_2.value])
-
-            # TODO: Colors and labels could be processed beforehand
-            #  and saved in raw_data, so it's only done once
-
-            # Define colors
-            single_choice_dict["color"] = Category20[len(single_choice_dict["x"])]
-
-            # Split long x-axis in more than one line
-            for i, label in enumerate(single_choice_dict["x"]):
-                single_choice_dict["x"][i] = "/\n".join(label.split("/"))
 
             self.fitted_data[code].data = single_choice_dict
 
