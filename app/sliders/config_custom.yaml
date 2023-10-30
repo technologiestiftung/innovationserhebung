@@ -96,5 +96,5 @@ coop_partner:
       - Kunden (privatwirtschaftl.)
       - Lieferanten
       - Wettbewerber
-    single_choice_default_2: insgesamt
+    single_choice_2_default: insgesamt
 

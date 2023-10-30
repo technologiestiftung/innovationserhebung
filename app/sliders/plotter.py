@@ -128,30 +128,77 @@ class BarPlotter(Plotter):
         self.plot.xaxis.major_label_orientation = pi/2
 
 
-class InteractiveBarPlotter(Plotter):
+class InteractiveBarPlotter(InteractivePlotter):
     def __init__(self, raw_data, config):
         super().__init__(raw_data, config)
 
+        self.filters_single_choice = None
+        self.filters_single_choice_2 = None
+
     def fit_data(self):
-        # Define colors
-        self.raw_data["color"] = Category20[len(self.raw_data["x"])]
+        self.fitted_data = {}
+        for code in self.config["plot_codes"]:
+            single_choice_dict = (self.raw_data[code][
+                                  self.config["filters"]["single_choice_default"]][
+                                  self.config["filters"]["single_choice_2_default"]])
 
-        # Split long x-axis in more than one line
-        for i, label in enumerate(self.raw_data["x"]):
-            self.raw_data["x"][i] = "/\n".join(label.split("/"))
+            # Define colors
+            single_choice_dict["color"] = Category20[len(single_choice_dict["x"])]
 
-        self.fitted_data = ColumnDataSource(data=self.raw_data)
+            # Split long x-axis in more than one line
+            for i, label in enumerate(single_choice_dict["x"]):
+                single_choice_dict["x"][i] = "/\n".join(label.split("/"))
+
+            self.fitted_data[code] = ColumnDataSource(data=single_choice_dict)
 
     def create_plot(self):
-        # Create the figure
-        self.plot = figure(x_range=self.fitted_data.data["x"], **self.config["general"])
+        self.plot = {}
 
-        # Add vertical bars to the figure
-        self.plot.vbar(x="x", top="y", source=self.fitted_data, color="color",
-                       **self.config["vbar"])
+        for code in self.config["plot_codes"]:
+            # Create the figure
+            plot = figure(x_range=self.fitted_data[code].data["x"], **self.config["general"])
 
-        # Rotate x-axis labels
-        self.plot.xaxis.major_label_orientation = pi/2
+            # Add vertical bars to the figure
+            plot.vbar(x="x", top="y", source=self.fitted_data[code], color="color", **self.config["vbar"])
+
+            # Rotate x-axis labels
+            plot.xaxis.major_label_orientation = pi/2
+
+            self.plot[code] = plot
+
+    def create_filters(self):
+        # Create single choice filter
+        self.filters_single_choice = panel.widgets.RadioBoxGroup(
+            name="Select unit", options=self.config["filters"]["single_choice"]
+        )
+
+        # Create single choice highlight filter
+        self.filters_single_choice_2 = panel.widgets.RadioBoxGroup(
+            name="Select unit", options=self.config["filters"]["single_choice_2"]
+        )
+
+        # Add interactivity
+        self.filters_single_choice.param.watch(self.update_filters, "value")
+        self.filters_single_choice_2.param.watch(self.update_filters, "value")
+
+    def update_filters(self, event):
+        for code in self.config["plot_codes"]:
+            # Extract data using the single choice filters
+            single_choice_dict = (self.raw_data[code][
+                                  self.filters_single_choice.value][
+                                  self.filters_single_choice_2.value])
+
+            # TODO: Colors and labels could be processed beforehand
+            #  and saved in raw_data, so it's only done once
+
+            # Define colors
+            single_choice_dict["color"] = Category20[len(single_choice_dict["x"])]
+
+            # Split long x-axis in more than one line
+            for i, label in enumerate(single_choice_dict["x"]):
+                single_choice_dict["x"][i] = "/\n".join(label.split("/"))
+
+            self.fitted_data[code].data = single_choice_dict
 
 
 class BubblePlotter(Plotter):

@@ -3,6 +3,7 @@ bar_interactive:
     title: Simple Bar Chart
     toolbar_location: null
     y_axis_label: Values
+    y_range: [0, 100]
   vbar:
     width: 0.5
   label_text_font_size: 12pt
