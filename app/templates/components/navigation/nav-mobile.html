@@ -43,9 +43,11 @@
       <span class="font-bold">{{ translations.nav.subHeader_1 }}</span>
     </div>
     <ul>
-      {% for section in translations.get("sections", []) %}
+      {% for section in translations.sections %}
         {% with section=section %}
-          {% include "components/navigation/nav-link.html" %}
+          {% if section.id %}
+            {% include "components/navigation/nav-link.html" %}
+          {% endif %}
         {% endwith %}
       {% endfor %}
     </ul>

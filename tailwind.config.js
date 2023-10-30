@@ -3,10 +3,15 @@ module.exports = {
   content: ["app/templates/**/*.html"],
   jit: true,
   theme: {
+    fontFamily: {
+      clan: ['ClanPro', 'sans-serif'],
+      source: ['Source Serif', 'serif']
+    },
     extend: {
       boxShadow: {
         top: "0px -8px 24px 0px rgba(0, 0, 0, 0.32)",
         bottom: "0px 0px 16px 0px rgba(0, 0, 0, 0.32)",
+        scrollButton: "4px 4px 0px 0px rgba(30, 55, 145, 0.24)"
       },
       colors: {
         "corporate-blue": "#1E3791",
@@ -43,6 +48,7 @@ module.exports = {
       },
       translate: {
         "x-full": "100%",
+        "2x-full": "200%",
       },
       width: {
         "2x-hero": "calc(2 * var(--width-hero))",

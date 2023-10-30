@@ -10,17 +10,18 @@ Tested with Python 3.11.4
 
 The following steps are not required but recommended. This will allow you to install packages in your isolated virtual environment instead of globally, reducing the risk of breaking system tools or other projects.
 
-1. Install [pyenv](https://github.com/pyenv/pyenv) and the [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv) plugin.
-2. Download the appropriate Python version with 
+1. Download the required font files ([Source Serif](https://adobe-fonts.github.io/source-serif/) and Clan Pro) and place them inside `/app/static/fonts`.
+2. Install [pyenv](https://github.com/pyenv/pyenv) and the [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv) plugin.
+3. Download the appropriate Python version with 
 ```shell
 pyenv install 3.11.4
 ``` 
 in the command line.
-3. Create a virtual environment with the appropriate Python version and name for your environment, for example 
+4. Create a virtual environment with the appropriate Python version and name for your environment, for example 
 ```shell
 pyenv virtualenv 3.11.4 innovationserhebung
 ```
-4. Activate the environment with 
+5. Activate the environment with 
 ```shell
 pyenv activate innovationserhebung
 ```
@@ -31,6 +32,7 @@ Install the required libraries with the command line
 ```shell
 pip install -r requirements.txt
 ```
+
 ### Run the APP
 
 1. Move to the `/app` directory.

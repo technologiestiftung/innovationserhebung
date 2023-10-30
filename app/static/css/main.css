@@ -554,12 +554,20 @@ video {
   bottom: 0px;
 }
 
+.bottom-4 {
+  bottom: 1rem;
+}
+
 .left-0 {
   left: 0px;
 }
 
 .right-0 {
   right: 0px;
+}
+
+.right-6 {
+  right: 1.5rem;
 }
 
 .top-0 {
@@ -634,6 +642,10 @@ video {
   display: none;
 }
 
+.h-12 {
+  height: 3rem;
+}
+
 .h-3\/5 {
   height: 60%;
 }
@@ -652,6 +664,14 @@ video {
 
 .max-h-screen {
   max-height: 100vh;
+}
+
+.w-16 {
+  width: 4rem;
+}
+
+.w-20 {
+  width: 5rem;
 }
 
 .w-2x-hero {
@@ -707,18 +727,13 @@ video {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-.translate-x-0 {
-  --tw-translate-x: 0px;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
-.translate-x-full {
-  --tw-translate-x: 100%;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
 .translate-y-0 {
   --tw-translate-y: 0px;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.translate-y-2x-full {
+  --tw-translate-y: 200%;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
@@ -745,8 +760,16 @@ video {
   flex-direction: column;
 }
 
+.items-center {
+  align-items: center;
+}
+
 .justify-start {
   justify-content: flex-start;
+}
+
+.justify-center {
+  justify-content: center;
 }
 
 .justify-between {
@@ -771,6 +794,11 @@ video {
 
 .scroll-smooth {
   scroll-behavior: smooth;
+}
+
+.hyphens-auto {
+  -webkit-hyphens: auto;
+          hyphens: auto;
 }
 
 .border-b {
@@ -849,6 +877,10 @@ video {
   padding-bottom: 2rem;
 }
 
+.pb-10 {
+  padding-bottom: 2.5rem;
+}
+
 .pb-2 {
   padding-bottom: 0.5rem;
 }
@@ -885,6 +917,10 @@ video {
   text-align: center;
 }
 
+.font-source {
+  font-family: Source Serif, serif;
+}
+
 .text-2xl {
   font-size: 1.5rem;
   line-height: 2rem;
@@ -908,6 +944,14 @@ video {
   font-weight: 700;
 }
 
+.font-thin {
+  font-weight: 100;
+}
+
+.leading-10 {
+  line-height: 2.5rem;
+}
+
 .leading-h2 {
   line-height: 1.5rem;
 }
@@ -928,6 +972,12 @@ video {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+.shadow-scrollButton {
+  --tw-shadow: 4px 4px 0px 0px rgba(30, 55, 145, 0.24);
+  --tw-shadow-colored: 4px 4px 0px 0px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
 .shadow-top {
   --tw-shadow: 0px -8px 24px 0px rgba(0, 0, 0, 0.32);
   --tw-shadow-colored: 0px -8px 24px 0px var(--tw-shadow-color);
@@ -938,10 +988,6 @@ video {
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
-}
-
-.duration-100 {
-  transition-duration: 100ms;
 }
 
 .duration-300 {
@@ -960,6 +1006,64 @@ h1 {
 h2 {
   font-size: 1.125rem;
   line-height: 1.5rem;
+}
+
+@font-face {
+  font-family: 'ClanPro';
+
+  src: url('/static/fonts/ClanWebPro-Bold.woff') format('woff');
+
+  font-weight: bold;
+
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ClanPro';
+
+  src: url('/static/fonts/ClanWebPro-News.woff') format('woff');
+
+  font-weight: normal;
+
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ClanPro';
+
+  src: url('/static/fonts/ClanWebPro-Book.woff') format('woff');
+
+  font-weight: thin;
+
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Source Serif';
+
+  src: url('/static/fonts/SourceSerif4-Bold.ttf.woff2') format('woff2');
+
+  font-weight: bold;
+
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Source Serif';
+
+  src: url('/static/fonts/SourceSerif4-Regular.ttf.woff2') format('woff2');
+
+  font-weight: normal;
+
+  font-style: normal;
+}
+
+body {
+  font-family: 'ClanPro', sans-serif;
+}
+
+.first-of-type\:border-hidden:first-of-type {
+  border-style: hidden;
 }
 
 .hover\:bg-light-gray:hover {
@@ -1002,6 +1106,10 @@ h2 {
 
   .desktop\:hidden {
     display: none;
+  }
+
+  .desktop\:min-h-screen {
+    min-height: 100vh;
   }
 
   .desktop\:max-w-none {

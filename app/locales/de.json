@@ -1,7 +1,7 @@
 {
   "introSection": {
     "title": "Einleitung",
-    "disclaimer": "Die Innovationserhebung Berlin wird seit 2012 vom Zentrum für Europäische Wirtschaftsforschung (ZEW) im Auftrag der Technologiestiftung Berlin durchgeführt. Sie hat zum Ziel, die Innovationsaktivitäten der Unternehmen in Berlin im jeweiligen Berichtsjahr in einer national und international vergleichbaren Form zu erheben. Hierzu wurde die Innovationserhebung Berlin als Zusatzerhebung zur Deutschen Innovationserhebung konzipiert. Die Deutsche Innovationserhebung wird vom ZEW jährlich im Auftrag des Bundesforschungsministeriums durchgeführt. Die Deutsche Innovationserhebung ist gleichzeitig der Beitrag Deutschlands zu den Community Innovation Surveys (CIS) der Europäischen Kommission, die zweijährlich unter Koordination des Statistischen Amts der Europäischen Kommission durchgeführt wird. Die Erhebung in ungeraden Jahren sind CIS-Erhebungen. Für die Innovationserhebung Berlin kommt dieselbe Erhebungsmethode im Hinblick auf Erhebungsinstrument (Fragebogen), Datenaufbereitung und Datenauswertung wie in der Deutschen Innovationserhebung zum Einsatz. Somit ist eine vollständige Vergleichbarkeit der Ergebnisse gewährleistet."
+    "text": "Die <strong>Innovationserhebung 2022</strong> widmet sich in gewohnter Weise der Auswertung der durch das Zentrum für Europäische Wirtschaftsforschung (ZEW) erhobenen Daten zum Innovationsverhalten Berlins. <br><br>Die Innovationserhebung Berlin wird zeitgleich mit der deutschen Innovationserhebung durchgeführt und nimmt Industrieunternehmen sowie Unternehmen aus dem Bereich wissensintensive Dienstleistungen über das letzte Jahrzehnt in den Blick."
   },
   "general": {
     "for": "für"
@@ -27,9 +27,15 @@
   },
   "sections": [
     {
+      "type": "quote",
+      "quote": "Die <strong>Innovationserhebung 2022</strong> widmet sich in gewohnter Weise der Auswertung der durch das Zentrum für Europäische Wirtschaftsforschung (ZEW) erhobenen Daten zum Innovationsverhalten Berlins. <br><br>Die Innovationserhebung Berlin wird zeitgleich mit der deutschen Innovationserhebung durchgeführt und nimmt Industrieunternehmen sowie Unternehmen aus dem Bereich wissensintensive Dienstleistungen über das letzte Jahrzehnt in den Blick."
+    },
+    {
+      "type": "chart",
       "id": "section_1",
-      "title": "Basisdaten",
-      "sectionDescription": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda soluta sed consequatur rem saepe dolores voluptates recusandae explicabo officiis",
+      "title": "I. Basisdaten",
+      "disclaimer": "Innovationsausgaben sowie Ausgaben für Forschung und Entwicklung: Tendenzen aus den Vorjahren setzen sich fort.",
+      "sectionDescription": "Hier in unserem Chart der Basisdaten können Sie sich die Daten nach Belieben zusammenstellen. Wählen sie Größen wie <strong>Branchen, Beschäftigungsgröße</strong> oder <strong>Technologieklasse</strong> und vergleichen verschiedene Kennzahlen und Ausgabengrößen. <br><br>Um die Daten besser in Kontext setzen zu können haben Sie die Wahl die Daten aus Berlin mit dem deckungsgleich aufgebauten Datensatz über bundesweite Innovationsunternehmen zu vergleichen.",
       "toggleText": "Zusammensetzung der FuE-Ausgaben in ",
       "chart-ids": [
         "base_chart_ber",
@@ -37,22 +43,31 @@
       ]
     },
     {
+      "type": "quote",
+      "quote": "Im Rahmen der <strong>Innovationsausgaben</strong> betrachten wir wie sich Berliner Unternehmen im bundesweiten Vergleich schlagen, welche Branchen aktiver werden und welche davon die größten Erfolge verzeichnen konnten."
+    },
+    {
+      "type": "chart",
       "id": "section_2",
-      "title": "FuE-Ausgaben",
-      "sectionDescription": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda soluta sed consequatur rem saepe dolores voluptates recusandae explicabo officiis",
+      "title": "II. Anteile der Wirtschaft an der gesamten Forschung",
+      "disclaimer": "Weiterhin kommen gute zwei Drittel der Mittel aus öffentlicher Hand.",
+      "sectionDescription": "Bei der <strong>Mittelherkunft</strong> ist wenig Bewegung: Während weiterhin ungefähr ein Drittel der Mittel aus der Wirtschaft selber kommen, fördert die öffentliche Hand die restlichen zwei Drittel der gesamten Ausgaben. <br><br>Während <strong>Verteilung</strong> der kleinste Anteil in den Hochschulen und der größte Teil in der Wirtschaft ausgegeben wird, befindet sich die Höhe der Ausgaben ungefähr in der selben Dimension, so dass man hier keinen eindeutigen Forschungsschwerpunkt ausmachen kann.",
       "chart-ids": [
         "fue_chart"
       ]
     },
     {
+      "type": "chart",
       "id": "section_3",
-      "title": "Anteile-Ausgaben",
-      "sectionDescription": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda soluta sed consequatur rem saepe dolores voluptates recusandae explicabo officiis",
+      "title": "III. Anteile der Branchen an der Industrieforschung",
+      "disclaimer": "Die Softwareindustrie hat ihren Anteil mehr als verdoppelt und ist jetzt zweitgrößter Träger der Industrieforschung",
+      "sectionDescription": "Spitzenreiter in <strong>Berlin</strong> bleibt hingegen weiterhin ungeschlagen die Pharmaziebranche. Keine andere Branche ist derart aktiv in der deutschen Forschungslandschaft.In den hier nicht weiter aufgeschlüsselten restlichen Branchen sind vor allem die Bereiche der Medien und der Finanzdienstleistungen verantwortlich für den moderaten Anstieg zwischen den Jahrzehnten. <br><br>Im <strong>bundesweiten</strong> Vergleich dominiert weiterhin ganz klar der Maschinen- und Fahrzeugbau im Bereich der Industrieforschung. Aber auch hier konnte die Softwarebranche ihre Anteile signifikant ausbauen.",
       "chart-ids": [
         "shares_chart"
       ]
     },
     {
+      "type": "chart",
       "id": "section_4",
       "title": "Erhebung 3",
       "sectionDescription": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda soluta sed consequatur rem saepe dolores voluptates recusandae explicabo officiis",
