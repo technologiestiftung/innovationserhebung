@@ -1,44 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // TODO: find all sections with charts // create a connection between defined chart classes
-  // TODO: get parent elements to disable on click
-
-
-  const allSections = document.querySelectorAll("section")
-  // const allFigures = document.querySelectorAll(".bk-panel-models-reactive_html-ReactiveHTML")
-  
-  const sectionIds = Array.from(allSections).map((section) =>
-  section.getAttribute("id"),
-  )
-
-  const sectionMeta = sectionIds
-  .map((id) => {
-    return { id, toggle: document.getElementById(id + "_toggle") }
-  })
-  .filter((meta) => meta.toggle)
-  .map((meta) => {
-    return {
-      id: meta.id,
-      toggle: meta.toggle,
-      charts: {
-        ber: document.getElementById(meta.id + "_ber"),
-        ger: document.getElementById(meta.id + "_ger"),
-      },
-    }
-  })
-  
-  sectionMeta.forEach((section) => {
-    section.toggle.addEventListener("change", () => {
-      const locations = ["ber", "ger"]
-      const SUFFIX_LENGTH = "ber".length
-      const selectedChartId = section.toggle.value
-      const activeChartLocation = selectedChartId.slice(-SUFFIX_LENGTH)
-      const inactiveChartLocation = locations.find(
-        (location) => location !== activeChartLocation,
-      )
-      section.charts[activeChartLocation].classList.remove("hidden")
-      section.charts[inactiveChartLocation].classList.add("hidden")
-    })
-  })
 
   const createChartControllerObj = () => {
     const allChartWrappers = document.querySelectorAll(".chart-wrapper")
@@ -58,13 +18,11 @@ document.addEventListener("DOMContentLoaded", () => {
         })
       })
     })
-    // returns an Object like { "chart-1-id": {"ber": chart1-ber, "de": chart1-de} }
     return chartObj
   }
   const addTogglesToController = (chartControllerObject) => {
     const chartIds = Object.keys(chartControllerObject)
     chartIds.forEach((chartId) => {
-      console.log(chartControllerObject[chartId])
       chartControllerObject[chartId]["toggle"] = document.getElementById(chartId + "_toggle")
       })
     }
@@ -79,13 +37,23 @@ document.addEventListener("DOMContentLoaded", () => {
       const chartControllerObject = createChartControllerObj()
 
       addTogglesToController(chartControllerObject)
+      // returns an Object like { "chart-1-id": {"ber": chart1-ber, "de": chart1-de, "toggle": chart1-toggle} }
       Object.keys(chartControllerObject).forEach((chartId) => {
         const chartObj = chartControllerObject[chartId]
-        chartObj["toggle"].addEventListener("change", () => {
-          console.log("change it")
-          //TODO: insert logig for toggles
+        chartObj["toggle"].addEventListener("change", (e) => {
+          const activeChartLocation = e.target.value
+          const locations = ["ber", "de"]
+          console.log(chartObj, activeChartLocation)
+          locations.forEach((location) => {
+            chartObj[location].style.display = "block"
+            if (location == activeChartLocation) {
+              chartObj[location].firstChild.style.maxHeight = "fit-content"
+            } else {
+              chartObj[location].firstChild.style.maxHeight = 0
+            }
         })
       })
+    })
 
       clearInterval(getChartsInterval)
       console.log(chartControllerObject)      
