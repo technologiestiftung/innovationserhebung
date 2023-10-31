@@ -98,28 +98,22 @@ class BaseDataParser(DataParser):
 
     def reshape(self, input_dict):
         """
-        Validate and reshape the extracted Basis data for a specific area and unit.
+        Validate and reshape the extracted data.
 
         :param input_dict: nested dict, with the shape {branch: {year: value}}
         :return: dict, with the shape {years: [year1, year2, ...], branch1: [value1, value2, ...]}
         """
         # Make an ordered list of all years that are present in the dataset
-        years = []
-        for branch in input_dict:
-            for year in input_dict[branch].keys():
-                if year not in years:
-                    years.append(year)
+        years = set()
+        for branch_values in input_dict.values():
+            years.update(year for year in branch_values.keys())
 
         # Check that all inner dictionaries contain all the years and reshape them
-        output_dict = {"jahre": [int(year) for year in years]}
-        for branch in input_dict:
-            branch_datapoints = []
-            for year in years:
-                if year in input_dict[branch]:
-                    branch_datapoints.append(input_dict[branch][year])
-                else:
-                    raise Exception  # TODO: Make more specific exception
-            output_dict[branch] = branch_datapoints
+        output_dict = {"jahre": sorted(list(year for year in years))}
+        for branch, branch_values in input_dict.items():
+            if set(branch_values.keys()) != years:
+                raise Exception  # TODO: Make more specific exception
+            output_dict[branch] = [year_value for year_value in branch_values.values()]
 
         return output_dict
 
