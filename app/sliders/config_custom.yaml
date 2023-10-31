@@ -78,7 +78,7 @@ fue_pie_interactive:
       - Staat
     single_choice_highlight_default: Wirtschaft
 
-coop_partner:
+coop_partner_bar_interactive:
   parser_type: coop
   plot_type: bar_interactive
   plot_codes:

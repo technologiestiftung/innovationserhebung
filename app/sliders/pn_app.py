@@ -1,6 +1,5 @@
 import json
 
-import numpy as np
 from panel.layout.gridstack import GridSpec
 from panel.layout.flex import FlexBox
 
@@ -8,25 +7,9 @@ from .config_importer import ConfigImporter
 from .plotter import PlotterFactory
 
 # TODO: Refactoring
-#   1/ ConfigImporter and PlotterFactory should be processed only once
 #   2/ Think alternative to functions for individual plots, since it's not reused and it's not very idiomatic
 
-with open("data/outfile.json", "r") as f:
-    data = json.load(f)
-
-
 # Create some random data - TODO: To be deleted later
-pie_data = {
-    "x": ["United States", "United Kingdom", "Japan", "China", "Germany"],
-    "y": [157, 93, 89, 63, 44]
-}
-
-n = 20
-x = np.random.rand(n)
-y = np.random.rand(n)
-size = np.random.randint(10, 100, n)
-bubble_data = {"x": x, "y": y, "size": size}
-
 line_data = {
     "x": [1, 2, 3, 4, 5],
     "y": [6, 7, 2, 4, 5]
@@ -63,53 +46,38 @@ interactive_line_data = {
     }
 }
 
-bar_data = {"x": ["A", "B", "C", "D"],
-            "y": [15, 40, 25, 30]
-}
+# Load data
+with open("data/outfile.json", "r") as f:
+    data = json.load(f)
 
+# Load config
+config_importer = ConfigImporter()
+config = config_importer.get_config()
 
-def get_fue_chart():
-    chart_data = data["fue_pie_interactive"]
-    config_importer = ConfigImporter()
-    config = config_importer.get_config()
+# Initialize plotter factory
+plotter_factory = PlotterFactory()
 
-    plotter_factory = PlotterFactory()
+# Generate plots
+plotters = {}
+for plot_key in config:
+    # TODO: Delete these conditions after refactoring the BubblePlotter
+    #  and fixing the base plot bug
+    if plot_key == "growth_bubble":
+        plot_data = data["growth_bubble"]["ber"]["individual"]
+    elif plot_key == "base_line_interactive":
+        continue
+    else:
+        plot_data = data[plot_key]
 
-    pie_plotter = plotter_factory.create_plotter("pie_interactive", chart_data, config["fue_pie_interactive"])
-    pie_plotter.generate()
+    # TODO: Can refactor create_plotter() so I only need to pass the config as an argument
+    plotter = plotter_factory.create_plotter(config[plot_key]["plot_type"], plot_data, config[plot_key])
+    plotter.generate()
 
-    fue_chart = FlexBox(*[pie_plotter.plot["ber"], pie_plotter.plot["de"],
-                          pie_plotter.filters_single_choice, pie_plotter.filters_single_choice_highlight],
-                          flex_direction="row", flex_wrap="wrap", justify_content="space-between")
-
-    return fue_chart.servable()
-
-
-def get_shares_chart():
-    chart_data = data["shares_pie_interactive"]
-    config_importer = ConfigImporter()
-    config = config_importer.get_config()
-
-    plotter_factory = PlotterFactory()
-
-    pie_plotter = plotter_factory.create_plotter("pie_interactive", chart_data, config["shares_pie_interactive"])
-    pie_plotter.generate()
-
-    shares_chart = FlexBox(*[pie_plotter.plot["ber"], pie_plotter.plot["de"],
-                             pie_plotter.filters_single_choice, pie_plotter.filters_single_choice_highlight],
-                             flex_direction="row", flex_wrap="wrap", justify_content="space-between")
-
-    return shares_chart.servable()
+    plotters[plot_key] = plotter
 
 
 def get_base_chart():
     # TODO: Import real data and adjust plotter accordingly
-    chart_data = data["base"]
-    config_importer = ConfigImporter()
-    config = config_importer.get_config()
-
-    plotter_factory = PlotterFactory()
-
     interactive_line_plotter = plotter_factory.create_plotter("line_interactive", interactive_line_data, config["base_line_interactive"])
     interactive_line_plotter.generate()
 
@@ -123,15 +91,10 @@ def get_base_chart():
     base_chart[6:7, 0:1] = interactive_line_plotter.filters_multi_choice
     base_chart[6:7, 1:2] = interactive_line_plotter.filters_single_choice
 
-    return base_chart.servable()
+    return base_chart
 
 
 def get_base_chart_ger():
-    config_importer = ConfigImporter()
-    config = config_importer.get_config()
-
-    plotter_factory = PlotterFactory()
-
     interactive_line_plotter = plotter_factory.create_plotter("line_interactive", interactive_line_data, config["base_line_interactive"])
     interactive_line_plotter.generate()
 
@@ -144,15 +107,10 @@ def get_base_chart_ger():
     base_chart[6:7, 0:1] = interactive_line_plotter.filters_multi_choice
     base_chart[6:7, 1:2] = interactive_line_plotter.filters_single_choice
 
-    return base_chart.servable()
+    return base_chart
 
 
 def get_base_chart_ber():
-    config_importer = ConfigImporter()
-    config = config_importer.get_config()
-
-    plotter_factory = PlotterFactory()
-
     interactive_line_plotter = plotter_factory.create_plotter("line_interactive", interactive_line_data, config["base_line_interactive"])
     interactive_line_plotter.generate()
 
@@ -164,40 +122,51 @@ def get_base_chart_ber():
     base_chart[0:6, 0:2] = interactive_line_plotter.plot["ber"]
     base_chart[6:7, 0:1] = interactive_line_plotter.filters_multi_choice
     base_chart[6:7, 1:2] = interactive_line_plotter.filters_single_choice
-    return base_chart.servable()
+    return base_chart
 
 
-def get_funky_bubble_chart():
-    chart_data = data["growth_bubble"]["ber"]["individual"]
+# TODO:
+#  Think if I can simplify some of the code below, there is a lot of duplicate
+#  Do we really need to use FlexBox AND GridSpec? Maybe we can just use one
+grids = {}
 
-    config_importer = ConfigImporter()
-    config = config_importer.get_config()
+plot_key = "fue_pie_interactive"
+plotter = plotters[plot_key]
+grid = FlexBox(plotter.plot["ber"],
+               plotter.plot["de"],
+               plotter.filters_single_choice,
+               plotter.filters_single_choice_highlight,
+               flex_direction="row",
+               flex_wrap="wrap",
+               justify_content="space-between")
+grids[plot_key] = grid
 
-    plotter_factory = PlotterFactory()
+plot_key = "shares_pie_interactive"
+plotter = plotters[plot_key]
+grid = FlexBox(plotter.plot["ber"],
+               plotter.plot["de"],
+               plotter.filters_single_choice,
+               plotter.filters_single_choice_highlight,
+               flex_direction="row",
+               flex_wrap="wrap",
+               justify_content="space-between")
+grids[plot_key] = grid
 
-    bubble_plotter = plotter_factory.create_plotter("bubble", chart_data, config["growth_bubble"])
-    bubble_plotter.generate()
+plot_key = "growth_bubble"
+plotter = plotters[plot_key]
+grid = GridSpec(sizing_mode="stretch_both",
+                min_height=350)
+grid[0:1, 0:2] = plotter.plot
+grids[plot_key] = grid
 
-    funky_bubbleplot = GridSpec(sizing_mode="stretch_both", min_height=350)
-    funky_bubbleplot[0:1, 0:2] = bubble_plotter.plot
+plot_key = "coop_partner_bar_interactive"
+plotter = plotters[plot_key]
+grid = GridSpec(sizing_mode="stretch_both", min_height=900)
+grid[0:1, 0:2] = plotter.plot["ber"]
+grid[1:2, 0:1] = plotter.filters_single_choice
+grid[1:2, 1:2] = plotter.filters_single_choice_2
+grids[plot_key] = grid
 
-    return funky_bubbleplot.servable()
-
-
-def get_bar_chart():
-    chart_data = data["coop_partner"]
-
-    config_importer = ConfigImporter()
-    config = config_importer.get_config()
-
-    plotter_factory = PlotterFactory()
-
-    bar_plotter = plotter_factory.create_plotter("bar_interactive", chart_data, config["coop_partner"])
-    bar_plotter.generate()
-
-    barplot = GridSpec(sizing_mode="stretch_both", min_height=900)
-    barplot[0:1, 0:2] = bar_plotter.plot["ber"]
-    barplot[1:2, 0:1] = bar_plotter.filters_single_choice
-    barplot[1:2, 1:2] = bar_plotter.filters_single_choice_2
-
-    return barplot.servable()
+grids["base_chart"] = get_base_chart()
+grids["base_chart_ber"] = get_base_chart_ber()
+grids["base_chart_ger"] = get_base_chart_ger()

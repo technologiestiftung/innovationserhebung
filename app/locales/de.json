@@ -53,7 +53,7 @@
       "disclaimer": "Weiterhin kommen gute zwei Drittel der Mittel aus öffentlicher Hand.",
       "sectionDescription": "Bei der <strong>Mittelherkunft</strong> ist wenig Bewegung: Während weiterhin ungefähr ein Drittel der Mittel aus der Wirtschaft selber kommen, fördert die öffentliche Hand die restlichen zwei Drittel der gesamten Ausgaben. <br><br>Während <strong>Verteilung</strong> der kleinste Anteil in den Hochschulen und der größte Teil in der Wirtschaft ausgegeben wird, befindet sich die Höhe der Ausgaben ungefähr in der selben Dimension, so dass man hier keinen eindeutigen Forschungsschwerpunkt ausmachen kann.",
       "chart-ids": [
-        "fue_chart"
+        "fue_pie_interactive"
       ]
     },
     {
@@ -63,7 +63,7 @@
       "disclaimer": "Die Softwareindustrie hat ihren Anteil mehr als verdoppelt und ist jetzt zweitgrößter Träger der Industrieforschung",
       "sectionDescription": "Spitzenreiter in <strong>Berlin</strong> bleibt hingegen weiterhin ungeschlagen die Pharmaziebranche. Keine andere Branche ist derart aktiv in der deutschen Forschungslandschaft.In den hier nicht weiter aufgeschlüsselten restlichen Branchen sind vor allem die Bereiche der Medien und der Finanzdienstleistungen verantwortlich für den moderaten Anstieg zwischen den Jahrzehnten. <br><br>Im <strong>bundesweiten</strong> Vergleich dominiert weiterhin ganz klar der Maschinen- und Fahrzeugbau im Bereich der Industrieforschung. Aber auch hier konnte die Softwarebranche ihre Anteile signifikant ausbauen.",
       "chart-ids": [
-        "shares_chart"
+        "shares_pie_interactive"
       ]
     },
     {
@@ -72,7 +72,7 @@
       "title": "Erhebung 3",
       "sectionDescription": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda soluta sed consequatur rem saepe dolores voluptates recusandae explicabo officiis",
       "chart-ids": [
-        "funky_bubble_chart"
+        "growth_bubble"
       ]
     },
     {
@@ -80,7 +80,7 @@
       "title": "Erhebung 4",
       "sectionDescription": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda soluta sed consequatur rem saepe dolores voluptates recusandae explicabo officiis",
       "chart-ids": [
-        "bar_chart"
+        "coop_partner_bar_interactive"
       ]
     }
   ]
