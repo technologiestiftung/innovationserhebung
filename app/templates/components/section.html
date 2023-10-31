@@ -10,16 +10,13 @@
       {{ section.title }}
     </h2>
     <h3 class="text-corporate-blue text-2xl font-thin leading-10 pb-10">{{ section.disclaimer }}</h3>
-    <p class="font-source">{{ section.sectionDescription | safe }}</p>
-    <div class="my-4">
+    <div class="mb-4">
       {% set charts = section.charts %}
       {% if charts %}
         {% with charts=charts %}
           {% for chart in charts %}
-            {% with section_id=section_id %}
-              {% with chart = chart %}
-                {% include "components/chart-toggle.html" %}
-              {% endwith %}
+            {% with chart = chart %}
+              {% include "components/chart-toggle.html" %}
             {% endwith %}
           {% endfor %}
         {% endwith %}

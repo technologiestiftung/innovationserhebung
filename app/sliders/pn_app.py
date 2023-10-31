@@ -104,7 +104,7 @@ def get_shares_chart():
 
 def get_base_chart():
     # TODO: Import real data and adjust plotter accordingly
-    chart_data = data["base"]
+    # chart_data = data["base"]
     config_importer = ConfigImporter()
     config = config_importer.get_config()
 
