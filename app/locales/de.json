@@ -74,6 +74,14 @@
       "chart-ids": [
         "funky_bubble_chart"
       ]
+    },
+    {
+      "id": "section_5",
+      "title": "Erhebung 4",
+      "sectionDescription": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda soluta sed consequatur rem saepe dolores voluptates recusandae explicabo officiis",
+      "chart-ids": [
+        "bar_chart"
+      ]
     }
   ]
 }

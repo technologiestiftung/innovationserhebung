@@ -6,7 +6,7 @@ class ConfigImporter:
         """
         Create a config dictionary based on default and custom values.
 
-        :return: dict, resulting configuration file
+        :return: dict, configuration
         """
         # Load config files
         config_default = self.load_config_file("config_default.yaml")

@@ -1,8 +1,8 @@
 from abc import abstractmethod, ABC
 from math import pi
 
-from bokeh.models import AnnularWedge, ColumnDataSource, ColorBar, Label
-from bokeh.palettes import Category10, Category20c, Viridis256
+from bokeh.models import AnnularWedge, ColumnDataSource, Label
+from bokeh.palettes import Category10, Category20, Category20c
 from bokeh.plotting import figure
 from bokeh.transform import cumsum, linear_cmap
 import panel
@@ -12,6 +12,7 @@ logging.basicConfig(level=logging.INFO)
 
 PLOT_TYPES = {
     "bar": "BarPlotter",
+    "bar_interactive": "InteractiveBarPlotter",
     "bubble": "BubblePlotter",
     "line": "LinePlotter",
     "line_interactive": "InteractiveLinePlotter",
@@ -106,6 +107,13 @@ class BarPlotter(Plotter):
         super().__init__(raw_data, config)
 
     def fit_data(self):
+        # Define colors
+        self.raw_data["color"] = Category20[len(self.raw_data["x"])]
+
+        # Split long x-axis in more than one line
+        for i, label in enumerate(self.raw_data["x"]):
+            self.raw_data["x"][i] = "/\n".join(label.split("/"))
+
         self.fitted_data = ColumnDataSource(data=self.raw_data)
 
     def create_plot(self):
@@ -113,11 +121,77 @@ class BarPlotter(Plotter):
         self.plot = figure(x_range=self.fitted_data.data["x"], **self.config["general"])
 
         # Add vertical bars to the figure
-        self.plot.vbar(x="x", top="y", source=self.fitted_data, **self.config["vbar"])
+        self.plot.vbar(x="x", top="y", source=self.fitted_data, color="color",
+                       **self.config["vbar"])
 
-        # Show legends
-        self.plot.legend.title = self.config["legend_title"]
-        self.plot.legend.label_text_font_size = self.config["label_text_font_size"]
+        # Rotate x-axis labels
+        self.plot.xaxis.major_label_orientation = pi/2
+
+
+class InteractiveBarPlotter(InteractivePlotter):
+    def __init__(self, raw_data, config):
+        super().__init__(raw_data, config)
+
+        self.filters_single_choice = None
+        self.filters_single_choice_2 = None
+
+    def fit_data(self):
+        for code in self.config["plot_codes"]:
+            for choice in self.config["filters"]["single_choice"]:
+                for choice_2 in self.config["filters"]["single_choice_2"]:
+                    x_values = self.raw_data[code][choice][choice_2]["x"]
+                    # Define color palette
+                    self.raw_data[code][choice][choice_2]["color"] = Category20[len(x_values)]
+                    # Split long x-axis in more than one line
+                    for i, label in enumerate(x_values):
+                        self.raw_data[code][choice][choice_2]["x"][i] = "/\n".join(label.split("/"))
+
+        self.fitted_data = {}
+        for code in self.config["plot_codes"]:
+            single_choice_dict = (self.raw_data[code][
+                                  self.config["filters"]["single_choice_default"]][
+                                  self.config["filters"]["single_choice_2_default"]])
+
+            self.fitted_data[code] = ColumnDataSource(data=single_choice_dict)
+
+    def create_plot(self):
+        self.plot = {}
+
+        for code in self.config["plot_codes"]:
+            # Create the figure
+            plot = figure(x_range=self.fitted_data[code].data["x"], **self.config["general"])
+
+            # Add vertical bars to the figure
+            plot.vbar(x="x", top="y", source=self.fitted_data[code], color="color", **self.config["vbar"])
+
+            # Rotate x-axis labels
+            plot.xaxis.major_label_orientation = pi/2
+
+            self.plot[code] = plot
+
+    def create_filters(self):
+        # Create single choice filter
+        self.filters_single_choice = panel.widgets.RadioBoxGroup(
+            name="Select unit", options=self.config["filters"]["single_choice"]
+        )
+
+        # Create single choice highlight filter
+        self.filters_single_choice_2 = panel.widgets.RadioBoxGroup(
+            name="Select unit", options=self.config["filters"]["single_choice_2"]
+        )
+
+        # Add interactivity
+        self.filters_single_choice.param.watch(self.update_filters, "value")
+        self.filters_single_choice_2.param.watch(self.update_filters, "value")
+
+    def update_filters(self, event):
+        for code in self.config["plot_codes"]:
+            # Extract data using the single choice filters
+            single_choice_dict = (self.raw_data[code][
+                                  self.filters_single_choice.value][
+                                  self.filters_single_choice_2.value])
+
+            self.fitted_data[code].data = single_choice_dict
 
 
 class BubblePlotter(Plotter):
@@ -127,8 +201,9 @@ class BubblePlotter(Plotter):
     def fit_data(self):
         source = ColumnDataSource(data={"x": self.raw_data["x"],
                                         "y": self.raw_data["y"],
-                                        "size": self.raw_data["size"],
-                                        "color": self.raw_data["color"]})
+                                        "z": self.scale_values(self.raw_data["z"]),
+                                        "color": [n for n in range(len(self.raw_data["x"]))],
+                                        "labels": self.raw_data["labels"]})
         self.fitted_data = source
 
     def create_plot(self):
@@ -136,12 +211,26 @@ class BubblePlotter(Plotter):
         self.plot = figure(**self.config["figure"])
 
         # Add circles to the plot
-        mapper = linear_cmap(field_name="color", palette=Viridis256, low=min(self.fitted_data.data["color"]), high=max(self.fitted_data.data["color"]))
-        self.plot.circle(x="x", y="y", size="size", color=mapper, source=self.fitted_data, **self.config["circle"])
+        mapper = linear_cmap(field_name="color", palette=Category20[20], low=0, high=20)
+        self.plot.circle(x="x", y="y", size="z", color=mapper, source=self.fitted_data, legend_group="labels")
 
-        # Add color bar
-        color_bar = ColorBar(color_mapper=mapper["transform"], **self.config["color_bar"])
-        self.plot.add_layout(color_bar, "right")
+        # Set the position of the legend
+        self.plot.add_layout(self.plot.legend[0], "right")
+
+    def scale_values(self, values, max_value=150):
+        """
+        Helper function.
+        Scale values of a list so that they don't exceed a maximum.
+
+        :param values: list, containing integers
+        :param max_value: int, maximum that the values shouldn't exceed
+        :return: list, scaled values
+        """
+        max_val = max(values)
+        scaling_factor = max_value / max_val if max_val > max_value else 1.0
+        scaled_values = [x * scaling_factor for x in values]
+
+        return scaled_values
 
 
 class LinePlotter(Plotter):
