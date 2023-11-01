@@ -49,11 +49,16 @@ INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
 
 ### Use tailwindcss and prettier-plugin-jinja-template
 
-1. If you want to work on the html templating files as well it would be useful to install tailwind, prettier and use the prettier-plugin-jinja-template as well.
+If you want to work on the html templating files as well it would be useful to install Tailwind, Prettier and use the prettier-plugin-jinja-template as well.
 
-```shell
-npm install
-```
+1. Use the Node version that’s defined in `.nvmrc`, e.g. with nvm:
+    ```shell
+    nvm use
+    ```
+2. Install the npm dependencies:
+    ```shell
+    npm install
+    ```
 
 
 ### Run tailwind watcher
