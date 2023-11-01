@@ -7,9 +7,6 @@ import panel as pn
 from sliders.pn_app import grids
 from utils.translation import load_translation
 from enum import Enum
-import logging
-
-logging.basicConfig(level=logging.INFO)
 
 
 class Language(str, Enum):

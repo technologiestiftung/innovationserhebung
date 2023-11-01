@@ -167,6 +167,9 @@ class InteractiveBarPlotter(InteractivePlotter):
             # Rotate x-axis labels
             plot.xaxis.major_label_orientation = pi/2
 
+            #Fixed line-height for tick-labels
+            plot.xaxis.axis_label_text_line_height = 1
+
             self.plot[code] = plot
 
     def create_filters(self):

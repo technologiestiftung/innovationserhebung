@@ -10,32 +10,11 @@
       {{ section.title }}
     </h2>
     <h3 class="text-corporate-blue text-2xl font-thin leading-10 pb-10">{{ section.disclaimer }}</h3>
-    <p class="font-source">{{ section.sectionDescription | safe }}</p>
-    <div class="my-4">
-      {% set chart_ids = section.get("chart-ids", []) %}
-      {% if chart_ids|length > 1 %}
-        {% with chart_ids=chart_ids %}
-          {% with section_id=section_id %}
-            {% with section_title=section.title %}
-              {% with toggleText=section.toggleText %}
-                {% include "components/chart-toggle.html" %}
-              {% endwith %}
-            {% endwith %}
-          {% endwith %}
-        {% endwith %}
-      {% else %}
-        {%
-          if chart_ids[0] in
-          request.app.extra
-        %}
-          <figure>
-            {{ request.app.extra[chart_ids[0]]|safe }}
-            <figcaption class="text-sm">
-              {{ section.title }}
-            </figcaption>
-          </figure>
-        {% endif %}
-      {% endif %}
+    <div class="mb-4">
+      {% set charts = section.charts %}
+      {% for chart in charts %}
+        {% include "components/chart-toggle.html" %}
+      {% endfor %}
     </div>
     {% endif %}
   </divclass>
