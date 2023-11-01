@@ -197,6 +197,7 @@ class InteractiveBarPlotter(InteractivePlotter):
             self.fitted_data[code].data = single_choice_dict
 
 
+# TODO: Refactor to produce several plots simultaneously (ber, de) and include filters (by_branch, by_company_size, etc)
 class BubblePlotter(Plotter):
     def __init__(self, raw_data, config):
         super().__init__(raw_data, config)

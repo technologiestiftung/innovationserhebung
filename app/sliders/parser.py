@@ -134,7 +134,7 @@ class BaseDataParser(DataParser):
 
 class CoopDataParser(DataParser):
     def parse(self, sheets, config):
-        data = self.extract(sheets, config["coop_partner"])  # TODO: The key should be configurable
+        data = self.extract(sheets, config["coop_partner_bar_interactive"])  # TODO: The key should be configurable
 
         return data
 

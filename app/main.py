@@ -4,7 +4,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.gzip import GZipMiddleware
 import panel as pn
-from sliders.pn_app import get_bar_chart, get_base_chart, get_base_chart_ger, get_base_chart_ber, get_funky_bubble_chart, get_fue_chart, get_shares_chart
+from sliders.pn_app import grids
 from utils.translation import load_translation
 from enum import Enum
 
@@ -19,6 +19,17 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 app.add_middleware(GZipMiddleware)
 templates = Jinja2Templates(directory="templates")
 
+# TODO: After fixing the BubblePlotter and InteractiveLinePlotter, I can get this list from the config
+plot_keys = [
+    "fue_pie_interactive",
+    "shares_pie_interactive",
+    "base_chart",
+    "base_chart_ger",
+    "base_chart_ber",
+    "growth_bubble",
+    "coop_partner_bar_interactive",
+]
+
 @app.get("/")
 @app.get("/{language}/")
 async def bkapp_page(request: Request, language: Language = None):
@@ -28,30 +39,20 @@ async def bkapp_page(request: Request, language: Language = None):
     # translations = load_translation(language_code)
     translations = load_translation("de")
 
-    request.app.extra["fue_chart"] = server_document('http://127.0.0.1:5000/fue_chart')
-    request.app.extra["shares_chart"] = server_document('http://127.0.0.1:5000/shares_chart')
-    request.app.extra["base_chart"] = server_document('http://127.0.0.1:5000/base_chart')
-    request.app.extra["base_chart_ger"] = server_document('http://127.0.0.1:5000/base_chart_ger')
-    request.app.extra["base_chart_ber"] = server_document('http://127.0.0.1:5000/base_chart_ber')
-    request.app.extra["funky_bubble_chart"] = server_document('http://127.0.0.1:5000/funky_bubble_chart')
-    request.app.extra["bar_chart"] = server_document('http://127.0.0.1:5000/bar_chart')
+    for key in plot_keys:
+        request.app.extra[key] = server_document(f"http://127.0.0.1:5000/{key}")
 
     script = server_document("http://127.0.0.1:5000/app")
-    return templates.TemplateResponse("index.html", {"request": request, "script": script, "translations": translations, "language_code": language_code})
+    response = templates.TemplateResponse("index.html", {
+        "request": request, "script": script, "translations": translations, "language_code": language_code})
+
+    return response
 
 
 def get_language_code(language: Language | str):
     return type(language) is str and language[:2] or language.value
 
 
-pn.serve({
-    "/fue_chart": get_fue_chart,
-    "/shares_chart": get_shares_chart,
-    "/base_chart": get_base_chart,
-    "/base_chart_ger": get_base_chart_ger,
-    "/base_chart_ber": get_base_chart_ber,
-    "/funky_bubble_chart": get_funky_bubble_chart,
-    "/bar_chart": get_bar_chart
-    },
-        port=5000, allow_websocket_origin=["127.0.0.1:8000"],
-         address="127.0.0.1", show=False)
+pn.serve({f"{key}": grids[key].servable() for key in plot_keys},
+         port=5000, allow_websocket_origin=["127.0.0.1:8000"], address="127.0.0.1", show=False
+         )
