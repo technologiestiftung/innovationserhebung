@@ -1063,6 +1063,19 @@ h2 {
 
 body {
   font-family: 'ClanPro', sans-serif;
+  --design-primary-color: #1E3791;
+}
+
+/* bokeh / panel overwrites */
+
+.bk-btn-primary {
+  border-color: #1E3791 !important;
+  color: #1E3791 !important;
+}
+
+.bk-btn-primary.bk-active {
+  color: white !important;
+  font-weight: bold;
 }
 
 .first-of-type\:border-hidden:first-of-type {
