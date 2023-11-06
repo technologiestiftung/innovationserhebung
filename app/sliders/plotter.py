@@ -271,7 +271,7 @@ class InteractiveLinePlotter(InteractivePlotter):
             single_choice_dict = (self.raw_data[code][self.config["filters"]["single_choice_default"]])
 
             # Get a subset of the lines selected with the multi choice filters
-            selected_lines = ["x"] + self.config["filters"]["multi_choice_default"]
+            selected_lines = ["x"] + self.config["filters"]["multi_choice"]
             initial_data = {line: single_choice_dict[line]
                             for line in selected_lines}
 
@@ -298,7 +298,7 @@ class InteractiveLinePlotter(InteractivePlotter):
         self.filters_multi_choice = panel.widgets.CheckBoxGroup(
             name="Select branches",
             options=self.config["filters"]["multi_choice"],
-            value=self.config["filters"]["multi_choice_default"]
+            value=self.config["filters"]["multi_choice"]
         )
 
         # Add interactivity
