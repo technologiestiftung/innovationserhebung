@@ -38,9 +38,6 @@ base_line_interactive:
       - nahrung
       - pharma
       - textil
-    multi_choice_default:
-      - nahrung
-      - pharma
 
 shares_pie_interactive:
   parser_type: shares
