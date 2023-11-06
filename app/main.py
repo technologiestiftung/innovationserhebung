@@ -1,12 +1,15 @@
+from enum import Enum
+
 from bokeh.embed import server_document
 from fastapi import FastAPI, Request
-from fastapi.templating import Jinja2Templates
-from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.gzip import GZipMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 import panel as pn
+
 from sliders.pn_app import grids
 from utils.translation import load_translation
-from enum import Enum
 
 
 class Language(str, Enum):
@@ -47,6 +50,11 @@ async def bkapp_page(request: Request, language: Language = None):
         "request": request, "script": script, "translations": translations, "language_code": language_code})
 
     return response
+
+
+@app.get("/favicon.ico", include_in_schema=False)
+async def favicon():
+    return FileResponse("favicon.ico")
 
 
 def get_language_code(language: Language | str):
