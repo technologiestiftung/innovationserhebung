@@ -78,7 +78,9 @@ for plot_key in config:
 
 def get_base_chart():
     # TODO: Import real data and adjust plotter accordingly
-    interactive_line_plotter = plotter_factory.create_plotter("line_interactive", interactive_line_data, config["base_line_interactive"])
+    interactive_line_plotter = plotter_factory.create_plotter("line_interactive",
+                                                              data["base_line_interactive"],
+                                                              config["base_line_interactive"])
     interactive_line_plotter.generate()
 
     line_plotter = plotter_factory.create_plotter("line", line_data, config["base_line_interactive"])
@@ -91,37 +93,6 @@ def get_base_chart():
     base_chart[6:7, 0:1] = interactive_line_plotter.filters_multi_choice
     base_chart[6:7, 1:2] = interactive_line_plotter.filters_single_choice
 
-    return base_chart
-
-
-def get_base_chart_ger():
-    interactive_line_plotter = plotter_factory.create_plotter("line_interactive", interactive_line_data, config["base_line_interactive"])
-    interactive_line_plotter.generate()
-
-    line_plotter = plotter_factory.create_plotter("line", line_data, config["base_line_interactive"])
-    line_plotter.generate()
-
-    base_chart = GridSpec(sizing_mode="stretch_both", min_height=600)
-
-    base_chart[0:6, 0:2] = interactive_line_plotter.plot["de"]
-    base_chart[6:7, 0:1] = interactive_line_plotter.filters_multi_choice
-    base_chart[6:7, 1:2] = interactive_line_plotter.filters_single_choice
-
-    return base_chart
-
-
-def get_base_chart_ber():
-    interactive_line_plotter = plotter_factory.create_plotter("line_interactive", interactive_line_data, config["base_line_interactive"])
-    interactive_line_plotter.generate()
-
-    line_plotter = plotter_factory.create_plotter("line", line_data, config["base_line_interactive"])
-    line_plotter.generate()
-
-    base_chart = GridSpec(sizing_mode="stretch_both", min_height=600)
-
-    base_chart[0:6, 0:2] = interactive_line_plotter.plot["ber"]
-    base_chart[6:7, 0:1] = interactive_line_plotter.filters_multi_choice
-    base_chart[6:7, 1:2] = interactive_line_plotter.filters_single_choice
     return base_chart
 
 
@@ -168,5 +139,3 @@ grid[1:2, 1:2] = plotter.filters_single_choice_2
 grids[plot_key] = grid
 
 grids["base_chart"] = get_base_chart()
-grids["base_chart_ber"] = get_base_chart_ber()
-grids["base_chart_ger"] = get_base_chart_ger()

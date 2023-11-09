@@ -109,7 +109,7 @@ class BaseDataParser(DataParser):
             years.update(year for year in branch_values.keys())
 
         # Check that all inner dictionaries contain all the years and reshape them
-        output_dict = {"jahre": sorted(list(year for year in years))}
+        output_dict = {"x": sorted(list(int(year) for year in years))}
         for branch, branch_values in input_dict.items():
             if set(branch_values.keys()) != years:
                 raise Exception  # TODO: Make more specific exception

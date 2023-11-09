@@ -37,7 +37,6 @@ line_interactive:
     x_axis_label: X-axis
     y_axis_label: Y-axis
     toolbar_location: null
-    y_range: [0, 14]
   line:
     line_width: 2
     legend_label: Line
