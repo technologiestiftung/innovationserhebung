@@ -1,5 +1,6 @@
 {
     "scripts": {
+        "get-fonts": "source .env && curl --fail $FONTS_URL --output fonts.zip && unzip -j -o fonts.zip -d app/static/fonts && rm fonts.zip",
         "dev:tailwind": "tailwindcss -i app/styles/main.css -o app/static/css/main.css --watch",
         "build": "tailwindcss -i app/styles/main.css -o app/static/css/main.css --minify"
     },
