@@ -39,19 +39,23 @@
 
 body {
   font-family: 'ClanPro', sans-serif;
-  --design-primary-color: #1E3791;
 }
 
 /* bokeh / panel overwrites */
-
-.bk-btn-primary {
-  border-color: #1E3791 !important;
-  color: #1E3791 !important;
+.bk-btn-group {
+  @apply !bg-corporate-blue !rounded;
 }
 
-.bk-btn-primary.bk-active {
-  color: white !important;
-  font-weight: bold;
+.bk-btn,
+.bk-btn:hover {
+  /* General overrides: */
+  @apply !font-clan !text-sm !font-normal !leading-6 !px-4 !py-1 !border !border-corporate-blue !shadow-none !rounded !outline-offset-0 !inline-flex !items-center !transform-none;
+  /* Specific styles for unselected button: */
+  @apply !bg-transparent !text-white;
+}
+
+.bk-btn.bk-active {
+  @apply !bg-white !text-corporate-blue;
 }
 
 

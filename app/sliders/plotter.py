@@ -521,10 +521,7 @@ class InteractivePiePlotter(InteractivePlotter):
         self.filters_single_choice = panel.widgets.RadioButtonGroup(
             name="Select unit", 
             options=self.config["filters"]["single_choice"],
-            button_type='primary',
-            button_style='outline',
-            border=0,
-            margin=(32, 0, 32, 0)
+            margin=(32, 0)
         )
         # Create single choice highlight filter
         self.filters_single_choice_highlight = panel.widgets.RadioBoxGroup(
