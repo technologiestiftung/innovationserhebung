@@ -1147,6 +1147,9 @@ body {
   border-radius: 0.25rem !important;
   --tw-bg-opacity: 1 !important;
   background-color: rgb(30 55 145 / var(--tw-bg-opacity)) !important;
+  --tw-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16) !important;
+  --tw-shadow-colored: 0px 0px 4px 0px var(--tw-shadow-color) !important;
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
 }
 
 .bk-btn,

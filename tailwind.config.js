@@ -12,6 +12,7 @@ module.exports = {
         top: "0px -8px 24px 0px rgba(0, 0, 0, 0.32)",
         bottom: "0px 0px 16px 0px rgba(0, 0, 0, 0.32)",
         scrollButton: "4px 4px 0px 0px rgba(30, 55, 145, 0.24)",
+        toggleButton: "0px 0px 4px 0px rgba(0, 0, 0, 0.16)",
       },
       colors: {
         "corporate-blue": "#1E3791",

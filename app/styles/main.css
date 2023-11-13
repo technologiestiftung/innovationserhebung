@@ -43,7 +43,7 @@ body {
 
 /* bokeh / panel overwrites */
 .bk-btn-group {
-  @apply !bg-corporate-blue !rounded;
+  @apply !bg-corporate-blue !rounded !shadow-toggleButton;
 }
 
 .bk-btn,
