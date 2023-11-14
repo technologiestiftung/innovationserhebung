@@ -8,13 +8,16 @@ Daten aus 10 Jahre Innovationserhebung ab Innovationserhebung 2013
 
 - Python version 3.11.4 (other versions might work as well) – You can e.g. use pyenv, see below.
 - A Node version that’s defined in `.nvmrc` – You can e.g. use [nvm](https://github.com/nvm-sh/nvm) to switch to the right version (with `nvm use` or `nvm install`).
-- If you are not using macOS or Linux, you might need to source the `.env` file manually to use the `get-fonts` script.
 
 
 ### General setup
 
 1. Create a `.env` file by copying the `.env.example` file and filling out the variables.
-2. Download the required font files (they will be placed in the `/app/static/fonts` directory):
+2. Install npm dependencies:
+    ```shell
+    npm install
+    ```
+3. Run the `get-fonts` script to download the required font files (they will be placed in the `/app/static/fonts` directory):
     ```shell
     npm run get-fonts
     ```
@@ -62,22 +65,15 @@ INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
 ```
 
 
-### Use tailwindcss and prettier-plugin-jinja-template
+### Changing HTML & CSS
 
-If you want to work on the html templating files as well it would be useful to install Tailwind, Prettier and use the prettier-plugin-jinja-template as well:
-
-```shell
-npm install
-```
-
-
-### Run tailwind watcher
+If you need to change HTML templates or CSS, you should use the Tailwind watcher to automatically recompile the CSS:
 
 1. Move to the root directory
-2. From now on you can start the tailwind watcher from the root directory via 
-```shell
-npm run dev:tailwind
-```
+2. Start the tailwind watcher:
+    ```shell
+    npm run dev:tailwind
+    ```
 
 ### Run server in development mode
 
@@ -98,7 +94,7 @@ This also runs the tailwind watcher
 To deploy the app, these commands should be run (in the root directory) to build the app:
 
 ```shell
-pip install -r requirements.txt && npm run build
+pip install -r requirements.txt && npm install && npm run build
 ```
 
 Afterwards, the app can be started with these commands:
