@@ -1,6 +1,6 @@
 growth_bubble:
   parser_type: growth
-  plot_type: bubble
+  plot_type: bubble_interactive
   figure:
     title: Simple Bubble Plot
     toolbar_location: null
@@ -10,6 +10,14 @@ growth_bubble:
   color_bar:
     width: 8
     location: [0, 0]
+  plot_codes:
+    - ber
+    - de
+  filters:
+    single_choice:
+      - individual
+      - by_company_size
+    single_choice_default: individual
 
 base_line_interactive:
   parser_type: base

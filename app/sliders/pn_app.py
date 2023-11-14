@@ -63,7 +63,7 @@ for plot_key in config:
     # TODO: Delete these conditions after refactoring the BubblePlotter
     #  and fixing the base plot bug
     if plot_key == "growth_bubble":
-        plot_data = data["growth_bubble"]["ber"]["individual"]
+        plot_data = data["growth_bubble"]
     elif plot_key == "base_line_interactive":
         continue
     else:
@@ -126,8 +126,9 @@ grids[plot_key] = grid
 plot_key = "growth_bubble"
 plotter = plotters[plot_key]
 grid = GridSpec(sizing_mode="stretch_both",
-                min_height=350)
-grid[0:1, 0:2] = plotter.plot
+                min_height=900)
+grid[0:1, 0:2] = plotter.plot["ber"]
+grid[1:2, 0:1] = plotter.filters_single_choice
 grids[plot_key] = grid
 
 plot_key = "coop_partner_bar_interactive"

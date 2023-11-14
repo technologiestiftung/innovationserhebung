@@ -14,6 +14,7 @@ PLOT_TYPES = {
     "bar": "BarPlotter",
     "bar_interactive": "InteractiveBarPlotter",
     "bubble": "BubblePlotter",
+    "bubble_interactive": "InteractiveBubblePlotter",
     "line": "LinePlotter",
     "line_interactive": "InteractiveLinePlotter",
     "pie": "PiePlotter",
@@ -197,7 +198,6 @@ class InteractiveBarPlotter(InteractivePlotter):
             self.fitted_data[code].data = single_choice_dict
 
 
-# TODO: Refactor to produce several plots simultaneously (ber, de) and include filters (by_branch, by_company_size, etc)
 class BubblePlotter(Plotter):
     def __init__(self, raw_data, config):
         super().__init__(raw_data, config)
@@ -235,6 +235,77 @@ class BubblePlotter(Plotter):
         scaled_values = [x * scaling_factor for x in values]
 
         return scaled_values
+
+
+class InteractiveBubblePlotter(InteractivePlotter):
+    def __init__(self, raw_data, config):
+        super().__init__(raw_data, config)
+
+        self.filters_single_choice = None
+
+    def fit_data(self):
+        # TODO: I can probably initialize a dict already in the abstract class for self.fitted_data.
+        #  Also when creating plots. Do this in the refactoring phase.
+        self.fitted_data = {}
+
+        for code in self.config["plot_codes"]:
+            single_choice_dict = self.raw_data[code][self.config["filters"]["single_choice_default"]]
+            source = ColumnDataSource(data={"x": single_choice_dict["x"],
+                                            "y": single_choice_dict["y"],
+                                            "z": self.scale_values(single_choice_dict["z"]),
+                                            "color": [n for n in range(len(single_choice_dict["x"]))],
+                                            "labels": single_choice_dict["labels"]})
+            self.fitted_data[code] = source
+
+    def create_plot(self):
+        self.plot = {}
+
+        for code in self.config["plot_codes"]:
+            # Create the figure
+            plot = figure(**self.config["figure"])
+
+            # Add circles to the plot
+            mapper = linear_cmap(field_name="color", palette=Category20[20], low=0, high=20)
+            plot.circle(x="x", y="y", size="z", color=mapper, source=self.fitted_data[code], legend_group="labels")
+
+            # Set the position of the legend
+            plot.add_layout(plot.legend[0], "right")
+
+            self.plot[code] = plot
+
+    def scale_values(self, values, max_value=150):
+        """
+        Helper function.
+        Scale values of a list so that they don't exceed a maximum.
+
+        :param values: list, containing integers
+        :param max_value: int, maximum that the values shouldn't exceed
+        :return: list, scaled values
+        """
+        max_val = max(values)
+        scaling_factor = max_value / max_val if max_val > max_value else 1.0
+        scaled_values = [x * scaling_factor for x in values]
+
+        return scaled_values
+
+    def create_filters(self):
+        self.filters_single_choice = panel.widgets.RadioBoxGroup(
+            name="Select unit", options=self.config["filters"]["single_choice"]
+        )
+
+        # Add interactivity
+        self.filters_single_choice.param.watch(self.update_filters, "value")
+
+    def update_filters(self, event):
+        for code in self.config["plot_codes"]:
+            # Extract data using the single choice filter
+            single_choice_dict = self.raw_data[code][self.filters_single_choice.value]
+            data = {"x": single_choice_dict["x"],
+                    "y": single_choice_dict["y"],
+                    "z": self.scale_values(single_choice_dict["z"]),
+                    "color": [n for n in range(len(single_choice_dict["x"]))],
+                    "labels": single_choice_dict["labels"]}
+            self.fitted_data[code].data = data
 
 
 class LinePlotter(Plotter):

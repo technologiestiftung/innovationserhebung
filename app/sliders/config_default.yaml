@@ -19,6 +19,17 @@ bubble:
     width: 8
     location: [0, 0]
 
+bubble_interactive:
+  figure:
+    title: Simple Bubble Plot
+    toolbar_location: null
+  linear_cmap:
+    field_name: color
+    palette: Viridis256
+  color_bar:
+    width: 8
+    location: [0, 0]
+
 line:
   general:
     title: Simple Line Chart
