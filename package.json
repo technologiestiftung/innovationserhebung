@@ -1,6 +1,7 @@
 {
     "scripts": {
-        "dev:tailwind": "tailwindcss -i app/styles/main.css -o app/static/css/main.css --watch"
+        "dev:tailwind": "tailwindcss -i app/styles/main.css -o app/static/css/main.css --watch",
+        "build": "tailwindcss -i app/styles/main.css -o app/static/css/main.css --minify"
     },
     "devDependencies": {
         "prettier": "^3.0.3",
