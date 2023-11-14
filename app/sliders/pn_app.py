@@ -110,7 +110,7 @@ flex_obj = FlexBox(plotter.plot["ber"],
                plotter.filters_single_choice_highlight,
                flex_direction="column",
                align_items="center",
-               justify_content="space-between")
+               sizing_mode="stretch_width")
 chart_collection[plot_key] = flex_obj
 
 plot_key = "shares_pie_interactive"
@@ -121,7 +121,7 @@ flex_obj = FlexBox(plotter.plot["ber"],
                plotter.filters_single_choice_highlight,
                flex_direction="column",
                align_items="center",
-               justify_content="space-between")
+               sizing_mode="stretch_width")
 chart_collection[plot_key] = flex_obj
 
 plot_key = "growth_bubble"
@@ -129,7 +129,7 @@ plotter = plotters[plot_key]
 flex_obj = FlexBox(plotter.plot,
                 flex_direction="column",
                 align_items="center",
-                justify_content="space-between")
+                sizing_mode="stretch_width")
 chart_collection[plot_key] = flex_obj
 
 plot_key = "coop_partner_bar_interactive"
@@ -139,7 +139,7 @@ flex_obj = FlexBox(plotter.plot["ber"],
                plotter.filters_single_choice_2,
                flex_direction="column",
                align_items="center",
-               justify_content="space-between")
+               sizing_mode="stretch_width")
 chart_collection[plot_key] = flex_obj
 
 chart_collection["base_chart"] = get_base_chart()
