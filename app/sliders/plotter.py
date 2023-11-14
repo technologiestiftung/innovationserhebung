@@ -261,8 +261,18 @@ class InteractiveBubblePlotter(InteractivePlotter):
         self.plot = {}
 
         for code in self.config["plot_codes"]:
+            # Get x and y range
+            x_range = []
+            y_range = []
+
+            for key in self.config["filters"]["single_choice"]:
+                x_range.extend(self.raw_data[code][key]["x"])
+                y_range.extend(self.raw_data[code][key]["y"])
+
             # Create the figure
-            plot = figure(**self.config["figure"])
+            plot = figure(**self.config["figure"],
+                          x_range=[min(x_range), max(x_range)],
+                          y_range=[min(y_range), max(y_range)])
 
             # Add circles to the plot
             mapper = linear_cmap(field_name="color", palette=Category20[20], low=0, high=20)
