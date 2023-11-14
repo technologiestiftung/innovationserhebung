@@ -92,3 +92,25 @@ from your root directory to give the bash file executable permission.
 ./run_dev.sh
 ```
 This also runs the tailwind watcher
+
+## Deployment
+
+To deploy the app, these commands should be run (in the root directory) to build the app:
+
+```shell
+pip install -r requirements.txt && npm run build
+```
+
+Afterwards, the app can be started with these commands:
+
+```shell
+cd app/; uvicorn main:app --host 0.0.0.0 --port $PORT
+```
+
+These **environment variables** should be set:
+
+| Variable       | Value        |
+|----------------|--------------|
+| FONTS_URL      | <secret-URL> |
+| PORT           | 8000         |
+| PYTHON_VERSION | 3.11.4       |
