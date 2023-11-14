@@ -19,7 +19,6 @@ base_line_interactive:
     x_axis_label: X-axis
     y_axis_label: Y-axis
     toolbar_location: null
-    y_range: [0, 14]
   line:
     line_width: 2
     legend_label: Line
@@ -31,13 +30,31 @@ base_line_interactive:
     - de
   filters:
     single_choice:
-      - anzahl
-      - umsatz
-    single_choice_default: anzahl
+      - anzahl_unternehmen_insgesamt
+      - anzahl_innovative_unternehmen
+      - anzahl_innovatoren
+      #- umsatz_mio
+      - innovations_ausgaben_mio
+      - fue_ausgaben_mio
+      - umsatz_mio_produkt
+      - umsatz_mio_markt
+    single_choice_default: anzahl_unternehmen_insgesamt
     multi_choice:
       - nahrung
       - pharma
-      - textil
+      - holz
+      - metall
+      - elektroindustrie
+      - fahrzeugbau
+      - sonstige_konsumgueter
+      - energie
+      - telekommunikation
+      - software
+      - finanz
+      - unternehmensberatung
+      - architektur
+      - forschung
+      - kreativ
 
 shares_pie_interactive:
   parser_type: shares
@@ -94,4 +111,3 @@ coop_partner_bar_interactive:
       - Lieferanten
       - Wettbewerber
     single_choice_2_default: insgesamt
-
