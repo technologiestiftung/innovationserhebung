@@ -3,10 +3,10 @@
   data-section-id="{{ section.id }}"
   data-toggle="click-nav-link"
 >
-  <a class=" flex justify-between" href="#{{ section.id }}">
+  <a class="flex justify-between gap-2" href="#{{ section.id }}">
     <span>{{ section.title }}</span>
     <img
-      class="w-4 mr-6"
+      class="w-4"
       src="{{ url_for('static', path='images/arrow-right.svg') }}"
       alt="{{ translations.nav.internalLink }}"
     />
