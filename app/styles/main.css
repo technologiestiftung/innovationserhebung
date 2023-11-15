@@ -41,6 +41,24 @@ body {
   font-family: 'ClanPro', sans-serif;
 }
 
+/* bokeh / panel overwrites */
+.bk-btn-group {
+  @apply !bg-corporate-blue !rounded !shadow-toggleButton;
+}
+
+.bk-btn,
+.bk-btn:hover {
+  /* General overrides: */
+  @apply !font-clan !text-sm !font-normal !leading-6 !px-4 !py-1 !border !border-corporate-blue !shadow-none !rounded !outline-offset-0 !inline-flex !items-center !transform-none;
+  /* Specific styles for unselected button: */
+  @apply !bg-transparent !text-white;
+}
+
+.bk-btn.bk-active {
+  @apply !bg-white !text-corporate-blue;
+}
+
+
 @layer utilities {
   h1 {
     @apply text-h1 leading-h1;

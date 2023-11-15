@@ -641,6 +641,10 @@ video {
   display: flex;
 }
 
+.\!inline-flex {
+  display: inline-flex !important;
+}
+
 .hidden {
   display: none;
 }
@@ -763,6 +767,10 @@ video {
   flex-direction: column;
 }
 
+.\!items-center {
+  align-items: center !important;
+}
+
 .items-center {
   align-items: center;
 }
@@ -804,6 +812,14 @@ video {
           hyphens: auto;
 }
 
+.\!rounded {
+  border-radius: 0.25rem !important;
+}
+
+.\!border {
+  border-width: 1px !important;
+}
+
 .border-b {
   border-bottom-width: 1px;
 }
@@ -818,6 +834,11 @@ video {
 
 .border-t {
   border-top-width: 1px;
+}
+
+.\!border-corporate-blue {
+  --tw-border-opacity: 1 !important;
+  border-color: rgb(30 55 145 / var(--tw-border-opacity)) !important;
 }
 
 .border-corporate-blue {
@@ -840,6 +861,20 @@ video {
   border-color: rgb(255 255 255 / var(--tw-border-opacity));
 }
 
+.\!bg-corporate-blue {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(30 55 145 / var(--tw-bg-opacity)) !important;
+}
+
+.\!bg-transparent {
+  background-color: transparent !important;
+}
+
+.\!bg-white {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity)) !important;
+}
+
 .bg-corporate-blue {
   --tw-bg-opacity: 1;
   background-color: rgb(30 55 145 / var(--tw-bg-opacity));
@@ -848,6 +883,16 @@ video {
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.\!px-4 {
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+}
+
+.\!py-1 {
+  padding-top: 0.25rem !important;
+  padding-bottom: 0.25rem !important;
 }
 
 .px-9 {
@@ -920,8 +965,17 @@ video {
   text-align: center;
 }
 
+.\!font-clan {
+  font-family: ClanPro, sans-serif !important;
+}
+
 .font-source {
   font-family: Source Serif, serif;
+}
+
+.\!text-sm {
+  font-size: 0.875rem !important;
+  line-height: 1.25rem !important;
 }
 
 .text-2xl {
@@ -934,6 +988,10 @@ video {
   line-height: 2.25rem;
 }
 
+.text-h1 {
+  font-size: 2rem;
+}
+
 .text-h2 {
   font-size: 1.125rem;
 }
@@ -943,12 +1001,20 @@ video {
   line-height: 1.25rem;
 }
 
+.\!font-normal {
+  font-weight: 400 !important;
+}
+
 .font-bold {
   font-weight: 700;
 }
 
 .font-thin {
   font-weight: 100;
+}
+
+.\!leading-6 {
+  line-height: 1.5rem !important;
 }
 
 .leading-10 {
@@ -969,6 +1035,12 @@ video {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
+.\!shadow-none {
+  --tw-shadow: 0 0 #0000 !important;
+  --tw-shadow-colored: 0 0 #0000 !important;
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
+}
+
 .shadow-bottom {
   --tw-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.32);
   --tw-shadow-colored: 0px 0px 16px 0px var(--tw-shadow-color);
@@ -985,6 +1057,10 @@ video {
   --tw-shadow: 0px -8px 24px 0px rgba(0, 0, 0, 0.32);
   --tw-shadow-colored: 0px -8px 24px 0px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.\!outline-offset-0 {
+  outline-offset: 0px !important;
 }
 
 .transition-all {
@@ -1063,6 +1139,52 @@ h2 {
 
 body {
   font-family: 'ClanPro', sans-serif;
+}
+
+/* bokeh / panel overwrites */
+
+.bk-btn-group {
+  border-radius: 0.25rem !important;
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(30 55 145 / var(--tw-bg-opacity)) !important;
+  --tw-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16) !important;
+  --tw-shadow-colored: 0px 0px 4px 0px var(--tw-shadow-color) !important;
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
+}
+
+.bk-btn,
+.bk-btn:hover {
+  /* General overrides: */
+  display: inline-flex !important;
+  transform: none !important;
+  align-items: center !important;
+  border-radius: 0.25rem !important;
+  border-width: 1px !important;
+  --tw-border-opacity: 1 !important;
+  border-color: rgb(30 55 145 / var(--tw-border-opacity)) !important;
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+  padding-top: 0.25rem !important;
+  padding-bottom: 0.25rem !important;
+  font-family: ClanPro, sans-serif !important;
+  font-size: 0.875rem !important;
+  font-weight: 400 !important;
+  line-height: 1.5rem !important;
+  --tw-shadow: 0 0 #0000 !important;
+  --tw-shadow-colored: 0 0 #0000 !important;
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
+  outline-offset: 0px !important;
+  /* Specific styles for unselected button: */
+  background-color: transparent !important;
+  --tw-text-opacity: 1 !important;
+  color: rgb(255 255 255 / var(--tw-text-opacity)) !important;
+}
+
+.bk-btn.bk-active {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity)) !important;
+  --tw-text-opacity: 1 !important;
+  color: rgb(30 55 145 / var(--tw-text-opacity)) !important;
 }
 
 .first-of-type\:border-hidden:first-of-type {

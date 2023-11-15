@@ -7,8 +7,7 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import panel as pn
-
-from sliders.pn_app import grids
+from sliders.pn_app import chart_collection
 from utils.translation import load_translation
 
 
@@ -58,7 +57,9 @@ async def favicon():
 def get_language_code(language: Language | str):
     return type(language) is str and language[:2] or language.value
 
+pn.config.css_files.append("static/css/main.css")
 
-pn.serve({f"{key}": grids[key].servable() for key in plot_keys},
+
+pn.serve({f"{key}": chart_collection[key].servable() for key in plot_keys},
          port=5000, allow_websocket_origin=["127.0.0.1:8000"], address="127.0.0.1", show=False
          )
