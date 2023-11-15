@@ -64,5 +64,7 @@ pn.config.css_files.append("static/css/main.css")
 
 
 pn.serve({f"{key}": chart_collection[key].servable() for key in plot_keys},
-         port=5000, allow_websocket_origin=["127.0.0.1:8000"], address="127.0.0.1", show=False
-         )
+         port=5000,
+         allow_websocket_origin=["127.0.0.1:8000", "localhost:8000"],
+         address="127.0.0.1",
+         show=False)
