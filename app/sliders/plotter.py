@@ -283,7 +283,7 @@ class InteractiveBubblePlotter(InteractivePlotter):
 
             self.plot[code] = plot
 
-    def scale_values(self, values, max_value=150):
+    def scale_values(self, values, threshold=150):
         """
         Helper function.
         Scale values of a list so that they don't exceed a maximum.
@@ -293,7 +293,7 @@ class InteractiveBubblePlotter(InteractivePlotter):
         :return: list, scaled values
         """
         max_val = max(values)
-        scaling_factor = max_value / max_val if max_val > max_value else 1.0
+        scaling_factor = threshold / max_val if max_val > threshold else 1.0
         scaled_values = [x * scaling_factor for x in values]
 
         return scaled_values
