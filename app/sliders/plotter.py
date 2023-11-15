@@ -8,7 +8,7 @@ from bokeh.transform import cumsum, linear_cmap
 import panel
 
 import logging
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 
 PLOT_TYPES = {
     "bar": "BarPlotter",
