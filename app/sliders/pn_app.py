@@ -63,7 +63,7 @@ for plot_key in config:
     # TODO: Delete these conditions after refactoring the BubblePlotter
     #  and fixing the base plot bug
     if plot_key == "growth_bubble":
-        plot_data = data["growth_bubble"]["ber"]["individual"]
+        plot_data = data["growth_bubble"]
     elif plot_key == "base_line_interactive":
         continue
     else:
@@ -105,41 +105,43 @@ plot_key = "fue_pie_interactive"
 plotter = plotters[plot_key]
 
 flex_obj = FlexBox(plotter.plot["ber"],
-               plotter.plot["de"],
-               plotter.filters_single_choice,
-               plotter.filters_single_choice_highlight,
-               flex_direction="column",
-               align_items="center",
-               sizing_mode="stretch_width")
+                   plotter.plot["de"],
+                   plotter.filters_single_choice,
+                   plotter.filters_single_choice_highlight,
+                   flex_direction="column",
+                   align_items="center",
+                   sizing_mode="stretch_width")
 chart_collection[plot_key] = flex_obj
 
 plot_key = "shares_pie_interactive"
 plotter = plotters[plot_key]
 flex_obj = FlexBox(plotter.plot["ber"],
-               plotter.plot["de"],
-               plotter.filters_single_choice,
-               plotter.filters_single_choice_highlight,
-               flex_direction="column",
-               align_items="center",
-               sizing_mode="stretch_width")
+                   plotter.plot["de"],
+                   plotter.filters_single_choice,
+                   plotter.filters_single_choice_highlight,
+                   flex_direction="column",
+                   align_items="center",
+                   sizing_mode="stretch_width")
 chart_collection[plot_key] = flex_obj
 
 plot_key = "growth_bubble"
 plotter = plotters[plot_key]
-flex_obj = FlexBox(plotter.plot,
-                flex_direction="column",
-                align_items="center",
-                sizing_mode="stretch_width")
+flex_obj = FlexBox(plotter.plot["ber"],
+                   plotter.plot["de"],
+                   plotter.filters_single_choice,
+                   flex_direction="column",
+                   align_items="center",
+                   sizing_mode="stretch_width")
 chart_collection[plot_key] = flex_obj
 
 plot_key = "coop_partner_bar_interactive"
 plotter = plotters[plot_key]
 flex_obj = FlexBox(plotter.plot["ber"],
-               plotter.filters_single_choice,
-               plotter.filters_single_choice_2,
-               flex_direction="column",
-               align_items="center",
-               sizing_mode="stretch_width")
+                   plotter.filters_single_choice,
+                   plotter.filters_single_choice_2,
+                   flex_direction="column",
+                   align_items="center",
+                   sizing_mode="stretch_width")
 chart_collection[plot_key] = flex_obj
 
 chart_collection["base_chart"] = get_base_chart()
