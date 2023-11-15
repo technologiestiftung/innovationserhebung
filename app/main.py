@@ -39,10 +39,13 @@ async def bkapp_page(request: Request, language: Language = None):
     # translations = load_translation(language_code)
     translations = load_translation("de")
 
-    for key in plot_keys:
-        request.app.extra[key] = server_document(f"http://127.0.0.1:5000/{key}")
+    port = 5000
+    server_base_path = f"http://localhost:{port}"
 
-    script = server_document("http://127.0.0.1:5000/app")
+    for key in plot_keys:
+        request.app.extra[key] = server_document(f"{server_base_path}/{key}")
+
+    script = server_document(f"{server_base_path}/app")
     response = templates.TemplateResponse("index.html", {
         "request": request, "script": script, "translations": translations, "language_code": language_code})
 
