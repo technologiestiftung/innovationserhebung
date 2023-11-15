@@ -39,8 +39,7 @@ async def bkapp_page(request: Request, language: Language = None):
     # translations = load_translation(language_code)
     translations = load_translation("de")
 
-    port = 5000
-    server_base_path = f"http://localhost:{port}"
+    server_base_path = f"http://127.0.0.1:5000"
 
     for key in plot_keys:
         request.app.extra[key] = server_document(f"{server_base_path}/{key}")
@@ -65,6 +64,6 @@ pn.config.css_files.append("static/css/main.css")
 
 pn.serve({f"{key}": chart_collection[key].servable() for key in plot_keys},
          port=5000,
-         allow_websocket_origin=["127.0.0.1:8000", "localhost:8000", "0.0.0.0:8000"],
+         allow_websocket_origin=["127.0.0.1:8000", "0.0.0.0:8000"],
          address="127.0.0.1",
          show=False)
