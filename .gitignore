@@ -10,3 +10,4 @@ node_modules
 /app/static/fonts/*
 !/app/static/fonts/.gitkeep
 
+.env

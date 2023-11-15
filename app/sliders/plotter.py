@@ -162,6 +162,10 @@ class InteractiveBarPlotter(InteractivePlotter):
             # Create the figure
             plot = figure(x_range=self.fitted_data[code].data["x"], **self.config["general"])
 
+            # Stretch to full width.
+            plot.sizing_mode = "scale_width"
+            plot.width_policy = "max"
+
             # Add vertical bars to the figure
             plot.vbar(x="x", top="y", source=self.fitted_data[code], color="color", **self.config["vbar"])
 
@@ -213,6 +217,10 @@ class BubblePlotter(Plotter):
     def create_plot(self):
         # Create the figure
         self.plot = figure(**self.config["figure"])
+
+        # Stretch to full width.
+        self.plot.sizing_mode = "scale_width"
+        self.plot.width_policy = "max"
 
         # Add circles to the plot
         mapper = linear_cmap(field_name="color", palette=Category20[20], low=0, high=20)
@@ -329,6 +337,10 @@ class LinePlotter(Plotter):
         # Create the figure
         self.plot = figure(**self.config["general"])
 
+        # Stretch to full width.
+        self.plot.sizing_mode = "scale_width"
+        self.plot.width_policy = "max"
+
         # Add a line glyph to the figure
         self.plot.line(x="x", y="y", source=self.fitted_data, **self.config["line"])
 
@@ -373,6 +385,10 @@ class InteractiveLinePlotter(InteractivePlotter):
                                      x_range=[x_range[0], x_range[-1]],
                                      y_range=[0, max_value])
 
+            # Stretch to full width.
+            self.plot[code].sizing_mode = "scale_width"
+            self.plot[code].width_policy = "max"
+            
             # Configure labels in x and y axes
             self.plot[code].xaxis.ticker = x_range
             self.plot[code].yaxis.formatter.use_scientific = False
@@ -472,6 +488,8 @@ class PiePlotter(Plotter):
                    source=self.fitted_data,
                    start_angle=cumsum("angle", include_zero=True),
                    end_angle=cumsum("angle"))
+        plot.sizing_mode = "scale_width"
+        plot.width_policy = "max"
         plot.axis.axis_label = self.config["axis_label"]
         plot.axis.visible = self.config["visible"]
         plot.grid.grid_line_color = self.config["grid_line_color"]
@@ -533,6 +551,8 @@ class InteractivePiePlotter(InteractivePlotter):
                 legend_field="x",
                 source=self.fitted_data[code],
             )
+            plot.sizing_mode = "scale_width"
+            plot.width_policy = "max"
 
             # Add a label in the center
             highlight_category = self.config["filters"]["single_choice_highlight_default"]
@@ -597,11 +617,13 @@ class InteractivePiePlotter(InteractivePlotter):
             self.plot[code] = plot
 
     def create_filters(self):
+
         # Create single choice filter
         self.filters_single_choice = panel.widgets.RadioButtonGroup(
-            name="Select unit", options=self.config["filters"]["single_choice"]
+            name="Select unit", 
+            options=self.config["filters"]["single_choice"],
+            margin=(32, 0)
         )
-
         # Create single choice highlight filter
         self.filters_single_choice_highlight = panel.widgets.RadioBoxGroup(
             name="Select unit", options=self.config["filters"]["single_choice_highlight"]

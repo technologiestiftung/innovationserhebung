@@ -17,8 +17,7 @@
     "closeNav": "Inhaltsverzeichnis schließen",
     "internalLink": "Interner Link",
     "label": "Inhaltsverzeichnis",
-    "scrollTop": "Zum Start der Seite gehen",
-    "subHeader_1": "Allgemeine Zahlen"
+    "scrollTop": "Zum Start der Seite gehen"
   },
   "chartToggle": {
     "ariaLabel": "Schalte um zwischen Berlin und Deutschland",
@@ -26,6 +25,10 @@
     "germany": "Deutschland"
   },
   "sections": [
+    {
+      "type": "header",
+      "title": "Allgemeine Zahlen"
+    },
     {
       "type": "quote",
       "quote": "Die <strong>Innovationserhebung 2022</strong> widmet sich in gewohnter Weise der Auswertung der durch das Zentrum für Europäische Wirtschaftsforschung (ZEW) erhobenen Daten zum Innovationsverhalten Berlins. <br><br>Die Innovationserhebung Berlin wird zeitgleich mit der deutschen Innovationserhebung durchgeführt und nimmt Industrieunternehmen sowie Unternehmen aus dem Bereich wissensintensive Dienstleistungen über das letzte Jahrzehnt in den Blick."

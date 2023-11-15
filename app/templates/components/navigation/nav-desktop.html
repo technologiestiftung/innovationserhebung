@@ -1,10 +1,9 @@
-<div class="border-b border-corporate-blue-light mx-mobile pt-7 pb-2 mb-6">
-  <span class="font-bold">{{ translations.nav.subHeader_1 }}</span>
-</div>
-<ul id="accordion-list" class="h-full px-mobile overflow-scroll max-w-hero">
+<ul id="accordion-list" class="h-full p-mobile overflow-scroll max-w-hero">
   {% for section in translations.get("sections", []) %}
     {% with section=section %}
-      {% if section.id %}
+      {% if section.type == "header" %}
+        {% include "components/navigation/nav-header.html" %}
+      {% elif section.id %}
         {% include "components/navigation/nav-link.html" %}
       {% endif %}
     {% endwith %}

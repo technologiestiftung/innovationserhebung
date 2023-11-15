@@ -99,44 +99,49 @@ def get_base_chart():
 # TODO:
 #  Think if I can simplify some of the code below, there is a lot of duplicate
 #  Do we really need to use FlexBox AND GridSpec? Maybe we can just use one
-grids = {}
+chart_collection = {}
 
 plot_key = "fue_pie_interactive"
 plotter = plotters[plot_key]
-grid = FlexBox(plotter.plot["ber"],
-               plotter.plot["de"],
-               plotter.filters_single_choice,
-               plotter.filters_single_choice_highlight,
-               flex_direction="row",
-               flex_wrap="wrap",
-               justify_content="space-between")
-grids[plot_key] = grid
+
+flex_obj = FlexBox(plotter.plot["ber"],
+                   plotter.plot["de"],
+                   plotter.filters_single_choice,
+                   plotter.filters_single_choice_highlight,
+                   flex_direction="column",
+                   align_items="center",
+                   sizing_mode="stretch_width")
+chart_collection[plot_key] = flex_obj
 
 plot_key = "shares_pie_interactive"
 plotter = plotters[plot_key]
-grid = FlexBox(plotter.plot["ber"],
-               plotter.plot["de"],
-               plotter.filters_single_choice,
-               plotter.filters_single_choice_highlight,
-               flex_direction="row",
-               flex_wrap="wrap",
-               justify_content="space-between")
-grids[plot_key] = grid
+flex_obj = FlexBox(plotter.plot["ber"],
+                   plotter.plot["de"],
+                   plotter.filters_single_choice,
+                   plotter.filters_single_choice_highlight,
+                   flex_direction="column",
+                   align_items="center",
+                   sizing_mode="stretch_width")
+chart_collection[plot_key] = flex_obj
 
 plot_key = "growth_bubble"
 plotter = plotters[plot_key]
-grid = GridSpec(sizing_mode="stretch_both",
-                min_height=900)
-grid[0:1, 0:2] = plotter.plot["ber"]
-grid[1:2, 0:1] = plotter.filters_single_choice
-grids[plot_key] = grid
+flex_obj = FlexBox(plotter.plot["ber"],
+                   plotter.plot["de"],
+                   plotter.filters_single_choice,
+                   flex_direction="column",
+                   align_items="center",
+                   sizing_mode="stretch_width")
+chart_collection[plot_key] = flex_obj
 
 plot_key = "coop_partner_bar_interactive"
 plotter = plotters[plot_key]
-grid = GridSpec(sizing_mode="stretch_both", min_height=900)
-grid[0:1, 0:2] = plotter.plot["ber"]
-grid[1:2, 0:1] = plotter.filters_single_choice
-grid[1:2, 1:2] = plotter.filters_single_choice_2
-grids[plot_key] = grid
+flex_obj = FlexBox(plotter.plot["ber"],
+                   plotter.filters_single_choice,
+                   plotter.filters_single_choice_2,
+                   flex_direction="column",
+                   align_items="center",
+                   sizing_mode="stretch_width")
+chart_collection[plot_key] = flex_obj
 
-grids["base_chart"] = get_base_chart()
+chart_collection["base_chart"] = get_base_chart()

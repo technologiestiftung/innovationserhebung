@@ -23,12 +23,9 @@
       <div class="w-full max-w-5xl mx-auto">
         <span id="nav-visible-anchor"></span>
         {% for section in translations.get("sections", []) %}
-          {%
-            with
-            section=section
-          %}
+          {% if section.type != "header" %}
             {% include "components/section.html" %}
-          {% endwith %}
+          {% endif %}
         {% endfor %}
       </div>
     </div>
