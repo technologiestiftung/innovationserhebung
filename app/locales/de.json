@@ -216,6 +216,68 @@
       ]
     },
     {
+      "type": "chart",
+      "id": "section_12",
+      "title": "XII. Inhalt und Nutzen von Wirtschaftskooperationen",
+      "disclaimer": "Insgesamt lässt sich beobachten, dass vor allem große Unternehmen einen hohen Grad an Kooperationen vorweisen können.",
+      "charts": [
+        {
+          "id": "coop_partner_bar_interactive",
+          "description": "Insbesondere die forschungsstarken Branchen Pharma und Elektro kooperierten in Berlin deutlich überdurchschnittlich, im bundesweiten Durchschnitt hingegen nur leicht. Bei den kooperierenden Unternehmen ist die Anzahl der Kooperationsprojekte pro Unternehmen nur in einigen Branchen überdurchschnittlich.",
+          "toggleText": "Anzahl der Kooperationsprojekte pro kooperierendem Unternehmen"
+        },
+        {
+          "id": "coop_partner_bar_interactive",
+          "description": "Die Art der Kooperation ist recht branchenspezifisch, Lizenzgeschäft und Personalaustausch spielten insgesamt die geringste Rolle. Alle Arten der Kooperation werden mit steigender Unternehmensgröße häufiger (kein Wunder) Die Einschätzung der Unternehmen über die Effizienz unterscheiden sich in Berlin nicht vom Bundesdurchschnitt außer in der Beurteilung des Lizenzgeschäftes. Der Stellenwert unterschiedlicher Kooperationsformen ist branchenspezifisch. aber nicht größenspezifisch.",
+          "toggleText": "Art der Kooperation in Prozent"
+        }
+      ]
+    },
+    {
+      "type": "chart",
+      "id": "section_13",
+      "title": "XIII. Zugang zu externem Wissen",
+      "disclaimer": "Reverse Engineering ist insgesamt von geringer Bedeutung, die Abwerbung von Personal im Dienstleistungsgewerbe etwas häufiger.",
+      "charts": [
+        {
+          "id": "coop_partner_bar_interactive",
+          "description": "Die meisten Unternehmen beschaffen technisch verbesserte Ausrüstung, Die Beschaffung unveränderter Technik oder völlig neuer Technologien ist seltener.<br>Unterschiede zwischen den Branchen sind überschaubar. Die Berliner Unternehmen unterschieden sich im Beschaffungsverhalten kaum von den deutschen.",
+          "toggleText": "Nutzung externem Wissens bei der Anschaffung von Maschinen und Ausrüstung 2018"
+        },
+        {
+          "id": "coop_partner_bar_interactive",
+          "description": "Messen und Konferenzen, Fachzeitschriften und wissenschaftliche Publikationen sind sowohl in der Industrie als auch im Dienstleistungsgewerbe der wichtigste Zugangsweg.<br>Patentschriften sind in der Industrie etwas bedeutender, Standardisierungsdokumente, Social Media und Openness im Dienstleistungsgewerbe.<br>Reverse Engineering ist insgesamt von geringer Bedeutung, die Abwerbung von Personal im Dienstleistungsgewerbe etwas häufiger. Die Unterschiede zwischen Berlin und Deutschland sind gering. Die Nutzung von Standards, social media und openness ist - wen wundert es - in der Softwarebranche, der Beratung, der Auftrags-FuE und den Kreativdienstleistungen deutlich ausgeprägter als in anderen Branchen. Die Relevanz der Zugangswege unterscheidet sich innerhalb verschieden großer Unternehmen nicht.",
+          "toggleText": "Zugangswege zum Know-How Dritter 2018"
+        }
+      ]
+    },
+    {
+      "type": "chart",
+      "id": "section_14",
+      "title": "XIV. Schutz von geistigem Eigentum",
+      "disclaimer": "Großunternehmen betreiben intensivere Schutzrechts-Aktivitäten als kleinere. ",
+      "charts": [
+        {
+          "id": "coop_partner_bar_interactive",
+          "description": "Außer bei der Eintragung von Marken und der Geltendmachung von Urheberrechten verfolgt die Deutsche Wirtschaft den Schutz geistigen Eigentums etwas intensiver. Das hängt mit der Branchenstruktur zusammen. Die Relevanz von Schutzrechts-Aktivitäten ist ausgesprochen branchenspezifisch. Großunternehmen betreiben intensivere Schutzrechts-Aktivitäten als kleinere. Deutschlandweit betreiben Unternehmen ab 250 Beschäftigten deutlich intensivere Schutzrechtsaktivitäten als Berliner Unternehmen mit mehr als 250 Beschäftigten. <br>Unternehmen mit weniger als 250 Mitarbeitern sind in Berlin nur bei Marken und Urheberrechten aktiver als im Bundesschnitt. Das hängt wieder mit der Branchenstruktur zusammen.",
+          "toggleText": "Schutz von geistigem Eigentum"
+        }
+      ]
+    },
+    {
+      "type": "chart",
+      "id": "section_15",
+      "title": "XV. Einsatz von künstlicher Intelligenz",
+      "disclaimer": "In Berlin treiben insbesondere Unternehmen mit mehr als 250 Beschäftigten die KI, während es bundesweit die Großunternehmen sind.",
+      "charts": [
+        {
+          "id": "coop_partner_bar_interactive",
+          "description": "KI wurde in Berlin in einem etwas größeren Anteil der Unternehmen eingesetzt als bundesweit, das gilt für alle Branchen und Verfahren. Insbesondere bei Sprachverstehen, Bilderkennung und Maschinellem Lernen gibt es in Berlin eine Reihe von IKT‑Unternehmen deren Kerngeschäft das ist. In Berlin treiben insbesondere Unternehmen mit mehr als 250 Beschäftigten die KI, während es bundesweit die Großunternehmen sind. In Berlin sind Unternehmen mit mehr als 250 Beschäftigen auch in allen Anwendungsgebieten Treiber der KI. In Berlin ist bei einem deutlich höheren Anteil von Unternehmen Künstliche Intelligenz selbst das Produkt oder die Dienstleistung, außerdem ist die Datenanalyse deutlich relevanter. Bei Anwendungen zur Prozessautomatisierung oder Kundenkommunikation sind Berliner Unternehmen durchschnittliche KI-Nutzer. ohne Chart: Berliner Unternehmen haben ca. 2-3 Jahre früher begonnen, KI für sich aufzugreifen. <br><br>Der Anteil an Unternehmen, die die eingesetzte KI selbst entwickelt haben ist in Berlin höher. <br><br>Quelle: Erhebung 2019",
+          "toggleText": "Einsatz von Künstlicher Intelligenz 2018 - 2022"
+        }
+      ]
+    },
+    {
       "type": "quote",
       "quote": "Die letzte Dekade brachte viele technische Neuheiten und neue Herausforderungen. Hier soll das Kapitel <strong>Know How und Trendwenden</strong> einen guten Überblick geben welche Fortschritte erreicht wurden und welche Veränderungen diese mit sich brachten."
     }, 
