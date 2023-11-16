@@ -18,6 +18,7 @@ PANEL_PORT = 5000
 FASTAPI_PORT = 8000
 PROXY_PANEL_THROUGH_FASTAPI = True
 
+
 class Language(str, Enum):
     en = "en"
     de = "de"
@@ -137,7 +138,7 @@ if PROXY_PANEL_THROUGH_FASTAPI:
 pn.config.css_files.append("static/css/main.css")
 
 
-pn.serve({f"{key}": chart_collection[key].servable() for key in plot_keys},
+pn.serve({key: chart_collection[key].servable() for key in plot_keys},
          port=PANEL_PORT,
          allow_websocket_origin=[f"{EXTERNAL_ADDRESS}:{FASTAPI_PORT}", f"{SERVER_ADDRESS}:{FASTAPI_PORT}", EXTERNAL_ADDRESS],
          address=SERVER_ADDRESS,
