@@ -74,6 +74,8 @@ class InteractivePlotter(Plotter):
     def __init__(self, raw_data, config):
         super().__init__(raw_data, config)
 
+        self.filters = {}
+
     def generate(self):
         """
         Run the necessary steps for creating a plot.
@@ -102,9 +104,6 @@ class InteractivePlotter(Plotter):
 class InteractiveBarPlotter(InteractivePlotter):
     def __init__(self, raw_data, config):
         super().__init__(raw_data, config)
-
-        self.filters_single_choice = None
-        self.filters_single_choice_2 = None
 
     def fit_data(self):
         for code in self.config["plot_codes"]:
@@ -149,25 +148,25 @@ class InteractiveBarPlotter(InteractivePlotter):
 
     def create_filters(self):
         # Create single choice filter
-        self.filters_single_choice = panel.widgets.RadioBoxGroup(
+        self.filters["single_choice"] = panel.widgets.RadioBoxGroup(
             name="Select unit", options=self.config["filters"]["single_choice"]
         )
 
         # Create single choice highlight filter
-        self.filters_single_choice_2 = panel.widgets.RadioBoxGroup(
+        self.filters["single_choice_2"] = panel.widgets.RadioBoxGroup(
             name="Select unit", options=self.config["filters"]["single_choice_2"]
         )
 
         # Add interactivity
-        self.filters_single_choice.param.watch(self.update_filters, "value")
-        self.filters_single_choice_2.param.watch(self.update_filters, "value")
+        self.filters["single_choice"].param.watch(self.update_filters, "value")
+        self.filters["single_choice_2"].param.watch(self.update_filters, "value")
 
     def update_filters(self, event):
         for code in self.config["plot_codes"]:
             # Extract data using the single choice filters
             single_choice_dict = (self.raw_data[code][
-                                  self.filters_single_choice.value][
-                                  self.filters_single_choice_2.value])
+                                  self.filters["single_choice"].value][
+                                  self.filters["single_choice_2"].value])
 
             self.fitted_data[code].data = single_choice_dict
 
@@ -175,8 +174,6 @@ class InteractiveBarPlotter(InteractivePlotter):
 class InteractiveBubblePlotter(InteractivePlotter):
     def __init__(self, raw_data, config):
         super().__init__(raw_data, config)
-
-        self.filters_single_choice = None
 
     def fit_data(self):
         # TODO: I can probably initialize a dict already in the abstract class for self.fitted_data.
@@ -234,17 +231,17 @@ class InteractiveBubblePlotter(InteractivePlotter):
         return scaled_values
 
     def create_filters(self):
-        self.filters_single_choice = panel.widgets.RadioBoxGroup(
+        self.filters["single_choice"] = panel.widgets.RadioBoxGroup(
             name="Select unit", options=self.config["filters"]["single_choice"]
         )
 
         # Add interactivity
-        self.filters_single_choice.param.watch(self.update_filters, "value")
+        self.filters["single_choice"].param.watch(self.update_filters, "value")
 
     def update_filters(self, event):
         for code in self.config["plot_codes"]:
             # Extract data using the single choice filter
-            single_choice_dict = self.raw_data[code][self.filters_single_choice.value]
+            single_choice_dict = self.raw_data[code][self.filters["single_choice"].value]
             data = {"x": single_choice_dict["x"],
                     "y": single_choice_dict["y"],
                     "z": self.scale_values(single_choice_dict["z"]),
@@ -256,9 +253,6 @@ class InteractiveBubblePlotter(InteractivePlotter):
 class InteractiveLinePlotter(InteractivePlotter):
     def __init__(self, raw_data, config):
         super().__init__(raw_data, config)
-
-        self.filters_multi_choice = None
-        self.filters_single_choice = None
 
     def fit_data(self):
         self.fitted_data = {}
@@ -303,27 +297,27 @@ class InteractiveLinePlotter(InteractivePlotter):
                 self.plot[code].line(x="x", y=line_name, source=self.fitted_data[code], color=colors[i], legend_label=line_name)
 
     def create_filters(self):
-        self.filters_single_choice = panel.widgets.RadioBoxGroup(
+        self.filters["single_choice"] = panel.widgets.RadioBoxGroup(
             name="Select unit", options=self.config["filters"]["single_choice"]
         )
 
         # Create multi choice filters
-        self.filters_multi_choice = panel.widgets.CheckBoxGroup(
+        self.filters["multi_choice"] = panel.widgets.CheckBoxGroup(
             name="Select branches",
             options=self.config["filters"]["multi_choice"],
             value=self.config["filters"]["multi_choice"]
         )
 
         # Add interactivity
-        self.filters_multi_choice.param.watch(self.update_filters, "value")
-        self.filters_single_choice.param.watch(self.update_filters, "value")
-        self.filters_single_choice.param.watch(self.update_y_range, "value")
+        self.filters["multi_choice"].param.watch(self.update_filters, "value")
+        self.filters["single_choice"].param.watch(self.update_filters, "value")
+        self.filters["single_choice"].param.watch(self.update_y_range, "value")
 
     def update_filters(self, event):
         for code in self.config["plot_codes"]:
             # Re select data based on new selection of filters
-            selected_lines = self.filters_multi_choice.value
-            single_choice_dict = self.raw_data[code][self.filters_single_choice.value]
+            selected_lines = self.filters["multi_choice"].value
+            single_choice_dict = self.raw_data[code][self.filters["single_choice"].value]
 
             filtered_data = {
                 "x": single_choice_dict["x"],
@@ -340,7 +334,7 @@ class InteractiveLinePlotter(InteractivePlotter):
         :param event: an event object that triggers the update
         """
         for code in self.config["plot_codes"]:
-            max_value = self.get_max_value(code, self.filters_single_choice.value)
+            max_value = self.get_max_value(code, self.filters["single_choice"].value)
             self.plot[code].y_range.end = max_value
 
     def get_max_value(self, code, single_choice):
@@ -363,8 +357,6 @@ class InteractivePiePlotter(InteractivePlotter):
     def __init__(self, raw_data, config):
         super().__init__(raw_data, config)
 
-        self.filters_single_choice = None
-        self.filters_single_choice_highlight = None
         self.center_labels = {}
         self.center_labels_2nd_line = {}
         self.inner_rings = {}
@@ -481,24 +473,24 @@ class InteractivePiePlotter(InteractivePlotter):
     def create_filters(self):
 
         # Create single choice filter
-        self.filters_single_choice = panel.widgets.RadioButtonGroup(
+        self.filters["single_choice"] = panel.widgets.RadioButtonGroup(
             name="Select unit", 
             options=self.config["filters"]["single_choice"],
             margin=(32, 0)
         )
         # Create single choice highlight filter
-        self.filters_single_choice_highlight = panel.widgets.RadioBoxGroup(
+        self.filters["single_choice_highlight"] = panel.widgets.RadioBoxGroup(
             name="Select unit", options=self.config["filters"]["single_choice_highlight"]
         )
 
         # Add interactivity
-        self.filters_single_choice.param.watch(self.update_filters, "value")
-        self.filters_single_choice_highlight.param.watch(self.update_filters, "value")
+        self.filters["single_choice"].param.watch(self.update_filters, "value")
+        self.filters["single_choice_highlight"].param.watch(self.update_filters, "value")
 
     def update_filters(self, event):
         for code in self.config["plot_codes"]:
             # Extract data using the single choice filters
-            single_choice_dict = (self.raw_data[code][self.filters_single_choice.value])
+            single_choice_dict = (self.raw_data[code][self.filters["single_choice"].value])
 
             # Get x and y values
             x_values = single_choice_dict["x"]
@@ -518,10 +510,10 @@ class InteractivePiePlotter(InteractivePlotter):
             self.fitted_data[code].data = filtered_data
 
             # Update the center label to match the highlighted category
-            highlight_category = self.filters_single_choice_highlight.value
+            highlight_category = self.filters["single_choice_highlight"].value
             highlight_category_trunkated = (highlight_category[:self.center_label_max_characters] + '..') if len(highlight_category) > self.center_label_max_characters else highlight_category
-            for key, value, color in zip(self.raw_data[code][self.filters_single_choice.value]["x"],
-                                         self.raw_data[code][self.filters_single_choice.value]["y"],
+            for key, value, color in zip(self.raw_data[code][self.filters["single_choice"].value]["x"],
+                                         self.raw_data[code][self.filters["single_choice"].value]["y"],
                                          colors):
                 if key == highlight_category:
                     self.center_labels[code].text = f"{str(int(value))} Mio €"
