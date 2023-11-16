@@ -1,12 +1,16 @@
-<section class="py-8 desktop:px-12 border-t border-corporate-gray-20 first-of-type:border-hidden" id="{{ section.id }}">
+{% if section.id %}
+  <section class="desktop:px-12" id="{{ section.id }}">
+{% else %}
+  <section class="desktop:px-12">
+{% endif %}
   {% if section.type == "quote" %}
     {% include "components/quote-section.html" %}
   {% elif section.type == "chart" %}
   <div>
-    <h2 class="text-sm font-bold mt-0 mb-2 text-corporate-blue pb-10">
+    <h2 class="text-sm font-bold text-corporate-blue mt-0 mb-12">
       {{ section.title }}
     </h2>
-    <h3 class="text-corporate-blue text-2xl font-thin leading-10 pb-10">{{ section.disclaimer }}</h3>
+    <h3 class="text-corporate-blue text-2xl font-thin mb-11">{{ section.disclaimer }}</h3>
     <div class="flex flex-col gap-16">
       {% set charts = section.charts %}
       {% for chart in charts %}

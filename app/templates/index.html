@@ -29,6 +29,9 @@
         {% for section in translations.get("sections", []) %}
           {% if section.type != "header" %}
             {% include "components/section.html" %}
+            {% if loop.last == false %}
+              <hr class="border-t border-corporate-gray-20 my-20" />
+            {% endif %}
           {% endif %}
         {% endfor %}
       </div>
