@@ -111,7 +111,7 @@
           "toggleText": "Zusammensetzung der FuE-Ausgaben in "
         }
       ]
-    }, 
+    },
     {
       "type": "chart",
       "id": "section_6",
@@ -129,8 +129,7 @@
           "toggleText": "Zusammensetzung der FuE-Ausgaben in "
         }
       ]
-    }, 
-
+    },
     {
       "type": "chart",
       "id": "section_7",
@@ -156,7 +155,11 @@
           "toggleText": "Zusammensetzung der FuE-Ausgaben in "
         }
       ]
-    }, 
+    },
+    {
+      "type": "header",
+      "title": "Forschung im öffentlichen Raum"
+    },
     {
       "type": "quote",
       "quote": "Auch bei der <strong>Forschung im öffentlichen Raum</strong> hat sich in den letzten 10 Jahren doch das ein oder andere verändert auf das es sich lohnt einen Blick zu werfen."
@@ -280,7 +283,7 @@
     {
       "type": "quote",
       "quote": "Die letzte Dekade brachte viele technische Neuheiten und neue Herausforderungen. Hier soll das Kapitel <strong>Know How und Trendwenden</strong> einen guten Überblick geben welche Fortschritte erreicht wurden und welche Veränderungen diese mit sich brachten."
-    }, 
+    },
     {
       "type": "chart",
       "id": "section_12",
@@ -298,7 +301,11 @@
           "toggleText": "Zusammensetzung der FuE-Ausgaben in "
         }
       ]
-    }, 
+    },
+    {
+      "type": "header",
+      "title": "Know How und Trendwenden"
+    },
     {
       "type": "quote",
       "quote": "Die letzte Dekade brachte viele technische Neuheiten und neue Herausforderungen. Hier soll das Kapitel <strong>Know How und Trendwenden</strong> einen guten Überblick geben welche Fortschritte erreicht wurden und welche Veränderungen diese mit sich brachten."
@@ -320,7 +327,7 @@
           "toggleText": "Zusammensetzung der FuE-Ausgaben in "
         }
       ]
-    }, 
+    },
     {
       "type": "chart",
       "id": "section_11",
@@ -338,32 +345,11 @@
           "toggleText": "Zusammensetzung der FuE-Ausgaben in "
         }
       ]
-    }, 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    },
+    {
+      "type": "header",
+      "title": "Addendum"
+    },
     {
       "type": "chart",
       "id": "section_growthBubble",
