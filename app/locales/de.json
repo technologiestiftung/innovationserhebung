@@ -286,14 +286,66 @@
     },
     {
       "type": "chart",
-      "id": "section_12",
-      "title": "_____",
-      "disclaimer": "_____",
+      "id": "section_16",
+      "title": "Digitale Methoden im Geschäftsmodell",
+      "disclaimer": "Berliner Unternehmen sind fast immer ein wenig digitaler",
       "charts": [
         {
-          "id": "",
-          "description": "_____",
-          "toggleText": "Zusammensetzung der FuE-Ausgaben in "
+          "id": "coop_partner_bar_interactive",
+          "description": "Berliner Unternehmen sind in fast allen Kategrorien ein bischen weiter als der Durchschnitt. Vertrieb ist mit Abstand die wichtigste Nutzung, gefolgt von Kunden- und Lieferanteninteraktion und Produktindividualisierung. <br>Nutzung nach Betriebsgröße unterscheidet sich zwischen B und D kaum. <br>Welche Methoden wie intensiv genutzt werden, unterscheidet sich von Branche zu Branche relativ stark. <br>",
+          "toggleText": "Nutzung digitaler Methoden im Geschäftsmodell"
+        }
+      ]
+    },
+    {
+      "type": "chart",
+      "id": "section_17",
+      "title": "Corona als Digitalisierungstreiber",
+      "disclaimer": "Verstärkte Digitalisierung ist die Antwort der Wirtschaft auf Corona.",
+      "charts": [
+        {
+          "id": "coop_partner_bar_interactive",
+          "description": "In Berlin wie in Deutschland: verstärkte Digitalisierung ist die Antwort der Wirtschaft auf Corona. <br>Mit branchenspezifischen Unterschieden gilt dies für alle Branchen außer den Ver- und Entsorgern. <br>und für alle Betriebsgrößen.",
+          "toggleText": "Dauerhafte Maßnahmen in Reaktion auf Corona"
+        }
+      ]
+    },
+    {
+      "type": "chart",
+      "id": "section_18",
+      "title": "Umweltinnovationen",
+      "disclaimer": "Die Umweltinnovationen sind im Vormarsch",
+      "charts": [
+        {
+          "id": "coop_partner_bar_interactive",
+          "description": "Der Anteil von Unternehmen, die Umwletinnovationen einführen ist von 2014 bis 2020 in Berlin deutlich gestiegen und brachenspezifisch etwas unterschiedlich. <br>Bundesweit ist der Anteil von Unternehmen mit Umweltinnovatiuonen etwas höher als in Berlin.",
+          "toggleText": "Umweltinnovationen"
+        }
+      ]
+    },
+    {
+      "type": "chart",
+      "id": "section_19",
+      "title": "Gründe für Umweltinnovationen",
+      "disclaimer": "Vor allem gesetzliche Regelungen sind der oberste Treiber wenn es um Umweltinnovationen geht. ",
+      "charts": [
+        {
+          "id": "coop_partner_bar_interactive",
+          "description": "Gesetzliche Regelungen und Rohstoff- / Energiepreise sind die Treiber für Umweltinnovationen, die Nachfrage außer in weniger Branchen, eher nicht. Am wichtigsten ist der Gesetzgeber. Berlin und D nehmen sich wenig. Für die Industrie ist Regulierung ein noch stärkerer Treiber als im Dienstleistungsgewerbe (mit Ausnahme der Auftragsforschung). ",
+          "toggleText": "Gründe für Umweltinnovationen"
+        }
+      ]
+    },
+    {
+      "type": "chart",
+      "id": "section_20",
+      "title": "Klimawandel",
+      "disclaimer": "Size does not matter",
+      "charts": [
+        {
+          "id": "coop_partner_bar_interactive",
+          "description": "Die Einschätzung von Berliner Unternehmen unterscheidet sich kaum vom Bundesdurchschnitt. Die Awareness ist in Berlin moderat niedriger. Die Einschätzung als \"hoch\" ist in der Industrie deutlich häufiger als im Dienstleistungsgewerbe. Die Einschätzung einzelner Aspekte als hoch ist branchenspezifisch sehr unterschiedlich, besonders hoch bei Ver- und Entsorgern, besonders niedrig in der IKT-Branche, den Medien und den Fintechs. size does not matter",
+          "toggleText": "Hohe Bedeutung einzelner Aspekte des Klimawandels für Aktivitäten des Unternehmens"
         },
         {
           "id": "",
