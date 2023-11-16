@@ -36,8 +36,8 @@ chart_collection = {}
 plot_key = "fue_pie_interactive"
 plotter = plotters[plot_key]
 
-flex_obj = FlexBox(plotter.plot["ber"],
-                   plotter.plot["de"],
+flex_obj = FlexBox(plotter.plots["ber"],
+                   plotter.plots["de"],
                    plotter.filters["single_choice"],
                    plotter.filters["single_choice_highlight"],
                    flex_direction="column",
@@ -47,8 +47,8 @@ chart_collection[plot_key] = flex_obj
 
 plot_key = "shares_pie_interactive"
 plotter = plotters[plot_key]
-flex_obj = FlexBox(plotter.plot["ber"],
-                   plotter.plot["de"],
+flex_obj = FlexBox(plotter.plots["ber"],
+                   plotter.plots["de"],
                    plotter.filters["single_choice"],
                    plotter.filters["single_choice_highlight"],
                    flex_direction="column",
@@ -58,8 +58,8 @@ chart_collection[plot_key] = flex_obj
 
 plot_key = "growth_bubble_interactive"
 plotter = plotters[plot_key]
-flex_obj = FlexBox(plotter.plot["ber"],
-                   plotter.plot["de"],
+flex_obj = FlexBox(plotter.plots["ber"],
+                   plotter.plots["de"],
                    plotter.filters["single_choice"],
                    flex_direction="column",
                    align_items="center",
@@ -68,7 +68,7 @@ chart_collection[plot_key] = flex_obj
 
 plot_key = "coop_partner_bar_interactive"
 plotter = plotters[plot_key]
-flex_obj = FlexBox(plotter.plot["ber"],
+flex_obj = FlexBox(plotter.plots["ber"],
                    plotter.filters["single_choice"],
                    plotter.filters["single_choice_2"],
                    flex_direction="column",
@@ -79,8 +79,8 @@ chart_collection[plot_key] = flex_obj
 
 plot_key = "base_line_interactive"
 plotter = plotters[plot_key]
-flex_obj = FlexBox(plotter.plot["ber"],
-                   plotter.plot["de"],
+flex_obj = FlexBox(plotter.plots["ber"],
+                   plotter.plots["de"],
                    plotter.filters["multi_choice"],
                    plotter.filters["single_choice"],
                    flex_direction="column",

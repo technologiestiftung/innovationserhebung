@@ -46,7 +46,7 @@ class Plotter(ABC):
         self.raw_data = raw_data
         self.config = config
         self.fitted_data = None
-        self.plot = None
+        self.plots = {}
 
     def generate(self):
         """
@@ -125,8 +125,6 @@ class InteractiveBarPlotter(InteractivePlotter):
             self.fitted_data[code] = ColumnDataSource(data=single_choice_dict)
 
     def create_plot(self):
-        self.plot = {}
-
         for code in self.config["plot_codes"]:
             # Create the figure
             plot = figure(x_range=self.fitted_data[code].data["x"], **self.config["general"])
@@ -144,7 +142,7 @@ class InteractiveBarPlotter(InteractivePlotter):
             #Fixed line-height for tick-labels
             plot.xaxis.axis_label_text_line_height = 1
 
-            self.plot[code] = plot
+            self.plots[code] = plot
 
     def create_filters(self):
         # Create single choice filter
@@ -190,8 +188,6 @@ class InteractiveBubblePlotter(InteractivePlotter):
             self.fitted_data[code] = source
 
     def create_plot(self):
-        self.plot = {}
-
         for code in self.config["plot_codes"]:
             # Get x and y range
             x_range = []
@@ -213,7 +209,7 @@ class InteractiveBubblePlotter(InteractivePlotter):
             # Set the position of the legend
             plot.add_layout(plot.legend[0], "right")
 
-            self.plot[code] = plot
+            self.plots[code] = plot
 
     def scale_values(self, values, threshold=150):
         """
@@ -269,8 +265,6 @@ class InteractiveLinePlotter(InteractivePlotter):
             self.fitted_data[code] = ColumnDataSource(initial_data)
 
     def create_plot(self):
-        self.plot = {}
-
         # Left-traverse nested data to get the x range
         x_range = self.raw_data
         while type(x_range) == dict:
@@ -279,22 +273,22 @@ class InteractiveLinePlotter(InteractivePlotter):
         for code in self.config["plot_codes"]:
             # Create a Bokeh figure
             max_value = self.get_max_value(code, self.config["filters"]["single_choice_default"])
-            self.plot[code] = figure(**self.config["general"],
+            self.plots[code] = figure(**self.config["general"],
                                      x_range=[x_range[0], x_range[-1]],
                                      y_range=[0, max_value])
 
             # Stretch to full width.
-            self.plot[code].sizing_mode = "scale_width"
-            self.plot[code].width_policy = "max"
+            self.plots[code].sizing_mode = "scale_width"
+            self.plots[code].width_policy = "max"
             
             # Configure labels in x and y axes
-            self.plot[code].xaxis.ticker = x_range
-            self.plot[code].yaxis.formatter.use_scientific = False
+            self.plots[code].xaxis.ticker = x_range
+            self.plots[code].yaxis.formatter.use_scientific = False
 
             # Add lines to the plot
             colors = Category20[20]
             for i, line_name in enumerate(self.config["filters"]["multi_choice"]):
-                self.plot[code].line(x="x", y=line_name, source=self.fitted_data[code], color=colors[i], legend_label=line_name)
+                self.plots[code].line(x="x", y=line_name, source=self.fitted_data[code], color=colors[i], legend_label=line_name)
 
     def create_filters(self):
         self.filters["single_choice"] = panel.widgets.RadioBoxGroup(
@@ -335,7 +329,7 @@ class InteractiveLinePlotter(InteractivePlotter):
         """
         for code in self.config["plot_codes"]:
             max_value = self.get_max_value(code, self.filters["single_choice"].value)
-            self.plot[code].y_range.end = max_value
+            self.plots[code].y_range.end = max_value
 
     def get_max_value(self, code, single_choice):
         """
@@ -386,7 +380,6 @@ class InteractivePiePlotter(InteractivePlotter):
             self.fitted_data[code] = ColumnDataSource(initial_data)
 
     def create_plot(self):
-        self.plot = {}
         self.center_label_max_characters = 20
 
         for code in self.config["plot_codes"]:
@@ -468,7 +461,7 @@ class InteractivePiePlotter(InteractivePlotter):
             plot.axis.visible = self.config["visible"]
             plot.grid.grid_line_color = self.config["grid_line_color"]
 
-            self.plot[code] = plot
+            self.plots[code] = plot
 
     def create_filters(self):
 
