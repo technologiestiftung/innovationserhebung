@@ -11,13 +11,9 @@ import logging
 logging.basicConfig(level=logging.INFO)
 
 PLOT_TYPES = {
-    "bar": "BarPlotter",
     "bar_interactive": "InteractiveBarPlotter",
-    "bubble": "BubblePlotter",
     "bubble_interactive": "InteractiveBubblePlotter",
-    "line": "LinePlotter",
     "line_interactive": "InteractiveLinePlotter",
-    "pie": "PiePlotter",
     "pie_interactive": "InteractivePiePlotter",
 }
 
@@ -103,32 +99,6 @@ class InteractivePlotter(Plotter):
         pass
 
 
-class BarPlotter(Plotter):
-    def __init__(self, raw_data, config):
-        super().__init__(raw_data, config)
-
-    def fit_data(self):
-        # Define colors
-        self.raw_data["color"] = Category20[len(self.raw_data["x"])]
-
-        # Split long x-axis in more than one line
-        for i, label in enumerate(self.raw_data["x"]):
-            self.raw_data["x"][i] = "/\n".join(label.split("/"))
-
-        self.fitted_data = ColumnDataSource(data=self.raw_data)
-
-    def create_plot(self):
-        # Create the figure
-        self.plot = figure(x_range=self.fitted_data.data["x"], **self.config["general"])
-
-        # Add vertical bars to the figure
-        self.plot.vbar(x="x", top="y", source=self.fitted_data, color="color",
-                       **self.config["vbar"])
-
-        # Rotate x-axis labels
-        self.plot.xaxis.major_label_orientation = pi/2
-
-
 class InteractiveBarPlotter(InteractivePlotter):
     def __init__(self, raw_data, config):
         super().__init__(raw_data, config)
@@ -200,49 +170,6 @@ class InteractiveBarPlotter(InteractivePlotter):
                                   self.filters_single_choice_2.value])
 
             self.fitted_data[code].data = single_choice_dict
-
-
-class BubblePlotter(Plotter):
-    def __init__(self, raw_data, config):
-        super().__init__(raw_data, config)
-
-    def fit_data(self):
-        source = ColumnDataSource(data={"x": self.raw_data["x"],
-                                        "y": self.raw_data["y"],
-                                        "z": self.scale_values(self.raw_data["z"]),
-                                        "color": [n for n in range(len(self.raw_data["x"]))],
-                                        "labels": self.raw_data["labels"]})
-        self.fitted_data = source
-
-    def create_plot(self):
-        # Create the figure
-        self.plot = figure(**self.config["figure"])
-
-        # Stretch to full width.
-        self.plot.sizing_mode = "scale_width"
-        self.plot.width_policy = "max"
-
-        # Add circles to the plot
-        mapper = linear_cmap(field_name="color", palette=Category20[20], low=0, high=20)
-        self.plot.circle(x="x", y="y", size="z", color=mapper, source=self.fitted_data, legend_group="labels")
-
-        # Set the position of the legend
-        self.plot.add_layout(self.plot.legend[0], "right")
-
-    def scale_values(self, values, max_value=150):
-        """
-        Helper function.
-        Scale values of a list so that they don't exceed a maximum.
-
-        :param values: list, containing integers
-        :param max_value: int, maximum that the values shouldn't exceed
-        :return: list, scaled values
-        """
-        max_val = max(values)
-        scaling_factor = max_value / max_val if max_val > max_value else 1.0
-        scaled_values = [x * scaling_factor for x in values]
-
-        return scaled_values
 
 
 class InteractiveBubblePlotter(InteractivePlotter):
@@ -324,29 +251,6 @@ class InteractiveBubblePlotter(InteractivePlotter):
                     "color": [n for n in range(len(single_choice_dict["x"]))],
                     "labels": single_choice_dict["labels"]}
             self.fitted_data[code].data = data
-
-
-class LinePlotter(Plotter):
-    def __init__(self, raw_data, config):
-        super().__init__(raw_data, config)
-
-    def fit_data(self):
-        self.fitted_data = ColumnDataSource(data=self.raw_data)
-
-    def create_plot(self):
-        # Create the figure
-        self.plot = figure(**self.config["general"])
-
-        # Stretch to full width.
-        self.plot.sizing_mode = "scale_width"
-        self.plot.width_policy = "max"
-
-        # Add a line glyph to the figure
-        self.plot.line(x="x", y="y", source=self.fitted_data, **self.config["line"])
-
-        # Show legends
-        self.plot.legend.title = self.config["legend_title"]
-        self.plot.legend.label_text_font_size = self.config["label_text_font_size"]
 
 
 class InteractiveLinePlotter(InteractivePlotter):
@@ -453,48 +357,6 @@ class InteractiveLinePlotter(InteractivePlotter):
         max_value = max(all_values)
 
         return max_value
-
-
-class PiePlotter(Plotter):
-    def __init__(self, raw_data, config):
-        super().__init__(raw_data, config)
-
-    def fit_data(self):
-        """
-        Prepare data.
-        """
-        x_values = self.raw_data["x"]
-        y_values = self.raw_data["y"]
-
-        # Calculate area for each category in the pie chart
-        total = sum(y_values)
-        angles = [2 * pi * (y / total) for y in y_values]
-        colors = Category20c[len(x_values)]
-
-        # Transform data to the ColumDataSource format required by Bokeh
-        data = {"x": x_values,
-                "y": y_values,
-                "angle": angles,
-                "color": colors}
-        source = ColumnDataSource(data)
-
-        self.fitted_data = source
-
-    def create_plot(self):
-        # Create a Bokeh figure
-        plot = figure(**self.config["general"])
-
-        plot.wedge(**self.config["wedge"],
-                   source=self.fitted_data,
-                   start_angle=cumsum("angle", include_zero=True),
-                   end_angle=cumsum("angle"))
-        plot.sizing_mode = "scale_width"
-        plot.width_policy = "max"
-        plot.axis.axis_label = self.config["axis_label"]
-        plot.axis.visible = self.config["visible"]
-        plot.grid.grid_line_color = self.config["grid_line_color"]
-
-        self.plot = plot
 
 
 class InteractivePiePlotter(InteractivePlotter):
