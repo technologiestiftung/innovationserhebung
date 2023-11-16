@@ -42,7 +42,7 @@
         {
           "id": "base_chart",
           "description": "Hier in unserem Chart der Basisdaten können Sie sich die Daten nach Belieben zusammenstellen. Wählen sie Größen wie <strong>Branchen, Beschäftigungsgröße</strong> oder <strong>Technologieklasse</strong> und vergleichen verschiedene Kennzahlen und Ausgabengrößen. <br><br>Um die Daten besser in Kontext setzen zu können haben Sie die Wahl die Daten aus Berlin mit dem deckungsgleich aufgebauten Datensatz über bundesweite Innovationsunternehmen zu vergleichen.",
-          "toggleText": "Zusammensetzung der FuE-Ausgaben in "
+          "toggleText": "Innovation nach Branchen"
         }
       ]
     },
@@ -85,12 +85,12 @@
         {
           "id": "growth_bubble",
           "description": "Im Gegensatz zur Bundesrepublik liegt in <strong>Berlin</strong> ein großer Schwerpunkt auf den Unternehmen der Software und Datenverarbeitung, diese Branche umfasst die größte Anzahl der Beschäftigten und kann den größten Wachstum vorweisen.<br><br>Mit weniger Wachstum, bleibt trotzdem weiterhin die Branche der Pharma-, Chemie- und Kunststoffunternehmen Spitzenreiter im Bereich der FuE-Ausgaben.",
-          "toggleText": "Zusammensetzung der FuE-Ausgaben in "
+          "toggleText": "Welche Innovatoren sind besonders wichtig für Berlin?"
         },
         {
           "id": "growth_bubble",
           "description": "<strong>Bundesweit</strong> hingegen bleibt wenig überraschend die Branchen des Maschinen- und Fahrzeugbaus klar vorn, aber auch die Branchen Elektroindustrie und Instrumententechnik, sowie die Branche der Pharma-, Chemie- und Kunststoffverarbeitenden Betriebe. ",
-          "toggleText": "Zusammensetzung der FuE-Ausgaben in "
+          "toggleText": "Welche Innovatoren sind besonders wichtig für Deutschland?"
         }
       ]
     },
@@ -103,12 +103,12 @@
         {
           "id": "growth_bubble",
           "description": "Auch hier kann in <strong>Berlin</strong> wieder einmal die Software-Branche die größten Ausgaben, sowie das größte Wachstum vorweisen. Gemessen am Umsatz haben hingegen Unternehmen der Branche Forschung- und Entwicklung die höchsten FuE-Ausgaben, was wiederum auch nicht überrascht.",
-          "toggleText": "Zusammensetzung der FuE-Ausgaben in "
+          "toggleText": "Welche Innovatoren sind besonders aktiv in Berlin?"
         },
         {
           "id": "growth_bubble",
           "description": "Überraschenderweise liegen <strong>bundesweit</strong> beim Wachstum der FuE-Ausgaben vor allem Unternehmen in der Branche der Verlage, Film-, Rundfunk- und Telekommunikationsunternehmen. Aber auch hier geben gemessen am Umsatz logischerweise die Unternehmen aus Forschung und Entwicklung den größten Anteil davon für Forschung und Entwicklung aus.",
-          "toggleText": "Zusammensetzung der FuE-Ausgaben in "
+          "toggleText": "Welche Innovatoren sind besonders aktiv in Deutschland?"
         }
       ]
     },
@@ -121,12 +121,12 @@
         {
           "id": "growth_bubble",
           "description": "Auch hier kann in <strong>Berlin</strong> wieder einmal die Software-Branche die größten Ausgaben, sowie das größte Wachstum vorweisen. Gemessen am Umsatz haben hingegen Unternehmen der Branche Forschung- und Entwicklung die höchsten FuE-Ausgaben, was wiederum auch nicht überrascht.",
-          "toggleText": "Zusammensetzung der FuE-Ausgaben in "
+          "toggleText": "Welche Innovatoren sind besonders erfolgreich in Berlin?"
         },
         {
           "id": "growth_bubble",
           "description": "Überraschenderweise liegen <strong>bundesweit</strong> beim Wachstum der FuE-Ausgaben vor allem Unternehmen in der Branche der Verlage, Film-, Rundfunk- und Telekommunikationsunternehmen. Aber auch hier geben gemessen am Umsatz logischerweise die Unternehmen aus Forschung und Entwicklung den größten Anteil davon für Forschung und Entwicklung aus.",
-          "toggleText": "Zusammensetzung der FuE-Ausgaben in "
+          "toggleText": "Welche Innovatoren sind besonders erfolgreich in Deutschland?"
         }
       ]
     },
@@ -139,7 +139,7 @@
         {
           "id": "growth_bubble",
           "description": "Die meisten Berliner Unternehmen unterscheiden sich wenig vom bundesweiten Durchschnitt, lediglich im die Unternehmensberatungen, die Kreativindustrie und interessanterweise die Holzindustrie heben sich merklich davon ab.",
-          "toggleText": "Zusammensetzung der FuE-Ausgaben in "
+          "toggleText": "Welche Berliner Innovatoren sind wichtig für Deutschland?"
         }
       ]
     },
@@ -173,12 +173,12 @@
         {
           "id": "coop_partner_bar_interactive",
           "description": "Öffentliche Förderungen sind, mit Ausnahme im Bereich der Finanzdienstleistungen, in allen Branchen relevant, wenn auch mit leicht abnehmender Tendenz. Der größte Anteil der Förderungen geht auch in die zahlenmäßig größten Branchen, sowie in den Bereich der Auftrags-FuE.<br><br>Der Bedarf an Förderung aus Landesmitteln ist relativ konstant geblieben, das in Anspruch nehmende Branchenspektrum hat sich jedoch leicht geändert. Eine gestiegene Inanspruchnahme findet sich bei den Medien, den Unternehmensberatungen und den sonstigen Konsumgütern.<br><br>Sowohl bei den Landesmitteln, als auch bei allen anderen öffentlichen Förderern ist die Inanspruchnahme von Seiten der Berliner Großunternehmen deutlich gestiegen, bei den kleineren Unternehmen ist diese hingegen mitunter deutlich gesunken.",
-          "toggleText": "Zusammensetzung der FuE-Ausgaben in "
+          "toggleText": "Erhalt öffentlicher Innovationsförderung"
         },
         {
           "id": "coop_partner_bar_interactive",
           "description": "<br><br>Auch bei der Aufteilung nach Technologieklassen lässt sich fast überall eine Inanspruchnahme öffentlicher Förderung beobachten, eine Ausnahme bildet hier die Klasse Medien und Kultur, sowie spezifisch auf Landesebene gesehen die nichttechnischen Beratungen.<br><br>Die Inanspruchnahme von Fördermitteln ist in Berlin in einzelnen Branchen moderat höher oder niedriger unterscheidet isch allerdings nicht grundlegend vim Verhalten der gesamtdeutschen Wirtschaft.Für EU-Mittel lässt sich hingegen beobachten, dass diese von Berliner Unterhmen moderat stärker angenommen wird als vergleichsweise bundesweit.<br><br>Sehr kleine Unternehmen mit weniger als 10 Beschäftigten und Berliner Unternehmen mit mehr als 50 Beschäftigten nehmen überdurchschnittlich Fördermittel in Anspruch.<br><br>Das gilt über alle Fördermittelgeber hinweg. In mittleren Unternehmen mit einer Größe zwischen 10 und 49 Beschäftigten sind bei den Antragsstellungen im Bund leicht unterdurchschnittlich erfolgreich.<br><br>Die Inanspruchnahmen von Fördermitteln unterscheidet sich in Berlin und bundesweit innerhalb der Sektoren nur wenig. Bei Bundesmitteln sind die Unternehmen in Berlin etwas unterdurchschnittlich, bei Landesmitteln hingegen nur die Industrie.<br><br>Insgesamt kann man erkennen, dass in Berlin die Medien- und Kreativbranche wesentlich mehr auf die Mittel des Landes Berlin, als auf Bundesmittel zurückgreift.",
-          "toggleText": "Zusammensetzung der FuE-Ausgaben in "
+          "toggleText": "Erhalt öffentlicher Innovationsförderung nach Technologieklassen"
         }
       ]
     },
@@ -191,12 +191,12 @@
         {
           "id": "coop_partner_bar_interactive",
           "description": "Der Kooperationsgrad in der Region, in Deutschland und in Europa sinkt moderat, während er bei den wenigen Unternehmen, die fernere Kooperation pflegen konstant bleibt.<br><br>Die räumliche Kooperationspräferenzen und ihre Änderungen sind stark branchenspezifisch. Während die FuE-Branche in allen Regionen kooperationsintensiver ist, sind Kooperationen über große Entfernungen vor allem im Pharma- und Elektrobereich stärker ausgeprägt als bei anderen Branchen. Eine Zunahme regionaler Kooperation gab es nur bei Architektur- und Ingenieurbüros und im Bereich der sonstigen Konsumgüter. In allen anderen Branchen ist der Kooperationsgrad regional wie überregional deutlich gesunken.<br><br>Insgesamt zeigt sich, dass die lokalen Kooperationen in der Region und Gesamt-Deutschland in allen Größenklassen die wichtigsten darstellen. Außer im Medienbereich ist die regionale Verteilung von Kooperationen in allen Branchen ähnlich.",
-          "toggleText": "Zusammensetzung der FuE-Ausgaben in "
+          "toggleText": "Kooperationen nach Region"
         },
         {
           "id": "coop_partner_bar_interactive",
           "description": "Die regionalen Präferenzen der Berliner Wirtschaft bei Kooperationen unterscheiden sich nicht um Größenordnungen von den bundesweit üblichen Präferenzen. Einzelne Ausreißer (bspw. im Bereich der Holzwirtschaft) sind durch wenige oder einzelne Unternehmen mit spezifischem Profil bedingt.<br><br>Die regionalen Präferenzen der Berliner Wirtschaft bei Kooperationen unterscheiden sich nicht um Größenordnungen von den bundesweit üblichen Präferenzen. Einzelne Ausreißer (Holz, sonst. Konsumgüter) sind durch wenige oder einzelne Unternehmen mit spezifischem Profil bedingt.<br><br>Berliner Unternehmen sind etwas kooperationsfreudiger, die regionalen Präferenzen unterscheiden sich jedoch nicht von den in den jeweiligen Größenklassen erwartbaren Präferenzen.",
-          "toggleText": "Zusammensetzung der FuE-Ausgaben in "
+          "toggleText": "Kooperationen nach Region und Branche"
         }
       ]
     },
@@ -209,12 +209,12 @@
         {
           "id": "coop_partner_bar_interactive",
           "description": "Die Kooperation der Berliner Unternehmen insgesamt und mit Hochschulen oder Forschungseinrichtungen ist in den meisten Branchen moderat rückläufig, aber immer noch höher als im deutschen Durchschnitt. Kooperationen mit der öffentlichen Forschung, !?!?!? Worin die bei Wissenschaftskopertionen besteht, steht mit Berichtsjahr 2017 in der I-Erbenung 2018",
-          "toggleText": "Zusammensetzung der FuE-Ausgaben in "
+          "toggleText": "Beteiligung Berliner Unternehmen an Kooperationen"
         },
         {
           "id": "coop_partner_bar_interactive",
           "description": "Der moderate Rückgang im Kooperationsverhalten gilt in vielen Branchen auch für Kooperationen mit anderen Unternehmen, in der Industrie ausgeprägter als im Dienstleistungsgewerbe, wo Kooperationen mit Lieferanten und Wettbewerbern sogar leicht zunahmen In Berlin ist hingegen die Wissenschaft der weit wichtigere Kooperationspartner, im Gegensatz zum bundesweiten Schnitt. Der Kooperationsgrad steigt nur bei Großunternehmen in Berlin, auch mit der Wirtschaft auch hier steigt bestenfalls die Kooperation mit Wettbewerbern. Ein Jahrzehnt der M&A?? Die Kooperation mit Hochschulen und Forschungseinrichtungen ist am Wissenschaftsstandort Berlin sehr viel ausgeprägter als im deutschen Durchschnitt. Moderat ausgeprägter als im deutschen Durchschnitt ist die Kooperation mit Wettbewerbern, während deutschlandweit die Kooperation mit Kunden und Lieferanten  moderat ausgeprägter ist als in Berlin.<br><br>Bei Unternehmen mit Beriebsgrößen, die typisch für erfolgreiche Nach-Gründungsphasen und spätere Wachstumsphasen sind, sind Kundenkooperationen in Berlin häufiger als in Deutschland. Kooperation mit Lieferanten wchein mit zunehmender Betriebsgröße in Berlin deutlich langsamer anzusteigen als im Bund.<br><br>Speziell bei den KMU ist die Kooperation mit der Wissenschaft in Berlin deutlich ausgeprägter.",
-          "toggleText": "Zusammensetzung der FuE-Ausgaben in "
+          "toggleText": "Kooperationsverhalten der Wirtschaft"
         }
       ]
     },
@@ -227,7 +227,7 @@
         {
           "id": "coop_partner_bar_interactive",
           "description": "Insbesondere die forschungsstarken Branchen Pharma und Elektro kooperierten in Berlin deutlich überdurchschnittlich, im bundesweiten Durchschnitt hingegen nur leicht. Bei den kooperierenden Unternehmen ist die Anzahl der Kooperationsprojekte pro Unternehmen nur in einigen Branchen überdurchschnittlich.",
-          "toggleText": "Anzahl der Kooperationsprojekte pro kooperierendem Unternehmen"
+          "toggleText": "Anzahl der Unternehmen mit Wissenschaftskooperationen"
         },
         {
           "id": "coop_partner_bar_interactive",
@@ -275,7 +275,7 @@
       "charts": [
         {
           "id": "coop_partner_bar_interactive",
-          "description": "KI wurde in Berlin in einem etwas größeren Anteil der Unternehmen eingesetzt als bundesweit, das gilt für alle Branchen und Verfahren. Insbesondere bei Sprachverstehen, Bilderkennung und Maschinellem Lernen gibt es in Berlin eine Reihe von IKT‑Unternehmen deren Kerngeschäft das ist. In Berlin treiben insbesondere Unternehmen mit mehr als 250 Beschäftigten die KI, während es bundesweit die Großunternehmen sind. In Berlin sind Unternehmen mit mehr als 250 Beschäftigen auch in allen Anwendungsgebieten Treiber der KI. In Berlin ist bei einem deutlich höheren Anteil von Unternehmen Künstliche Intelligenz selbst das Produkt oder die Dienstleistung, außerdem ist die Datenanalyse deutlich relevanter. Bei Anwendungen zur Prozessautomatisierung oder Kundenkommunikation sind Berliner Unternehmen durchschnittliche KI-Nutzer. ohne Chart: Berliner Unternehmen haben ca. 2-3 Jahre früher begonnen, KI für sich aufzugreifen. <br><br>Der Anteil an Unternehmen, die die eingesetzte KI selbst entwickelt haben ist in Berlin höher. <br><br>Quelle: Erhebung 2019",
+          "description": "KI wurde in Berlin in einem etwas größeren Anteil der Unternehmen eingesetzt als bundesweit, das gilt für alle Branchen und Verfahren. Insbesondere bei Sprachverstehen, Bilderkennung und Maschinellem Lernen gibt es in Berlin eine Reihe von IKT‑Unternehmen deren Kerngeschäft das ist. In Berlin treiben insbesondere Unternehmen mit mehr als 250 Beschäftigten die KI, während es bundesweit die Großunternehmen sind. In Berlin sind Unternehmen mit mehr als 250 Beschäftigen auch in allen Anwendungsgebieten Treiber der KI. In Berlin ist bei einem deutlich höheren Anteil von Unternehmen Künstliche Intelligenz selbst das Produkt oder die Dienstleistung, außerdem ist die Datenanalyse deutlich relevanter. Bei Anwendungen zur Prozessautomatisierung oder Kundenkommunikation sind Berliner Unternehmen durchschnittliche KI-Nutzer. ohne Chart: Berliner Unternehmen haben ca. 2-3 Jahre früher begonnen, KI für sich aufzugreifen.  Der Anteil an Unternehmen, die die eingesetzte KI selbst entwickelt haben ist in Berlin höher. <br><br>Quelle: Erhebung 2019",
           "toggleText": "Einsatz von Künstlicher Intelligenz 2018 - 2022"
         }
       ]
