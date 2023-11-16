@@ -44,7 +44,7 @@ async def bkapp_page(request: Request, language: Language = None):
     language_code = get_language_code(language)
     # translations = load_translation(language_code)
     translations = load_translation("de")
-    
+
     scheme = 'https' if SERVER_ADDRESS != EXTERNAL_ADDRESS else 'http'
     server_base_path = f"{scheme}://{SERVER_ADDRESS}:{PANEL_PORT}"
 
@@ -71,6 +71,7 @@ pn.config.css_files.append("static/css/main.css")
 
 pn.serve({f"{key}": chart_collection[key].servable() for key in plot_keys},
          port=PANEL_PORT,
-         allow_websocket_origin=[f"{EXTERNAL_ADDRESS}:{FASTAPI_PORT}", f"{SERVER_ADDRESS}:{FASTAPI_PORT}", EXTERNAL_ADDRESS],
+         # allow_websocket_origin=[f"{EXTERNAL_ADDRESS}:{FASTAPI_PORT}", f"{SERVER_ADDRESS}:{FASTAPI_PORT}", EXTERNAL_ADDRESS],
+         allow_websocket_origin='*',
          address=SERVER_ADDRESS,
          show=False)
