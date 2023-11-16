@@ -44,8 +44,9 @@ async def bkapp_page(request: Request, language: Language = None):
     language_code = get_language_code(language)
     # translations = load_translation(language_code)
     translations = load_translation("de")
-
-    server_base_path = f"http://{SERVER_ADDRESS}:{PANEL_PORT}"
+    
+    scheme = 'https' if SERVER_ADDRESS != EXTERNAL_ADDRESS else 'http'
+    server_base_path = f"{scheme}://{SERVER_ADDRESS}:{PANEL_PORT}"
 
     for key in plot_keys:
         request.app.extra[key] = server_document(f"{server_base_path}/{key}")
