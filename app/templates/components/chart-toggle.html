@@ -19,11 +19,11 @@
         </select>
       </p>
     {% endif %}
-    <div id="{{ section_id }}_ber">
+    <div id="{{ section.id }}_ber">
       <figure>
         {{ request.app.extra[chart.id]|safe }}
         <figcaption class="text-sm">
-          {{ section_title }} {{ translations.general.for }}
+          {{ section.title }} {{ translations.general.for }}
           {{ translations.chartToggle.berlin }}
         </figcaption>
       </figure>

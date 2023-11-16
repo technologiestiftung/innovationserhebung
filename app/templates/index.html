@@ -18,10 +18,14 @@
       "components/hero-desktop.html"
     %}
     <div
-      class="page-wrapper mt-3/5 pt-16 bg-white w-full absolute left-0 shadow-top desktop:mt-0 desktop:relative desktop:ml-hero px-mobile tablet:px-desktop"
+      class="page-wrapper mt-3/5 bg-white w-full absolute left-0 shadow-top desktop:mt-0 desktop:relative desktop:ml-hero px-mobile tablet:px-desktop"
     >
       <div class="w-full max-w-5xl mx-auto">
-        <span id="nav-visible-anchor"></span>
+        <div
+          id="nav-visible-anchor"
+          class="w-0 h-0 overflow-hidden"
+          role="none"
+        ></div>
         {% for section in translations.get("sections", []) %}
           {% if section.type != "header" %}
             {% include "components/section.html" %}
