@@ -10,6 +10,12 @@ import panel as pn
 from sliders.pn_app import chart_collection
 from utils.translation import load_translation
 
+# SERVER_ADDRESS = "127.0.0.1"  # "0.0.0.0"
+SERVER_ADDRESS = "0.0.0.0"
+# EXTERNAL_ADDRESS = "127.0.0.1"  # "innovationserhebung-staging.onrender.com"
+EXTERNAL_ADDRESS = "innovationserhebung-staging.onrender.com"
+PANEL_PORT = 5000
+FASTAPI_PORT = 8000
 
 class Language(str, Enum):
     en = "en"
@@ -39,7 +45,7 @@ async def bkapp_page(request: Request, language: Language = None):
     # translations = load_translation(language_code)
     translations = load_translation("de")
 
-    server_base_path = f"http://127.0.0.1:5000"
+    server_base_path = f"http://{SERVER_ADDRESS}:{PANEL_PORT}"
 
     for key in plot_keys:
         request.app.extra[key] = server_document(f"{server_base_path}/{key}")
@@ -63,7 +69,7 @@ pn.config.css_files.append("static/css/main.css")
 
 
 pn.serve({f"{key}": chart_collection[key].servable() for key in plot_keys},
-         port=5000,
-         allow_websocket_origin=["127.0.0.1:8000", "0.0.0.0:8000", "innovationserhebung-staging.onrender.com:8000"],
-         address="127.0.0.1",
+         port=PANEL_PORT,
+         allow_websocket_origin=[f"{EXTERNAL_ADDRESS}:{FASTAPI_PORT}", f"{SERVER_ADDRESS}:{FASTAPI_PORT}", EXTERNAL_ADDRESS],
+         address=SERVER_ADDRESS,
          show=False)
