@@ -716,10 +716,6 @@ video {
   max-width: var(--width-hero);
 }
 
-.flex-auto {
-  flex: 1 1 auto;
-}
-
 .flex-\[1rem\] {
   flex: 1rem;
 }
@@ -810,12 +806,12 @@ video {
   align-self: center;
 }
 
-.overflow-hidden {
-  overflow: hidden;
+.overflow-auto {
+  overflow: auto;
 }
 
-.overflow-scroll {
-  overflow: scroll;
+.overflow-hidden {
+  overflow: hidden;
 }
 
 .scroll-smooth {
@@ -960,6 +956,10 @@ video {
   padding-bottom: 2rem;
 }
 
+.pt-1 {
+  padding-top: 0.25rem;
+}
+
 .pt-10 {
   padding-top: 2.5rem;
 }
@@ -970,10 +970,6 @@ video {
 
 .pt-4 {
   padding-top: 1rem;
-}
-
-.pt-1 {
-  padding-top: 0.25rem;
 }
 
 .text-left {
@@ -1256,12 +1252,12 @@ body {
     min-height: 100vh;
   }
 
-  .desktop\:max-w-none {
-    max-width: none;
-  }
-
   .desktop\:max-w-hero {
     max-width: var(--width-hero);
+  }
+
+  .desktop\:max-w-none {
+    max-width: none;
   }
 
   .desktop\:justify-start {
