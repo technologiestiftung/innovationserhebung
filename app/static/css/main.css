@@ -955,6 +955,11 @@ video {
   padding-bottom: 2.5rem;
 }
 
+.py-16 {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
 .py-3 {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
@@ -1283,5 +1288,9 @@ body {
   .desktop\:px-12 {
     padding-left: 3rem;
     padding-right: 3rem;
+  }
+
+  .desktop\:pt-0 {
+    padding-top: 0px;
   }
 }

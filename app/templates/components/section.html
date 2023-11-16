@@ -1,7 +1,7 @@
 {% if section.id %}
-  <section class="desktop:px-12" id="{{ section.id }}">
+  <section id="{{ section.id }}">
 {% else %}
-  <section class="desktop:px-12">
+  <section>
 {% endif %}
   {% if section.type == "quote" %}
     {% include "components/quote-section.html" %}
