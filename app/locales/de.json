@@ -83,7 +83,7 @@
       "disclaimer": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda soluta sed consequatur rem saepe dolores voluptates recusandae explicabo officiis",
       "charts": [
         {
-          "id": "growth_bubble",
+          "id": "growth_bubble_interactive",
           "description": "Ein funky chart für <strong>Berlin</strong> bleibt hingegen weiterhin ungeschlagen die Pharmaziebranche. Keine andere Branche ist derart aktiv in der deutschen Forschungslandschaft.In den hier nicht weiter aufgeschlüsselten restlichen Branchen sind vor allem die Bereiche der Medien und der Finanzdienstleistungen verantwortlich für den moderaten Anstieg zwischen den Jahrzehnten. <br><br>Im <strong>bundesweiten</strong> Vergleich dominiert weiterhin ganz klar der Maschinen- und Fahrzeugbau im Bereich der Industrieforschung. Aber auch hier konnte die Softwarebranche ihre Anteile signifikant ausbauen.",
           "toggleText": "Anteile der Industrieforschung in "
         }

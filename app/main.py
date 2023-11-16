@@ -26,7 +26,7 @@ plot_keys = [
     "fue_pie_interactive",
     "shares_pie_interactive",
     "base_line_interactive",
-    "growth_bubble",
+    "growth_bubble_interactive",
     "coop_partner_bar_interactive",
 ]
 

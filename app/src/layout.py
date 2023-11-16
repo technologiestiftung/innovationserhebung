@@ -57,7 +57,7 @@ flex_obj = FlexBox(plotter.plot["ber"],
                    sizing_mode="stretch_width")
 chart_collection[plot_key] = flex_obj
 
-plot_key = "growth_bubble"
+plot_key = "growth_bubble_interactive"
 plotter = plotters[plot_key]
 flex_obj = FlexBox(plotter.plot["ber"],
                    plotter.plot["de"],
