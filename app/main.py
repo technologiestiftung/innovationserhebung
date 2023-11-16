@@ -7,7 +7,7 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import panel as pn
-from src.pn_app import chart_collection
+from src.layout import chart_collection
 from utils.translation import load_translation
 
 
