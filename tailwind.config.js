@@ -20,7 +20,8 @@ module.exports = {
         "corporate-gray-20": "#DADADA",
         "corporate-gray-90": "#3B3B3A",
         "light-gray": "#EBECF0",
-      },
+        "page-background": "#F6F6F6",
+    },
       fontSize: {
         h1: "2rem",
         h2: "1.125rem",
