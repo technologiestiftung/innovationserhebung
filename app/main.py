@@ -25,7 +25,7 @@ templates = Jinja2Templates(directory="templates")
 plot_keys = [
     "fue_pie_interactive",
     "shares_pie_interactive",
-    "base_chart",
+    "base_line_interactive",
     "growth_bubble",
     "coop_partner_bar_interactive",
 ]

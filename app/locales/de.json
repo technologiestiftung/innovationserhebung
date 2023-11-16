@@ -40,7 +40,7 @@
       "disclaimer": "Innovationsausgaben sowie Ausgaben für Forschung und Entwicklung: Tendenzen aus den Vorjahren setzen sich fort.",
       "charts": [
         {
-          "id": "base_chart",
+          "id": "base_line_interactive",
           "description": "Hier in unserem Chart der Basisdaten können Sie sich die Daten nach Belieben zusammenstellen. Wählen sie Größen wie <strong>Branchen, Beschäftigungsgröße</strong> oder <strong>Technologieklasse</strong> und vergleichen verschiedene Kennzahlen und Ausgabengrößen. <br><br>Um die Daten besser in Kontext setzen zu können haben Sie die Wahl die Daten aus Berlin mit dem deckungsgleich aufgebauten Datensatz über bundesweite Innovationsunternehmen zu vergleichen.",
           "toggleText": "Zusammensetzung der FuE-Ausgaben in "
         }
