@@ -10,10 +10,10 @@ import panel as pn
 from sliders.pn_app import chart_collection
 from utils.translation import load_translation
 
-# SERVER_ADDRESS = "127.0.0.1"  # "0.0.0.0"
-SERVER_ADDRESS = "0.0.0.0"
-# EXTERNAL_ADDRESS = "127.0.0.1"  # "innovationserhebung-staging.onrender.com"
-EXTERNAL_ADDRESS = "innovationserhebung-staging.onrender.com"
+SERVER_ADDRESS = "127.0.0.1"
+EXTERNAL_ADDRESS = "127.0.0.1"
+# SERVER_ADDRESS = "0.0.0.0"
+# EXTERNAL_ADDRESS = "innovationserhebung-staging.onrender.com"
 PANEL_PORT = 5000
 FASTAPI_PORT = 8000
 
@@ -45,8 +45,7 @@ async def bkapp_page(request: Request, language: Language = None):
     # translations = load_translation(language_code)
     translations = load_translation("de")
 
-    scheme = 'https' if SERVER_ADDRESS != EXTERNAL_ADDRESS else 'http'
-    server_base_path = f"{scheme}://{SERVER_ADDRESS}:{PANEL_PORT}"
+    server_base_path = f"{request.url.scheme}://{SERVER_ADDRESS}:{PANEL_PORT}"
 
     for key in plot_keys:
         request.app.extra[key] = server_document(f"{server_base_path}/{key}")
