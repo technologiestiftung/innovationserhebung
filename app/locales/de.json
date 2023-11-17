@@ -36,7 +36,7 @@
     {
       "type": "chart",
       "id": "section_1",
-      "title": "I. Basisdaten",
+      "title": "Basisdaten",
       "disclaimer": "Innovationsausgaben sowie Ausgaben für Forschung und Entwicklung: Tendenzen aus den Vorjahren setzen sich fort.",
       "charts": [
         {
@@ -53,7 +53,7 @@
     {
       "type": "chart",
       "id": "section_2",
-      "title": "II. Anteile der Wirtschaft an der gesamten Forschung",
+      "title": "Anteile der Wirtschaft an der gesamten Forschung",
       "disclaimer": "Weiterhin kommen gute zwei Drittel der Mittel aus öffentlicher Hand.",
       "charts": [
         {
@@ -66,7 +66,7 @@
     {
       "type": "chart",
       "id": "section_3",
-      "title": "III. Anteile der Branchen an der Industrieforschung",
+      "title": "Anteile der Branchen an der Industrieforschung",
       "disclaimer": "Die Softwareindustrie hat ihren Anteil mehr als verdoppelt und ist jetzt zweitgrößter Träger der Industrieforschung",
       "charts": [
         {
@@ -79,7 +79,7 @@
     {
       "type": "chart",
       "id": "section_4",
-      "title": "IV. Welche Innovatoren sind wichtig für Berlin/Deutschland?",
+      "title": "Welche Innovatoren sind wichtig für Berlin/Deutschland?",
       "disclaimer": "Berlin entwickelt sich zunehmend zum Software-Standort, während bundesweit weiterhin der Maschinen- und Fahrzeugbau dominiert.",
       "charts": [
         {
@@ -97,7 +97,7 @@
     {
       "type": "chart",
       "id": "section_5",
-      "title": "V. Welche Innovatoren sind besonders aktiv?",
+      "title": "Welche Innovatoren sind besonders aktiv?",
       "disclaimer": "Berlin entwickelt sich zunehmend zum Software-Standort, während bundesweit weiterhin der Maschinen- und Fahrzeugbau dominiert.",
       "charts": [
         {
@@ -115,7 +115,7 @@
     {
       "type": "chart",
       "id": "section_6",
-      "title": "VI. Welche Innovatoren sind besonders erfolgreich?",
+      "title": "Welche Innovatoren sind besonders erfolgreich?",
       "disclaimer": "Während in Berlin besonders der Bereich der Software-Unternehmen besonders erfolgreich sind, ist es bundesweit gesehen die Medienbranche.",
       "charts": [
         {
@@ -133,7 +133,7 @@
     {
       "type": "chart",
       "id": "section_7",
-      "title": "VII. Welche Berliner Innovatoren sind wichtig für Deutschland?",
+      "title": "Welche Berliner Innovatoren sind wichtig für Deutschland?",
       "disclaimer": "Die Berliner Beratungsunternehmen, Kreativdienstleistungen und Holzindustrie heben sich deutlich ab.",
       "charts": [
         {
@@ -146,7 +146,7 @@
     {
       "type": "chart",
       "id": "section_8",
-      "title": "VIII. Innovatoren im Kontext der Gesamtwirtschaft",
+      "title": "Innovatoren im Kontext der Gesamtwirtschaft",
       "disclaimer": "Lorem Ipsum",
       "charts": [
         {
@@ -167,7 +167,7 @@
     {
       "type": "chart",
       "id": "section_9",
-      "title": "IX. Öffentliche Förderung",
+      "title": "Öffentliche Förderung",
       "disclaimer": "Die Berliner Beratungsunternehmen, Kreativdienstleistungen und Holzindustrie heben sich deutlich ab.",
       "charts": [
         {
@@ -185,7 +185,7 @@
     {
       "type": "chart",
       "id": "section_10",
-      "title": "X. Kooperation nach Region der Partner",
+      "title": "Kooperation nach Region der Partner",
       "disclaimer": "Insgesamt zeigt sich, dass die lokalen Kooperationen in der Region und Gesamt-Deutschland in allen Größenklassen die wichtigsten darstellen. ",
       "charts": [
         {
@@ -203,7 +203,7 @@
     {
       "type": "chart",
       "id": "section_11",
-      "title": "XI. Kooperation nach Art der Partner",
+      "title": "Kooperation nach Art der Partner",
       "disclaimer": "Außer in Unternehmen mit mehr als 1.000 Beschäftigten ist der Kooperationsgrad sowohl insgesamt, als auch mit der Wissenschaft leicht rückläufig.",
       "charts": [
         {
@@ -221,7 +221,7 @@
     {
       "type": "chart",
       "id": "section_12",
-      "title": "XII. Inhalt und Nutzen von Wirtschaftskooperationen",
+      "title": "Inhalt und Nutzen von Wirtschaftskooperationen",
       "disclaimer": "Insgesamt lässt sich beobachten, dass vor allem große Unternehmen einen hohen Grad an Kooperationen vorweisen können.",
       "charts": [
         {
@@ -239,7 +239,7 @@
     {
       "type": "chart",
       "id": "section_13",
-      "title": "XIII. Zugang zu externem Wissen",
+      "title": "Zugang zu externem Wissen",
       "disclaimer": "Reverse Engineering ist insgesamt von geringer Bedeutung, die Abwerbung von Personal im Dienstleistungsgewerbe etwas häufiger.",
       "charts": [
         {
@@ -257,7 +257,7 @@
     {
       "type": "chart",
       "id": "section_14",
-      "title": "XIV. Schutz von geistigem Eigentum",
+      "title": "Schutz von geistigem Eigentum",
       "disclaimer": "Großunternehmen betreiben intensivere Schutzrechts-Aktivitäten als kleinere. ",
       "charts": [
         {
@@ -270,7 +270,7 @@
     {
       "type": "chart",
       "id": "section_15",
-      "title": "XV. Einsatz von künstlicher Intelligenz",
+      "title": "Einsatz von künstlicher Intelligenz",
       "disclaimer": "In Berlin treiben insbesondere Unternehmen mit mehr als 250 Beschäftigten die KI, während es bundesweit die Großunternehmen sind.",
       "charts": [
         {
