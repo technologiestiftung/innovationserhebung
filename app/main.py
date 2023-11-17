@@ -15,10 +15,10 @@ from utils.translation import load_translation
 load_dotenv()
 
 SERVER_ADDRESS = os.getenv('SERVER_ADDRESS')
-EXTERNAL_ADDRESS = os.getenv('EXTERNAL_ADDRESS')
 PANEL_PORT = int(os.getenv('PANEL_PORT'))
 FASTAPI_PORT = int(os.getenv('FASTAPI_PORT'))
 PROXY_PANEL_THROUGH_FASTAPI = os.getenv('PROXY_PANEL_THROUGH_FASTAPI', 'False').lower() == 'true'
+RENDER_EXTERNAL_HOSTNAME = os.getenv('RENDER_EXTERNAL_HOSTNAME')
 
 
 class Language(str, Enum):
@@ -54,7 +54,9 @@ async def bkapp_page(request: Request, language: Language = None):
     # translations = load_translation(language_code)
     translations = load_translation("de")
 
-    if PROXY_PANEL_THROUGH_FASTAPI:
+    if RENDER_EXTERNAL_HOSTNAME:
+        server_base_path = f"{request.url.scheme}://{RENDER_EXTERNAL_HOSTNAME}/panel"
+    elif PROXY_PANEL_THROUGH_FASTAPI:
         server_base_path = f"{request.url.scheme}://{SERVER_ADDRESS}:{FASTAPI_PORT}/panel"
     else:
         server_base_path = f"{request.url.scheme}://{SERVER_ADDRESS}:{PANEL_PORT}"
@@ -142,6 +144,6 @@ pn.config.css_files.append("static/css/main.css")
 
 pn.serve({key: chart_collection[key].servable() for key in plot_keys},
          port=PANEL_PORT,
-         allow_websocket_origin=[f"{EXTERNAL_ADDRESS}:{FASTAPI_PORT}", f"{SERVER_ADDRESS}:{FASTAPI_PORT}", EXTERNAL_ADDRESS],
+         allow_websocket_origin=[f"{SERVER_ADDRESS}:{FASTAPI_PORT}", RENDER_EXTERNAL_HOSTNAME or SERVER_ADDRESS],
          address=SERVER_ADDRESS,
          show=False)
