@@ -16,6 +16,7 @@ EXTERNAL_ADDRESS = "127.0.0.1"
 # EXTERNAL_ADDRESS = "innovationserhebung-staging.onrender.com"
 PANEL_PORT = 5000
 FASTAPI_PORT = 8000
+PROXY_PANEL_THROUGH_FASTAPI = True
 
 class Language(str, Enum):
     en = "en"
@@ -23,7 +24,12 @@ class Language(str, Enum):
 
 
 app = FastAPI()
-app.mount("/static", StaticFiles(directory="static"), name="static")
+if PROXY_PANEL_THROUGH_FASTAPI:
+    # Also serve statics from bokeh and panel directly
+    app.mount("/static/extensions/panel", StaticFiles(packages=[('panel', 'dist')]), name="panelstatic")
+    app.mount("/static", StaticFiles(directory="static", packages=[('bokeh', 'server/static')]), name="static")
+else:
+    app.mount("/static", StaticFiles(directory="static"), name="static")
 app.add_middleware(GZipMiddleware)
 templates = Jinja2Templates(directory="templates")
 
@@ -45,7 +51,10 @@ async def bkapp_page(request: Request, language: Language = None):
     # translations = load_translation(language_code)
     translations = load_translation("de")
 
-    server_base_path = f"{request.url.scheme}://{SERVER_ADDRESS}:{PANEL_PORT}"
+    if PROXY_PANEL_THROUGH_FASTAPI:
+        server_base_path = f"{request.url.scheme}://{SERVER_ADDRESS}:{FASTAPI_PORT}/panel"
+    else:
+        server_base_path = f"{request.url.scheme}://{SERVER_ADDRESS}:{PANEL_PORT}"
 
     for key in plot_keys:
         request.app.extra[key] = server_document(f"{server_base_path}/{key}")
@@ -64,6 +73,66 @@ async def favicon():
 
 def get_language_code(language: Language | str):
     return type(language) is str and language[:2] or language.value
+
+if PROXY_PANEL_THROUGH_FASTAPI:
+    # Forward the websockets through a bridge
+    from fastapi import WebSocket
+    import websockets
+    import asyncio
+    from starlette.websockets import WebSocketDisconnect
+    from websockets.exceptions import ConnectionClosedOK
+
+    @app.websocket("/panel/{plot_key}/ws")
+    async def websocket_endpoint(ws_client: WebSocket, plot_key: str):
+        await ws_client.accept()
+        subprotocols = ws_client.headers['sec-websocket-protocol'].split(', ')
+        uri = f"{ws_client.url.scheme}://{SERVER_ADDRESS}:{PANEL_PORT}/{plot_key}/ws"
+        async with websockets.connect(uri, subprotocols=subprotocols) as ws_server:
+
+            async def listen_to_client():
+                try:
+                    while True:
+                        data = await ws_client.receive_text()
+                        await ws_server.send(data)
+                except WebSocketDisconnect:
+                    await ws_server.close()
+
+            async def listen_to_server():
+                try:
+                    while True:
+                        data = await ws_server.recv()
+                        await ws_client.send_text(data)
+                except ConnectionClosedOK:
+                    pass
+
+            await asyncio.gather(listen_to_client(), listen_to_server())
+
+    # Also stream/serve other panel specific content, especifically the autoload.js
+    from starlette.requests import Request
+    from starlette.responses import StreamingResponse
+    from starlette.background import BackgroundTask
+
+    import httpx
+
+    client = httpx.AsyncClient(base_url=f"http://{SERVER_ADDRESS}:{PANEL_PORT}")
+
+    async def _reverse_proxy(request: Request):
+        # remove /panel from path
+        url_path = request.url.path.removeprefix('/panel')
+        url = httpx.URL(path=url_path, query=request.url.query.encode("utf-8"))
+        rp_req = client.build_request(request.method, url,
+                                    headers=request.headers.raw,
+                                    content=await request.body())
+        rp_resp = await client.send(rp_req, stream=True)
+        return StreamingResponse(
+            rp_resp.aiter_raw(),
+            status_code=rp_resp.status_code,
+            headers=rp_resp.headers,
+            background=BackgroundTask(rp_resp.aclose),
+        )
+
+    app.add_route("/panel/{path:path}", _reverse_proxy, ["GET", "POST"])
+
 
 pn.config.css_files.append("static/css/main.css")
 
