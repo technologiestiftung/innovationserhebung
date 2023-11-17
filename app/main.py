@@ -1,22 +1,24 @@
 from enum import Enum
 
 from bokeh.embed import server_document
+from dotenv import load_dotenv
 from fastapi import FastAPI, Request
 from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+import os
 import panel as pn
 from sliders.pn_app import chart_collection
 from utils.translation import load_translation
 
-SERVER_ADDRESS = "127.0.0.1"
-EXTERNAL_ADDRESS = "127.0.0.1"
-# SERVER_ADDRESS = "0.0.0.0"
-# EXTERNAL_ADDRESS = "innovationserhebung-staging.onrender.com"
-PANEL_PORT = 5000
-FASTAPI_PORT = 8000
-PROXY_PANEL_THROUGH_FASTAPI = True
+load_dotenv()
+
+SERVER_ADDRESS = os.getenv('SERVER_ADDRESS')
+EXTERNAL_ADDRESS = os.getenv('EXTERNAL_ADDRESS')
+PANEL_PORT = int(os.getenv('PANEL_PORT'))
+FASTAPI_PORT = int(os.getenv('FASTAPI_PORT'))
+PROXY_PANEL_THROUGH_FASTAPI = os.getenv('PROXY_PANEL_THROUGH_FASTAPI', 'False').lower() == 'true'
 
 
 class Language(str, Enum):
