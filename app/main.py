@@ -121,10 +121,9 @@ if PROXY_PANEL_THROUGH_FASTAPI:
 
     client = httpx.AsyncClient(base_url=f"http://{SERVER_ADDRESS}:{PANEL_PORT}")
 
-    async def _reverse_proxy(request: Request):
-        # remove /panel from path
-        url_path = request.url.path.removeprefix('/panel')
-        url = httpx.URL(path=url_path, query=request.url.query.encode("utf-8"))
+    @app.api_route("/panel/{path_name:path}", methods=["GET"])
+    async def _reverse_proxy(request: Request, path_name: str):
+        url = httpx.URL(path=path_name, query=request.url.query.encode("utf-8"))
         rp_req = client.build_request(request.method, url,
                                     headers=request.headers.raw,
                                     content=await request.body())
@@ -135,8 +134,6 @@ if PROXY_PANEL_THROUGH_FASTAPI:
             headers=rp_resp.headers,
             background=BackgroundTask(rp_resp.aclose),
         )
-
-    app.add_route("/panel/{path:path}", _reverse_proxy, ["GET", "POST"])
 
 
 pn.config.css_files.append("static/css/main.css")
