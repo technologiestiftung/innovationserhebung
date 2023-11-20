@@ -368,8 +368,6 @@ class InteractivePiePlotter(InteractivePlotter):
             self.fitted_data[code] = ColumnDataSource(initial_data)
 
     def create_plot(self):
-        self.center_label_max_characters = 20
-
         for code in self.config["plot_codes"]:
             # Create a Bokeh figure
             plot = figure(**self.config["general"])
@@ -391,13 +389,15 @@ class InteractivePiePlotter(InteractivePlotter):
 
             # Add a label in the center
             highlight_category = self.config["filters_defaults"]["single_choice_highlight"]
-            highlight_category_trunkated = (highlight_category[:self.center_label_max_characters] + '..') if len(highlight_category) > self.center_label_max_characters else highlight_category
             for key, value, color in zip(self.raw_data[code][self.config["filters_defaults"]["single_choice"]]["x"],
                                          self.raw_data[code][self.config["filters_defaults"]["single_choice"]]["y"],
                                          self.fitted_data[code].data["color"]):
                 if key == highlight_category:
                     label_value = f"{str(int(value))} Mio €"
-                    label_text = f"{highlight_category_trunkated}"
+                    if len(highlight_category) > self.config["center_label_max_char"]:
+                        label_text = highlight_category[:self.config["center_label_max_char"]] + ".."
+                    else:
+                        label_text = highlight_category
                     highlight_color = color
                     break
 
@@ -407,8 +407,8 @@ class InteractivePiePlotter(InteractivePlotter):
                 text=label_value,
                 text_align="center",
                 text_baseline="middle",
-                text_font_style = "bold",
-                y_offset = 10,
+                text_font_style="bold",
+                y_offset=10,
                 text_font_size="14pt",
             )
 
@@ -420,7 +420,7 @@ class InteractivePiePlotter(InteractivePlotter):
                 text=label_text,
                 text_align="center",
                 text_baseline="middle",
-                y_offset = -10,
+                y_offset=-10,
                 text_font_size="8pt",
             )
 
@@ -492,12 +492,14 @@ class InteractivePiePlotter(InteractivePlotter):
 
             # Update the center label to match the highlighted category
             highlight_category = self.filters["single_choice_highlight"].value
-            highlight_category_trunkated = (highlight_category[:self.center_label_max_characters] + '..') if len(highlight_category) > self.center_label_max_characters else highlight_category
             for key, value, color in zip(self.raw_data[code][self.filters["single_choice"].value]["x"],
                                          self.raw_data[code][self.filters["single_choice"].value]["y"],
                                          colors):
                 if key == highlight_category:
                     self.center_labels[code].text = f"{str(int(value))} Mio €"
-                    self.center_labels_2nd_line[code].text = f"{highlight_category_trunkated}"
+                    if len(highlight_category) > self.config["center_label_max_char"]:
+                        self.center_labels_2nd_line[code].text = highlight_category[:self.config["center_label_max_char"]] + ".."
+                    else:
+                        self.center_labels_2nd_line[code].text = highlight_category
                     self.inner_rings[code].fill_color = color
                     break

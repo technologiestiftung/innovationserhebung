@@ -27,3 +27,4 @@ pie_interactive:
     tools: hover
     tooltips: '@x: @y'
     x_range: [-0.5, 1.0]
+  center_label_max_char: 20
