@@ -7,8 +7,6 @@ from bokeh.plotting import figure
 from bokeh.transform import cumsum, linear_cmap
 import panel
 
-import logging
-logging.basicConfig(level=logging.INFO)
 
 PLOT_TYPES = {
     "bar_interactive": "InteractiveBarPlotter",
