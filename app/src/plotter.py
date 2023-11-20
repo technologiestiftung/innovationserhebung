@@ -42,7 +42,7 @@ class Plotter(ABC):
         """
         self.raw_data = raw_data
         self.config = config
-        self.fitted_data = None
+        self.fitted_data = {}
         self.plots = {}
 
     def generate(self):
@@ -113,7 +113,6 @@ class InteractiveBarPlotter(InteractivePlotter):
                     for i, label in enumerate(x_values):
                         self.raw_data[code][choice][choice_2]["x"][i] = "/\n".join(label.split("/"))
 
-        self.fitted_data = {}
         for code in self.config["plot_codes"]:
             single_choice_dict = (self.raw_data[code][
                                   self.config["filters_defaults"]["single_choice"]][
@@ -171,10 +170,6 @@ class InteractiveBubblePlotter(InteractivePlotter):
         super().__init__(raw_data, config)
 
     def fit_data(self):
-        # TODO: I can probably initialize a dict already in the abstract class for self.fitted_data.
-        #  Also when creating plots. Do this in the refactoring phase.
-        self.fitted_data = {}
-
         for code in self.config["plot_codes"]:
             single_choice_dict = self.raw_data[code][self.config["filters_defaults"]["single_choice"]]
             source = ColumnDataSource(data={"x": single_choice_dict["x"],
@@ -248,8 +243,6 @@ class InteractiveLinePlotter(InteractivePlotter):
         super().__init__(raw_data, config)
 
     def fit_data(self):
-        self.fitted_data = {}
-
         for code in self.config["plot_codes"]:
             # Extract data using the single choice filters
             single_choice_dict = (self.raw_data[code][self.config["filters_defaults"]["single_choice"]])
@@ -353,8 +346,6 @@ class InteractivePiePlotter(InteractivePlotter):
         self.inner_rings = {}
 
     def fit_data(self):
-        self.fitted_data = {}
-
         for code in self.config["plot_codes"]:
             # Extract data using the single choice filters
             single_choice_dict = (self.raw_data[code][self.config["filters_defaults"]["single_choice"]])
