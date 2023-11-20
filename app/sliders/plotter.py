@@ -375,7 +375,7 @@ class InteractiveLinePlotter(InteractivePlotter):
 
         # Left-traverse nested data to get the x range
         x_range = self.raw_data
-        while type(x_range) == dict:
+        while isinstance(x_range, dict):
             x_range = x_range[next(iter(x_range))]
 
         for code in self.config["plot_codes"]:
