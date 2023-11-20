@@ -23,17 +23,6 @@ growth_bubble_interactive:
 base_line_interactive:
   parser_type: base
   plot_type: line_interactive
-  general:
-    title: Basis Chart
-    x_axis_label: X-axis
-    y_axis_label: Y-axis
-    toolbar_location: null
-  line:
-    line_width: 2
-    legend_label: Line
-    line_color: blue
-  legend_title: Legend
-  label_text_font_size: 12pt
   plot_codes:
     - ber
     - de

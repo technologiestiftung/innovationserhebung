@@ -6,18 +6,11 @@ bar_interactive:
     y_range: [0, 100]
   vbar:
     width: 0.5
-  label_text_font_size: 12pt
 
 bubble_interactive:
   figure:
     title: Simple Bubble Plot
     toolbar_location: null
-  linear_cmap:
-    field_name: color
-    palette: Viridis256
-  color_bar:
-    width: 8
-    location: [0, 0]
 
 line_interactive:
   general:
@@ -25,12 +18,6 @@ line_interactive:
     x_axis_label: X-axis
     y_axis_label: Y-axis
     toolbar_location: null
-  line:
-    line_width: 2
-    legend_label: Line
-    line_color: blue
-  legend_title: Legend
-  label_text_font_size: 12pt
 
 pie_interactive:
   general:
@@ -40,13 +27,3 @@ pie_interactive:
     tools: hover
     tooltips: '@x: @y'
     x_range: [-0.5, 1.0]
-  wedge:
-    x: 0
-    y: 1
-    radius: 0.4
-    line_color: white
-    fill_color: color
-    legend_field: x
-  axis_label: null
-  visible: false
-  grid_line_color: null

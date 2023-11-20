@@ -445,9 +445,9 @@ class InteractivePiePlotter(InteractivePlotter):
             plot.add_glyph(inner_ring)
 
             # Add other labels
-            plot.axis.axis_label = self.config["axis_label"]
-            plot.axis.visible = self.config["visible"]
-            plot.grid.grid_line_color = self.config["grid_line_color"]
+            plot.axis.axis_label = None
+            plot.axis.visible = False
+            plot.grid.grid_line_color = None
 
             self.plots[code] = plot
 
