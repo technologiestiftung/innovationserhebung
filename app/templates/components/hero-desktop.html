@@ -5,7 +5,7 @@
     id="slider"
     class="w-2x-hero h-full flex ease-in duration-300 {% if false %}-translate-x-1/2{% endif %}"
   >
-    <div class="left h-full w-hero flex flex-col justify-between">
+    <div class="h-full w-hero flex flex-col justify-between">
       <div
         class="w-full px-desktop max-w-4xl pt-10 mx-auto flex flex-col justify-start"
       >
@@ -27,7 +27,7 @@
         class="w-full shadow-bottom max-w-full cursor-pointer"
       >
         <div class="px-9 py-4 flex justify-between font-bold">
-          <div class="flex ">
+          <div class="flex">
             <img
               class="w-4 mr-6"
               src="{{ url_for('static', path='images/align-left.svg') }}"
@@ -43,8 +43,8 @@
         </div>
       </button>
     </div>
-    <div class="right w-hero h-full flex flex-col justify-between">
-      <nav>{% include "components/navigation/nav-desktop.html" %}</nav>
+    <div class="w-hero h-full flex flex-col justify-between">
+      <nav class="overflow-auto">{% include "components/navigation/nav-desktop.html" %}</nav>
       <button
         type="button"
         aria-expanded="false"
@@ -56,7 +56,7 @@
           <img
             class="w-4 mr-6 rotate-180"
             src="{{ url_for('static', path='images/arrow-right.svg') }}"
-            alt="{{ translations.nav.tableOfContents }}"
+            role="presentation"
           />
           <span class="font-bold text-sm text-left w-full">
             {{ translations.nav.backLabel }}
