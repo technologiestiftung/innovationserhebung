@@ -1,4 +1,5 @@
 from enum import Enum
+import os
 
 from bokeh.embed import server_document
 from dotenv import load_dotenv
@@ -7,7 +8,6 @@ from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-import os
 import panel as pn
 from sliders.pn_app import chart_collection
 from utils.translation import load_translation
@@ -77,16 +77,20 @@ async def favicon():
 
 
 def get_language_code(language: Language | str):
-    return type(language) is str and language[:2] or language.value
+    return isinstance(language, str) and language[:2] or language.value
 
 if PROXY_PANEL_THROUGH_FASTAPI:
-    # Forward the websockets through a bridge
-    from fastapi import WebSocket
-    import websockets
     import asyncio
+    from fastapi import WebSocket
+    import httpx
     from starlette.websockets import WebSocketDisconnect
+    from starlette.requests import Request
+    from starlette.responses import StreamingResponse
+    from starlette.background import BackgroundTask
+    import websockets
     from websockets.exceptions import ConnectionClosedOK
 
+    # Forward the websockets through a bridge
     @app.websocket("/panel/{plot_key}/ws")
     async def websocket_endpoint(ws_client: WebSocket, plot_key: str):
         await ws_client.accept()
@@ -113,12 +117,6 @@ if PROXY_PANEL_THROUGH_FASTAPI:
             await asyncio.gather(listen_to_client(), listen_to_server())
 
     # Also stream/serve other panel specific content, especifically the autoload.js
-    from starlette.requests import Request
-    from starlette.responses import StreamingResponse
-    from starlette.background import BackgroundTask
-
-    import httpx
-
     client = httpx.AsyncClient(base_url=f"http://{SERVER_ADDRESS}:{PANEL_PORT}")
 
     @app.api_route("/panel/{path_name:path}", methods=["GET"])
