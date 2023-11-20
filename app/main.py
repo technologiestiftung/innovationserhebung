@@ -21,14 +21,6 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 app.add_middleware(GZipMiddleware)
 templates = Jinja2Templates(directory="templates")
 
-# TODO: After fixing the BubblePlotter and InteractiveLinePlotter, I can get this list from the config
-plot_keys = [
-    "fue_pie_interactive",
-    "shares_pie_interactive",
-    "base_line_interactive",
-    "growth_bubble_interactive",
-    "coop_partner_bar_interactive",
-]
 
 @app.get("/")
 @app.get("/{language}/")
@@ -39,7 +31,7 @@ async def bkapp_page(request: Request, language: Language = None):
     # translations = load_translation(language_code)
     translations = load_translation("de")
 
-    for key in plot_keys:
+    for key in chart_collection:
         request.app.extra[key] = server_document(f"http://127.0.0.1:5000/{key}")
 
     script = server_document("http://127.0.0.1:5000/app")
@@ -57,9 +49,9 @@ async def favicon():
 def get_language_code(language: Language | str):
     return type(language) is str and language[:2] or language.value
 
+
 pn.config.css_files.append("static/css/main.css")
 
-
-pn.serve({f"{key}": chart_collection[key].servable() for key in plot_keys},
+pn.serve({f"{key}": chart_collection[key].servable() for key in chart_collection},
          port=5000, allow_websocket_origin=["127.0.0.1:8000"], address="127.0.0.1", show=False
          )
