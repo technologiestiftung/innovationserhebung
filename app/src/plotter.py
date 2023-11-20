@@ -20,16 +20,15 @@ PLOT_TYPES = {
 
 class PlotterFactory:
     @staticmethod
-    def create_plotter(plot_type, raw_data, config):
+    def create_plotter(raw_data, config):
         """
         Create a plotter for a specific plot type.
 
-        :param plot_type: str, type of plot
-        :param raw_data: dict, data to plot
+        :param raw_data: dict, raw_data to plot
         :param config: dict, configuration for the plot
         :return: a plotter instance of the specified type
         """
-        class_name = PLOT_TYPES[plot_type]
+        class_name = PLOT_TYPES[config["plot_type"]]
         cls = globals()[class_name]
 
         return cls(raw_data, config)

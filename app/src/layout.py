@@ -20,9 +20,7 @@ plotter_factory = PlotterFactory()
 chart_collection = {}
 for plot_key in config:
     # Generate plots and filters
-    plot_data = data[plot_key]
-    # TODO: Can refactor create_plotter() so I only need to pass the config as an argument
-    plotter = plotter_factory.create_plotter(config[plot_key]["plot_type"], plot_data, config[plot_key])
+    plotter = plotter_factory.create_plotter(data[plot_key], config[plot_key])
     plotter.generate()
 
     # Place plots and filters in the layout
