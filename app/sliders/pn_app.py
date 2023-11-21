@@ -52,9 +52,6 @@ interactive_line_data = {
 with open("data/outfile.json", "r") as f:
     data = json.load(f)
 
-with open("locales/de.json", "r") as f:
-    content = json.load(f)
-
 # Load config
 config_importer = ConfigImporter()
 config = config_importer.get_config()
@@ -121,46 +118,53 @@ def get_base_chart():
 # TODO:
 #  Think if I can simplify some of the code below, there is a lot of duplicate
 #  Do we really need to use FlexBox AND GridSpec? Maybe we can just use one
+def create_update_chart(flex_obj, plotter):
+    def update_chart(event):
+        selected_location = event.new
+        flex_obj.__setitem__(1, plotter.plot[selected_location])
+    return update_chart
+
+
 chart_collection = {}
 
-plot_key = "fue_pie_interactive"
-plotter = plotters[plot_key]
-plotted_charts = {
-    'de': plotter.plot["de"],
-    'ber': plotter.plot["ber"],
-}
+# Can we wrap all this in a function so we can reuse plotter, toggle flex_obj variables in a smaller scope?
 
-location_toggle = Select(options={
+plot_key = "fue_pie_interactive"
+fue_plotter = plotters[plot_key]
+fue_location_toggle = Select(options={
     'Deutschland': 'de', 'Berlin': 'ber'}, value='de')
 
-
-flex_obj_1 = FlexBox(location_toggle,
-                     plotted_charts[location_toggle.value],
-                     plotter.filters_single_choice,
-                     plotter.filters_single_choice_highlight,
-                     flex_direction="column",
-                     align_items="center",
-                     sizing_mode="stretch_width")
-chart_collection[plot_key] = flex_obj_1
-
-
-def update_chart(event):
-    selected_location = event.new
-    flex_obj_1.__setitem__(1, plotted_charts[selected_location])
+flex_obj_fue = FlexBox(fue_location_toggle,
+                       fue_plotter.plot[fue_location_toggle.value],
+                       fue_plotter.filters_single_choice,
+                       fue_plotter.filters_single_choice_highlight,
+                       flex_direction="column",
+                       align_items="center",
+                       sizing_mode="stretch_width")
+chart_collection[plot_key] = flex_obj_fue
 
 
-location_toggle.param.watch(update_chart, 'value')
+fue_update_chart = create_update_chart(flex_obj_fue, fue_plotter)
+fue_location_toggle.param.watch(fue_update_chart, 'value')
+
+
+shares_location_toggle = Select(options={
+    'Deutschland': 'de', 'Berlin': 'ber'}, value='de')
 
 plot_key = "shares_pie_interactive"
-plotter = plotters[plot_key]
-flex_obj = FlexBox(plotter.plot["ber"],
-                   plotter.plot["de"],
-                   plotter.filters_single_choice,
-                   plotter.filters_single_choice_highlight,
-                   flex_direction="column",
-                   align_items="center",
-                   sizing_mode="stretch_width")
-chart_collection[plot_key] = flex_obj
+shares_plotter = plotters[plot_key]
+flex_obj_shares = FlexBox(shares_location_toggle,
+                          shares_plotter.plot[shares_location_toggle.value],
+                          shares_plotter.filters_single_choice,
+                          shares_plotter.filters_single_choice_highlight,
+                          flex_direction="column",
+                          align_items="center",
+                          sizing_mode="stretch_width")
+chart_collection[plot_key] = flex_obj_shares
+
+shares_update_chart = create_update_chart(flex_obj_shares, shares_plotter)
+shares_location_toggle.param.watch(shares_update_chart, 'value')
+
 
 plot_key = "growth_bubble"
 plotter = plotters[plot_key]
