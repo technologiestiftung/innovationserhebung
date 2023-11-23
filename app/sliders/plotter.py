@@ -119,7 +119,8 @@ class BarPlotter(Plotter):
 
     def create_plot(self):
         # Create the figure
-        self.plot = figure(x_range=self.fitted_data.data["x"], **self.config["general"])
+        self.plot = figure(
+            x_range=self.fitted_data.data["x"], **self.config["general"])
 
         # Add vertical bars to the figure
         self.plot.vbar(x="x", top="y", source=self.fitted_data, color="color",
@@ -142,10 +143,12 @@ class InteractiveBarPlotter(InteractivePlotter):
                 for choice_2 in self.config["filters"]["single_choice_2"]:
                     x_values = self.raw_data[code][choice][choice_2]["x"]
                     # Define color palette
-                    self.raw_data[code][choice][choice_2]["color"] = Category20[len(x_values)]
+                    self.raw_data[code][choice][choice_2]["color"] = Category20[len(
+                        x_values)]
                     # Split long x-axis in more than one line
                     for i, label in enumerate(x_values):
-                        self.raw_data[code][choice][choice_2]["x"][i] = "/\n".join(label.split("/"))
+                        self.raw_data[code][choice][choice_2]["x"][i] = "/\n".join(
+                            label.split("/"))
 
         self.fitted_data = {}
         for code in self.config["plot_codes"]:
@@ -160,19 +163,21 @@ class InteractiveBarPlotter(InteractivePlotter):
 
         for code in self.config["plot_codes"]:
             # Create the figure
-            plot = figure(x_range=self.fitted_data[code].data["x"], **self.config["general"])
+            plot = figure(
+                x_range=self.fitted_data[code].data["x"], **self.config["general"])
 
             # Stretch to full width.
             plot.sizing_mode = "scale_width"
             plot.width_policy = "max"
 
             # Add vertical bars to the figure
-            plot.vbar(x="x", top="y", source=self.fitted_data[code], color="color", **self.config["vbar"])
+            plot.vbar(
+                x="x", top="y", source=self.fitted_data[code], color="color", **self.config["vbar"])
 
             # Rotate x-axis labels
             plot.xaxis.major_label_orientation = pi/2
 
-            #Fixed line-height for tick-labels
+            # Fixed line-height for tick-labels
             plot.xaxis.axis_label_text_line_height = 1
 
             self.plot[code] = plot
@@ -223,8 +228,10 @@ class BubblePlotter(Plotter):
         self.plot.width_policy = "max"
 
         # Add circles to the plot
-        mapper = linear_cmap(field_name="color", palette=Category20[20], low=0, high=20)
-        self.plot.circle(x="x", y="y", size="z", color=mapper, source=self.fitted_data, legend_group="labels")
+        mapper = linear_cmap(field_name="color",
+                             palette=Category20[20], low=0, high=20)
+        self.plot.circle(x="x", y="y", size="z", color=mapper,
+                         source=self.fitted_data, legend_group="labels")
 
         # Set the position of the legend
         self.plot.add_layout(self.plot.legend[0], "right")
@@ -257,7 +264,8 @@ class InteractiveBubblePlotter(InteractivePlotter):
         self.fitted_data = {}
 
         for code in self.config["plot_codes"]:
-            single_choice_dict = self.raw_data[code][self.config["filters"]["single_choice_default"]]
+            single_choice_dict = self.raw_data[code][self.config["filters"]
+                                                     ["single_choice_default"]]
             source = ColumnDataSource(data={"x": single_choice_dict["x"],
                                             "y": single_choice_dict["y"],
                                             "z": self.scale_values(single_choice_dict["z"]),
@@ -283,8 +291,10 @@ class InteractiveBubblePlotter(InteractivePlotter):
                           y_range=[min(y_range), max(y_range)])
 
             # Add circles to the plot
-            mapper = linear_cmap(field_name="color", palette=Category20[20], low=0, high=20)
-            plot.circle(x="x", y="y", size="z", color=mapper, source=self.fitted_data[code], legend_group="labels")
+            mapper = linear_cmap(field_name="color",
+                                 palette=Category20[20], low=0, high=20)
+            plot.circle(x="x", y="y", size="z", color=mapper,
+                        source=self.fitted_data[code], legend_group="labels")
 
             # Set the position of the legend
             plot.add_layout(plot.legend[0], "right")
@@ -342,7 +352,8 @@ class LinePlotter(Plotter):
         self.plot.width_policy = "max"
 
         # Add a line glyph to the figure
-        self.plot.line(x="x", y="y", source=self.fitted_data, **self.config["line"])
+        self.plot.line(x="x", y="y", source=self.fitted_data,
+                       **self.config["line"])
 
         # Show legends
         self.plot.legend.title = self.config["legend_title"]
@@ -361,7 +372,8 @@ class InteractiveLinePlotter(InteractivePlotter):
 
         for code in self.config["plot_codes"]:
             # Extract data using the single choice filters
-            single_choice_dict = (self.raw_data[code][self.config["filters"]["single_choice_default"]])
+            single_choice_dict = (
+                self.raw_data[code][self.config["filters"]["single_choice_default"]])
 
             # Get a subset of the lines selected with the multi choice filters
             selected_lines = ["x"] + self.config["filters"]["multi_choice"]
@@ -380,7 +392,8 @@ class InteractiveLinePlotter(InteractivePlotter):
 
         for code in self.config["plot_codes"]:
             # Create a Bokeh figure
-            max_value = self.get_max_value(code, self.config["filters"]["single_choice_default"])
+            max_value = self.get_max_value(
+                code, self.config["filters"]["single_choice_default"])
             self.plot[code] = figure(**self.config["general"],
                                      x_range=[x_range[0], x_range[-1]],
                                      y_range=[0, max_value])
@@ -388,7 +401,7 @@ class InteractiveLinePlotter(InteractivePlotter):
             # Stretch to full width.
             self.plot[code].sizing_mode = "scale_width"
             self.plot[code].width_policy = "max"
-            
+
             # Configure labels in x and y axes
             self.plot[code].xaxis.ticker = x_range
             self.plot[code].yaxis.formatter.use_scientific = False
@@ -396,7 +409,8 @@ class InteractiveLinePlotter(InteractivePlotter):
             # Add lines to the plot
             colors = Category20[20]
             for i, line_name in enumerate(self.config["filters"]["multi_choice"]):
-                self.plot[code].line(x="x", y=line_name, source=self.fitted_data[code], color=colors[i], legend_label=line_name)
+                self.plot[code].line(
+                    x="x", y=line_name, source=self.fitted_data[code], color=colors[i], legend_label=line_name)
 
     def create_filters(self):
         self.filters_single_choice = panel.widgets.RadioBoxGroup(
@@ -436,7 +450,8 @@ class InteractiveLinePlotter(InteractivePlotter):
         :param event: an event object that triggers the update
         """
         for code in self.config["plot_codes"]:
-            max_value = self.get_max_value(code, self.filters_single_choice.value)
+            max_value = self.get_max_value(
+                code, self.filters_single_choice.value)
             self.plot[code].y_range.end = max_value
 
     def get_max_value(self, code, single_choice):
@@ -512,7 +527,8 @@ class InteractivePiePlotter(InteractivePlotter):
 
         for code in self.config["plot_codes"]:
             # Extract data using the single choice filters
-            single_choice_dict = (self.raw_data[code][self.config["filters"]["single_choice_default"]])
+            single_choice_dict = (
+                self.raw_data[code][self.config["filters"]["single_choice_default"]])
 
             # Get x and y values
             x_values = single_choice_dict["x"]
@@ -556,9 +572,11 @@ class InteractivePiePlotter(InteractivePlotter):
 
             # Add a label in the center
             highlight_category = self.config["filters"]["single_choice_highlight_default"]
-            highlight_category_trunkated = (highlight_category[:self.center_label_max_characters] + '..') if len(highlight_category) > self.center_label_max_characters else highlight_category
+            highlight_category_trunkated = (highlight_category[:self.center_label_max_characters] + '..') if len(
+                highlight_category) > self.center_label_max_characters else highlight_category
             for key, value, color in zip(self.raw_data[code][self.config["filters"]["single_choice_default"]]["x"],
-                                         self.raw_data[code][self.config["filters"]["single_choice_default"]]["y"],
+                                         self.raw_data[code][self.config["filters"]
+                                                             ["single_choice_default"]]["y"],
                                          self.fitted_data[code].data["color"]):
                 if key == highlight_category:
                     label_value = f"{str(int(value))} Mio €"
@@ -572,8 +590,8 @@ class InteractivePiePlotter(InteractivePlotter):
                 text=label_value,
                 text_align="center",
                 text_baseline="middle",
-                text_font_style = "bold",
-                y_offset = 10,
+                text_font_style="bold",
+                y_offset=10,
                 text_font_size="14pt",
             )
 
@@ -585,7 +603,7 @@ class InteractivePiePlotter(InteractivePlotter):
                 text=label_text,
                 text_align="center",
                 text_baseline="middle",
-                y_offset = -10,
+                y_offset=-10,
                 text_font_size="8pt",
             )
 
@@ -620,7 +638,7 @@ class InteractivePiePlotter(InteractivePlotter):
 
         # Create single choice filter
         self.filters_single_choice = panel.widgets.RadioButtonGroup(
-            name="Select unit", 
+            name="Select unit",
             options=self.config["filters"]["single_choice"],
             margin=(32, 0)
         )
@@ -631,12 +649,14 @@ class InteractivePiePlotter(InteractivePlotter):
 
         # Add interactivity
         self.filters_single_choice.param.watch(self.update_filters, "value")
-        self.filters_single_choice_highlight.param.watch(self.update_filters, "value")
+        self.filters_single_choice_highlight.param.watch(
+            self.update_filters, "value")
 
     def update_filters(self, event):
         for code in self.config["plot_codes"]:
             # Extract data using the single choice filters
-            single_choice_dict = (self.raw_data[code][self.filters_single_choice.value])
+            single_choice_dict = (
+                self.raw_data[code][self.filters_single_choice.value])
 
             # Get x and y values
             x_values = single_choice_dict["x"]
@@ -657,7 +677,8 @@ class InteractivePiePlotter(InteractivePlotter):
 
             # Update the center label to match the highlighted category
             highlight_category = self.filters_single_choice_highlight.value
-            highlight_category_trunkated = (highlight_category[:self.center_label_max_characters] + '..') if len(highlight_category) > self.center_label_max_characters else highlight_category
+            highlight_category_trunkated = (highlight_category[:self.center_label_max_characters] + '..') if len(
+                highlight_category) > self.center_label_max_characters else highlight_category
             for key, value, color in zip(self.raw_data[code][self.filters_single_choice.value]["x"],
                                          self.raw_data[code][self.filters_single_choice.value]["y"],
                                          colors):

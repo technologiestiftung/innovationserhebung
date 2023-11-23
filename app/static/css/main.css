@@ -1264,6 +1264,7 @@ select.bk-input:hover {
 
 .bk-input-group {
   width: 180px;
+  margin: auto;
 }
 
 .first-of-type\:mt-0:first-of-type {
