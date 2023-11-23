@@ -36,6 +36,7 @@ module.exports = {
       },
       maxWidth: {
         hero: "var(--width-hero)",
+        80: "20rem",
       },
       minHeight: {
         4: "1rem",
