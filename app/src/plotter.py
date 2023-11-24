@@ -270,7 +270,7 @@ class InteractiveLinePlotter(InteractivePlotter):
             # Stretch to full width.
             self.plots[code].sizing_mode = "scale_width"
             self.plots[code].width_policy = "max"
-            
+
             # Configure labels in x and y axes
             self.plots[code].xaxis.ticker = x_range
             self.plots[code].yaxis.formatter.use_scientific = False
@@ -455,7 +455,7 @@ class InteractivePiePlotter(InteractivePlotter):
 
         # Create single choice filter
         self.filters["single_choice"] = panel.widgets.RadioButtonGroup(
-            name="Select unit", 
+            name="Select unit",
             options=self.config["filters"]["single_choice"],
             margin=(32, 0)
         )
