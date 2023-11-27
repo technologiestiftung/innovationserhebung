@@ -22,17 +22,14 @@ growth_bubble:
 base_line_interactive:
   parser_type: base
   plot_type: line_interactive
+  background_fill_color: "#F6F6F6"
   general:
-    title: Basis Chart
-    x_axis_label: X-axis
-    y_axis_label: Y-axis
+    y_axis_label: Umsatz in Mio. €
     toolbar_location: null
   line:
-    line_width: 2
     legend_label: Line
-    line_color: blue
   legend_title: Legend
-  label_text_font_size: 12pt
+  label_text_font_size: 13pt
   plot_codes:
     - ber
     - de

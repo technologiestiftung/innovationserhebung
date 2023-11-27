@@ -44,16 +44,15 @@ line:
 
 line_interactive:
   general:
-    title: Interactive Line Chart
-    x_axis_label: X-axis
     y_axis_label: Y-axis
     toolbar_location: null
   line:
     line_width: 2
     legend_label: Line
-    line_color: blue
+  axis:
+    axis_line_width: 2
+    axis_line_color: white
   legend_title: Legend
-  label_text_font_size: 12pt
 
 pie:
   general:
@@ -61,7 +60,7 @@ pie:
     title: Pie Chart
     toolbar_location: null
     tools: hover
-    tooltips: '@x: @y'
+    tooltips: "@x: @y"
     x_range: [-0.5, 1.0]
   wedge:
     x: 0
@@ -80,7 +79,7 @@ pie_interactive:
     title: Pie Chart
     toolbar_location: null
     tools: hover
-    tooltips: '@x: @y'
+    tooltips: "@x: @y"
     x_range: [-0.5, 1.0]
   wedge:
     x: 0
