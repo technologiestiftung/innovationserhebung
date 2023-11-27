@@ -96,7 +96,7 @@
       "disclaimer": "Überraschenderweise liegen bundesweit beim Wachstum der Forschungs-und Entwicklungsausgaben vor allem Unternehmen in der Branche der Verlage, Film-, Rundfunk- und Telekommunikationsunternehmen vorn.",
       "charts": [
         {
-          "id": "growth_bubble",
+          "id": "coop_partner_bar_interactive",
           "description": "Auch hier kann in <strong>Berlin</strong> wieder einmal die Software-Branche die größten Ausgaben, sowie das größte Wachstum vorweisen. Gemessen am Umsatz haben hingegen Unternehmen der Branche Forschung- und Entwicklung die höchsten Forschungs- und Entwicklungsausgaben, was wiederum auch nicht überrascht.<br><br>Überraschenderweise liegen <strong>bundesweit</strong> beim Wachstum der Forschungs- und Entwicklungsausgaben vor allem Unternehmen in der Branche der Verlage, Film-, Rundfunk- und Telekommunikationsunternehme vorn. Aber auch hier geben gemessen am Umsatz logischerweise die Unternehmen der Kategorie Forschung und Entwicklung den größten Anteil davon für Forschung und Entwicklung aus.",
           "toggleText": "Welche Innovatoren sind besonders aktiv in "
         }
