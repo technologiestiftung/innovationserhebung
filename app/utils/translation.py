@@ -11,6 +11,7 @@ logger.setLevel(logging.INFO)
 #     "<br>": "\u003cbr/\u003e",
 # }
 
+
 def load_translation(language):
     primary_language = language.split(",")[0].split(";")[0].split("-")[0]
     translations = {}

@@ -19,7 +19,9 @@ load_dotenv()
 SERVER_ADDRESS = os.getenv("SERVER_ADDRESS")
 PANEL_PORT = int(os.getenv("PANEL_PORT"))
 FASTAPI_PORT = int(os.getenv("FASTAPI_PORT"))
-PROXY_PANEL_THROUGH_FASTAPI = os.getenv("PROXY_PANEL_THROUGH_FASTAPI", "False").lower() == "true"
+PROXY_PANEL_THROUGH_FASTAPI = (
+    os.getenv("PROXY_PANEL_THROUGH_FASTAPI", "False").lower() == "true"
+)
 RENDER_EXTERNAL_HOSTNAME = os.getenv("RENDER_EXTERNAL_HOSTNAME")
 
 
@@ -31,8 +33,16 @@ class Language(str, Enum):
 app = FastAPI()
 if PROXY_PANEL_THROUGH_FASTAPI:
     # Also serve statics from bokeh and panel directly
-    app.mount("/static/extensions/panel", StaticFiles(packages=[('panel', 'dist')]), name="panelstatic")
-    app.mount("/static", StaticFiles(directory="static", packages=[('bokeh', 'server/static')]), name="static")
+    app.mount(
+        "/static/extensions/panel",
+        StaticFiles(packages=[("panel", "dist")]),
+        name="panelstatic",
+    )
+    app.mount(
+        "/static",
+        StaticFiles(directory="static", packages=[("bokeh", "server/static")]),
+        name="static",
+    )
 else:
     app.mount("/static", StaticFiles(directory="static"), name="static")
 app.add_middleware(GZipMiddleware)
@@ -51,7 +61,9 @@ async def bkapp_page(request: Request, language: Language = None):
     if RENDER_EXTERNAL_HOSTNAME:
         server_base_path = f"{request.url.scheme}://{RENDER_EXTERNAL_HOSTNAME}/panel"
     elif PROXY_PANEL_THROUGH_FASTAPI:
-        server_base_path = f"{request.url.scheme}://{SERVER_ADDRESS}:{FASTAPI_PORT}/panel"
+        server_base_path = (
+            f"{request.url.scheme}://{SERVER_ADDRESS}:{FASTAPI_PORT}/panel"
+        )
     else:
         server_base_path = f"{request.url.scheme}://{SERVER_ADDRESS}:{PANEL_PORT}"
 
@@ -59,8 +71,15 @@ async def bkapp_page(request: Request, language: Language = None):
         request.app.extra[key] = server_document(f"{server_base_path}/{key}")
 
     script = server_document(f"{server_base_path}/app")
-    response = templates.TemplateResponse("index.html", {
-        "request": request, "script": script, "translations": translations, "language_code": language_code})
+    response = templates.TemplateResponse(
+        "index.html",
+        {
+            "request": request,
+            "script": script,
+            "translations": translations,
+            "language_code": language_code,
+        },
+    )
 
     return response
 
@@ -92,7 +111,6 @@ if PROXY_PANEL_THROUGH_FASTAPI:
 
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.WARNING)
-
 
     # Forward the websockets through a bridge
     @app.websocket("/panel/{plot_key}/ws")
@@ -139,9 +157,12 @@ if PROXY_PANEL_THROUGH_FASTAPI:
     @app.api_route("/panel/{path_name:path}", methods=["GET"])
     async def _reverse_proxy(request: Request, path_name: str):
         url = httpx.URL(path=path_name, query=request.url.query.encode("utf-8"))
-        rp_req = client.build_request(request.method, url,
-                                    headers=request.headers.raw,
-                                    content=await request.body())
+        rp_req = client.build_request(
+            request.method,
+            url,
+            headers=request.headers.raw,
+            content=await request.body(),
+        )
         rp_resp = await client.send(rp_req, stream=True)
         return StreamingResponse(
             rp_resp.aiter_raw(),
@@ -151,12 +172,16 @@ if PROXY_PANEL_THROUGH_FASTAPI:
         )
 
 
-
 pn.config.css_files.append("static/css/main.css")
 
 
-pn.serve({key: chart_collection[key].servable() for key in chart_collection},
-         port=PANEL_PORT,
-         allow_websocket_origin=[f"{SERVER_ADDRESS}:{FASTAPI_PORT}", RENDER_EXTERNAL_HOSTNAME or SERVER_ADDRESS],
-         address=SERVER_ADDRESS,
-         show=False)
+pn.serve(
+    {key: chart_collection[key].servable() for key in chart_collection},
+    port=PANEL_PORT,
+    allow_websocket_origin=[
+        f"{SERVER_ADDRESS}:{FASTAPI_PORT}",
+        RENDER_EXTERNAL_HOSTNAME or SERVER_ADDRESS,
+    ],
+    address=SERVER_ADDRESS,
+    show=False,
+)

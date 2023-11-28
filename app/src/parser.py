@@ -87,12 +87,13 @@ class BaseDataParser(DataParser):
                     # Process each row
                     row = df.loc[df["Wirtschaftsgliederung"] == branch]
                     if not row.empty:
-
                         # Extract value for each certain unit from the row
                         for unit in mapping_units:
                             if unit in row:
                                 value = row.iloc[0][unit]
-                                extracted[area][mapping_units[unit]][mapping_branches[branch]][year] = value
+                                extracted[area][mapping_units[unit]][
+                                    mapping_branches[branch]
+                                ][year] = value
 
         return extracted
 
@@ -127,14 +128,18 @@ class BaseDataParser(DataParser):
         :return: pandas.DataFrame, a data row after applying the mapping
         """
         if row["Wirtschaftsgliederung"] == "Beschäftigte":
-            return mapping_employees_n.get(row["Nr. der Klas-\nsifikation"], row["Wirtschaftsgliederung"])
+            return mapping_employees_n.get(
+                row["Nr. der Klas-\nsifikation"], row["Wirtschaftsgliederung"]
+            )
         else:
             return row["Wirtschaftsgliederung"]
 
 
 class CoopDataParser(DataParser):
     def parse(self, sheets, config):
-        data = self.extract(sheets, config["coop_partner_bar_interactive"])  # TODO: The key should be configurable
+        data = self.extract(
+            sheets, config["coop_partner_bar_interactive"]
+        )  # TODO: The key should be configurable
 
         return data
 
@@ -154,7 +159,7 @@ class CoopDataParser(DataParser):
 
                 for _, row in df.iterrows():
                     branch = row["Branche"]
-                    if branch in branch_groups and branch_groups[branch] == "individual":
+                    if branch_groups.get(branch) == "individual":
                         for criteria in config["filters"]["single_choice_2"]:
                             if criteria not in extracted[area][year]:
                                 extracted[area][year][criteria] = {"x": [], "y": []}
@@ -240,11 +245,15 @@ class GrowthDataParser(DataParser):
 
                         if "y" not in extracted[area][group]:
                             extracted[area][group]["y"] = []
-                        extracted[area][group]["y"].append(row["Wachstum FuE-Ausgaben 2018-2021"])
+                        extracted[area][group]["y"].append(
+                            row["Wachstum FuE-Ausgaben 2018-2021"]
+                        )
 
                         if "z" not in extracted[area][group]:
                             extracted[area][group]["z"] = []
-                        extracted[area][group]["z"].append(row["Umsatz mit Produktneuheiten in Mio. €"])
+                        extracted[area][group]["z"].append(
+                            row["Umsatz mit Produktneuheiten in Mio. €"]
+                        )
 
         return extracted
 
