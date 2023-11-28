@@ -1,4 +1,7 @@
-<ul id="accordion-list" class="h-full p-mobile overflow-auto max-w-full desktop:max-w-hero">
+<ul
+  id="accordion-list"
+  class="h-full p-mobile overflow-auto max-w-full desktop:max-w-hero"
+>
   {% for section in translations.get("sections", []) %}
     {% with section=section %}
       {% if section.type == "header" %}
@@ -8,4 +11,5 @@
       {% endif %}
     {% endwith %}
   {% endfor %}
+  <li>{% include "components/navigation/footer.html" %}</li>
 </ul>

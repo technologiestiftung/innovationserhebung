@@ -3,6 +3,12 @@
     "title": "Einleitung",
     "text": "Die <strong>Innovationserhebung 2022</strong> widmet sich in gewohnter Weise der Auswertung der durch das Zentrum für Europäische Wirtschaftsforschung (ZEW) erhobenen Daten zum Innovationsverhalten Berlins. <br><br>Die Innovationserhebung Berlin wird zeitgleich mit der deutschen Innovationserhebung durchgeführt und nimmt Industrieunternehmen sowie Unternehmen aus dem Bereich wissensintensive Dienstleistungen über das letzte Jahrzehnt in den Blick."
   },
+  "footer": {
+    "impressum": "Impressum",
+    "dataPrivacy": "Datenschutzerklärung",
+    "sponsored": "Gefördert von:",
+    "copywrite": "© 2023 Technologiestiftung Berlin"
+  },
   "general": {
     "for": "für"
   },
