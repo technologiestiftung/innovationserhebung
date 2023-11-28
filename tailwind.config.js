@@ -11,14 +11,15 @@ module.exports = {
       boxShadow: {
         top: "0px -8px 24px 0px rgba(0, 0, 0, 0.32)",
         bottom: "0px 0px 16px 0px rgba(0, 0, 0, 0.32)",
-        scrollButton: "4px 4px 0px 0px rgba(30, 55, 145, 0.24)",
         toggleButton: "0px 0px 4px 0px rgba(0, 0, 0, 0.16)",
       },
       colors: {
         "corporate-blue": "#1E3791",
         "corporate-blue-light": "#495DA5",
         "corporate-gray-20": "#DADADA",
+        "corporate-gray-90": "#3B3B3A",
         "light-gray": "#EBECF0",
+        "page-background": "#F6F6F6",
       },
       fontSize: {
         h1: "2rem",

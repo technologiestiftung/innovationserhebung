@@ -1,12 +1,14 @@
 <div>
-  <p class="font-source">{{ chart.description | safe }}</p>
+  <p class="font-source text-corporate-gray-90">
+    {{ chart.description | safe }}
+  </p>
   {% if chart.id %}
     {% if chart.toggleText %}
       <p class="text-corporate-blue text-center text-h2 mt-14">
         {{ chart.toggleText }}
         <select
           id="{{ chart.id }}_toggle"
-          class="bg-white font-bold border-b-2 border-corporate-blue inline cursor-pointer hover:bg-light-gray"
+          class="bg-page-background font-bold rounded-none border-b-2 border-corporate-blue inline cursor-pointer hover:bg-light-gray"
           aria-controls="{{ chart.id }}_ber {{ chart.id }}_ger"
           aria-label="{{ translations.chartToggle.ariaLabel }}"
         >
@@ -19,11 +21,11 @@
         </select>
       </p>
     {% endif %}
-    <div id="{{ section_id }}_ber">
+    <div id="{{ section.id }}_ber">
       <figure>
         {{ request.app.extra[chart.id]|safe }}
         <figcaption class="text-sm">
-          {{ section_title }} {{ translations.general.for }}
+          {{ section.title }} {{ translations.general.for }}
           {{ translations.chartToggle.berlin }}
         </figcaption>
       </figure>
