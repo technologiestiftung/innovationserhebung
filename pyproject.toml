@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+version = "0.0.1"
+requires-python = ">=3.11"
+name = "innovationserhebung"
+description = "Visualisation of Innovation Data."
+readme = {file = "README.md", content-type = "text/x-md"}
+keywords = [
+  "FastAPI", "Bokeh", "Panel"
+]
+license = {text = "MIT"}
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Natural Language :: English",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+]
+dynamic = ["dependencies", "optional-dependencies"]
+
+[tool.setuptools.dynamic]
+dependencies = { file = ["requirements.in"] }
+optional-dependencies = {dev = { file = ["requirements-dev.in"] }}

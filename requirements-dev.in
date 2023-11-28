@@ -1,0 +1,5 @@
+-c requirements.txt
+
+pre-commit<4
+pip-tools<8
+ruff<1
