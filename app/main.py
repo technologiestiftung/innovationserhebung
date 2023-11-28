@@ -9,16 +9,18 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import panel as pn
-from sliders.pn_app import chart_collection
+
+from src.layout import chart_collection
 from utils.translation import load_translation
+
 
 load_dotenv()
 
-SERVER_ADDRESS = os.getenv('SERVER_ADDRESS')
-PANEL_PORT = int(os.getenv('PANEL_PORT'))
-FASTAPI_PORT = int(os.getenv('FASTAPI_PORT'))
-PROXY_PANEL_THROUGH_FASTAPI = os.getenv('PROXY_PANEL_THROUGH_FASTAPI', 'False').lower() == 'true'
-RENDER_EXTERNAL_HOSTNAME = os.getenv('RENDER_EXTERNAL_HOSTNAME')
+SERVER_ADDRESS = os.getenv("SERVER_ADDRESS")
+PANEL_PORT = int(os.getenv("PANEL_PORT"))
+FASTAPI_PORT = int(os.getenv("FASTAPI_PORT"))
+PROXY_PANEL_THROUGH_FASTAPI = os.getenv("PROXY_PANEL_THROUGH_FASTAPI", "False").lower() == "true"
+RENDER_EXTERNAL_HOSTNAME = os.getenv("RENDER_EXTERNAL_HOSTNAME")
 
 
 class Language(str, Enum):
@@ -36,14 +38,6 @@ else:
 app.add_middleware(GZipMiddleware)
 templates = Jinja2Templates(directory="templates")
 
-# TODO: After fixing the BubblePlotter and InteractiveLinePlotter, I can get this list from the config
-plot_keys = [
-    "fue_pie_interactive",
-    "shares_pie_interactive",
-    "base_chart",
-    "growth_bubble",
-    "coop_partner_bar_interactive",
-]
 
 @app.get("/")
 @app.get("/{language}/")
@@ -61,7 +55,7 @@ async def bkapp_page(request: Request, language: Language = None):
     else:
         server_base_path = f"{request.url.scheme}://{SERVER_ADDRESS}:{PANEL_PORT}"
 
-    for key in plot_keys:
+    for key in chart_collection:
         request.app.extra[key] = server_document(f"{server_base_path}/{key}")
 
     script = server_document(f"{server_base_path}/app")
@@ -134,10 +128,11 @@ if PROXY_PANEL_THROUGH_FASTAPI:
         )
 
 
+
 pn.config.css_files.append("static/css/main.css")
 
 
-pn.serve({key: chart_collection[key].servable() for key in plot_keys},
+pn.serve({key: chart_collection[key].servable() for key in chart_collection},
          port=PANEL_PORT,
          allow_websocket_origin=[f"{SERVER_ADDRESS}:{FASTAPI_PORT}", RENDER_EXTERNAL_HOSTNAME or SERVER_ADDRESS],
          address=SERVER_ADDRESS,

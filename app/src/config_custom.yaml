@@ -1,4 +1,4 @@
-growth_bubble:
+growth_bubble_interactive:
   parser_type: growth
   plot_type: bubble_interactive
   figure:
@@ -17,22 +17,12 @@ growth_bubble:
     single_choice:
       - individual
       - by_company_size
-    single_choice_default: individual
+  filters_defaults:
+    single_choice: individual
 
 base_line_interactive:
   parser_type: base
   plot_type: line_interactive
-  general:
-    title: Basis Chart
-    x_axis_label: X-axis
-    y_axis_label: Y-axis
-    toolbar_location: null
-  line:
-    line_width: 2
-    legend_label: Line
-    line_color: blue
-  legend_title: Legend
-  label_text_font_size: 12pt
   plot_codes:
     - ber
     - de
@@ -46,7 +36,6 @@ base_line_interactive:
       - fue_ausgaben_mio
       - umsatz_mio_produkt
       - umsatz_mio_markt
-    single_choice_default: anzahl_unternehmen_insgesamt
     multi_choice:
       - nahrung
       - pharma
@@ -63,6 +52,8 @@ base_line_interactive:
       - architektur
       - forschung
       - kreativ
+  filters_defaults:
+    single_choice: anzahl_unternehmen_insgesamt
 
 shares_pie_interactive:
   parser_type: shares
@@ -74,14 +65,15 @@ shares_pie_interactive:
     single_choice:
       - "2012"
       - "2021"
-    single_choice_default: "2012"
     single_choice_highlight:
       - Maschinen-/Fahrzeugbau
       - Elektroindustrie/Instrumententechnik
       - Pharma/Chemie/Kunststoff
       - Software/Datenverarbeitung
       - restliche Branchen
-    single_choice_highlight_default: Maschinen-/Fahrzeugbau
+  filters_defaults:
+    single_choice: "2012"
+    single_choice_highlight: Maschinen-/Fahrzeugbau
 
 fue_pie_interactive:
   parser_type: fue
@@ -93,12 +85,13 @@ fue_pie_interactive:
     single_choice:
       - "2011"
       - "2020"
-    single_choice_default: "2011"
     single_choice_highlight:
       - Wirtschaft
       - Hochschulen
       - Staat
-    single_choice_highlight_default: Wirtschaft
+  filters_defaults:
+    single_choice: "2011"
+    single_choice_highlight: Wirtschaft
 
 coop_partner_bar_interactive:
   parser_type: coop
@@ -110,7 +103,6 @@ coop_partner_bar_interactive:
     single_choice:
       - "2012"
       - "2020"
-    single_choice_default: "2012"
     single_choice_2:
       - insgesamt
       - Hochschulen
@@ -118,4 +110,6 @@ coop_partner_bar_interactive:
       - Kunden (privatwirtschaftl.)
       - Lieferanten
       - Wettbewerber
-    single_choice_2_default: insgesamt
+  filters_defaults:
+    single_choice: "2012"
+    single_choice_2: insgesamt

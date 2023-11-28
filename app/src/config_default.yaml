@@ -1,0 +1,30 @@
+bar_interactive:
+  general:
+    title: Simple Bar Chart
+    toolbar_location: null
+    y_axis_label: Values
+    y_range: [0, 100]
+  vbar:
+    width: 0.5
+
+bubble_interactive:
+  figure:
+    title: Simple Bubble Plot
+    toolbar_location: null
+
+line_interactive:
+  general:
+    title: Interactive Line Chart
+    x_axis_label: X-axis
+    y_axis_label: Y-axis
+    toolbar_location: null
+
+pie_interactive:
+  general:
+    height: 350
+    title: Pie Chart
+    toolbar_location: null
+    tools: hover
+    tooltips: '@x: @y'
+    x_range: [-0.5, 1.0]
+  center_label_max_char: 20
