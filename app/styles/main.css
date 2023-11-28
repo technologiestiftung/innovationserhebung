@@ -92,8 +92,16 @@ select.bk-input {
   @apply flex items-center mb-3 text-lg text-corporate-gray-80;
 }
 
+.bk-panel-models-markup-HTML.card-title + .accordion-header .card-button {
+  @apply translate-x-8
+}
+.bk-panel-models-markup-HTML.card-title::before {
+  content: "";
+  @apply bg-filter-icon w-[14px] h-[14px] block mr-4 absolute left-[-32px] top-[8px];
+}
+
 .bk-input-group label span {
-  @apply top-0;
+  @apply top-0 translate-x-5;
 }
 
 /* Accordion */
@@ -108,7 +116,7 @@ select.bk-input {
 }
 
 .accordion-header {
-  @apply !border-0 pt-4;
+  @apply !border-0 pt-4 flex flex-row-reverse;
 }
 
 .accordion-header, h3 {

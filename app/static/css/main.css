@@ -574,6 +574,10 @@ video {
   left: 0px;
 }
 
+.left-\[-32px\] {
+  left: -32px;
+}
+
 .right-0 {
   right: 0px;
 }
@@ -584,6 +588,10 @@ video {
 
 .top-0 {
   top: 0px;
+}
+
+.top-\[8px\] {
+  top: 8px;
 }
 
 .-z-10 {
@@ -693,6 +701,10 @@ video {
   height: 1.5rem;
 }
 
+.h-\[14px\] {
+  height: 14px;
+}
+
 .h-full {
   height: 100%;
 }
@@ -743,6 +755,10 @@ video {
 
 .w-80 {
   width: 20rem;
+}
+
+.w-\[14px\] {
+  width: 14px;
 }
 
 .w-full {
@@ -796,6 +812,11 @@ video {
 
 .-translate-y-1 {
   --tw-translate-y: -0.25rem;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.translate-x-8 {
+  --tw-translate-x: 2rem;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
@@ -1000,6 +1021,10 @@ video {
 .bg-page-background {
   --tw-bg-opacity: 1;
   background-color: rgb(246 246 246 / var(--tw-bg-opacity));
+}
+
+.bg-filter-icon {
+  background-image: url('/static/images/Filter.svg');
 }
 
 .p-mobile {
@@ -1451,8 +1476,27 @@ select.bk-input:hover {
   color: rgb(86 86 86 / var(--tw-text-opacity));
 }
 
+.bk-panel-models-markup-HTML.card-title + .accordion-header .card-button {
+  --tw-translate-x: 2rem;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.bk-panel-models-markup-HTML.card-title::before {
+  content: "";
+  position: absolute;
+  left: -32px;
+  top: 8px;
+  margin-right: 1rem;
+  display: block;
+  height: 14px;
+  width: 14px;
+  background-image: url('/static/images/Filter.svg');
+}
+
 .bk-input-group label span {
   top: 0px;
+  --tw-translate-x: 1.25rem;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 /* Accordion */
@@ -1467,6 +1511,8 @@ select.bk-input:hover {
 }
 
 .accordion-header {
+  display: flex;
+  flex-direction: row-reverse;
   border-width: 0px !important;
   padding-top: 1rem;
 }

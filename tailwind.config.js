@@ -8,6 +8,9 @@ module.exports = {
       source: ["Source Serif", "serif"],
     },
     extend: {
+      backgroundImage: {
+        "filter-icon": "url('/static/images/Filter.svg')",
+      },
       boxShadow: {
         top: "0px -8px 24px 0px rgba(0, 0, 0, 0.32)",
         bottom: "0px 0px 16px 0px rgba(0, 0, 0, 0.32)",
