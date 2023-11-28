@@ -70,6 +70,32 @@ select.bk-input {
   margin: auto;
 }
 
+.bk-input-group label input[type=checkbox] {
+  @apply mr-4 w-6 h-6 bg-page-background rounded-sm align-middle border-2 border-corporate-gray-80 appearance-none outline-none cursor-pointer;
+}
+
+.bk-input-group label input[type=checkbox]:checked::before {
+  @apply -translate-y-1 flex justify-center;
+  content: "✔︎";
+}
+
+.bk-input-group label input[type=radio] {
+  @apply mr-4 w-6 h-6 bg-page-background rounded-full align-middle border-2 border-corporate-gray-80 appearance-none outline-none cursor-pointer;
+}
+
+.bk-input-group label input[type=radio]:checked::before {
+  @apply bg-corporate-gray-80 border-2 border-white rounded-full w-full h-full block;
+  content: ""; 
+}
+
+.bk-input-group label {
+  @apply flex items-center mb-3 text-lg text-corporate-gray-80;
+}
+
+.bk-input-group label span {
+  @apply top-0;
+}
+
 /* Accordion */
 .bk-Column {
   width: 100%
@@ -82,7 +108,7 @@ select.bk-input {
 }
 
 .accordion-header {
-  @apply !border-0 mb-4 pt-4 flex flex-row-reverse;
+  @apply !border-0 pt-4;
 }
 
 .accordion-header, h3 {
