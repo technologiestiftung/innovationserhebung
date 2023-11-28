@@ -70,6 +70,25 @@ select.bk-input {
   margin: auto;
 }
 
+/* Accordion */
+.bk-Column {
+  width: 100%
+}
+
+.bk-panel-models-layout-Card.accordion {
+  width: 100%;
+  margin: 0;
+
+}
+
+.accordion-header {
+  @apply !border-0 mb-4 pt-4 flex flex-row-reverse;
+}
+
+.accordion-header, h3 {
+  @apply !text-corporate-blue font-bold text-[1rem];
+}
+
 
 @layer utilities {
   h1 {

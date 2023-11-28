@@ -1,6 +1,6 @@
 import json
 
-from panel.layout.gridstack import GridSpec
+from panel.layout.accordion import Accordion
 from panel.layout.flex import FlexBox
 from panel.widgets import Select
 
@@ -58,17 +58,18 @@ with open("data/outfile.json", "r") as f:
 with open("locales/de.json", "r") as f:
     content = json.load(f)
 
-allCharts = []
+# allCharts = []
 
-for section in content["sections"]:
-    if section["type"] == "chart":
-        charts = section["charts"]
-        for chart in charts:
-            chart_obj = {
-                "chartId": chart["id"],
-                "toggleText": chart["toggleText"]
-            }
-            allCharts.append(chart_obj)
+# for section in content["sections"]:
+#     if section["type"] == "chart":
+#         charts = section["charts"]
+#         for chart in charts:
+#             if chart["id"]:
+#                 chart_obj = {
+#                     "chartId": chart["id"],
+#                     "toggleText": chart["toggleText"]
+#                 }
+#                 allCharts.append(chart_obj)
 
 
 # Load config
@@ -99,7 +100,6 @@ for plot_key in config:
 
 
 def get_base_chart():
-    # TODO: Import real data and adjust plotter accordingly
     plotter = plotter_factory.create_plotter("line_interactive",
                                              data["base_line_interactive"],
                                              config["base_line_interactive"])
@@ -112,10 +112,15 @@ def get_base_chart():
     location_toggle = Select(options={
         'Deutschland': 'de', 'Berlin': 'ber'}, value='de')
 
+    filters_multi_choice_accordion = Accordion(
+        ("Branchen auswählen", plotter.filters_multi_choice), header_color="#1E3791", active_header_background="#F6F6F6", header_background="#F6F6F6")
+    filters_single_choice_accordion = Accordion(
+        ("Einheiten auswählen", plotter.filters_single_choice), header_color="#1E3791", active_header_background="#F6F6F6", header_background="#F6F6F6")
+
     flex_obj = FlexBox(location_toggle,
                        plotter.plot[location_toggle.value],
-                       plotter.filters_multi_choice,
-                       plotter.filters_single_choice,
+                       filters_multi_choice_accordion,
+                       filters_single_choice_accordion,
                        flex_direction="column",
                        align_items="center",
                        sizing_mode="stretch_width")
@@ -138,29 +143,6 @@ def create_update_chart(flex_obj, plotter):
 
 chart_collection = {}
 
-# Can we use a more generic function?
-
-# for chart in allCharts:
-#     if chart["chartId"] == "base_chart":
-#         continue
-#     else:
-#         plotter = plotters[chart["chartId"]]
-
-#         location_toggle = Select(options={
-#             'Deutschland': 'de', 'Berlin': 'ber'}, value='de')
-
-#         flex_obj = FlexBox(location_toggle,
-#                            plotter.plot[location_toggle.value],
-#                            plotter.filters_multi_choice,
-#                            plotter.filters_single_choice,
-#                            plotter.filters_single_choice_highlight,
-#                            flex_direction="column",
-#                            align_items="center",
-#                            sizing_mode="stretch_width")
-#         chart_collection[plot_key] = flex_obj
-
-#         update_chart = create_update_chart(flex_obj, plotter)
-#         location_toggle.param.watch(update_chart, 'value')
 
 plot_key = "fue_pie_interactive"
 plotter = plotters[plot_key]
