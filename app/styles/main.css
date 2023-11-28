@@ -58,6 +58,18 @@ body {
   @apply !bg-white !text-corporate-blue;
 }
 
+.bk-panel-models-widgets-CustomSelect {
+  @apply flex justify-center;
+}
+select.bk-input {
+  @apply bg-page-background font-bold rounded-none border-0 border-b-2 py-0 border-corporate-blue text-[22px] text-corporate-blue inline cursor-pointer hover:bg-light-gray px-0;
+}
+
+.bk-input-group {
+  width: 180px;
+  margin: auto;
+}
+
 
 @layer utilities {
   h1 {

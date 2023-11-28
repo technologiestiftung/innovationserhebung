@@ -399,7 +399,6 @@ class InteractiveLinePlotter(InteractivePlotter):
             # Create a Bokeh figure
             max_value = self.get_max_value(
                 code, self.config["filters"]["single_choice_default"])
-
             self.plot[code] = figure(**self.config["general"],
                                      x_range=[x_range[0] - .25,
                                               x_range[-1] + .25],

@@ -2,9 +2,13 @@ import json
 
 from panel.layout.gridstack import GridSpec
 from panel.layout.flex import FlexBox
+from panel.widgets import Select
 
 from .config_importer import ConfigImporter
 from .plotter import PlotterFactory
+
+import logging
+logging.basicConfig(level=logging.INFO)
 
 # TODO: Refactoring
 #   2/ Think alternative to functions for individual plots, since it's not reused and it's not very idiomatic
@@ -50,6 +54,23 @@ interactive_line_data = {
 with open("data/outfile.json", "r") as f:
     data = json.load(f)
 
+# Use de.json as source of chart ids and toggle texts
+with open("locales/de.json", "r") as f:
+    content = json.load(f)
+
+allCharts = []
+
+for section in content["sections"]:
+    if section["type"] == "chart":
+        charts = section["charts"]
+        for chart in charts:
+            chart_obj = {
+                "chartId": chart["id"],
+                "toggleText": chart["toggleText"]
+            }
+            allCharts.append(chart_obj)
+
+
 # Load config
 config_importer = ConfigImporter()
 config = config_importer.get_config()
@@ -70,7 +91,8 @@ for plot_key in config:
         plot_data = data[plot_key]
 
     # TODO: Can refactor create_plotter() so I only need to pass the config as an argument
-    plotter = plotter_factory.create_plotter(config[plot_key]["plot_type"], plot_data, config[plot_key])
+    plotter = plotter_factory.create_plotter(
+        config[plot_key]["plot_type"], plot_data, config[plot_key])
     plotter.generate()
 
     plotters[plot_key] = plotter
@@ -78,51 +100,104 @@ for plot_key in config:
 
 def get_base_chart():
     # TODO: Import real data and adjust plotter accordingly
-    interactive_line_plotter = plotter_factory.create_plotter("line_interactive",
-                                                              data["base_line_interactive"],
-                                                              config["base_line_interactive"])
-    interactive_line_plotter.generate()
+    plotter = plotter_factory.create_plotter("line_interactive",
+                                             data["base_line_interactive"],
+                                             config["base_line_interactive"])
+    plotter.generate()
 
-    line_plotter = plotter_factory.create_plotter("line", line_data, config["base_line_interactive"])
+    line_plotter = plotter_factory.create_plotter(
+        "line", line_data, config["base_line_interactive"])
     line_plotter.generate()
 
-    base_chart = GridSpec(sizing_mode="stretch_both", min_height=800)
+    location_toggle = Select(options={
+        'Deutschland': 'de', 'Berlin': 'ber'}, value='de')
 
-    base_chart[0:3, 0:2] = interactive_line_plotter.plot["ber"]
-    base_chart[3:6, 0:2] = interactive_line_plotter.plot["de"]
-    base_chart[6:7, 0:1] = interactive_line_plotter.filters_multi_choice
-    base_chart[6:7, 1:2] = interactive_line_plotter.filters_single_choice
+    flex_obj = FlexBox(location_toggle,
+                       plotter.plot[location_toggle.value],
+                       plotter.filters_multi_choice,
+                       plotter.filters_single_choice,
+                       flex_direction="column",
+                       align_items="center",
+                       sizing_mode="stretch_width")
 
-    return base_chart
+    update_chart = create_update_chart(flex_obj, plotter)
+    location_toggle.param.watch(update_chart, 'value')
+
+    return flex_obj
 
 
 # TODO:
 #  Think if I can simplify some of the code below, there is a lot of duplicate
-#  Do we really need to use FlexBox AND GridSpec? Maybe we can just use one
+
+def create_update_chart(flex_obj, plotter):
+    def update_chart(event):
+        selected_location = event.new
+        flex_obj.__setitem__(1, plotter.plot[selected_location])
+    return update_chart
+
+
 chart_collection = {}
+
+# Can we use a more generic function?
+
+# for chart in allCharts:
+#     if chart["chartId"] == "base_chart":
+#         continue
+#     else:
+#         plotter = plotters[chart["chartId"]]
+
+#         location_toggle = Select(options={
+#             'Deutschland': 'de', 'Berlin': 'ber'}, value='de')
+
+#         flex_obj = FlexBox(location_toggle,
+#                            plotter.plot[location_toggle.value],
+#                            plotter.filters_multi_choice,
+#                            plotter.filters_single_choice,
+#                            plotter.filters_single_choice_highlight,
+#                            flex_direction="column",
+#                            align_items="center",
+#                            sizing_mode="stretch_width")
+#         chart_collection[plot_key] = flex_obj
+
+#         update_chart = create_update_chart(flex_obj, plotter)
+#         location_toggle.param.watch(update_chart, 'value')
 
 plot_key = "fue_pie_interactive"
 plotter = plotters[plot_key]
+location_toggle = Select(options={
+    'Deutschland': 'de', 'Berlin': 'ber'}, value='de')
 
-flex_obj = FlexBox(plotter.plot["ber"],
-                   plotter.plot["de"],
+flex_obj = FlexBox(location_toggle,
+                   plotter.plot[location_toggle.value],
                    plotter.filters_single_choice,
                    plotter.filters_single_choice_highlight,
                    flex_direction="column",
                    align_items="center",
                    sizing_mode="stretch_width")
 chart_collection[plot_key] = flex_obj
+
+
+update_chart = create_update_chart(flex_obj, plotter)
+location_toggle.param.watch(update_chart, 'value')
+
+
+location_toggle = Select(options={
+    'Deutschland': 'de', 'Berlin': 'ber'}, value='de')
 
 plot_key = "shares_pie_interactive"
 plotter = plotters[plot_key]
-flex_obj = FlexBox(plotter.plot["ber"],
-                   plotter.plot["de"],
+flex_obj = FlexBox(location_toggle,
+                   plotter.plot[location_toggle.value],
                    plotter.filters_single_choice,
                    plotter.filters_single_choice_highlight,
                    flex_direction="column",
                    align_items="center",
                    sizing_mode="stretch_width")
 chart_collection[plot_key] = flex_obj
+
+update_chart = create_update_chart(flex_obj, plotter)
+location_toggle.param.watch(update_chart, 'value')
+
 
 plot_key = "growth_bubble"
 plotter = plotters[plot_key]
