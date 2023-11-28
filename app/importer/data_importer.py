@@ -4,7 +4,7 @@ import sys
 from openpyxl import load_workbook
 import pandas as pd
 
-from config_importer import ConfigImporter
+from app.importer.config_importer import ConfigImporter
 from parser import DataParserFactory
 
 # TODO:

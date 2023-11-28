@@ -11,8 +11,8 @@ class ConfigImporter:
         :return: dict, configuration
         """
         # Load config files
-        config_default = self.load_config_file("config_default.yaml")
-        config_custom = self.load_config_file("config_custom.yaml")
+        config_default = self.load_config_file("../config/config_default.yaml")
+        config_custom = self.load_config_file("../config/config_custom.yaml")
 
         config_result = {}
         # Override default values with custom values for each plot

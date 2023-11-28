@@ -10,8 +10,8 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import panel as pn
 
-from src.layout import chart_collection
-from utils.translation import load_translation
+from app.plot.layout import chart_collection
+from app.utils.translation import load_translation
 
 
 load_dotenv()
@@ -40,13 +40,13 @@ if PROXY_PANEL_THROUGH_FASTAPI:
     )
     app.mount(
         "/static",
-        StaticFiles(directory="static", packages=[("bokeh", "server/static")]),
+        StaticFiles(directory="app/static", packages=[("bokeh", "server/static")]),
         name="static",
     )
 else:
-    app.mount("/static", StaticFiles(directory="static"), name="static")
+    app.mount("/static", StaticFiles(directory="app/static"), name="static")
 app.add_middleware(GZipMiddleware)
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory="app/templates")
 
 
 @app.get("/")
@@ -172,7 +172,7 @@ if PROXY_PANEL_THROUGH_FASTAPI:
         )
 
 
-pn.config.css_files.append("static/css/main.css")
+pn.config.css_files.append("app/static/css/main.css")
 
 
 pn.serve(

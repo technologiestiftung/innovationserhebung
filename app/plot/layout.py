@@ -2,12 +2,12 @@ import json
 
 from panel.layout.flex import FlexBox
 
-from .config_importer import ConfigImporter
-from .plotter import PlotterFactory
+from app.importer.config_importer import ConfigImporter
+from app.plot.plotter import PlotterFactory
 
 
 # Load data
-with open("data/outfile.json", "r") as f:
+with open("app/data/outfile.json", "r") as f:
     data = json.load(f)
 
 # Load config
