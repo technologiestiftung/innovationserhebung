@@ -24,8 +24,8 @@ for plot_key in config:
     plotter.generate()
 
     # Place plots and filters in the layout
-    flex_obj = FlexBox(*list(plotter.plots.values()),
-                       *list(plotter.filters.values()),
+    flex_obj = FlexBox(*plotter.plots.values(),
+                       *plotter.filters.values(),
                        flex_direction="column",
                        align_items="center",
                        sizing_mode="stretch_width")
