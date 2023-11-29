@@ -1,6 +1,6 @@
 from abc import abstractmethod, ABC
 from math import pi
-import numpy as np
+import panel as pn
 
 from bokeh.models import AnnularWedge, ColumnDataSource, Label
 from bokeh.palettes import Category20, Category20c
@@ -438,27 +438,41 @@ class InteractiveLinePlotter(InteractivePlotter):
                     x="x", y=line_name, source=self.fitted_data[code], color=self.config["background_fill_color"], legend_label=line_name, size=12)
 
     def create_filters(self):
-        self.filters_single_choice = panel.widgets.RadioBoxGroup(
+        # Create single choice filters
+        self.filters_single_choice = pn.widgets.RadioBoxGroup(
             name="Select unit", options=self.config["filters"]["single_choice"]
         )
 
-        # Create multi choice filt`ers
-        self.filters_multi_choice = panel.widgets.CheckBoxGroup(
-            name="Select branches",
-            options=self.config["filters"]["multi_choice"],
-            value=self.config["filters"]["multi_choice"]
-        )
+        # Create multi choice filters
+        self.filters_multi_choice = pn.Column(*[
+            pn.Row(
+                pn.pane.HTML(
+                    '<div style="width:24px; height:24px; background-color:{};"></div>'.format(color)),
+                pn.widgets.Checkbox(name=option, value=True)
+            )
+            for color, option in zip(overwrite_colors, self.config["filters"]["multi_choice"])
+        ])
 
         # Add interactivity
-        self.filters_multi_choice.param.watch(self.update_filters, "value")
         self.filters_single_choice.param.watch(self.update_filters, "value")
         self.filters_single_choice.param.watch(self.update_y_range, "value")
+
+        for filter_row in self.filters_multi_choice:
+            filter_row[1].param.watch(self.update_filters, "value")
+
+        # Wrap filters in an accordion
+        self.filters_accordion = pn.Accordion(
+            ("Select unit", self.filters_single_choice),
+            ("Select branches", pn.Column(*self.filters_multi_choice))
+        )
 
     def update_filters(self, event):
         for code in self.config["plot_codes"]:
             # Re select data based on new selection of filters
-            selected_lines = self.filters_multi_choice.value
-            single_choice_dict = self.raw_data[code][self.filters_single_choice.value]
+            selected_lines = [
+                filter_row[1].name for filter_row in self.filters_multi_choice if filter_row[1].value]
+            single_choice_value = self.filters_single_choice.value
+            single_choice_dict = self.raw_data[code][single_choice_value]
 
             filtered_data = {
                 "x": single_choice_dict["x"],
