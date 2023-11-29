@@ -70,17 +70,8 @@ select.bk-input {
   margin: auto;
 }
 
-.bk-input-group label input[type=checkbox] {
-  @apply mr-4 w-6 h-6 bg-page-background rounded-sm align-middle border-2 border-corporate-gray-80 appearance-none outline-none cursor-pointer;
-}
-
-.bk-input-group label input[type=checkbox]:checked::before {
-  @apply -translate-y-1 flex justify-center;
-  content: "✔︎";
-}
-
 .bk-input-group label input[type=radio] {
-  @apply mr-4 w-6 h-6 bg-page-background rounded-full align-middle border-2 border-corporate-gray-80 appearance-none outline-none cursor-pointer;
+  @apply w-6 h-6 bg-page-background rounded-full align-middle border-2 border-corporate-gray-80 appearance-none outline-none cursor-pointer;
 }
 
 .bk-input-group label input[type=radio]:checked::before {
@@ -101,18 +92,20 @@ select.bk-input {
 }
 
 .bk-input-group label span {
-  @apply top-0 translate-x-5;
+  @apply top-0 translate-x-5 text-sm ml-0;
 }
 
 /* Accordion */
 .bk-Column {
-  width: 100%
+  width: 100%;
+}
+
+:host(.bk-Column) .bk-Row {
+  width: inherit;
 }
 
 .bk-panel-models-layout-Card.accordion {
-  width: 100%;
-  margin: 0;
-
+  @apply px-8 md:py-0 w-full m-0;
 }
 
 .accordion-header {
@@ -123,6 +116,29 @@ select.bk-input {
   @apply !text-corporate-blue font-bold text-[1rem];
 }
 
+/* Checkboxes */
+
+.legend-checkbox {
+  @apply w-full;
+
+}
+
+.legend-field {
+  @apply w-6 h-6 rounded-sm border border-corporate-gray-80;
+}
+
+:host(.legend-checkbox) input[type=checkbox] {
+  @apply mr-4 w-6 h-6 bg-page-background rounded-sm align-middle border-2 border-corporate-gray-80 appearance-none outline-none cursor-pointer;
+}
+
+:host(.legend-checkbox) input[type=checkbox]:checked::before {
+  @apply -translate-y-1 flex justify-center text-lg;
+  content: "✔︎";
+}
+
+:host(.legend-checkbox) span {
+  @apply text-sm translate-y-1 absolute w-full;
+}
 
 @layer utilities {
   h1 {

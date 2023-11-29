@@ -26,9 +26,6 @@ base_line_interactive:
   general:
     y_axis_label: Umsatz in Mio. €
     toolbar_location: null
-  line:
-    legend_label: Line
-  legend_title: Legend
   label_text_font_size: 13pt
   plot_codes:
     - ber

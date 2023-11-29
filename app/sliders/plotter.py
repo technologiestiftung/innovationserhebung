@@ -360,10 +360,6 @@ class LinePlotter(Plotter):
         self.plot.line(x="x", y="y", source=self.fitted_data,
                        **self.config["line"])
 
-        # Show legends
-        self.plot.legend.title = self.config["legend_title"]
-        self.plot.legend.label_text_font_size = self.config["label_text_font_size"]
-
 
 class InteractiveLinePlotter(InteractivePlotter):
     def __init__(self, raw_data, config):
@@ -433,9 +429,9 @@ class InteractiveLinePlotter(InteractivePlotter):
                 self.plot[code].line(
                     x="x", y=line_name, source=self.fitted_data[code], color=colors[i],  **self.config["line"])
                 self.plot[code].circle(
-                    x="x", y=line_name, source=self.fitted_data[code], color=colors[i], legend_label=line_name, size=16)
+                    x="x", y=line_name, source=self.fitted_data[code], color=colors[i], size=16)
                 self.plot[code].circle(
-                    x="x", y=line_name, source=self.fitted_data[code], color=self.config["background_fill_color"], legend_label=line_name, size=12)
+                    x="x", y=line_name, source=self.fitted_data[code], color=self.config["background_fill_color"], size=12)
 
     def create_filters(self):
         # Create single choice filters
@@ -447,8 +443,9 @@ class InteractiveLinePlotter(InteractivePlotter):
         self.filters_multi_choice = pn.Column(*[
             pn.Row(
                 pn.pane.HTML(
-                    '<div style="width:24px; height:24px; background-color:{};"></div>'.format(color)),
-                pn.widgets.Checkbox(name=option, value=True)
+                    '<div class="legend-field" style="background-color:{};"></div>'.format(color)),
+                pn.widgets.Checkbox(name=option, value=True,
+                                    css_classes=["legend-checkbox"])
             )
             for color, option in zip(overwrite_colors, self.config["filters"]["multi_choice"])
         ])

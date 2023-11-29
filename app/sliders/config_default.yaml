@@ -37,9 +37,7 @@ line:
     y_axis_label: Y-axis
   line:
     line_width: 2
-    legend_label: Line
     line_color: blue
-  legend_title: Legend
   label_text_font_size: 12pt
 
 line_interactive:
@@ -48,11 +46,9 @@ line_interactive:
     toolbar_location: null
   line:
     line_width: 2
-    legend_label: Line
   axis:
     axis_line_width: 2
     axis_line_color: white
-  legend_title: Legend
 
 pie:
   general:
