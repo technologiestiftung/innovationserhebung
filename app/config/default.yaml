@@ -14,10 +14,11 @@ bubble_interactive:
 
 line_interactive:
   general:
-    title: Interactive Line Chart
-    x_axis_label: X-axis
     y_axis_label: Y-axis
     toolbar_location: null
+  axis:
+    axis_line_width: 2
+    axis_line_color: white
 
 pie_interactive:
   general:
@@ -25,6 +26,6 @@ pie_interactive:
     title: Pie Chart
     toolbar_location: null
     tools: hover
-    tooltips: '@x: @y'
+    tooltips: "@x: @y"
     x_range: [-0.5, 1.0]
   center_label_max_char: 20

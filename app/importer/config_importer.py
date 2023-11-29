@@ -22,8 +22,7 @@ class ConfigImporter:
             plot_config_default = config_default[plot_type]
 
             overwritten_config = self.override_values(
-                plot_config_default, plot_config_custom
-            )
+                plot_config_default, plot_config_custom)
             config_result[plot_name] = overwritten_config
 
         return config_result
@@ -54,12 +53,9 @@ class ConfigImporter:
 
         overwritten_config = deepcopy(default_config)
         for key, value in custom_config.items():
-            if (
-                isinstance(value, dict)
-                and key in overwritten_config
-                and isinstance(overwritten_config[key], dict)
-            ):
-                self.override_values(overwritten_config[key], value)
+            if isinstance(value, dict) and key in overwritten_config and isinstance(overwritten_config[key], dict):
+                overwritten_config[key] = self.override_values(
+                    overwritten_config[key], value)
             else:
                 overwritten_config[key] = value
         return overwritten_config

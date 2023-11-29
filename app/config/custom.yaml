@@ -21,6 +21,10 @@ growth_bubble_interactive:
     single_choice: individual
 
 base_line_interactive:
+  background_fill_color: "#F6F6F6"
+  general:
+    y_axis_label: Umsatz in Mio. €
+  label_text_font_size: 13pt
   parser_type: base
   plot_type: line_interactive
   plot_codes:
