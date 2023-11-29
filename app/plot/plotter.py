@@ -6,6 +6,10 @@ from bokeh.palettes import Category20, Category20c
 from bokeh.plotting import figure
 from bokeh.transform import cumsum, linear_cmap
 import panel
+from panel.layout.accordion import Accordion
+
+import logging
+logging.basicConfig(level=logging.INFO)
 
 
 PLOT_TYPES = {
@@ -14,6 +18,10 @@ PLOT_TYPES = {
     "line_interactive": "InteractiveLinePlotter",
     "pie_interactive": "InteractivePiePlotter",
 }
+
+overwrite_colors = [
+    '#E7EA81', '#EE4C70', '#B2D9A8', '#B1B2B3', '#99DCF8', '#7ACBB5', '#DCC82D', '#6ECDF5', '#5BB5B5', '#6273B2', '#E60032', '#6CB2E0', '#2D91D2', '#B2D9A8', '#EADE81', '#1E3791', '#5BB5B5', '#6F6F6E'
+]
 
 
 class PlotterFactory:
@@ -167,7 +175,8 @@ class InteractiveBarPlotter(InteractivePlotter):
 
         # Add interactivity
         self.filters["single_choice"].param.watch(self.update_filters, "value")
-        self.filters["single_choice_2"].param.watch(self.update_filters, "value")
+        self.filters["single_choice_2"].param.watch(
+            self.update_filters, "value")
 
     def update_filters(self, event):
         for code in self.config["plot_codes"]:
@@ -293,7 +302,7 @@ class InteractiveLinePlotter(InteractivePlotter):
     def create_plot(self):
         # Left-traverse nested data to get the x range
         x_range = self.raw_data
-        while isinstance(x_range, dict):
+        while type(x_range) == dict:
             x_range = x_range[next(iter(x_range))]
 
         for code in self.config["plot_codes"]:
@@ -311,39 +320,59 @@ class InteractiveLinePlotter(InteractivePlotter):
             self.plots[code].sizing_mode = "scale_width"
             self.plots[code].width_policy = "max"
 
+            # Change background color
+            self.plots[code].background_fill_color = self.config["background_fill_color"]
+            self.plots[code].border_fill_color = self.config["background_fill_color"]
+
             # Configure labels in x and y axes
             self.plots[code].xaxis.ticker = x_range
-            self.plots[code].yaxis.formatter.use_scientific = False
+            self.plots[code].yaxis.ticker.desired_num_ticks = 8
+            self.plots[code].yaxis.minor_tick_line_color = None
+            self.plots[code].yaxis.major_tick_line_color = None
+            self.plots[code].xaxis.major_tick_line_color = None
+            self.plots[code].yaxis.axis_label_text_font_size = "13pt"
+
+            # Hide x grid
+            self.plots[code].xgrid.grid_line_color = None
+
+            # Hide axes
+            self.plots[code].xaxis.axis_line_width = self.config["axis"]["axis_line_width"]
+            self.plots[code].yaxis.axis_line_width = self.config["axis"]["axis_line_width"]
+            self.plots[code].xaxis.axis_line_color = self.config["background_fill_color"]
+            self.plots[code].yaxis.axis_line_color = self.config["background_fill_color"]
 
             # Add lines to the plot
-            colors = Category20[20]
+            colors = overwrite_colors
             for i, line_name in enumerate(self.config["filters"]["multi_choice"]):
                 self.plots[code].line(
-                    x="x",
-                    y=line_name,
-                    source=self.fitted_data[code],
-                    color=colors[i],
-                    legend_label=line_name,
-                )
+                    x="x", y=line_name, source=self.fitted_data[code], color=colors[i], line_width=4)
+                self.plots[code].circle(
+                    x="x", y=line_name, source=self.fitted_data[code], color=colors[i], size=16)
+                self.plots[code].circle(
+                    x="x", y=line_name, source=self.fitted_data[code], color=self.config["background_fill_color"], size=12)
 
     def create_filters(self):
-        self.filters["single_choice"] = panel.widgets.RadioBoxGroup(
+        filters_single_choice = panel.widgets.RadioBoxGroup(
             name="Select unit", options=self.config["filters"]["single_choice"]
         )
 
-        # Create multi choice filters
-        self.filters["multi_choice"] = panel.widgets.CheckBoxGroup(
-            name="Select branches",
-            options=self.config["filters"]["multi_choice"],
-            value=self.config["filters"]["multi_choice"],
-        )
+        filters_multi_choice = panel.Column(*[
+            panel.Row(
+                panel.pane.HTML(
+                    '<div class="legend-field" style="background-color:{};"></div>'.format(color)),
+                panel.widgets.Checkbox(name=option, value=True,
+                                       css_classes=["legend-checkbox"])
+            )
+            for color, option in zip(overwrite_colors, self.config["filters"]["multi_choice"])
+        ])
 
-        # Add interactivity
-        self.filters["multi_choice"].param.watch(self.update_filters, "value")
-        self.filters["single_choice"].param.watch(self.update_filters, "value")
-        self.filters["single_choice"].param.watch(self.update_y_range, "value")
+        self.filters["multi_choice"] = Accordion(
+            ("Branchen auswählen", filters_multi_choice), header_color="#1E3791", active_header_background="#F6F6F6", header_background="#F6F6F6")
+        self.filters["single_choice"] = Accordion(
+            ("Einheiten auswählen", filters_single_choice), header_color="#1E3791", active_header_background="#F6F6F6", header_background="#F6F6F6")
 
     def update_filters(self, event):
+        # TODO: Update filters
         for code in self.config["plot_codes"]:
             # Re select data based on new selection of filters
             selected_lines = self.filters["multi_choice"].value
@@ -366,7 +395,8 @@ class InteractiveLinePlotter(InteractivePlotter):
         :param event: an event object that triggers the update
         """
         for code in self.config["plot_codes"]:
-            max_value = self.get_max_value(code, self.filters["single_choice"].value)
+            max_value = self.get_max_value(
+                code, self.filters["single_choice"].value)
             self.plots[code].y_range.end = max_value
 
     def get_max_value(self, code, single_choice):
@@ -442,11 +472,11 @@ class InteractivePiePlotter(InteractivePlotter):
             plot.width_policy = "max"
 
             # Add a label in the center
-            for key, value, color in zip(
-                self.raw_data[code][single_choice_key]["x"],
-                self.raw_data[code][single_choice_key]["y"],
-                self.fitted_data[code].data["color"],
-            ):
+            highlight_category = self.config["filters_defaults"]["single_choice_highlight"]
+            for key, value, color in zip(self.raw_data[code][self.config["filters_defaults"]["single_choice"]]["x"],
+                                         self.raw_data[code][self.config["filters_defaults"]
+                                                             ["single_choice"]]["y"],
+                                         self.fitted_data[code].data["color"]):
                 if key == highlight_category:
                     label_value = f"{str(int(value))} Mio €"
                     if len(highlight_category) > self.config["center_label_max_char"]:

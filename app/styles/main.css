@@ -58,6 +58,87 @@ body {
   @apply !bg-white !text-corporate-blue;
 }
 
+.bk-panel-models-widgets-CustomSelect {
+  @apply flex justify-center;
+}
+select.bk-input {
+  @apply bg-page-background font-bold rounded-none border-0 border-b-2 py-0 border-corporate-blue text-[22px] text-corporate-blue inline cursor-pointer hover:bg-light-gray px-0;
+}
+
+.bk-input-group {
+  width: 180px;
+  margin: auto;
+}
+
+.bk-input-group label input[type=radio] {
+  @apply w-6 h-6 bg-page-background rounded-full align-middle border-2 border-corporate-gray-80 appearance-none outline-none cursor-pointer;
+}
+
+.bk-input-group label input[type=radio]:checked::before {
+  @apply bg-corporate-gray-80 border-2 border-white rounded-full w-full h-full block;
+  content: ""; 
+}
+
+.bk-input-group label {
+  @apply flex items-center mb-3 text-lg text-corporate-gray-80;
+}
+
+.bk-panel-models-markup-HTML.card-title + .accordion-header .card-button {
+  @apply translate-x-8
+}
+.bk-panel-models-markup-HTML.card-title::before {
+  content: "";
+  @apply bg-filter-icon w-[14px] h-[14px] block mr-4 absolute left-[-32px] top-[8px];
+}
+
+.bk-input-group label span {
+  @apply top-0 translate-x-5 text-sm ml-0;
+}
+
+/* Accordion */
+.bk-Column {
+  width: 100%;
+}
+
+:host(.bk-Column) .bk-Row {
+  width: inherit;
+}
+
+.bk-panel-models-layout-Card.accordion {
+  @apply px-8 md:py-0 w-full m-0;
+}
+
+.accordion-header {
+  @apply !border-0 pt-4 flex flex-row-reverse;
+}
+
+.accordion-header, h3 {
+  @apply !text-corporate-blue font-bold text-[1rem];
+}
+
+/* Checkboxes */
+
+.legend-checkbox {
+  @apply w-full;
+
+}
+
+.legend-field {
+  @apply w-6 h-6 rounded-sm border border-corporate-gray-80;
+}
+
+:host(.legend-checkbox) input[type=checkbox] {
+  @apply mr-4 w-6 h-6 bg-page-background rounded-sm align-middle border-2 border-corporate-gray-80 appearance-none outline-none cursor-pointer;
+}
+
+:host(.legend-checkbox) input[type=checkbox]:checked::before {
+  @apply -translate-y-1 flex justify-center text-lg;
+  content: "✔︎";
+}
+
+:host(.legend-checkbox) span {
+  @apply text-sm translate-y-1 absolute w-full;
+}
 
 @layer utilities {
   h1 {

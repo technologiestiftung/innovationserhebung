@@ -6,25 +6,12 @@
     {% if chart.toggleText %}
       <p class="text-corporate-blue text-center text-h2 mt-14">
         {{ chart.toggleText }}
-        <select
-          id="{{ chart.id }}_toggle"
-          class="bg-page-background font-bold rounded-none border-b-2 border-corporate-blue inline cursor-pointer hover:bg-light-gray"
-          aria-controls="{{ chart.id }}_ber {{ chart.id }}_ger"
-          aria-label="{{ translations.chartToggle.ariaLabel }}"
-        >
-          <option value="{{ chart.id }}_ber">
-            {{ translations.chartToggle.berlin }}
-          </option>
-          <option value="{{ chart.id }}_ger">
-            {{ translations.chartToggle.germany }}
-          </option>
-        </select>
       </p>
     {% endif %}
     <div id="{{ section.id }}_ber">
       <figure>
         {{ request.app.extra[chart.id]|safe }}
-        <figcaption class="text-sm">
+        <figcaption class="sr-only">
           {{ section.title }} {{ translations.general.for }}
           {{ translations.chartToggle.berlin }}
         </figcaption>
