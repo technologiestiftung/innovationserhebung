@@ -24,6 +24,9 @@ line_interactive:
   text:
     font: Clan Pro
     font_style: normal
+  axis:
+    axis_line_width: 2
+    axis_line_color: white
 
 pie_interactive:
   general:

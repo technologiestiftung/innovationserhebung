@@ -189,7 +189,8 @@ class InteractiveBarPlotter(InteractivePlotter):
 
         # Add interactivity
         self.filters["single_choice"].param.watch(self.update_filters, "value")
-        self.filters["single_choice_2"].param.watch(self.update_filters, "value")
+        self.filters["single_choice_2"].param.watch(
+            self.update_filters, "value")
 
     def update_filters(self, event):
         for code in self.config["plot_codes"]:
@@ -315,7 +316,7 @@ class InteractiveLinePlotter(InteractivePlotter):
     def create_plot(self):
         # Left-traverse nested data to get the x range
         x_range = self.raw_data
-        while isinstance(x_range, dict):
+        while type(x_range) == dict:
             x_range = x_range[next(iter(x_range))]
 
         for code in self.config["plot_codes"]:
@@ -428,6 +429,7 @@ class InteractiveLinePlotter(InteractivePlotter):
         self.filters["single_choice"][0].param.watch(self.update_y_range, "value")
 
     def update_filters(self, event):
+        # TODO: Update filters
         for code in self.config["plot_codes"]:
             selected_lines = []
             # Re select data based on new selection of filters
