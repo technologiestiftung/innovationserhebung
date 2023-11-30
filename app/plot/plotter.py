@@ -369,7 +369,7 @@ class InteractiveLinePlotter(InteractivePlotter):
         ])
 
         self.filters["multi_choice"] = Accordion(
-            ("Branchen auswählen", filters_multi_choice), header_color="#1E3791", active_header_background="#F6F6F6", header_background="#F6F6F6")
+            ("Branchen auswählen", filters_multi_choice), header_color="#1E3791", active_header_background="#F6F6F6", header_background="#F6F6F6", active=[0])
         self.filters["single_choice"] = Accordion(
             ("Einheiten auswählen", filters_single_choice), header_color="#1E3791", active_header_background="#F6F6F6", header_background="#F6F6F6")
 
