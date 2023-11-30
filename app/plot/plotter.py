@@ -8,9 +8,6 @@ from bokeh.transform import cumsum, linear_cmap
 import panel
 from panel.layout.accordion import Accordion
 
-import logging
-logging.basicConfig(level=logging.INFO)
-
 
 PLOT_TYPES = {
     "bar_interactive": "InteractiveBarPlotter",
@@ -373,13 +370,22 @@ class InteractiveLinePlotter(InteractivePlotter):
         self.filters["single_choice"] = Accordion(
             ("Einheiten auswählen", filters_single_choice), header_color="#1E3791", active_header_background="#F6F6F6", header_background="#F6F6F6")
 
-    def update_filters(self, event):
-        # TODO: Update filters
-        for code in self.config["plot_codes"]:
-            # Re select data based on new selection of filters
-            selected_lines = self.filters["multi_choice"][1].value
-            single_choice_dict = self.raw_data[code][self.filters["single_choice"][1].value]
+        # Add interactivity
+        for filter_row in self.filters["multi_choice"][0]:
+            filter_row[1].param.watch(self.update_filters, "value")
+        self.filters["single_choice"][0].param.watch(
+            self.update_filters, "value")
+        self.filters["single_choice"][0].param.watch(
+            self.update_y_range, "value")
 
+    def update_filters(self, event):
+        for code in self.config["plot_codes"]:
+            selected_lines = []
+            # Re select data based on new selection of filters
+            for filter_row in self.filters["multi_choice"][0]:
+                if filter_row[1].value:
+                    selected_lines.append(filter_row[1].name)
+            single_choice_dict = self.raw_data[code][self.filters["single_choice"][0].value]
             filtered_data = {
                 "x": single_choice_dict["x"],
                 **{line: single_choice_dict[line] for line in selected_lines},
@@ -396,7 +402,7 @@ class InteractiveLinePlotter(InteractivePlotter):
         """
         for code in self.config["plot_codes"]:
             max_value = self.get_max_value(
-                code, self.filters["single_choice"].value)
+                code, self.filters["single_choice"][0].value)
             self.plots[code].y_range.end = max_value
 
     def get_max_value(self, code, single_choice):
