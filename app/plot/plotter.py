@@ -306,6 +306,7 @@ class InteractiveLinePlotter(InteractivePlotter):
             x_range = x_range[next(iter(x_range))]
 
         for code in self.config["plot_codes"]:
+
             # Create a Bokeh figure
             max_value = self.get_max_value(
                 code, self.config["filters_defaults"]["single_choice"]
@@ -324,22 +325,23 @@ class InteractiveLinePlotter(InteractivePlotter):
             self.plots[code].background_fill_color = self.config["background_fill_color"]
             self.plots[code].border_fill_color = self.config["background_fill_color"]
 
-            # Configure labels in x and y axes
+            # Hide x grid
+            self.plots[code].xgrid.grid_line_color = None
+
+            # Configure axes
             self.plots[code].xaxis.ticker = x_range
             self.plots[code].yaxis.ticker.desired_num_ticks = 8
             self.plots[code].yaxis.minor_tick_line_color = None
             self.plots[code].yaxis.major_tick_line_color = None
             self.plots[code].xaxis.major_tick_line_color = None
-            self.plots[code].yaxis.axis_label_text_font_size = "13pt"
 
-            # Hide x grid
-            self.plots[code].xgrid.grid_line_color = None
-
-            # Hide axes
-            self.plots[code].xaxis.axis_line_width = self.config["axis"]["axis_line_width"]
-            self.plots[code].yaxis.axis_line_width = self.config["axis"]["axis_line_width"]
-            self.plots[code].xaxis.axis_line_color = self.config["background_fill_color"]
-            self.plots[code].yaxis.axis_line_color = self.config["background_fill_color"]
+            for axis in [self.plots[code].xaxis, self.plots[code].yaxis]:
+                axis.axis_label_text_font = self.config["text"]["font"]
+                axis.axis_label_text_font_style = self.config["text"]["font_style"]
+                axis.major_label_text_font = self.config["text"]["font"]
+                axis.major_label_text_font_style = self.config["text"]["font_style"]
+                axis.axis_line_width = self.config["axis"]["axis_line_width"]
+                axis.axis_line_color = self.config["background_fill_color"]
 
             # Add lines to the plot
             colors = overwrite_colors
@@ -375,10 +377,8 @@ class InteractiveLinePlotter(InteractivePlotter):
         # TODO: Update filters
         for code in self.config["plot_codes"]:
             # Re select data based on new selection of filters
-            selected_lines = self.filters["multi_choice"].value
-            single_choice_dict = self.raw_data[code][
-                self.filters["single_choice"].value
-            ]
+            selected_lines = self.filters["multi_choice"][1].value
+            single_choice_dict = self.raw_data[code][self.filters["single_choice"][1].value]
 
             filtered_data = {
                 "x": single_choice_dict["x"],
