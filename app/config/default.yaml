@@ -13,12 +13,15 @@ bubble_interactive:
     toolbar_location: null
 
 line_interactive:
-  general:
-    y_axis_label: Y-axis
-    toolbar_location: null
   axis:
     axis_line_width: 2
     axis_line_color: white
+  general:
+    y_axis_label: Y-axis
+    toolbar_location: null
+  text:
+    font: Clan Pro
+    font_style: normal
 
 pie_interactive:
   general:
