@@ -87,8 +87,8 @@ if PROXY_PANEL_THROUGH_FASTAPI:
     # Forward the websockets through a bridge
     @app.websocket("/panel/{plot_key}/ws")
     async def websocket_endpoint(ws_client: WebSocket, plot_key: str):
-        await ws_client.accept()
-        subprotocols = ws_client.headers['sec-websocket-protocol'].split(', ')
+        subprotocols = ws_client.headers["sec-websocket-protocol"].split(", ")
+        await ws_client.accept(subprotocol=subprotocols[0])
         uri = f"ws://{SERVER_ADDRESS}:{PANEL_PORT}/{plot_key}/ws"
         async with websockets.connect(uri, subprotocols=subprotocols) as ws_server:
 
