@@ -2,8 +2,9 @@
 
 # Innovationsdaten
 
-Daten aus 10 Jahre Innovationserhebung seit 2012
+This informational long-read is a digital version of the study "Innovationserhebung" which is conducted by the [Technologiestiftung Berlin](https://www.technologiestiftung-berlin.de) in german language. The study takes a look into data about business innovation since 2012 and was released in a [print version](https://www.technologiestiftung-berlin.de/downloads/innovationserhebung-2022) since then.
 
+The digital version now enhances the findings and data with interactive charts to enable viewers to find even more customised insights. The data of the study is based on the yearly published [Innovationserhebung](https://www.zew.de/publikationen/zew-gutachten-und-forschungsberichte/forschungsberichte/innovationen/innovationserhebung) by the ZEW - Zentrum für Europäische Wirtschaftsforschung.
 
 ## Installation guide
 
