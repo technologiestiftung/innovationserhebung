@@ -118,7 +118,7 @@ These **environment variables** should be set:
 
 ## Content Licencing
 
-Texts and content available as [CC BY](https://creativecommons.org/licenses/by/3.0/de/). 
+Texts and content available as [CC-BY-SA](https://creativecommons.org/licenses/by-sa/4.0/).
 
 
 ## Credits
