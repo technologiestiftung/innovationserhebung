@@ -1,4 +1,6 @@
 [![Technologiestiftung Berlin](https://img.shields.io/badge/Built%20with%20%E2%9D%A4%EF%B8%8F-at%20Technologiestiftung%20Berlin-blue)](https://www.technologiestiftung-berlin.de)
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/technologiestiftung/innovationserhebung/main.svg)](https://results.pre-commit.ci/latest/github/technologiestiftung/innovationserhebung/main)
+
 
 # Innovationsdaten
 
