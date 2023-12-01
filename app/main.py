@@ -73,10 +73,16 @@ async def favicon():
 def get_language_code(language: Language | str):
     return isinstance(language, str) and language[:2] or language.value
 
+
 if PROXY_PANEL_THROUGH_FASTAPI:
+    # Custom solution inspired by https://github.com/tiangolo/fastapi/discussions/7382
+    # to be able to understand what is happening and adjust to bokeh specific protocol.
+    # If one day broken, you may use and adapt this library
+    # https://github.com/WSH032/fastapi-proxy-lib
     import asyncio
     from fastapi import WebSocket
     import httpx
+    import logging
     from starlette.websockets import WebSocketDisconnect
     from starlette.requests import Request
     from starlette.responses import StreamingResponse
@@ -84,11 +90,27 @@ if PROXY_PANEL_THROUGH_FASTAPI:
     import websockets
     from websockets.exceptions import ConnectionClosedOK
 
+    logger = logging.getLogger(__name__)
+    logger.setLevel(logging.WARNING)
+
+
     # Forward the websockets through a bridge
     @app.websocket("/panel/{plot_key}/ws")
     async def websocket_endpoint(ws_client: WebSocket, plot_key: str):
-        subprotocols = ws_client.headers["sec-websocket-protocol"].split(", ")
+        # Check that the bokehJS client requests the expected subprotocol defined in
+        # bokeh.server.views.ws.py in WSHandler.open()/select_subprotocol()
+        subprotocols = ws_client.get("subprotocols")
+        if (
+            not subprotocols
+            or not isinstance(subprotocols, list)
+            or not len(subprotocols) == 2
+            or not subprotocols[0] == "bokeh"
+        ):
+            logger.warning(f"Subprotocols {subprotocols} not of the awaited format")
+        # Accept the Websocket, adding bokeh as subprotocol in the server response
         await ws_client.accept(subprotocol=subprotocols[0])
+
+        # Connect internally to the bokeh server, adding the subprotocol list
         uri = f"ws://{SERVER_ADDRESS}:{PANEL_PORT}/{plot_key}/ws"
         async with websockets.connect(uri, subprotocols=subprotocols) as ws_server:
 
@@ -108,6 +130,7 @@ if PROXY_PANEL_THROUGH_FASTAPI:
                 except ConnectionClosedOK:
                     pass
 
+            # Sync the upstream and downstream websockets through asyncio
             await asyncio.gather(listen_to_client(), listen_to_server())
 
     # Also stream/serve other panel specific content, especifically the autoload.js
