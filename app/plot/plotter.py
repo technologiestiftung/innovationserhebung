@@ -178,19 +178,16 @@ class InteractiveBarPlotter(InteractivePlotter):
 
     def create_filters(self):
         # Create single choice filter
-        self.filters["single_choice"] = panel.widgets.RadioBoxGroup(
-            name="Select unit", options=self.config["filters"]["single_choice"]
+        self.filters["single_choice"] = panel.widgets.RadioBoxGroup(name="Select unit", options=self.config["filters"]["single_choice"]
         )
 
         # Create single choice highlight filter
-        self.filters["single_choice_2"] = panel.widgets.RadioBoxGroup(
-            name="Select unit", options=self.config["filters"]["single_choice_2"]
+        self.filters["single_choice_2"] = panel.widgets.RadioBoxGroup(name="Select unit", options=self.config["filters"]["single_choice_2"]
         )
 
         # Add interactivity
         self.filters["single_choice"].param.watch(self.update_filters, "value")
-        self.filters["single_choice_2"].param.watch(
-            self.update_filters, "value")
+        self.filters["single_choice_2"].param.watch(self.update_filters, "value")
 
     def update_filters(self, event):
         for code in self.config["plot_codes"]:
