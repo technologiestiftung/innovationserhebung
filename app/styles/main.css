@@ -42,6 +42,9 @@ body {
 }
 
 /* bokeh / panel overwrites */
+.bk-panel-models-reactive_html-ReactiveHTML {
+  font-family: 'ClanPro', sans-serif;
+}
 .bk-btn-group {
   @apply !bg-corporate-blue !rounded !shadow-toggleButton;
 }

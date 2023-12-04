@@ -16,8 +16,25 @@ PLOT_TYPES = {
     "pie_interactive": "InteractivePiePlotter",
 }
 
-overwrite_colors = [
-    '#E7EA81', '#EE4C70', '#B2D9A8', '#B1B2B3', '#99DCF8', '#7ACBB5', '#DCC82D', '#6ECDF5', '#5BB5B5', '#6273B2', '#E60032', '#6CB2E0', '#2D91D2', '#B2D9A8', '#EADE81', '#1E3791', '#5BB5B5', '#6F6F6E'
+custom_palette = [
+    '#E7EA81',
+    '#EE4C70',
+    '#B2D9A8',
+    '#B1B2B3',
+    '#99DCF8',
+    '#7ACBB5',
+    '#DCC82D',
+    '#6ECDF5',
+    '#5BB5B5',
+    '#6273B2',
+    '#E60032',
+    '#6CB2E0',
+    '#2D91D2',
+    '#B2D9A8',
+    '#EADE81',
+    '#1E3791',
+    '#5BB5B5',
+    '#6F6F6E'
 ]
 
 
@@ -113,14 +130,10 @@ class InteractiveBarPlotter(InteractivePlotter):
                 for choice_2 in self.config["filters"]["single_choice_2"]:
                     x_values = self.raw_data[code][choice][choice_2]["x"]
                     # Define color palette
-                    self.raw_data[code][choice][choice_2]["color"] = Category20[
-                        len(x_values)
-                    ]
+                    self.raw_data[code][choice][choice_2]["color"] = Category20[len(x_values)]
                     # Split long x-axis in more than one line
                     for i, label in enumerate(x_values):
-                        self.raw_data[code][choice][choice_2]["x"][i] = "/\n".join(
-                            label.split("/")
-                        )
+                        self.raw_data[code][choice][choice_2]["x"][i] = "/\n".join(label.split("/"))
 
         single_choice_default = self.config["filters_defaults"]["single_choice"]
         single_choice_2_default = self.config["filters_defaults"]["single_choice_2"]
@@ -134,22 +147,14 @@ class InteractiveBarPlotter(InteractivePlotter):
     def create_plot(self):
         for code in self.config["plot_codes"]:
             # Create the figure
-            plot = figure(
-                x_range=self.fitted_data[code].data["x"], **self.config["general"]
-            )
+            plot = figure(x_range=self.fitted_data[code].data["x"], **self.config["general"])
 
             # Stretch to full width.
             plot.sizing_mode = "scale_width"
             plot.width_policy = "max"
 
             # Add vertical bars to the figure
-            plot.vbar(
-                x="x",
-                top="y",
-                source=self.fitted_data[code],
-                color="color",
-                **self.config["vbar"],
-            )
+            plot.vbar(x="x", top="y", source=self.fitted_data[code], color="color", **self.config["vbar"])
 
             # Rotate x-axis labels
             plot.xaxis.major_label_orientation = pi / 2
@@ -161,26 +166,21 @@ class InteractiveBarPlotter(InteractivePlotter):
 
     def create_filters(self):
         # Create single choice filter
-        self.filters["single_choice"] = panel.widgets.RadioBoxGroup(
-            name="Select unit", options=self.config["filters"]["single_choice"]
+        self.filters["single_choice"] = panel.widgets.RadioBoxGroup(name="Select unit", options=self.config["filters"]["single_choice"]
         )
 
         # Create single choice highlight filter
-        self.filters["single_choice_2"] = panel.widgets.RadioBoxGroup(
-            name="Select unit", options=self.config["filters"]["single_choice_2"]
+        self.filters["single_choice_2"] = panel.widgets.RadioBoxGroup(name="Select unit", options=self.config["filters"]["single_choice_2"]
         )
 
         # Add interactivity
         self.filters["single_choice"].param.watch(self.update_filters, "value")
-        self.filters["single_choice_2"].param.watch(
-            self.update_filters, "value")
+        self.filters["single_choice_2"].param.watch(self.update_filters, "value")
 
     def update_filters(self, event):
         for code in self.config["plot_codes"]:
             # Extract data using the single choice filters
-            single_choice_dict = self.raw_data[code][
-                self.filters["single_choice"].value
-            ][self.filters["single_choice_2"].value]
+            single_choice_dict = (self.raw_data[code][self.filters["single_choice"].value][self.filters["single_choice_2"].value])
 
             self.fitted_data[code].data = single_choice_dict
 
@@ -223,17 +223,8 @@ class InteractiveBubblePlotter(InteractivePlotter):
             )
 
             # Add circles to the plot
-            mapper = linear_cmap(
-                field_name="color", palette=Category20[20], low=0, high=20
-            )
-            plot.circle(
-                x="x",
-                y="y",
-                size="z",
-                color=mapper,
-                source=self.fitted_data[code],
-                legend_group="labels",
-            )
+            mapper = linear_cmap(field_name="color", palette=Category20[20], low=0, high=20)
+            plot.circle(x="x", y="y", size="z", color=mapper, source=self.fitted_data[code], legend_group="labels")
 
             # Set the position of the legend
             plot.add_layout(plot.legend[0], "right")
@@ -286,9 +277,7 @@ class InteractiveLinePlotter(InteractivePlotter):
     def fit_data(self):
         for code in self.config["plot_codes"]:
             # Extract data using the single choice filters
-            single_choice_dict = self.raw_data[code][
-                self.config["filters_defaults"]["single_choice"]
-            ]
+            single_choice_dict = (self.raw_data[code][self.config["filters_defaults"]["single_choice"]])
 
             # Get a subset of the lines selected with the multi choice filters
             selected_lines = ["x"] + self.config["filters"]["multi_choice"]
@@ -305,14 +294,11 @@ class InteractiveLinePlotter(InteractivePlotter):
         for code in self.config["plot_codes"]:
 
             # Create a Bokeh figure
-            max_value = self.get_max_value(
-                code, self.config["filters_defaults"]["single_choice"]
-            )
-            self.plots[code] = figure(
-                **self.config["general"],
-                x_range=[x_range[0], x_range[-1]],
-                y_range=[0, max_value],
-            )
+            max_value = self.get_max_value(code, self.config["filters_defaults"]["single_choice"])
+            self.plots[code] = figure(**self.config["general"],
+                                      x_range=[x_range[0] - .25,
+                                               x_range[-1] + .25],
+                                      y_range=[0, max_value])
 
             # Stretch to full width.
             self.plots[code].sizing_mode = "scale_width"
@@ -330,6 +316,7 @@ class InteractiveLinePlotter(InteractivePlotter):
             self.plots[code].yaxis.ticker.desired_num_ticks = 8
             self.plots[code].yaxis.minor_tick_line_color = None
             self.plots[code].yaxis.major_tick_line_color = None
+            self.plots[code].yaxis.formatter.use_scientific = False
             self.plots[code].xaxis.major_tick_line_color = None
 
             for axis in [self.plots[code].xaxis, self.plots[code].yaxis]:
@@ -341,7 +328,7 @@ class InteractiveLinePlotter(InteractivePlotter):
                 axis.axis_line_color = self.config["background_fill_color"]
 
             # Add lines to the plot
-            colors = overwrite_colors
+            colors = custom_palette
             for i, line_name in enumerate(self.config["filters"]["multi_choice"]):
                 self.plots[code].line(
                     x="x", y=line_name, source=self.fitted_data[code], color=colors[i], line_width=4)
@@ -355,14 +342,11 @@ class InteractiveLinePlotter(InteractivePlotter):
             name="Select unit", options=self.config["filters"]["single_choice"]
         )
 
-        filters_multi_choice = panel.Column(*[
-            panel.Row(
-                panel.pane.HTML(
-                    '<div class="legend-field" style="background-color:{};"></div>'.format(color)),
-                panel.widgets.Checkbox(name=option, value=True,
-                                       css_classes=["legend-checkbox"])
+        filters_multi_choice = panel.Column(*[panel.Row(
+                panel.pane.HTML('<div class="legend-field" style="background-color:{};"></div>'.format(color)),
+                panel.widgets.Checkbox(name=option, value=True,css_classes=["legend-checkbox"])
             )
-            for color, option in zip(overwrite_colors, self.config["filters"]["multi_choice"])
+            for color, option in zip(custom_palette, self.config["filters"]["multi_choice"])
         ])
 
         self.filters["multi_choice"] = Accordion(
