@@ -1347,6 +1347,10 @@ body {
 
 /* bokeh / panel overwrites */
 
+.bk-panel-models-reactive_html-ReactiveHTML {
+  font-family: 'ClanPro', sans-serif;
+}
+
 .bk-btn-group {
   border-radius: 0.25rem !important;
   --tw-bg-opacity: 1 !important;
