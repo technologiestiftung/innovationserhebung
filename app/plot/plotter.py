@@ -315,17 +315,20 @@ class InteractiveLinePlotter(InteractivePlotter):
             self.plots[code].xaxis.ticker = x_range
             self.plots[code].yaxis.ticker.desired_num_ticks = 8
             self.plots[code].yaxis.minor_tick_line_color = None
-            self.plots[code].yaxis.major_tick_line_color = None
             self.plots[code].yaxis.formatter.use_scientific = False
-            self.plots[code].xaxis.major_tick_line_color = None
+            self.plots[code].yaxis.axis_label_text_color = "#878786"
 
             for axis in [self.plots[code].xaxis, self.plots[code].yaxis]:
+                axis.major_tick_line_color = None
                 axis.axis_label_text_font = self.config["text"]["font"]
                 axis.axis_label_text_font_style = self.config["text"]["font_style"]
+                axis.axis_label_text_font_size = "13px"
                 axis.major_label_text_font = self.config["text"]["font"]
+                axis.major_label_text_color = "#878786"
                 axis.major_label_text_font_style = self.config["text"]["font_style"]
                 axis.axis_line_width = self.config["axis"]["axis_line_width"]
                 axis.axis_line_color = self.config["background_fill_color"]
+                axis.axis_label_text_color = "#3B3B3A"
 
             # Add lines to the plot
             colors = custom_palette
