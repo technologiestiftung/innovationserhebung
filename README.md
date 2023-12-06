@@ -1,6 +1,10 @@
+[![Technologiestiftung Berlin](https://img.shields.io/badge/Built%20with%20%E2%9D%A4%EF%B8%8F-at%20Technologiestiftung%20Berlin-blue)](https://www.technologiestiftung-berlin.de)
+
 # Innovationsdaten
 
-Daten aus 10 Jahre Innovationserhebung ab Innovationserhebung 2013
+This informational long-read is a digital version of the study "Innovationserhebung" which is conducted by the [Technologiestiftung Berlin](https://www.technologiestiftung-berlin.de) in german language. The study takes a look into data about business innovation since 2012 and was released in a [print version](https://www.technologiestiftung-berlin.de/downloads/innovationserhebung-2022) since then.
+
+The digital version now enhances the findings and data with interactive charts to enable viewers to find even more customised insights. The data of the study is based on the yearly published [Innovationserhebung](https://www.zew.de/publikationen/zew-gutachten-und-forschungsberichte/forschungsberichte/innovationen/innovationserhebung) by the ZEW - Zentrum für Europäische Wirtschaftsforschung.
 
 ## Installation guide
 
@@ -110,3 +114,30 @@ These **environment variables** should be set:
 | FONTS_URL      | <secret-URL> |
 | PORT           | 8000         |
 | PYTHON_VERSION | 3.11.4       |
+
+
+## Content Licencing
+
+Texts and content available as [CC-BY-SA](https://creativecommons.org/licenses/by-sa/4.0/).
+
+
+## Credits
+
+<table>
+  <tr>
+    <td>
+      A project by: <a href="https://www.technologiestiftung-berlin.de/en/">
+        <br />
+        <br />
+        <img width="150" src="https://logos.citylab-berlin.org/logo-technologiestiftung-berlin-en.svg" />
+      </a>
+    </td>
+    <td>
+      Supported by: <a href="https://www.berlin.de/sen/web/">
+        <br />
+        <br />
+        <img width="100" src="https://logos.citylab-berlin.org/logo-berlin-senweb-de.svg" />
+      </a>
+    </td>
+  </tr>
+</table>
