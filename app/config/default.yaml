@@ -35,11 +35,13 @@ line_interactive:
     font_style: normal
 
 pie_interactive:
+  background_fill_color: "#F6F6F6"
   general:
-    height: 350
-    title: Pie Chart
+    height: 400
     toolbar_location: null
-    tools: hover
-    tooltips: "@x: @y"
-    x_range: [-0.5, 1.0]
+    tooltips: "@x: @y Mio €"
+    x_range: [-0.6, 0.6]
   center_label_max_char: 20
+  text:
+  font: Clan Pro
+  font_style: normal

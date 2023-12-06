@@ -2,7 +2,7 @@ from abc import abstractmethod, ABC
 from math import pi
 
 from bokeh.models import AnnularWedge, ColumnDataSource, Label
-from bokeh.palettes import Category20, Category20c
+from bokeh.palettes import Category20
 from bokeh.plotting import figure
 from bokeh.transform import cumsum, linear_cmap
 import panel
@@ -337,6 +337,7 @@ class InteractiveLinePlotter(InteractivePlotter):
                 "background_fill_color"
             ]
             self.plots[code].border_fill_color = self.config["background_fill_color"]
+            self.plots[code].outline_line_color = self.config["background_fill_color"]
 
             # Hide x grid
             self.plots[code].xgrid.grid_line_color = None
@@ -492,14 +493,13 @@ class InteractivePiePlotter(InteractivePlotter):
             # Calculate area for each category in the pie chart
             total = sum(y_values)
             angles = [2 * pi * (y / total) for y in y_values]
-            colors = Category20c[len(x_values)]
 
             # Transform data to the ColumnDataSource format required by Bokeh
             initial_data = {
                 "x": x_values,
                 "y": y_values,
                 "angle": angles,
-                "color": colors,
+                "color": custom_palette,
             }
 
             self.fitted_data[code] = ColumnDataSource(initial_data)
@@ -519,11 +519,15 @@ class InteractivePiePlotter(InteractivePlotter):
                 end_angle=cumsum("angle"),
                 line_color=None,
                 fill_color="color",
-                legend_field="x",
                 source=self.fitted_data[code],
             )
             plot.sizing_mode = "scale_width"
             plot.width_policy = "max"
+
+            # Change background color
+            plot.background_fill_color = self.config["background_fill_color"]
+            plot.border_fill_color = self.config["background_fill_color"]
+            plot.outline_line_color = self.config["background_fill_color"]
 
             # Add a label in the center
             highlight_category = self.config["filters_defaults"][
@@ -633,14 +637,13 @@ class InteractivePiePlotter(InteractivePlotter):
             # Calculate area for each category in the pie chart
             total = sum(y_values)
             angles = [2 * pi * (y / total) for y in y_values]
-            colors = Category20c[len(x_values)]
 
             # Transform data to the ColumnDataSource format required by Bokeh
             filtered_data = {
                 "x": x_values,
                 "y": y_values,
                 "angle": angles,
-                "color": colors,
+                "color": custom_palette,
             }
 
             self.fitted_data[code].data = filtered_data
@@ -650,7 +653,7 @@ class InteractivePiePlotter(InteractivePlotter):
             for key, value, color in zip(
                 self.raw_data[code][self.filters["single_choice"].value]["x"],
                 self.raw_data[code][self.filters["single_choice"].value]["y"],
-                colors,
+                custom_palette,
             ):
                 if key == highlight_category:
                     self.center_labels[code].text = f"{str(int(value))} Mio €"
