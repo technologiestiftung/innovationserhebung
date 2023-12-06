@@ -1,3 +1,4 @@
+from copy import deepcopy
 import os
 import yaml
 
@@ -51,7 +52,7 @@ class ConfigImporter:
         :param custom_config: dict, custom configuration for a plot
         """
 
-        overwritten_config = default_config.copy()
+        overwritten_config = deepcopy(default_config)
         for key, value in custom_config.items():
             if (
                 isinstance(value, dict)
