@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from collections import defaultdict
 
-from app.importer.mapping import branch_groups, mapping_branches, mapping_employees_n, mapping_units
+from .mapping import branch_groups, mapping_branches, mapping_employees_n, mapping_units
 
 # TODO: Make keys more generic (x, y, z)
 

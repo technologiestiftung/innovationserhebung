@@ -2,8 +2,8 @@ import json
 
 from panel.layout.flex import FlexBox
 
-from app.importer.config_importer import ConfigImporter
-from app.plot.plotter import PlotterFactory
+from ..importer.config_importer import ConfigImporter
+from .plotter import PlotterFactory
 
 
 # Load data

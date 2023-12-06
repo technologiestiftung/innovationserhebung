@@ -63,11 +63,11 @@ pre-commit install
 
 ### Run the APP
 
-1. Run the server with the command line 
+1. Run the server with the command line
 ```shell
 uvicorn app.main:app --reload
 ```
-2. Your terminal should show something like: 
+2. Your terminal should show something like:
 
 ```
 INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
@@ -97,6 +97,14 @@ from your root directory to give the bash file executable permission.
 ./run_dev.sh
 ```
 This also runs the tailwind watcher
+
+### Convert the source XLSX data source to JSON
+
+Taking an input XLSX file similar to the one in this repository, you can convert it to
+JSON by running
+```shell
+python -m app.xlsx2json
+```
 
 ## Deployment
 

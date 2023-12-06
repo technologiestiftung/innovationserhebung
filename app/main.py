@@ -10,8 +10,8 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import panel as pn
 
-from app.plot.layout import chart_collection
-from app.utils.translation import load_translation
+from .plot.layout import chart_collection
+from .utils.translation import load_translation
 
 
 load_dotenv()
@@ -172,7 +172,7 @@ if PROXY_PANEL_THROUGH_FASTAPI:
         )
 
 
-pn.config.css_files.append("app/static/css/main.css")
+pn.config.css_files.append("static/css/main.css")
 
 
 pn.serve(
