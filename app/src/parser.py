@@ -76,23 +76,28 @@ class BaseDataParser(DataParser):
         extracted = init_nested_dict()
 
         for sheet_key in sheets:
-            if "basis" in sheet_key:
-                basis, year, area = sheet_key.split("_")
-                df = sheets[sheet_key]
+            if "basis" not in sheet_key:
+                continue
 
-                for branch in mapping_branches:
-                    # Add the number of employees to those branches which refer to the company size
-                    df["Wirtschaftsgliederung"] = df.apply(self.apply_mapping, axis=1)
+            basis, year, area = sheet_key.split("_")
+            df = sheets[sheet_key]
 
-                    # Process each row
-                    row = df.loc[df["Wirtschaftsgliederung"] == branch]
-                    if not row.empty:
+            for branch in mapping_branches:
+                # Add the number of employees to those branches which refer to the company size
+                df["Wirtschaftsgliederung"] = df.apply(self.apply_mapping, axis=1)
 
-                        # Extract value for each certain unit from the row
-                        for unit in mapping_units:
-                            if unit in row:
-                                value = row.iloc[0][unit]
-                                extracted[area][mapping_units[unit]][mapping_branches[branch]][year] = value
+                # Process each non-empty row
+                row = df.loc[df["Wirtschaftsgliederung"] == branch]
+                if row.empty:
+                    continue
+
+                # Else extract value for each certain unit from the row
+                mapped_branch = mapping_branches[branch]
+                for unit in mapping_units:
+                    if unit in row:
+                        mapped_unit = mapping_units[unit]
+                        value = row.iloc[0][unit]
+                        extracted[area][mapped_unit][mapped_branch][year] = value
 
         return extracted
 
@@ -127,14 +132,18 @@ class BaseDataParser(DataParser):
         :return: pandas.DataFrame, a data row after applying the mapping
         """
         if row["Wirtschaftsgliederung"] == "Beschäftigte":
-            return mapping_employees_n.get(row["Nr. der Klas-\nsifikation"], row["Wirtschaftsgliederung"])
+            return mapping_employees_n.get(
+                row["Nr. der Klas-\nsifikation"], row["Wirtschaftsgliederung"]
+            )
         else:
             return row["Wirtschaftsgliederung"]
 
 
 class CoopDataParser(DataParser):
     def parse(self, sheets, config):
-        data = self.extract(sheets, config["coop_partner_bar_interactive"])  # TODO: The key should be configurable
+        data = self.extract(
+            sheets, config["coop_partner_bar_interactive"]
+        )  # TODO: The key should be configurable
 
         return data
 
@@ -154,7 +163,7 @@ class CoopDataParser(DataParser):
 
                 for _, row in df.iterrows():
                     branch = row["Branche"]
-                    if branch in branch_groups and branch_groups[branch] == "individual":
+                    if branch_groups.get(branch) == "individual":
                         for criteria in config["filters"]["single_choice_2"]:
                             if criteria not in extracted[area][year]:
                                 extracted[area][year][criteria] = {"x": [], "y": []}
@@ -240,11 +249,15 @@ class GrowthDataParser(DataParser):
 
                         if "y" not in extracted[area][group]:
                             extracted[area][group]["y"] = []
-                        extracted[area][group]["y"].append(row["Wachstum FuE-Ausgaben 2018-2021"])
+                        extracted[area][group]["y"].append(
+                            row["Wachstum FuE-Ausgaben 2018-2021"]
+                        )
 
                         if "z" not in extracted[area][group]:
                             extracted[area][group]["z"] = []
-                        extracted[area][group]["z"].append(row["Umsatz mit Produktneuheiten in Mio. €"])
+                        extracted[area][group]["z"].append(
+                            row["Umsatz mit Produktneuheiten in Mio. €"]
+                        )
 
         return extracted
 

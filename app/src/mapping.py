@@ -26,7 +26,7 @@ branch_groups = {
     "Wissensint. DL - Kommunikation": "by_branch_class",
     "Wissensint. DL - technische Beratung": "by_branch_class",
     "Wissensint. DL - nichttechnische Beratung": "by_branch_class",
-    "Wissensint. DL - Medien/Kultur": "by_branch_class"
+    "Wissensint. DL - Medien/Kultur": "by_branch_class",
 }
 
 mapping_branches = {

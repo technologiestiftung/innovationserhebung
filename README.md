@@ -1,4 +1,6 @@
 [![Technologiestiftung Berlin](https://img.shields.io/badge/Built%20with%20%E2%9D%A4%EF%B8%8F-at%20Technologiestiftung%20Berlin-blue)](https://www.technologiestiftung-berlin.de)
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/technologiestiftung/innovationserhebung/main.svg)](https://results.pre-commit.ci/latest/github/technologiestiftung/innovationserhebung/main)
+
 
 # Innovationsdaten
 
@@ -10,7 +12,7 @@ The digital version now enhances the findings and data with interactive charts t
 
 ### Prerequisites
 
-- Python version 3.11.4 (other versions might work as well) – You can e.g. use pyenv, see below.
+- Latest Python 3.11 version (i.e. 3.11.4, other versions might work as well) – You can e.g. use pyenv, see below.
 - A Node version that’s defined in `.nvmrc` – You can e.g. use [nvm](https://github.com/nvm-sh/nvm) to switch to the right version (with `nvm use` or `nvm install`).
 
 
@@ -32,37 +34,41 @@ The digital version now enhances the findings and data with interactive charts t
 The following steps are not required but recommended. This will allow you to install packages in your isolated virtual environment instead of globally, reducing the risk of breaking system tools or other projects.
 
 1. Install [pyenv](https://github.com/pyenv/pyenv) and the [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv) plugin.
-2. Download the appropriate Python version with 
+2. Download the appropriate Python version with
 ```shell
 pyenv install 3.11.4
-``` 
+```
 in the command line.
-3. Create a virtual environment with the appropriate Python version and name for your environment, for example 
+3. Create a virtual environment with the appropriate Python version and name for your environment, for example
 ```shell
 pyenv virtualenv 3.11.4 innovationserhebung
 ```
-4. Activate the environment with 
+4. Activate the environment with
 ```shell
 pyenv activate innovationserhebung
 ```
 
 
-### Install Python requirements
+### Install Python requirements and the pre-commit
 
-Install the required libraries with the command line 
+Install the required libraries with the command line
 ```shell
 pip install -r requirements.txt
 ```
 
+Install the pre-commit git hook
+```shell
+pre-commit install
+```
 
 ### Run the APP
 
 1. Move to the `/app` directory.
-2. Run the server with the command line 
+2. Run the server with the command line
 ```shell
 uvicorn main:app --reload
 ```
-3. Your terminal should show something like: 
+3. Your terminal should show something like:
 
 ```
 INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
@@ -87,7 +93,7 @@ $ chmod +x run_dev.sh
 ```
 from your root directory to give the bash file executable permission.
 
-2. Now you should be able to start a development server via 
+2. Now you should be able to start a development server via
 ```shell
 ./run_dev.sh
 ```

@@ -108,34 +108,48 @@ class InteractiveBarPlotter(InteractivePlotter):
                 for choice_2 in self.config["filters"]["single_choice_2"]:
                     x_values = self.raw_data[code][choice][choice_2]["x"]
                     # Define color palette
-                    self.raw_data[code][choice][choice_2]["color"] = Category20[len(x_values)]
+                    self.raw_data[code][choice][choice_2]["color"] = Category20[
+                        len(x_values)
+                    ]
                     # Split long x-axis in more than one line
                     for i, label in enumerate(x_values):
-                        self.raw_data[code][choice][choice_2]["x"][i] = "/\n".join(label.split("/"))
+                        self.raw_data[code][choice][choice_2]["x"][i] = "/\n".join(
+                            label.split("/")
+                        )
 
+        single_choice_default = self.config["filters_defaults"]["single_choice"]
+        single_choice_2_default = self.config["filters_defaults"]["single_choice_2"]
         for code in self.config["plot_codes"]:
-            single_choice_dict = (self.raw_data[code][
-                                  self.config["filters_defaults"]["single_choice"]][
-                                  self.config["filters_defaults"]["single_choice_2"]])
+            single_choice_dict = self.raw_data[code][single_choice_default][
+                single_choice_2_default
+            ]
 
             self.fitted_data[code] = ColumnDataSource(data=single_choice_dict)
 
     def create_plot(self):
         for code in self.config["plot_codes"]:
             # Create the figure
-            plot = figure(x_range=self.fitted_data[code].data["x"], **self.config["general"])
+            plot = figure(
+                x_range=self.fitted_data[code].data["x"], **self.config["general"]
+            )
 
             # Stretch to full width.
             plot.sizing_mode = "scale_width"
             plot.width_policy = "max"
 
             # Add vertical bars to the figure
-            plot.vbar(x="x", top="y", source=self.fitted_data[code], color="color", **self.config["vbar"])
+            plot.vbar(
+                x="x",
+                top="y",
+                source=self.fitted_data[code],
+                color="color",
+                **self.config["vbar"],
+            )
 
             # Rotate x-axis labels
-            plot.xaxis.major_label_orientation = pi/2
+            plot.xaxis.major_label_orientation = pi / 2
 
-            #Fixed line-height for tick-labels
+            # Fixed line-height for tick-labels
             plot.xaxis.axis_label_text_line_height = 1
 
             self.plots[code] = plot
@@ -158,9 +172,9 @@ class InteractiveBarPlotter(InteractivePlotter):
     def update_filters(self, event):
         for code in self.config["plot_codes"]:
             # Extract data using the single choice filters
-            single_choice_dict = (self.raw_data[code][
-                                  self.filters["single_choice"].value][
-                                  self.filters["single_choice_2"].value])
+            single_choice_dict = self.raw_data[code][
+                self.filters["single_choice"].value
+            ][self.filters["single_choice_2"].value]
 
             self.fitted_data[code].data = single_choice_dict
 
@@ -171,12 +185,18 @@ class InteractiveBubblePlotter(InteractivePlotter):
 
     def fit_data(self):
         for code in self.config["plot_codes"]:
-            single_choice_dict = self.raw_data[code][self.config["filters_defaults"]["single_choice"]]
-            source = ColumnDataSource(data={"x": single_choice_dict["x"],
-                                            "y": single_choice_dict["y"],
-                                            "z": self.scale_values(single_choice_dict["z"]),
-                                            "color": [n for n in range(len(single_choice_dict["x"]))],
-                                            "labels": single_choice_dict["labels"]})
+            single_choice_dict = self.raw_data[code][
+                self.config["filters_defaults"]["single_choice"]
+            ]
+            source = ColumnDataSource(
+                data={
+                    "x": single_choice_dict["x"],
+                    "y": single_choice_dict["y"],
+                    "z": self.scale_values(single_choice_dict["z"]),
+                    "color": [n for n in range(len(single_choice_dict["x"]))],
+                    "labels": single_choice_dict["labels"],
+                }
+            )
             self.fitted_data[code] = source
 
     def create_plot(self):
@@ -190,13 +210,24 @@ class InteractiveBubblePlotter(InteractivePlotter):
                 y_range.extend(self.raw_data[code][key]["y"])
 
             # Create the figure
-            plot = figure(**self.config["figure"],
-                          x_range=[min(x_range), max(x_range)],
-                          y_range=[min(y_range), max(y_range)])
+            plot = figure(
+                **self.config["figure"],
+                x_range=[min(x_range), max(x_range)],
+                y_range=[min(y_range), max(y_range)],
+            )
 
             # Add circles to the plot
-            mapper = linear_cmap(field_name="color", palette=Category20[20], low=0, high=20)
-            plot.circle(x="x", y="y", size="z", color=mapper, source=self.fitted_data[code], legend_group="labels")
+            mapper = linear_cmap(
+                field_name="color", palette=Category20[20], low=0, high=20
+            )
+            plot.circle(
+                x="x",
+                y="y",
+                size="z",
+                color=mapper,
+                source=self.fitted_data[code],
+                legend_group="labels",
+            )
 
             # Set the position of the legend
             plot.add_layout(plot.legend[0], "right")
@@ -229,12 +260,16 @@ class InteractiveBubblePlotter(InteractivePlotter):
     def update_filters(self, event):
         for code in self.config["plot_codes"]:
             # Extract data using the single choice filter
-            single_choice_dict = self.raw_data[code][self.filters["single_choice"].value]
-            data = {"x": single_choice_dict["x"],
-                    "y": single_choice_dict["y"],
-                    "z": self.scale_values(single_choice_dict["z"]),
-                    "color": [n for n in range(len(single_choice_dict["x"]))],
-                    "labels": single_choice_dict["labels"]}
+            single_choice_dict = self.raw_data[code][
+                self.filters["single_choice"].value
+            ]
+            data = {
+                "x": single_choice_dict["x"],
+                "y": single_choice_dict["y"],
+                "z": self.scale_values(single_choice_dict["z"]),
+                "color": [n for n in range(len(single_choice_dict["x"]))],
+                "labels": single_choice_dict["labels"],
+            }
             self.fitted_data[code].data = data
 
 
@@ -245,12 +280,13 @@ class InteractiveLinePlotter(InteractivePlotter):
     def fit_data(self):
         for code in self.config["plot_codes"]:
             # Extract data using the single choice filters
-            single_choice_dict = (self.raw_data[code][self.config["filters_defaults"]["single_choice"]])
+            single_choice_dict = self.raw_data[code][
+                self.config["filters_defaults"]["single_choice"]
+            ]
 
             # Get a subset of the lines selected with the multi choice filters
             selected_lines = ["x"] + self.config["filters"]["multi_choice"]
-            initial_data = {line: single_choice_dict[line]
-                            for line in selected_lines}
+            initial_data = {line: single_choice_dict[line] for line in selected_lines}
 
             self.fitted_data[code] = ColumnDataSource(initial_data)
 
@@ -262,15 +298,19 @@ class InteractiveLinePlotter(InteractivePlotter):
 
         for code in self.config["plot_codes"]:
             # Create a Bokeh figure
-            max_value = self.get_max_value(code, self.config["filters_defaults"]["single_choice"])
-            self.plots[code] = figure(**self.config["general"],
-                                     x_range=[x_range[0], x_range[-1]],
-                                     y_range=[0, max_value])
+            max_value = self.get_max_value(
+                code, self.config["filters_defaults"]["single_choice"]
+            )
+            self.plots[code] = figure(
+                **self.config["general"],
+                x_range=[x_range[0], x_range[-1]],
+                y_range=[0, max_value],
+            )
 
             # Stretch to full width.
             self.plots[code].sizing_mode = "scale_width"
             self.plots[code].width_policy = "max"
-            
+
             # Configure labels in x and y axes
             self.plots[code].xaxis.ticker = x_range
             self.plots[code].yaxis.formatter.use_scientific = False
@@ -278,7 +318,13 @@ class InteractiveLinePlotter(InteractivePlotter):
             # Add lines to the plot
             colors = Category20[20]
             for i, line_name in enumerate(self.config["filters"]["multi_choice"]):
-                self.plots[code].line(x="x", y=line_name, source=self.fitted_data[code], color=colors[i], legend_label=line_name)
+                self.plots[code].line(
+                    x="x",
+                    y=line_name,
+                    source=self.fitted_data[code],
+                    color=colors[i],
+                    legend_label=line_name,
+                )
 
     def create_filters(self):
         self.filters["single_choice"] = panel.widgets.RadioBoxGroup(
@@ -289,7 +335,7 @@ class InteractiveLinePlotter(InteractivePlotter):
         self.filters["multi_choice"] = panel.widgets.CheckBoxGroup(
             name="Select branches",
             options=self.config["filters"]["multi_choice"],
-            value=self.config["filters"]["multi_choice"]
+            value=self.config["filters"]["multi_choice"],
         )
 
         # Add interactivity
@@ -301,11 +347,13 @@ class InteractiveLinePlotter(InteractivePlotter):
         for code in self.config["plot_codes"]:
             # Re select data based on new selection of filters
             selected_lines = self.filters["multi_choice"].value
-            single_choice_dict = self.raw_data[code][self.filters["single_choice"].value]
+            single_choice_dict = self.raw_data[code][
+                self.filters["single_choice"].value
+            ]
 
             filtered_data = {
                 "x": single_choice_dict["x"],
-                **{line: single_choice_dict[line] for line in selected_lines}
+                **{line: single_choice_dict[line] for line in selected_lines},
             }
 
             # Update the existing ColumnDataSource with new data
@@ -348,7 +396,9 @@ class InteractivePiePlotter(InteractivePlotter):
     def fit_data(self):
         for code in self.config["plot_codes"]:
             # Extract data using the single choice filters
-            single_choice_dict = (self.raw_data[code][self.config["filters_defaults"]["single_choice"]])
+            single_choice_dict = self.raw_data[code][
+                self.config["filters_defaults"]["single_choice"]
+            ]
 
             # Get x and y values
             x_values = single_choice_dict["x"]
@@ -360,14 +410,18 @@ class InteractivePiePlotter(InteractivePlotter):
             colors = Category20c[len(x_values)]
 
             # Transform data to the ColumnDataSource format required by Bokeh
-            initial_data = {"x": x_values,
-                            "y": y_values,
-                            "angle": angles,
-                            "color": colors}
+            initial_data = {
+                "x": x_values,
+                "y": y_values,
+                "angle": angles,
+                "color": colors,
+            }
 
             self.fitted_data[code] = ColumnDataSource(initial_data)
 
     def create_plot(self):
+        single_choice_key = self.config["filters_defaults"]["single_choice"]
+        highlight_category = self.config["filters_defaults"]["single_choice_highlight"]
         for code in self.config["plot_codes"]:
             # Create a Bokeh figure
             plot = figure(**self.config["general"])
@@ -388,14 +442,18 @@ class InteractivePiePlotter(InteractivePlotter):
             plot.width_policy = "max"
 
             # Add a label in the center
-            highlight_category = self.config["filters_defaults"]["single_choice_highlight"]
-            for key, value, color in zip(self.raw_data[code][self.config["filters_defaults"]["single_choice"]]["x"],
-                                         self.raw_data[code][self.config["filters_defaults"]["single_choice"]]["y"],
-                                         self.fitted_data[code].data["color"]):
+            for key, value, color in zip(
+                self.raw_data[code][single_choice_key]["x"],
+                self.raw_data[code][single_choice_key]["y"],
+                self.fitted_data[code].data["color"],
+            ):
                 if key == highlight_category:
                     label_value = f"{str(int(value))} Mio €"
                     if len(highlight_category) > self.config["center_label_max_char"]:
-                        label_text = highlight_category[:self.config["center_label_max_char"]] + ".."
+                        label_text = (
+                            highlight_category[: self.config["center_label_max_char"]]
+                            + ".."
+                        )
                     else:
                         label_text = highlight_category
                     highlight_color = color
@@ -436,7 +494,7 @@ class InteractivePiePlotter(InteractivePlotter):
                 inner_radius=inner_radius,
                 outer_radius=outer_radius,
                 start_angle=0,
-                end_angle=2*pi,
+                end_angle=2 * pi,
                 line_color=None,
                 fill_color=highlight_color,
             )
@@ -452,26 +510,30 @@ class InteractivePiePlotter(InteractivePlotter):
             self.plots[code] = plot
 
     def create_filters(self):
-
         # Create single choice filter
         self.filters["single_choice"] = panel.widgets.RadioButtonGroup(
-            name="Select unit", 
+            name="Select unit",
             options=self.config["filters"]["single_choice"],
-            margin=(32, 0)
+            margin=(32, 0),
         )
         # Create single choice highlight filter
         self.filters["single_choice_highlight"] = panel.widgets.RadioBoxGroup(
-            name="Select unit", options=self.config["filters"]["single_choice_highlight"]
+            name="Select unit",
+            options=self.config["filters"]["single_choice_highlight"],
         )
 
         # Add interactivity
         self.filters["single_choice"].param.watch(self.update_filters, "value")
-        self.filters["single_choice_highlight"].param.watch(self.update_filters, "value")
+        self.filters["single_choice_highlight"].param.watch(
+            self.update_filters, "value"
+        )
 
     def update_filters(self, event):
         for code in self.config["plot_codes"]:
             # Extract data using the single choice filters
-            single_choice_dict = (self.raw_data[code][self.filters["single_choice"].value])
+            single_choice_dict = self.raw_data[code][
+                self.filters["single_choice"].value
+            ]
 
             # Get x and y values
             x_values = single_choice_dict["x"]
@@ -483,22 +545,29 @@ class InteractivePiePlotter(InteractivePlotter):
             colors = Category20c[len(x_values)]
 
             # Transform data to the ColumnDataSource format required by Bokeh
-            filtered_data = {"x": x_values,
-                             "y": y_values,
-                             "angle": angles,
-                             "color": colors}
+            filtered_data = {
+                "x": x_values,
+                "y": y_values,
+                "angle": angles,
+                "color": colors,
+            }
 
             self.fitted_data[code].data = filtered_data
 
             # Update the center label to match the highlighted category
             highlight_category = self.filters["single_choice_highlight"].value
-            for key, value, color in zip(self.raw_data[code][self.filters["single_choice"].value]["x"],
-                                         self.raw_data[code][self.filters["single_choice"].value]["y"],
-                                         colors):
+            for key, value, color in zip(
+                self.raw_data[code][self.filters["single_choice"].value]["x"],
+                self.raw_data[code][self.filters["single_choice"].value]["y"],
+                colors,
+            ):
                 if key == highlight_category:
                     self.center_labels[code].text = f"{str(int(value))} Mio €"
                     if len(highlight_category) > self.config["center_label_max_char"]:
-                        self.center_labels_2nd_line[code].text = highlight_category[:self.config["center_label_max_char"]] + ".."
+                        self.center_labels_2nd_line[code].text = (
+                            highlight_category[: self.config["center_label_max_char"]]
+                            + ".."
+                        )
                     else:
                         self.center_labels_2nd_line[code].text = highlight_category
                     self.inner_rings[code].fill_color = color

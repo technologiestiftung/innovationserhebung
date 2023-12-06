@@ -1,5 +1,7 @@
+from copy import deepcopy
 import os
 import yaml
+
 
 class ConfigImporter:
     def get_config(self):
@@ -19,7 +21,9 @@ class ConfigImporter:
             plot_type = plot_config_custom["plot_type"]
             plot_config_default = config_default[plot_type]
 
-            overwritten_config = self.override_values(plot_config_default, plot_config_custom)
+            overwritten_config = self.override_values(
+                plot_config_default, plot_config_custom
+            )
             config_result[plot_name] = overwritten_config
 
         return config_result
@@ -48,9 +52,13 @@ class ConfigImporter:
         :param custom_config: dict, custom configuration for a plot
         """
 
-        overwritten_config = default_config.copy()
+        overwritten_config = deepcopy(default_config)
         for key, value in custom_config.items():
-            if isinstance(value, dict) and key in overwritten_config and isinstance(default_config[key], dict):
+            if (
+                isinstance(value, dict)
+                and key in overwritten_config
+                and isinstance(overwritten_config[key], dict)
+            ):
                 self.override_values(overwritten_config[key], value)
             else:
                 overwritten_config[key] = value
