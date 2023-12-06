@@ -345,17 +345,19 @@ class InteractiveLinePlotter(InteractivePlotter):
             name="Select unit", options=self.config["filters"]["single_choice"]
         )
 
-        filters_multi_choice = panel.Column(*[panel.Row(
+        filters_multi_choice = panel.Column(
+            *[panel.Row(
                 panel.pane.HTML('<div class="legend-field" style="background-color:{};"></div>'.format(color)),
                 panel.widgets.Checkbox(name=option, value=True,css_classes=["legend-checkbox"])
             )
             for color, option in zip(custom_palette, self.config["filters"]["multi_choice"])
         ])
 
+        filter_options = { "header_color": self.config["corporate_text_color"], "active_header_background": self.config["background_fill_color"], "header_background": self.config["background_fill_color"] }
         self.filters["multi_choice"] = Accordion(
-            ("Branchen auswählen", filters_multi_choice), header_color="#1E3791", active_header_background="#F6F6F6", header_background="#F6F6F6", active=[0])
+            ("Branchen auswählen", filters_multi_choice), **filter_options, active=[0])
         self.filters["single_choice"] = Accordion(
-            ("Einheiten auswählen", filters_single_choice), header_color="#1E3791", active_header_background="#F6F6F6", header_background="#F6F6F6")
+            ("Einheiten auswählen", filters_single_choice), **filter_options)
 
         # Add interactivity
         for filter_row in self.filters["multi_choice"][0]:
