@@ -1,12 +1,16 @@
 from abc import abstractmethod, ABC
 from math import pi
 
-from bokeh.models import AnnularWedge, ColumnDataSource, Label
+from bokeh.io import curdoc
+from bokeh.models import AnnularWedge, ColumnDataSource, Label, TapTool, CustomJS
 from bokeh.palettes import Category20
 from bokeh.plotting import figure
 from bokeh.transform import cumsum, linear_cmap
 import panel
 from panel.layout.accordion import Accordion
+
+import logging
+logging.basicConfig(level=logging.INFO)
 
 
 PLOT_TYPES = {
@@ -521,6 +525,15 @@ class InteractivePiePlotter(InteractivePlotter):
                 fill_color="color",
                 source=self.fitted_data[code],
             )
+
+            def on_click(event):
+                logging.info(f"Click")
+
+            taptool = TapTool()
+            plot.add_tools(taptool)
+            plot.toolbar.active_tap = taptool
+            taptool.on_event('tap', on_click)
+
             plot.sizing_mode = "scale_width"
             plot.width_policy = "max"
 
@@ -624,6 +637,8 @@ class InteractivePiePlotter(InteractivePlotter):
         )
 
     def update_filters(self, event):
+        logging.info(f"Filters updated: {event.new}")
+        logging.info(f"CLICK")
         for code in self.config["plot_codes"]:
             # Extract data using the single choice filters
             single_choice_dict = self.raw_data[code][
