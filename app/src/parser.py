@@ -76,24 +76,28 @@ class BaseDataParser(DataParser):
         extracted = init_nested_dict()
 
         for sheet_key in sheets:
-            if "basis" in sheet_key:
-                basis, year, area = sheet_key.split("_")
-                df = sheets[sheet_key]
+            if "basis" not in sheet_key:
+                continue
 
-                for branch in mapping_branches:
-                    # Add the number of employees to those branches which refer to the company size
-                    df["Wirtschaftsgliederung"] = df.apply(self.apply_mapping, axis=1)
+            basis, year, area = sheet_key.split("_")
+            df = sheets[sheet_key]
 
-                    # Process each row
-                    row = df.loc[df["Wirtschaftsgliederung"] == branch]
-                    if not row.empty:
-                        # Extract value for each certain unit from the row
-                        for unit in mapping_units:
-                            if unit in row:
-                                value = row.iloc[0][unit]
-                                extracted[area][mapping_units[unit]][
-                                    mapping_branches[branch]
-                                ][year] = value
+            for branch in mapping_branches:
+                # Add the number of employees to those branches which refer to the company size
+                df["Wirtschaftsgliederung"] = df.apply(self.apply_mapping, axis=1)
+
+                # Process each non-empty row
+                row = df.loc[df["Wirtschaftsgliederung"] == branch]
+                if row.empty:
+                    continue
+
+                # Else extract value for each certain unit from the row
+                mapped_branch = mapping_branches[branch]
+                for unit in mapping_units:
+                    if unit in row:
+                        mapped_unit = mapping_units[unit]
+                        value = row.iloc[0][unit]
+                        extracted[area][mapped_unit][mapped_branch][year] = value
 
         return extracted
 
