@@ -1,3 +1,4 @@
+from functools import lru_cache
 import json
 import logging
 
@@ -12,6 +13,7 @@ logger.setLevel(logging.INFO)
 # }
 
 
+@lru_cache
 def load_translation(language):
     primary_language = language.split(",")[0].split(";")[0].split("-")[0]
     translations = {}
