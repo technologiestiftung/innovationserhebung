@@ -503,7 +503,7 @@ class InteractivePiePlotter(InteractivePlotter):
                 "x": x_values,
                 "y": y_values,
                 "angle": angles,
-                "color": custom_palette,
+                "color": custom_palette[0:len(x_values)],
             }
 
             self.fitted_data[code] = ColumnDataSource(initial_data)
@@ -637,8 +637,6 @@ class InteractivePiePlotter(InteractivePlotter):
         )
 
     def update_filters(self, event):
-        logging.info(f"Filters updated: {event.new}")
-        logging.info(f"CLICK")
         for code in self.config["plot_codes"]:
             # Extract data using the single choice filters
             single_choice_dict = self.raw_data[code][
@@ -658,7 +656,7 @@ class InteractivePiePlotter(InteractivePlotter):
                 "x": x_values,
                 "y": y_values,
                 "angle": angles,
-                "color": custom_palette,
+                "color": custom_palette[0:len(x_values)],
             }
 
             self.fitted_data[code].data = filtered_data
@@ -668,7 +666,7 @@ class InteractivePiePlotter(InteractivePlotter):
             for key, value, color in zip(
                 self.raw_data[code][self.filters["single_choice"].value]["x"],
                 self.raw_data[code][self.filters["single_choice"].value]["y"],
-                custom_palette,
+                custom_palette[0:len(x_values)],
             ):
                 if key == highlight_category:
                     self.center_labels[code].text = f"{str(int(value))} Mio €"
