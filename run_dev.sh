@@ -1,8 +1,7 @@
 #!/bin/bash
 
-# Start the FastAPI app from the app folder
-cd app
-uvicorn main:app --reload &
+# Start the FastAPI app
+uvicorn app.main:app --reload &
 
 python -m webbrowser -t "http://127.0.0.1:8000" &
 

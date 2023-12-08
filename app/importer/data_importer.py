@@ -1,30 +1,22 @@
 import json
-import sys
 
 from openpyxl import load_workbook
 import pandas as pd
 
-from config_importer import ConfigImporter
-from parser import DataParserFactory
+from .config_importer import ConfigImporter
+from .parser import DataParserFactory
 
-# TODO:
-#   1/ Organize file paths
-#   2/ Organize loggers
-
-sys.path.append("/app/sliders/config_importer")
-
-excel_file = "data/basisdaten_clean.xlsx"
-outfile_path = "data/outfile.json"
+# TODO: Organize loggers
 
 
 class DataImporter:
-    def import_data(self, data_file, config_file):
+    def import_data(self, data_file, outfile_path):
         """
         Main method of the class.
         Import the data from an Excel file.
 
         :param data_file: str, path to the Excel file containing the data to parse
-        :param config_file: str, path to the YAML file containing the configuration
+        :param outfile_path: str, path to the JSON output file
         """
         sheets = self.load_excel(data_file)
         config_importer = ConfigImporter()
@@ -73,9 +65,5 @@ class DataImporter:
         """
 
         with open(outfile_path, "w") as outfile:
-            json.dump(parsed_data, outfile, ensure_ascii=False)
-
-
-# TODO: These two lines are for testing purposes. Remove later.
-data_importer = DataImporter()
-data_importer.import_data(excel_file, "config_file")
+            json.dump(parsed_data, outfile, ensure_ascii=False, indent=2)
+            outfile.write("\n")

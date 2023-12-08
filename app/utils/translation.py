@@ -1,3 +1,4 @@
+from functools import lru_cache
 import json
 import logging
 
@@ -12,11 +13,12 @@ logger.setLevel(logging.INFO)
 # }
 
 
+@lru_cache
 def load_translation(language):
     primary_language = language.split(",")[0].split(";")[0].split("-")[0]
     translations = {}
     try:
-        with open(f"locales/{primary_language}.json", "r", encoding="utf-8") as f:
+        with open(f"app/locales/{primary_language}.json", "r", encoding="utf-8") as f:
             translations = json.load(f)
             # TODO: Remove this if it is no longer needed.
             # for key in translations:
