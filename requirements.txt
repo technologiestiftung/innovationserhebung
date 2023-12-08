@@ -4,30 +4,31 @@
 #
 #    pip-compile requirements.in
 #
-annotated-types==0.5.0
+annotated-types==0.6.0
     # via pydantic
 anyio==3.7.1
     # via
+    #   fastapi
     #   httpx
     #   starlette
-bleach==6.0.0
+bleach==6.1.0
     # via panel
 bokeh==3.2.2
     # via panel
-certifi==2023.7.22
+certifi==2023.11.17
     # via
     #   httpcore
     #   httpx
     #   requests
-charset-normalizer==3.2.0
+charset-normalizer==3.3.2
     # via requests
-click==8.1.6
+click==8.1.7
     # via uvicorn
-contourpy==1.1.0
+contourpy==1.2.0
     # via bokeh
 et-xmlfile==1.1.0
     # via openpyxl
-fastapi==0.101.1
+fastapi==0.104.1
     # via -r requirements.in
 h11==0.14.0
     # via
@@ -35,9 +36,9 @@ h11==0.14.0
     #   uvicorn
 httpcore==1.0.2
     # via httpx
-httpx==0.25.1
+httpx==0.25.2
     # via -r requirements.in
-idna==3.4
+idna==3.6
     # via
     #   anyio
     #   httpx
@@ -46,7 +47,7 @@ jinja2==3.1.2
     # via bokeh
 linkify-it-py==2.0.2
     # via panel
-markdown==3.4.4
+markdown==3.5.1
     # via panel
 markdown-it-py==3.0.0
     # via
@@ -58,38 +59,38 @@ mdit-py-plugins==0.4.0
     # via panel
 mdurl==0.1.2
     # via markdown-it-py
-numpy==1.25.2
+numpy==1.26.2
     # via
     #   bokeh
     #   contourpy
     #   pandas
 openpyxl==3.1.2
     # via -r requirements.in
-packaging==23.1
+packaging==23.2
     # via bokeh
-pandas==2.0.3
+pandas==2.1.3
     # via
     #   bokeh
     #   panel
-panel==1.2.1
+panel==1.2.3
     # via -r requirements.in
-param==1.13.0
+param==2.0.1
     # via
     #   panel
     #   pyviz-comms
-pillow==10.0.0
+pillow==10.1.0
     # via bokeh
-pydantic==2.1.1
+pydantic==2.5.2
     # via fastapi
-pydantic-core==2.4.0
+pydantic-core==2.14.5
     # via pydantic
 python-dateutil==2.8.2
     # via pandas
 python-dotenv==1.0.0
     # via -r requirements.in
-pytz==2023.3
+pytz==2023.3.post1
     # via pandas
-pyviz-comms==2.3.2
+pyviz-comms==3.0.0
     # via panel
 pyyaml==6.0.1
     # via bokeh
@@ -105,11 +106,11 @@ sniffio==1.3.0
     #   httpx
 starlette==0.27.0
     # via fastapi
-tornado==6.3.3
+tornado==6.4
     # via bokeh
-tqdm==4.65.0
+tqdm==4.66.1
     # via panel
-typing-extensions==4.7.1
+typing-extensions==4.8.0
     # via
     #   fastapi
     #   panel
@@ -119,7 +120,7 @@ tzdata==2023.3
     # via pandas
 uc-micro-py==1.0.2
     # via linkify-it-py
-urllib3==2.0.4
+urllib3==2.1.0
     # via requests
 uvicorn==0.23.2
     # via -r requirements.in
@@ -127,7 +128,7 @@ webencodings==0.5.1
     # via bleach
 websockets==12.0
     # via -r requirements.in
-xyzservices==2023.7.0
+xyzservices==2023.10.1
     # via
     #   bokeh
     #   panel

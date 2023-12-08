@@ -8,7 +8,7 @@ build==1.0.3
     # via pip-tools
 cfgv==3.4.0
     # via pre-commit
-click==8.1.6
+click==8.1.7
     # via
     #   -c requirements.txt
     #   pip-tools
@@ -20,7 +20,7 @@ identify==2.5.33
     # via pre-commit
 nodeenv==1.8.0
     # via pre-commit
-packaging==23.1
+packaging==23.2
     # via
     #   -c requirements.txt
     #   build
