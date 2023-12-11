@@ -5,7 +5,6 @@ uvicorn app.main:app --reload &
 
 python -m webbrowser -t "http://127.0.0.1:8000" &
 
-cd ..
 # Start the Tailwind CSS watcher using the npm script
 npm run dev:tailwind
 
