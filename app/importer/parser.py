@@ -3,8 +3,6 @@ from collections import defaultdict
 
 from .mapping import branch_groups, mapping_branches, mapping_employees_n, mapping_units
 
-# TODO: Make keys more generic (x, y, z)
-
 
 PARSER_TYPES = {
     "base": "BaseDataParser",
@@ -48,7 +46,7 @@ class DataParser(ABC):
         """
 
         :param sheets: dict, where keys are names of sheets and values are pandas DataFrames
-        :param config: dict, configuration
+        :param config: dict, configuration for a specific plot
         :return: dict, parsed data
         """
         pass
@@ -141,9 +139,7 @@ class BaseDataParser(DataParser):
 
 class CoopDataParser(DataParser):
     def parse(self, sheets, config):
-        data = self.extract(
-            sheets, config["coop_partner_bar_interactive"]
-        )  # TODO: The key should be configurable
+        data = self.extract(sheets, config)
 
         return data
 
@@ -156,8 +152,9 @@ class CoopDataParser(DataParser):
             {area: {year: {criteria: {"x": [branch1, branch2, ...], "y": [value1, value2, ...]}}}}
         """
         extracted = init_nested_dict()
+        parser_subtype = config["parser_subtype"]
         for sheet_key in sheets:
-            if "coop" in sheet_key:
+            if f"coop_{parser_subtype}" in sheet_key:
                 coop, partner, year, area = sheet_key.split("_")
                 df = sheets[sheet_key]
 
@@ -175,7 +172,6 @@ class CoopDataParser(DataParser):
 
 class FUEDataParser(DataParser):
     def parse(self, sheets, config):
-        config = config["fue_pie_interactive"]
         data = self.extract(sheets, config)
 
         return data

@@ -6,8 +6,6 @@ import pandas as pd
 from .config_importer import ConfigImporter
 from .parser import DataParserFactory
 
-# TODO: Organize loggers
-
 
 class DataImporter:
     def import_data(self, data_file, outfile_path):
@@ -27,7 +25,7 @@ class DataImporter:
         for plot in config:
             parser_type = config[plot]["parser_type"]
             parser = data_parser_factory.create_parser(parser_type)
-            output[plot] = parser.parse(sheets, config)
+            output[plot] = parser.parse(sheets, config[plot])
 
         self.save_to_json(output, outfile_path)
 

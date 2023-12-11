@@ -109,6 +109,19 @@
       ]
     },
     {
+      "type": "chart",
+      "id": "section_6",
+      "title": "Lorem ipsum",
+      "disclaimer": "Lorem ipsum",
+      "charts": [
+        {
+          "id": "coop_region_bar_interactive",
+          "description": "Lorem ipsum",
+          "toggleText": "Lorem ipsum "
+        }
+      ]
+    },
+    {
       "type": "header",
       "title": "Addendum"
     },

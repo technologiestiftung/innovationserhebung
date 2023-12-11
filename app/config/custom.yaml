@@ -100,6 +100,7 @@ fue_pie_interactive:
 
 coop_partner_bar_interactive:
   parser_type: coop
+  parser_subtype: partner
   plot_type: bar_interactive
   plot_codes:
     - ber
@@ -118,3 +119,25 @@ coop_partner_bar_interactive:
   filters_defaults:
     single_choice: "2012"
     single_choice_2: insgesamt
+
+coop_region_bar_interactive:
+  parser_type: coop
+  parser_subtype: region
+  plot_type: bar_interactive
+  plot_codes:
+    - ber
+    - de
+  filters:
+    single_choice:
+      - "2012"
+      - "2020"
+    single_choice_2:
+      - der Region
+      - anderen Regionen in Deutschland
+      - anderen europäischen Ländern
+      - den USA
+      - Asien
+      - anderen Ländern
+  filters_defaults:
+    single_choice: "2012"
+    single_choice_2: Asien
