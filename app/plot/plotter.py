@@ -2,7 +2,7 @@ from abc import abstractmethod, ABC
 from math import pi
 
 from bokeh.io import curdoc
-from bokeh.models import AnnularWedge, ColumnDataSource, Label, TapTool, CustomJS
+from bokeh.models import AnnularWedge, ColumnDataSource, Label, HoverTool
 from bokeh.palettes import Category20
 from bokeh.plotting import figure
 from bokeh.transform import cumsum, linear_cmap
@@ -21,24 +21,25 @@ PLOT_TYPES = {
 }
 
 custom_palette = [
-    "#E7EA81",
+    "#6CB2E0",
     "#EE4C70",
-    "#B2D9A8",
+    "#41B496",
+    "#E7EA81",
     "#B1B2B3",
     "#99DCF8",
+    "#B2D9A8",
     "#7ACBB5",
     "#DCC82D",
     "#6ECDF5",
     "#5BB5B5",
     "#6273B2",
     "#E60032",
-    "#6CB2E0",
     "#2D91D2",
     "#B2D9A8",
     "#EADE81",
     "#1E3791",
     "#5BB5B5",
-    "#6F6F6E",
+    "#6F6F6E"
 ]
 
 
@@ -511,6 +512,26 @@ class InteractivePiePlotter(InteractivePlotter):
     def create_plot(self):
         highlight_category = self.config["filters_defaults"]["single_choice_highlight"]
         for code in self.config["plot_codes"]:
+
+            tooltip_html = """
+                <div style="padding: .5rem;">
+                    <div style="font-size: 1rem; font-weight: bold;">
+                        <strong>@x</strong>
+                    </div>
+                    <div style="font-size: 1rem; display:flex; justify-content: space-between; align-items: center; gap:2rem; width: 100%;">
+                        <p style="color: #878786;">insgesamt:</p>
+                        <strong>@y Mio. €</strong>
+                    </div>
+                </div>
+            """
+
+            hover_tool = HoverTool(
+                tooltips=tooltip_html,
+                attachment="above",
+                line_policy="nearest",
+                point_policy="snap_to_data",
+                anchor="center_right"
+            )
             # Create a Bokeh figure
             plot = figure(**self.config["general"])
 
@@ -526,14 +547,6 @@ class InteractivePiePlotter(InteractivePlotter):
                 source=self.fitted_data[code],
             )
 
-            def on_click(event):
-                logging.info(f"Click")
-
-            taptool = TapTool()
-            plot.add_tools(taptool)
-            plot.toolbar.active_tap = taptool
-            taptool.on_event('tap', on_click)
-
             plot.sizing_mode = "scale_width"
             plot.width_policy = "max"
 
@@ -541,6 +554,7 @@ class InteractivePiePlotter(InteractivePlotter):
             plot.background_fill_color = self.config["background_fill_color"]
             plot.border_fill_color = self.config["background_fill_color"]
             plot.outline_line_color = self.config["background_fill_color"]
+            plot.add_tools(hover_tool)
 
             # Add a label in the center
             highlight_category = self.config["filters_defaults"][
@@ -571,6 +585,7 @@ class InteractivePiePlotter(InteractivePlotter):
                 x=0,
                 y=0,
                 text=label_value,
+                # text=label_value,
                 text_align="center",
                 text_baseline="middle",
                 text_font_style="bold",
@@ -578,7 +593,6 @@ class InteractivePiePlotter(InteractivePlotter):
                 text_font_size="14pt",
             )
 
-            plot.add_layout(self.center_labels[code])
 
             self.center_labels_2nd_line[code] = Label(
                 x=0,
@@ -590,7 +604,9 @@ class InteractivePiePlotter(InteractivePlotter):
                 text_font_size="8pt",
             )
 
-            plot.add_layout(self.center_labels_2nd_line[code])
+            # uncommented for tooltip version
+            # plot.add_layout(self.center_labels[code])
+            # plot.add_layout(self.center_labels_2nd_line[code])
 
             # Create an inner ring with the color of the highlighted category
             inner_radius = 0.17
@@ -607,8 +623,8 @@ class InteractivePiePlotter(InteractivePlotter):
                 fill_color=highlight_color,
             )
 
-            self.inner_rings[code] = inner_ring
-            plot.add_glyph(inner_ring)
+            # self.inner_rings[code] = inner_ring
+            # plot.add_glyph(inner_ring)
 
             # Add other labels
             plot.axis.axis_label = None
@@ -624,17 +640,16 @@ class InteractivePiePlotter(InteractivePlotter):
             options=self.config["filters"]["single_choice"],
             margin=(32, 0),
         )
+        self.filters["single_choice"].param.watch(self.update_filters, "value")
+
         # Create single choice highlight filter
-        self.filters["single_choice_highlight"] = panel.widgets.RadioBoxGroup(
-            name="Select unit",
-            options=self.config["filters"]["single_choice_highlight"],
-        )
+        # self.filters["single_choice_highlight"] = panel.widgets.RadioBoxGroup(
+        #     name="Select unit", options=self.config["filters"]["single_choice_highlight"]
+        # )
 
         # Add interactivity
-        self.filters["single_choice"].param.watch(self.update_filters, "value")
-        self.filters["single_choice_highlight"].param.watch(
-            self.update_filters, "value"
-        )
+        # self.filters["single_choice_highlight"].param.watch(
+        #     self.update_filters, "value")
 
     def update_filters(self, event):
         for code in self.config["plot_codes"]:
@@ -662,20 +677,16 @@ class InteractivePiePlotter(InteractivePlotter):
             self.fitted_data[code].data = filtered_data
 
             # Update the center label to match the highlighted category
-            highlight_category = self.filters["single_choice_highlight"].value
-            for key, value, color in zip(
-                self.raw_data[code][self.filters["single_choice"].value]["x"],
-                self.raw_data[code][self.filters["single_choice"].value]["y"],
-                custom_palette[0:len(x_values)],
-            ):
-                if key == highlight_category:
-                    self.center_labels[code].text = f"{str(int(value))} Mio €"
-                    if len(highlight_category) > self.config["center_label_max_char"]:
-                        self.center_labels_2nd_line[code].text = (
-                            highlight_category[: self.config["center_label_max_char"]]
-                            + ".."
-                        )
-                    else:
-                        self.center_labels_2nd_line[code].text = highlight_category
-                    self.inner_rings[code].fill_color = color
-                    break
+            # highlight_category = self.filters["single_choice_highlight"].value
+            # for key, value, color in zip(self.raw_data[code][self.filters["single_choice"].value]["x"],
+            #                              self.raw_data[code][self.filters["single_choice"].value]["y"],
+            #                              custom_palette[0:len(x_values)]):
+            #     if key == highlight_category:
+            #         self.center_labels[code].text = f"{str(int(value))} Mio €"
+            #         if len(highlight_category) > self.config["center_label_max_char"]:
+            #             self.center_labels_2nd_line[code].text = highlight_category[:
+            #                                                                         self.config["center_label_max_char"]] + ".."
+            #         else:
+            #             self.center_labels_2nd_line[code].text = highlight_category
+            #         self.inner_rings[code].fill_color = color
+            #         break

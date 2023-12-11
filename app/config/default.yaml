@@ -39,7 +39,6 @@ pie_interactive:
   general:
     height: 400
     toolbar_location: null
-    tooltips: "@x: @y Mio €"
     x_range: [-0.6, 0.6]
   center_label_max_char: 20
   text:
