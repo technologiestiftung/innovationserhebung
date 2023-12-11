@@ -86,7 +86,7 @@ async def bkapp_page(request: Request, language: Language = None):
 
 @app.get("/favicon.ico", include_in_schema=False)
 async def favicon():
-    return FileResponse("favicon.ico")
+    return FileResponse("app/static/favicon.ico")
 
 
 def get_language_code(language: Language | str):
