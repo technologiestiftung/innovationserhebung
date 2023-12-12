@@ -15,21 +15,12 @@ bubble_interactive:
 line_interactive:
   background_fill_color: "#F6F6F6"
   corporate_text_color: "#1E3791"
-  axis:
-    axis_line_width: 2
-    axis_line_color: white
   general:
     y_axis_label: Y-axis
     toolbar_location: null
-  text:
-    font: Clan Pro
-    font_style: normal
   axis:
     axis_line_width: 2
     axis_line_color: white
-  general:
-    y_axis_label: Y-axis
-    toolbar_location: null
   text:
     font: Clan Pro
     font_style: normal

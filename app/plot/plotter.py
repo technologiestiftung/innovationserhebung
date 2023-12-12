@@ -1,8 +1,7 @@
 from abc import abstractmethod, ABC
 from math import pi
 
-from bokeh.io import curdoc
-from bokeh.models import AnnularWedge, ColumnDataSource, Label, HoverTool
+from bokeh.models import ColumnDataSource, Label, HoverTool
 from bokeh.palettes import Category20
 from bokeh.plotting import figure
 from bokeh.transform import cumsum, linear_cmap
@@ -10,6 +9,7 @@ import panel
 from panel.layout.accordion import Accordion
 
 import logging
+
 logging.basicConfig(level=logging.INFO)
 
 
@@ -39,7 +39,7 @@ custom_palette = [
     "#EADE81",
     "#1E3791",
     "#5BB5B5",
-    "#6F6F6E"
+    "#6F6F6E",
 ]
 
 
@@ -183,11 +183,13 @@ class InteractiveBarPlotter(InteractivePlotter):
 
     def create_filters(self):
         # Create single choice filter
-        self.filters["single_choice"] = panel.widgets.RadioBoxGroup(name="Select unit", options=self.config["filters"]["single_choice"]
+        self.filters["single_choice"] = panel.widgets.RadioBoxGroup(
+            name="Select unit", options=self.config["filters"]["single_choice"]
         )
 
         # Create single choice highlight filter
-        self.filters["single_choice_2"] = panel.widgets.RadioBoxGroup(name="Select unit", options=self.config["filters"]["single_choice_2"]
+        self.filters["single_choice_2"] = panel.widgets.RadioBoxGroup(
+            name="Select unit", options=self.config["filters"]["single_choice_2"]
         )
 
         # Add interactivity
@@ -318,11 +320,10 @@ class InteractiveLinePlotter(InteractivePlotter):
     def create_plot(self):
         # Left-traverse nested data to get the x range
         x_range = self.raw_data
-        while type(x_range) == dict:
+        while isinstance(x_range, dict):
             x_range = x_range[next(iter(x_range))]
 
         for code in self.config["plot_codes"]:
-
             # Create a Bokeh figure
             max_value = self.get_max_value(
                 code, self.config["filters_defaults"]["single_choice"]
@@ -420,7 +421,12 @@ class InteractiveLinePlotter(InteractivePlotter):
             "header_background": self.config["background_fill_color"],
         }
         self.filters["multi_choice"] = Accordion(
-            ("Branchen auswählen", filters_multi_choice), header_color="#1E3791", active_header_background="#F6F6F6", header_background="#F6F6F6", active=[0])
+            ("Branchen auswählen", filters_multi_choice),
+            header_color="#1E3791",
+            active_header_background="#F6F6F6",
+            header_background="#F6F6F6",
+            active=[0],
+        )
         self.filters["single_choice"] = Accordion(
             ("Einheiten auswählen", filters_single_choice), **filter_options
         )
@@ -504,7 +510,7 @@ class InteractivePiePlotter(InteractivePlotter):
                 "x": x_values,
                 "y": y_values,
                 "angle": angles,
-                "color": custom_palette[0:len(x_values)],
+                "color": custom_palette[0 : len(x_values)],
             }
 
             self.fitted_data[code] = ColumnDataSource(initial_data)
@@ -512,7 +518,6 @@ class InteractivePiePlotter(InteractivePlotter):
     def create_plot(self):
         highlight_category = self.config["filters_defaults"]["single_choice_highlight"]
         for code in self.config["plot_codes"]:
-
             tooltip_html = """
                 <div style="padding: .5rem;">
                     <div style="font-size: 1rem; font-weight: bold;">
@@ -530,7 +535,7 @@ class InteractivePiePlotter(InteractivePlotter):
                 attachment="above",
                 line_policy="nearest",
                 point_policy="snap_to_data",
-                anchor="center_right"
+                anchor="center_right",
             )
             # Create a Bokeh figure
             plot = figure(**self.config["general"])
@@ -578,7 +583,6 @@ class InteractivePiePlotter(InteractivePlotter):
                         )
                     else:
                         label_text = highlight_category
-                    highlight_color = color
                     break
 
             self.center_labels[code] = Label(
@@ -592,7 +596,6 @@ class InteractivePiePlotter(InteractivePlotter):
                 y_offset=10,
                 text_font_size="14pt",
             )
-
 
             self.center_labels_2nd_line[code] = Label(
                 x=0,
@@ -609,19 +612,19 @@ class InteractivePiePlotter(InteractivePlotter):
             # plot.add_layout(self.center_labels_2nd_line[code])
 
             # Create an inner ring with the color of the highlighted category
-            inner_radius = 0.17
-            outer_radius = 0.21
+            # inner_radius = 0.17
+            # outer_radius = 0.21
 
-            inner_ring = AnnularWedge(
-                x=0,
-                y=0,
-                inner_radius=inner_radius,
-                outer_radius=outer_radius,
-                start_angle=0,
-                end_angle=2 * pi,
-                line_color=None,
-                fill_color=highlight_color,
-            )
+            # inner_ring = AnnularWedge(
+            #     x=0,
+            #     y=0,
+            #     inner_radius=inner_radius,
+            #     outer_radius=outer_radius,
+            #     start_angle=0,
+            #     end_angle=2 * pi,
+            #     line_color=None,
+            #     fill_color=highlight_color,
+            # )
 
             # self.inner_rings[code] = inner_ring
             # plot.add_glyph(inner_ring)
@@ -671,7 +674,7 @@ class InteractivePiePlotter(InteractivePlotter):
                 "x": x_values,
                 "y": y_values,
                 "angle": angles,
-                "color": custom_palette[0:len(x_values)],
+                "color": custom_palette[0 : len(x_values)],
             }
 
             self.fitted_data[code].data = filtered_data
