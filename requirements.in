@@ -1,0 +1,7 @@
+fastapi<1
+httpx<1
+openpyxl<4
+panel<2
+python-dotenv<2
+uvicorn<1
+websockets<13

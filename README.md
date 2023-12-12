@@ -49,11 +49,11 @@ pyenv activate innovationserhebung
 ```
 
 
-### Install Python requirements and the pre-commit
+### Install Python requirements and pre-commit
 
 Install the required libraries with the command line
 ```shell
-pip install -r requirements.txt
+pip install -r requirements.txt -r requirements-dev.txt
 ```
 
 Install the pre-commit git hook
@@ -104,6 +104,30 @@ Taking an input XLSX file similar to the one in this repository, you can convert
 JSON by running
 ```shell
 python -m app.xlsx2json
+```
+
+### Handling & updating requirements
+
+We are using [pip-tools](https://pip-tools.readthedocs.io/en/latest/) to handle the
+requirements and keep the dependencies updated.
+
+In case you are updating or adding some dependencies, do so in the `requirements.*.in`
+files and don't forget to compile the new `requirements.*.txt` files running:
+```shell
+pip-compile requirements.in
+pip-compile requirements-dev.in
+```
+
+To update the packages, following the version pinning defined in the
+`requirements*.in` files, run:
+```shell
+pip-compile --upgrade requirements.in
+pip-compile --upgrade requirements-dev.in
+```
+
+To keep your environment in sync, run:
+```shell
+pip-sync requirements.txt requirements-dev.txt
 ```
 
 ## Deployment

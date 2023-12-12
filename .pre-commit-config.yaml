@@ -16,9 +16,20 @@ repos:
         args: ['--no-ensure-ascii', '--no-sort-keys', '--autofix']
         exclude: '^package.*json'
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.1.6
+    rev: v0.1.7
     hooks:
       # Run the linter.
       - id: ruff
       # Run the formatter.
       - id: ruff-format
+  - repo: https://github.com/jazzband/pip-tools
+    rev: 7.3.0
+    hooks:
+      - id: pip-compile
+        name: pip-compile requirements.in
+        args: [requirements.in]
+        files: ^requirements\.(in|txt)$
+      - id: pip-compile
+        name: pip-compile requirements-dev.in
+        args: [requirements-dev.in]
+        files: ^requirements-dev\.(in|txt)$
