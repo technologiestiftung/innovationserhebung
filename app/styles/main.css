@@ -79,7 +79,7 @@ select.bk-input {
 
 .bk-input-group label input[type=radio]:checked::before {
   @apply bg-corporate-gray-80 border-2 border-white rounded-full w-full h-full block;
-  content: ""; 
+  content: "";
 }
 
 .bk-input-group label {
