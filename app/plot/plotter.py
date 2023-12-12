@@ -315,7 +315,7 @@ class InteractiveLinePlotter(InteractivePlotter):
     def create_plot(self):
         # Left-traverse nested data to get the x range
         x_range = self.raw_data
-        while type(x_range) == dict:
+        while isinstance(x_range, dict):
             x_range = x_range[next(iter(x_range))]
 
         for code in self.config["plot_codes"]:
@@ -506,7 +506,6 @@ class InteractivePiePlotter(InteractivePlotter):
             self.fitted_data[code] = ColumnDataSource(initial_data)
 
     def create_plot(self):
-        single_choice_key = self.config["filters_defaults"]["single_choice"]
         highlight_category = self.config["filters_defaults"]["single_choice_highlight"]
         for code in self.config["plot_codes"]:
             # Create a Bokeh figure
