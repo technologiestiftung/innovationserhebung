@@ -122,6 +122,32 @@
       ]
     },
     {
+      "type": "chart",
+      "id": "section_7",
+      "title": "Lorem ipsum",
+      "disclaimer": "Lorem ipsum",
+      "charts": [
+        {
+          "id": "protection_bar_interactive",
+          "description": "Lorem ipsum",
+          "toggleText": "Lorem ipsum "
+        }
+      ]
+    },
+        {
+      "type": "chart",
+      "id": "section_8",
+      "title": "Lorem ipsum",
+      "disclaimer": "Lorem ipsum",
+      "charts": [
+        {
+          "id": "public_funding_bar_interactive",
+          "description": "Lorem ipsum",
+          "toggleText": "Lorem ipsum "
+        }
+      ]
+    },
+    {
       "type": "header",
       "title": "Addendum"
     },

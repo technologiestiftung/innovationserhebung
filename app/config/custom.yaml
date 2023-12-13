@@ -141,3 +141,44 @@ coop_region_bar_interactive:
   filters_defaults:
     single_choice: "2012"
     single_choice_2: Asien
+
+protection_bar_interactive:
+  parser_type: bar
+  sheet_key_regex: protection
+  plot_type: bar_interactive
+  plot_codes:
+    - ber
+    - de
+  filters:
+    single_choice:
+      - "2012"
+      - "2020"
+    single_choice_2:
+      - Anmeldung von Patenten
+      - Anmeldung von Gebrauchs-mustern
+      - Eintragung von Geschmacks-mustern
+      - Eintragung von Marken
+      - Geltend-machung von Urheber-rechten
+  filters_defaults:
+    single_choice: "2012"
+    single_choice_2: Anmeldung von Patenten
+
+public_funding_bar_interactive:
+  parser_type: bar
+  sheet_key_regex: public_funding
+  plot_type: bar_interactive
+  plot_codes:
+    - ber
+    - de
+  filters:
+    single_choice:
+      - "2012"
+      - "2020"
+    single_choice_2:
+      - insgesamt
+      - vom Land
+      - vom Bund
+      - von der EU
+  filters_defaults:
+    single_choice: "2012"
+    single_choice_2: insgesamt
