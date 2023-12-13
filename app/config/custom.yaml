@@ -99,8 +99,8 @@ fue_pie_interactive:
     single_choice_highlight: Wirtschaft
 
 coop_partner_bar_interactive:
-  parser_type: coop
-  parser_subtype: partner
+  parser_type: bar
+  sheet_key_regex: coop_partner
   plot_type: bar_interactive
   plot_codes:
     - ber
@@ -121,8 +121,8 @@ coop_partner_bar_interactive:
     single_choice_2: insgesamt
 
 coop_region_bar_interactive:
-  parser_type: coop
-  parser_subtype: region
+  parser_type: bar
+  sheet_key_regex: coop_region
   plot_type: bar_interactive
   plot_codes:
     - ber

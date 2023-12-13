@@ -5,8 +5,8 @@ from .mapping import branch_groups, mapping_branches, mapping_employees_n, mappi
 
 
 PARSER_TYPES = {
+    "bar": "BarDataParser",
     "base": "BaseDataParser",
-    "coop": "CoopDataParser",
     "fue": "FUEDataParser",
     "growth": "GrowthDataParser",
     "shares": "SharesDataParser",
@@ -137,7 +137,7 @@ class BaseDataParser(DataParser):
             return row["Wirtschaftsgliederung"]
 
 
-class CoopDataParser(DataParser):
+class BarDataParser(DataParser):
     def parse(self, sheets, config):
         data = self.extract(sheets, config)
 
@@ -145,17 +145,17 @@ class CoopDataParser(DataParser):
 
     def extract(self, sheets, config):
         """
-        Extract cooperation data.
+        Extract bar data.
 
         :param sheets: dict, where keys are names of sheets and values are pandas DataFrames
         :return: nested dict, with the following shape:
             {area: {year: {criteria: {"x": [branch1, branch2, ...], "y": [value1, value2, ...]}}}}
         """
         extracted = init_nested_dict()
-        parser_subtype = config["parser_subtype"]
         for sheet_key in sheets:
-            if f"coop_{parser_subtype}" in sheet_key:
-                coop, partner, year, area = sheet_key.split("_")
+            sheet_key_regex = config["sheet_key_regex"]
+            if sheet_key_regex in sheet_key:
+                year, area = sheet_key.removeprefix(sheet_key_regex + "_").split("_")
                 df = sheets[sheet_key]
 
                 for _, row in df.iterrows():
