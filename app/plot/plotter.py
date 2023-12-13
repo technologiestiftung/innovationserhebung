@@ -510,7 +510,7 @@ class InteractivePiePlotter(InteractivePlotter):
                 "x": x_values,
                 "y": y_values,
                 "angle": angles,
-                "color": custom_palette[0 : len(x_values)],
+                "color": custom_palette[: len(x_values)],
             }
 
             self.fitted_data[code] = ColumnDataSource(initial_data)
@@ -674,7 +674,7 @@ class InteractivePiePlotter(InteractivePlotter):
                 "x": x_values,
                 "y": y_values,
                 "angle": angles,
-                "color": custom_palette[0 : len(x_values)],
+                "color": custom_palette[: len(x_values)],
             }
 
             self.fitted_data[code].data = filtered_data
