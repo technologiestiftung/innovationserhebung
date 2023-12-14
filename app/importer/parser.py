@@ -3,12 +3,10 @@ from collections import defaultdict
 
 from .mapping import branch_groups, mapping_branches, mapping_employees_n, mapping_units
 
-# TODO: Make keys more generic (x, y, z)
-
 
 PARSER_TYPES = {
+    "bar": "BarDataParser",
     "base": "BaseDataParser",
-    "coop": "CoopDataParser",
     "fue": "FUEDataParser",
     "growth": "GrowthDataParser",
     "shares": "SharesDataParser",
@@ -48,7 +46,7 @@ class DataParser(ABC):
         """
 
         :param sheets: dict, where keys are names of sheets and values are pandas DataFrames
-        :param config: dict, configuration
+        :param config: dict, configuration for a specific plot
         :return: dict, parsed data
         """
         pass
@@ -139,17 +137,15 @@ class BaseDataParser(DataParser):
             return row["Wirtschaftsgliederung"]
 
 
-class CoopDataParser(DataParser):
+class BarDataParser(DataParser):
     def parse(self, sheets, config):
-        data = self.extract(
-            sheets, config["coop_partner_bar_interactive"]
-        )  # TODO: The key should be configurable
+        data = self.extract(sheets, config)
 
         return data
 
     def extract(self, sheets, config):
         """
-        Extract cooperation data.
+        Extract bar data.
 
         :param sheets: dict, where keys are names of sheets and values are pandas DataFrames
         :return: nested dict, with the following shape:
@@ -157,8 +153,9 @@ class CoopDataParser(DataParser):
         """
         extracted = init_nested_dict()
         for sheet_key in sheets:
-            if "coop" in sheet_key:
-                coop, partner, year, area = sheet_key.split("_")
+            sheet_key_regex = config["sheet_key_regex"]
+            if sheet_key_regex in sheet_key:
+                year, area = sheet_key.removeprefix(sheet_key_regex + "_").split("_")
                 df = sheets[sheet_key]
 
                 for _, row in df.iterrows():
@@ -175,7 +172,6 @@ class CoopDataParser(DataParser):
 
 class FUEDataParser(DataParser):
     def parse(self, sheets, config):
-        config = config["fue_pie_interactive"]
         data = self.extract(sheets, config)
 
         return data
