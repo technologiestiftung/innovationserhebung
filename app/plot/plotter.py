@@ -207,9 +207,10 @@ class InteractiveBarPlotter(InteractivePlotter):
             self.plots[code] = plot
 
     def create_filters(self):
-        # Create single choice filter
-        self.filters["single_choice"] = panel.widgets.RadioBoxGroup(
-            name="Select unit", options=self.config["filters"]["single_choice"]
+        self.filters["single_choice"] = panel.widgets.RadioButtonGroup(
+            name="Select unit",
+            options=self.config["filters"]["single_choice"],
+            margin=(32, 0),
         )
 
         # Create single choice highlight filter
