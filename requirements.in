@@ -1,7 +1,8 @@
 fastapi<1
 httpx<1
 openpyxl<4
-panel<2
+panel==1.2.1  # any version higher destroys the CSS
+param<2  # remove when updating to panel1.3+
 python-dotenv<2
 uvicorn<1
 websockets<13
