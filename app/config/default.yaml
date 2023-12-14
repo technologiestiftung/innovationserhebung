@@ -1,36 +1,52 @@
 bar_interactive:
+  background_fill_color: "#F6F6F6"
   general:
-    title: Simple Bar Chart
     toolbar_location: null
     y_axis_label: Values
     y_range: [0, 100]
   vbar:
     width: 0.5
+  axis:
+    axis_line_width: 2
+    axis_line_color: white
+  text:
+    font: Clan Pro
+    font_style: normal
 
 bubble_interactive:
-  figure:
-    title: Simple Bubble Plot
+  background_fill_color: "#F6F6F6"
+  corporate_text_color: "#1E3791"
+  general:
     toolbar_location: null
+  axis:
+    axis_line_width: 2
+    axis_line_color: white
+  text:
+    font: Clan Pro
+    font_style: normal
 
 line_interactive:
   background_fill_color: "#F6F6F6"
   corporate_text_color: "#1E3791"
-  axis:
-    axis_line_width: 2
-    axis_line_color: white
   general:
     y_axis_label: Y-axis
     toolbar_location: null
+  axis:
+    axis_line_width: 2
+    axis_line_color: white
   text:
     font: Clan Pro
     font_style: normal
 
 pie_interactive:
+  background_fill_color: "#F6F6F6"
   general:
-    height: 350
-    title: Pie Chart
+    height: 400
     toolbar_location: null
-    tools: hover
-    tooltips: "@x: @y"
-    x_range: [-0.5, 1.0]
+    x_range: [-0.6, 0.6]
   center_label_max_char: 20
+  text:
+    font: Clan Pro
+    font_style: normal
+  font: Clan Pro
+  font_style: normal

@@ -1,12 +1,14 @@
 growth_bubble_interactive:
+  general:
+    y_axis_label: Wachstum deutsche FuE-Ausgaben 2018-2021 in %
+    x_axis_label: Deutsche Fue-Ausgaben 2021 in Mio. €
   parser_type: growth
   plot_type: bubble_interactive
-  figure:
-    title: Simple Bubble Plot
-    toolbar_location: null
+  tooltip:
+    tooltip_cat_1: Wachstum
+    tooltip_cat_2: Beschäftigte in D
   linear_cmap:
     field_name: color
-    palette: Viridis256
   color_bar:
     width: 8
     location: [0, 0]

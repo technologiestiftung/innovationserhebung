@@ -143,6 +143,18 @@ select.bk-input {
   @apply text-sm translate-y-1 absolute w-full;
 }
 
+.bk-btn-group {
+  @apply !bg-corporate-gray-40 !border-corporate-gray-40 text-black;
+}
+
+.bk-btn.bk-active {
+  @apply !text-black;
+}
+
+.bk-btn {
+  @apply !border-none;
+}
+
 @layer utilities {
   h1 {
     @apply text-h1 leading-h1;

@@ -20,6 +20,7 @@ module.exports = {
         "corporate-blue": "#1E3791",
         "corporate-blue-light": "#495DA5",
         "corporate-gray-20": "#DADADA",
+        "corporate-gray-40": "#B1B2B3",
         "corporate-gray-80": "#565656",
         "corporate-gray-90": "#3B3B3A",
         "light-gray": "#EBECF0",

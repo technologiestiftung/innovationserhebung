@@ -1,12 +1,15 @@
 from abc import abstractmethod, ABC
 from math import pi
 
-from bokeh.models import AnnularWedge, ColumnDataSource, Label
-from bokeh.palettes import Category20, Category20c
+from bokeh.models import ColumnDataSource, Label, HoverTool
 from bokeh.plotting import figure
 from bokeh.transform import cumsum, linear_cmap
 import panel
 from panel.layout.accordion import Accordion
+
+import logging
+
+logging.basicConfig(level=logging.INFO)
 
 
 PLOT_TYPES = {
@@ -17,18 +20,19 @@ PLOT_TYPES = {
 }
 
 custom_palette = [
-    "#E7EA81",
+    "#6CB2E0",
     "#EE4C70",
-    "#B2D9A8",
+    "#41B496",
+    "#E7EA81",
     "#B1B2B3",
     "#99DCF8",
+    "#B2D9A8",
     "#7ACBB5",
     "#DCC82D",
     "#6ECDF5",
     "#5BB5B5",
     "#6273B2",
     "#E60032",
-    "#6CB2E0",
     "#2D91D2",
     "#B2D9A8",
     "#EADE81",
@@ -130,14 +134,9 @@ class InteractiveBarPlotter(InteractivePlotter):
                 for choice_2 in self.config["filters"]["single_choice_2"]:
                     x_values = self.raw_data[code][choice][choice_2]["x"]
                     # Define color palette
-                    self.raw_data[code][choice][choice_2]["color"] = Category20[
-                        len(x_values)
+                    self.raw_data[code][choice][choice_2]["color"] = custom_palette[
+                        : len(x_values)
                     ]
-                    # Split long x-axis in more than one line
-                    for i, label in enumerate(x_values):
-                        self.raw_data[code][choice][choice_2]["x"][i] = "/\n".join(
-                            label.split("/")
-                        )
 
         single_choice_default = self.config["filters_defaults"]["single_choice"]
         single_choice_2_default = self.config["filters_defaults"]["single_choice_2"]
@@ -151,13 +150,38 @@ class InteractiveBarPlotter(InteractivePlotter):
     def create_plot(self):
         for code in self.config["plot_codes"]:
             # Create the figure
-            plot = figure(
-                x_range=self.fitted_data[code].data["x"], **self.config["general"]
-            )
+            x_range = self.fitted_data[code].data["x"]
+            plot = figure(x_range=x_range, **self.config["general"])
 
             # Stretch to full width.
             plot.sizing_mode = "scale_width"
             plot.width_policy = "max"
+
+            # Change background color
+            plot.background_fill_color = self.config["background_fill_color"]
+            plot.border_fill_color = self.config["background_fill_color"]
+            plot.outline_line_color = self.config["background_fill_color"]
+
+            # Hide x grid
+            plot.xgrid.grid_line_color = None
+
+            # # Configure axes
+            plot.yaxis.ticker.desired_num_ticks = 8
+            plot.yaxis.minor_tick_line_color = None
+            plot.yaxis.formatter.use_scientific = False
+            plot.yaxis.axis_label_text_color = "#878786"
+
+            for axis in [plot.xaxis, plot.yaxis]:
+                axis.major_tick_line_color = None
+                axis.axis_label_text_font = self.config["text"]["font"]
+                axis.axis_label_text_font_style = self.config["text"]["font_style"]
+                axis.axis_label_text_font_size = "13px"
+                axis.major_label_text_font = self.config["text"]["font"]
+                axis.major_label_text_color = "#878786"
+                axis.major_label_text_font_style = self.config["text"]["font_style"]
+                axis.axis_line_width = self.config["axis"]["axis_line_width"]
+                axis.axis_line_color = self.config["background_fill_color"]
+                axis.axis_label_text_color = "#3B3B3A"
 
             # Add vertical bars to the figure
             plot.vbar(
@@ -177,9 +201,10 @@ class InteractiveBarPlotter(InteractivePlotter):
             self.plots[code] = plot
 
     def create_filters(self):
-        # Create single choice filter
-        self.filters["single_choice"] = panel.widgets.RadioBoxGroup(
-            name="Select unit", options=self.config["filters"]["single_choice"]
+        self.filters["single_choice"] = panel.widgets.RadioButtonGroup(
+            name="Select unit",
+            options=self.config["filters"]["single_choice"],
+            margin=(32, 0),
         )
 
         # Create single choice highlight filter
@@ -210,6 +235,11 @@ class InteractiveBubblePlotter(InteractivePlotter):
             single_choice_dict = self.raw_data[code][
                 self.config["filters_defaults"]["single_choice"]
             ]
+
+            # Add tooltip categories
+            n = len(single_choice_dict["x"])
+            tooltip_cat_1_list = [self.config["tooltip"]["tooltip_cat_1"]] * n
+            tooltip_cat_2_list = [self.config["tooltip"]["tooltip_cat_2"]] * n
             source = ColumnDataSource(
                 data={
                     "x": single_choice_dict["x"],
@@ -217,6 +247,8 @@ class InteractiveBubblePlotter(InteractivePlotter):
                     "z": self.scale_values(single_choice_dict["z"]),
                     "color": [n for n in range(len(single_choice_dict["x"]))],
                     "labels": single_choice_dict["labels"],
+                    "tooltip_cat_1": tooltip_cat_1_list,
+                    "tooltip_cat_2": tooltip_cat_2_list,
                 }
             )
             self.fitted_data[code] = source
@@ -233,14 +265,71 @@ class InteractiveBubblePlotter(InteractivePlotter):
 
             # Create the figure
             plot = figure(
-                **self.config["figure"],
+                **self.config["general"],
                 x_range=[min(x_range), max(x_range)],
                 y_range=[min(y_range), max(y_range)],
             )
 
+            tooltip_html = """
+                <div style="padding: .5rem; display: flex; flex-direction: column; ">
+                    <div style="font-size: 1rem; font-weight: bold;">
+                        <strong>@labels</strong>
+                    </div>
+                    <div style="font-size: 1rem; display:flex; justify-content: space-between; margin-top: 1rem; align-items: center; gap:2rem; width: 100%;">
+                        <p style="color: #878786; margin: 0;">@tooltip_cat_1:</p>
+                        <strong>@y Mio. €</strong>
+                    </div>
+                    <div style="font-size: 1rem; display:flex; justify-content: space-between; align-items: center; gap:2rem; width: 100%;">
+                        <p style="color: #878786; margin: 0;">@tooltip_cat_2:</p>
+                        <strong>@z Tsd.</strong>
+                    </div>
+                </div>
+            """
+
+            hover_tool = HoverTool(
+                tooltips=tooltip_html,
+                attachment="above",
+                line_policy="nearest",
+                point_policy="snap_to_data",
+                anchor="center_right",
+            )
+
+            plot.sizing_mode = "scale_width"
+            plot.width_policy = "max"
+            plot.add_tools(hover_tool)
+
+            # Change background color
+            plot.background_fill_color = self.config["background_fill_color"]
+            plot.border_fill_color = self.config["background_fill_color"]
+            plot.outline_line_color = self.config["background_fill_color"]
+
+            # Hide x grid
+            plot.xgrid.grid_line_color = None
+
+            # # Configure axes
+            plot.yaxis.ticker.desired_num_ticks = 8
+            plot.yaxis.formatter.use_scientific = False
+            plot.yaxis.axis_label_text_color = "#878786"
+
+            for axis in [plot.xaxis, plot.yaxis]:
+                axis.minor_tick_line_color = None
+                axis.major_tick_line_color = None
+                axis.axis_label_text_font = self.config["text"]["font"]
+                axis.axis_label_text_font_style = self.config["text"]["font_style"]
+                axis.axis_label_text_font_size = "13px"
+                axis.major_label_text_font = self.config["text"]["font"]
+                axis.major_label_text_color = "#878786"
+                axis.major_label_text_font_style = self.config["text"]["font_style"]
+                axis.axis_line_width = self.config["axis"]["axis_line_width"]
+                axis.axis_line_color = self.config["background_fill_color"]
+                axis.axis_label_text_color = "#3B3B3A"
+
             # Add circles to the plot
             mapper = linear_cmap(
-                field_name="color", palette=Category20[20], low=0, high=20
+                field_name="color",
+                palette=custom_palette[: len(x_range)],
+                low=0,
+                high=20,
             )
             plot.circle(
                 x="x",
@@ -248,11 +337,7 @@ class InteractiveBubblePlotter(InteractivePlotter):
                 size="z",
                 color=mapper,
                 source=self.fitted_data[code],
-                legend_group="labels",
             )
-
-            # Set the position of the legend
-            plot.add_layout(plot.legend[0], "right")
 
             self.plots[code] = plot
 
@@ -272,8 +357,11 @@ class InteractiveBubblePlotter(InteractivePlotter):
         return scaled_values
 
     def create_filters(self):
-        self.filters["single_choice"] = panel.widgets.RadioBoxGroup(
-            name="Select unit", options=self.config["filters"]["single_choice"]
+        self.filters["single_choice"] = panel.widgets.RadioButtonGroup(
+            name="Select unit",
+            options=self.config["filters"]["single_choice"],
+            margin=(32, 0),
+            css_classes=["single_choice_toggle"],
         )
 
         # Add interactivity
@@ -338,6 +426,7 @@ class InteractiveLinePlotter(InteractivePlotter):
                 "background_fill_color"
             ]
             self.plots[code].border_fill_color = self.config["background_fill_color"]
+            self.plots[code].outline_line_color = self.config["background_fill_color"]
 
             # Hide x grid
             self.plots[code].xgrid.grid_line_color = None
@@ -415,7 +504,7 @@ class InteractiveLinePlotter(InteractivePlotter):
             "header_background": self.config["background_fill_color"],
         }
         self.filters["multi_choice"] = Accordion(
-            ("Branchen auswählen", filters_multi_choice), **filter_options, active=[0]
+            ("Branchen auswählen", filters_multi_choice), active=[0], **filter_options
         )
         self.filters["single_choice"] = Accordion(
             ("Einheiten auswählen", filters_single_choice), **filter_options
@@ -428,6 +517,7 @@ class InteractiveLinePlotter(InteractivePlotter):
         self.filters["single_choice"][0].param.watch(self.update_y_range, "value")
 
     def update_filters(self, event):
+        # TODO: Update filters
         for code in self.config["plot_codes"]:
             selected_lines = []
             # Re select data based on new selection of filters
@@ -493,14 +583,13 @@ class InteractivePiePlotter(InteractivePlotter):
             # Calculate area for each category in the pie chart
             total = sum(y_values)
             angles = [2 * pi * (y / total) for y in y_values]
-            colors = Category20c[len(x_values)]
 
             # Transform data to the ColumnDataSource format required by Bokeh
             initial_data = {
                 "x": x_values,
                 "y": y_values,
                 "angle": angles,
-                "color": colors,
+                "color": custom_palette[: len(x_values)],
             }
 
             self.fitted_data[code] = ColumnDataSource(initial_data)
@@ -508,6 +597,25 @@ class InteractivePiePlotter(InteractivePlotter):
     def create_plot(self):
         highlight_category = self.config["filters_defaults"]["single_choice_highlight"]
         for code in self.config["plot_codes"]:
+            tooltip_html = """
+                <div style="padding: .5rem;">
+                    <div style="font-size: 1rem; font-weight: bold;">
+                        <strong>@x</strong>
+                    </div>
+                    <div style="font-size: 1rem; display:flex; justify-content: space-between; align-items: center; gap:2rem; width: 100%;">
+                        <p style="color: #878786;">insgesamt:</p>
+                        <strong>@y Mio. €</strong>
+                    </div>
+                </div>
+            """
+
+            hover_tool = HoverTool(
+                tooltips=tooltip_html,
+                attachment="above",
+                line_policy="nearest",
+                point_policy="snap_to_data",
+                anchor="center_right",
+            )
             # Create a Bokeh figure
             plot = figure(**self.config["general"])
 
@@ -520,11 +628,17 @@ class InteractivePiePlotter(InteractivePlotter):
                 end_angle=cumsum("angle"),
                 line_color=None,
                 fill_color="color",
-                legend_field="x",
                 source=self.fitted_data[code],
             )
+
             plot.sizing_mode = "scale_width"
             plot.width_policy = "max"
+
+            # Change background color
+            plot.background_fill_color = self.config["background_fill_color"]
+            plot.border_fill_color = self.config["background_fill_color"]
+            plot.outline_line_color = self.config["background_fill_color"]
+            plot.add_tools(hover_tool)
 
             # Add a label in the center
             highlight_category = self.config["filters_defaults"][
@@ -548,21 +662,19 @@ class InteractivePiePlotter(InteractivePlotter):
                         )
                     else:
                         label_text = highlight_category
-                    highlight_color = color
                     break
 
             self.center_labels[code] = Label(
                 x=0,
                 y=0,
                 text=label_value,
+                # text=label_value,
                 text_align="center",
                 text_baseline="middle",
                 text_font_style="bold",
                 y_offset=10,
                 text_font_size="14pt",
             )
-
-            plot.add_layout(self.center_labels[code])
 
             self.center_labels_2nd_line[code] = Label(
                 x=0,
@@ -573,26 +685,6 @@ class InteractivePiePlotter(InteractivePlotter):
                 y_offset=-10,
                 text_font_size="8pt",
             )
-
-            plot.add_layout(self.center_labels_2nd_line[code])
-
-            # Create an inner ring with the color of the highlighted category
-            inner_radius = 0.17
-            outer_radius = 0.21
-
-            inner_ring = AnnularWedge(
-                x=0,
-                y=0,
-                inner_radius=inner_radius,
-                outer_radius=outer_radius,
-                start_angle=0,
-                end_angle=2 * pi,
-                line_color=None,
-                fill_color=highlight_color,
-            )
-
-            self.inner_rings[code] = inner_ring
-            plot.add_glyph(inner_ring)
 
             # Add other labels
             plot.axis.axis_label = None
@@ -608,17 +700,7 @@ class InteractivePiePlotter(InteractivePlotter):
             options=self.config["filters"]["single_choice"],
             margin=(32, 0),
         )
-        # Create single choice highlight filter
-        self.filters["single_choice_highlight"] = panel.widgets.RadioBoxGroup(
-            name="Select unit",
-            options=self.config["filters"]["single_choice_highlight"],
-        )
-
-        # Add interactivity
         self.filters["single_choice"].param.watch(self.update_filters, "value")
-        self.filters["single_choice_highlight"].param.watch(
-            self.update_filters, "value"
-        )
 
     def update_filters(self, event):
         for code in self.config["plot_codes"]:
@@ -630,37 +712,16 @@ class InteractivePiePlotter(InteractivePlotter):
             # Get x and y values
             x_values = single_choice_dict["x"]
             y_values = single_choice_dict["y"]
-
             # Calculate area for each category in the pie chart
             total = sum(y_values)
             angles = [2 * pi * (y / total) for y in y_values]
-            colors = Category20c[len(x_values)]
 
             # Transform data to the ColumnDataSource format required by Bokeh
             filtered_data = {
                 "x": x_values,
                 "y": y_values,
                 "angle": angles,
-                "color": colors,
+                "color": custom_palette[: len(x_values)],
             }
 
             self.fitted_data[code].data = filtered_data
-
-            # Update the center label to match the highlighted category
-            highlight_category = self.filters["single_choice_highlight"].value
-            for key, value, color in zip(
-                self.raw_data[code][self.filters["single_choice"].value]["x"],
-                self.raw_data[code][self.filters["single_choice"].value]["y"],
-                colors,
-            ):
-                if key == highlight_category:
-                    self.center_labels[code].text = f"{str(int(value))} Mio €"
-                    if len(highlight_category) > self.config["center_label_max_char"]:
-                        self.center_labels_2nd_line[code].text = (
-                            highlight_category[: self.config["center_label_max_char"]]
-                            + ".."
-                        )
-                    else:
-                        self.center_labels_2nd_line[code].text = highlight_category
-                    self.inner_rings[code].fill_color = color
-                    break
