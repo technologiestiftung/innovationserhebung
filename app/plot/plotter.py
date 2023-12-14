@@ -504,11 +504,7 @@ class InteractiveLinePlotter(InteractivePlotter):
             "header_background": self.config["background_fill_color"],
         }
         self.filters["multi_choice"] = Accordion(
-            ("Branchen auswählen", filters_multi_choice),
-            header_color="#1E3791",
-            active_header_background="#F6F6F6",
-            header_background="#F6F6F6",
-            active=[0],
+            ("Branchen auswählen", filters_multi_choice), active=[0], **filter_options
         )
         self.filters["single_choice"] = Accordion(
             ("Einheiten auswählen", filters_single_choice), **filter_options
