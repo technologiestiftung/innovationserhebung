@@ -2,7 +2,6 @@ from abc import abstractmethod, ABC
 from math import pi
 
 from bokeh.models import ColumnDataSource, Label, HoverTool
-from bokeh.palettes import Category20
 from bokeh.plotting import figure
 from bokeh.transform import cumsum, linear_cmap
 import panel
@@ -264,14 +263,67 @@ class InteractiveBubblePlotter(InteractivePlotter):
 
             # Create the figure
             plot = figure(
-                **self.config["figure"],
+                **self.config["general"],
                 x_range=[min(x_range), max(x_range)],
                 y_range=[min(y_range), max(y_range)],
             )
 
+            tooltip_html = """
+                <div style="padding: .5rem;">
+                    <div style="font-size: 1rem; font-weight: bold;">
+                        <strong>@labels</strong>
+                    </div>
+                    <div style="font-size: 1rem; display:flex; justify-content: space-between; align-items: center; gap:2rem; width: 100%;">
+                        <p style="color: #878786;">insgesamt:</p>
+                        <strong>@y Mio. €</strong>
+                    </div>
+                </div>
+            """
+
+            hover_tool = HoverTool(
+                tooltips=tooltip_html,
+                attachment="above",
+                line_policy="nearest",
+                point_policy="snap_to_data",
+                anchor="center_right",
+            )
+
+            plot.sizing_mode = "scale_width"
+            plot.width_policy = "max"
+            plot.add_tools(hover_tool)
+
+            # Change background color
+            plot.background_fill_color = self.config["background_fill_color"]
+            plot.border_fill_color = self.config["background_fill_color"]
+            plot.outline_line_color = self.config["background_fill_color"]
+
+            # Hide x grid
+            plot.xgrid.grid_line_color = None
+
+            # # Configure axes
+            plot.yaxis.ticker.desired_num_ticks = 8
+            plot.yaxis.formatter.use_scientific = False
+            plot.yaxis.axis_label_text_color = "#878786"
+
+            for axis in [plot.xaxis, plot.yaxis]:
+                axis.minor_tick_line_color = None
+                axis.major_tick_line_color = None
+                axis.axis_label_text_font = self.config["text"]["font"]
+                axis.axis_label_text_font_style = self.config["text"]["font_style"]
+                axis.axis_label_text_font_size = "13px"
+                axis.major_label_text_font = self.config["text"]["font"]
+                axis.major_label_text_color = "#878786"
+                axis.major_label_text_font_style = self.config["text"]["font_style"]
+                axis.axis_line_width = self.config["axis"]["axis_line_width"]
+                axis.axis_line_color = self.config["background_fill_color"]
+                axis.axis_label_text_color = "#3B3B3A"
+
             # Add circles to the plot
             mapper = linear_cmap(
-                field_name="color", palette=Category20[20], low=0, high=20
+                field_name="color",
+                palette=custom_palette[: len(x_range)],
+                low=0,
+                high=20,
             )
             plot.circle(
                 x="x",
@@ -279,11 +331,7 @@ class InteractiveBubblePlotter(InteractivePlotter):
                 size="z",
                 color=mapper,
                 source=self.fitted_data[code],
-                legend_group="labels",
             )
-
-            # Set the position of the legend
-            plot.add_layout(plot.legend[0], "right")
 
             self.plots[code] = plot
 
@@ -303,8 +351,10 @@ class InteractiveBubblePlotter(InteractivePlotter):
         return scaled_values
 
     def create_filters(self):
-        self.filters["single_choice"] = panel.widgets.RadioBoxGroup(
-            name="Select unit", options=self.config["filters"]["single_choice"]
+        self.filters["single_choice"] = panel.widgets.RadioButtonGroup(
+            name="Select unit",
+            options=self.config["filters"]["single_choice"],
+            margin=(32, 0),
         )
 
         # Add interactivity
