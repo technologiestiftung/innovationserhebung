@@ -686,28 +686,6 @@ class InteractivePiePlotter(InteractivePlotter):
                 text_font_size="8pt",
             )
 
-            # uncommented for tooltip version
-            # plot.add_layout(self.center_labels[code])
-            # plot.add_layout(self.center_labels_2nd_line[code])
-
-            # Create an inner ring with the color of the highlighted category
-            # inner_radius = 0.17
-            # outer_radius = 0.21
-
-            # inner_ring = AnnularWedge(
-            #     x=0,
-            #     y=0,
-            #     inner_radius=inner_radius,
-            #     outer_radius=outer_radius,
-            #     start_angle=0,
-            #     end_angle=2 * pi,
-            #     line_color=None,
-            #     fill_color=highlight_color,
-            # )
-
-            # self.inner_rings[code] = inner_ring
-            # plot.add_glyph(inner_ring)
-
             # Add other labels
             plot.axis.axis_label = None
             plot.axis.visible = False
@@ -723,15 +701,6 @@ class InteractivePiePlotter(InteractivePlotter):
             margin=(32, 0),
         )
         self.filters["single_choice"].param.watch(self.update_filters, "value")
-
-        # Create single choice highlight filter
-        # self.filters["single_choice_highlight"] = panel.widgets.RadioBoxGroup(
-        #     name="Select unit", options=self.config["filters"]["single_choice_highlight"]
-        # )
-
-        # Add interactivity
-        # self.filters["single_choice_highlight"].param.watch(
-        #     self.update_filters, "value")
 
     def update_filters(self, event):
         for code in self.config["plot_codes"]:
@@ -756,18 +725,3 @@ class InteractivePiePlotter(InteractivePlotter):
             }
 
             self.fitted_data[code].data = filtered_data
-
-            # Update the center label to match the highlighted category
-            # highlight_category = self.filters["single_choice_highlight"].value
-            # for key, value, color in zip(self.raw_data[code][self.filters["single_choice"].value]["x"],
-            #                              self.raw_data[code][self.filters["single_choice"].value]["y"],
-            #                              custom_palette[0:len(x_values)]):
-            #     if key == highlight_category:
-            #         self.center_labels[code].text = f"{str(int(value))} Mio €"
-            #         if len(highlight_category) > self.config["center_label_max_char"]:
-            #             self.center_labels_2nd_line[code].text = highlight_category[:
-            #                                                                         self.config["center_label_max_char"]] + ".."
-            #         else:
-            #             self.center_labels_2nd_line[code].text = highlight_category
-            #         self.inner_rings[code].fill_color = color
-            #         break
