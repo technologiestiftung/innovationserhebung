@@ -108,11 +108,11 @@ select.bk-input {
 }
 
 .bk-panel-models-layout-Card.accordion {
-  @apply px-8 md:py-0 w-full m-0;
+  @apply !outline-none px-8 md:py-0 w-full m-0;
 }
 
 .accordion-header {
-  @apply !border-0 pt-4 flex flex-row-reverse;
+  @apply !outline-none pt-4 flex flex-row-reverse;
 }
 
 .accordion-header, h3 {
