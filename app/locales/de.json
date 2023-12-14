@@ -96,54 +96,62 @@
       ]
     },
     {
-      "type": "chart",
-      "id": "section_5",
-      "title": "Welche Innovatoren sind besonders aktiv?",
-      "disclaimer": "Überraschenderweise liegen bundesweit beim Wachstum der Forschungs-und Entwicklungsausgaben vor allem Unternehmen in der Branche der Verlage, Film-, Rundfunk- und Telekommunikationsunternehmen vorn.",
-      "charts": [
-        {
-          "id": "coop_partner_bar_interactive",
-          "description": "Auch hier kann in <strong>Berlin</strong> wieder einmal die Software-Branche die größten Ausgaben, sowie das größte Wachstum vorweisen. Gemessen am Umsatz haben hingegen Unternehmen der Branche Forschung- und Entwicklung die höchsten Forschungs- und Entwicklungsausgaben, was wiederum auch nicht überrascht.<br><br>Überraschenderweise liegen <strong>bundesweit</strong> beim Wachstum der Forschungs- und Entwicklungsausgaben vor allem Unternehmen in der Branche der Verlage, Film-, Rundfunk- und Telekommunikationsunternehme vorn. Aber auch hier geben gemessen am Umsatz logischerweise die Unternehmen der Kategorie Forschung und Entwicklung den größten Anteil davon für Forschung und Entwicklung aus.",
-          "toggleText": "Welche Innovatoren sind besonders aktiv in "
-        }
-      ]
+      "type": "header",
+      "title": "Forschung im öffentlichen Raum"
+    },
+    {
+      "type": "quote",
+      "quote": "Auch bei der <strong>Forschung im öffentlichen Raum</strong> hat sich in den letzten 10 Jahren doch das ein oder andere verändert auf das es sich lohnt einen Blick zu werfen."
     },
     {
       "type": "chart",
-      "id": "section_6",
-      "title": "Coop Region",
-      "disclaimer": "Lorem ipsum",
-      "charts": [
-        {
-          "id": "coop_region_bar_interactive",
-          "description": "Lorem ipsum",
-          "toggleText": "Lorem ipsum "
-        }
-      ]
-    },
-    {
-      "type": "chart",
-      "id": "section_7",
-      "title": "Protection",
-      "disclaimer": "Lorem ipsum",
-      "charts": [
-        {
-          "id": "protection_bar_interactive",
-          "description": "Lorem ipsum",
-          "toggleText": "Lorem ipsum "
-        }
-      ]
-    },
-    {
-      "type": "chart",
-      "id": "section_8",
-      "title": "Public Funding",
-      "disclaimer": "Lorem ipsum",
+      "id": "section_9",
+      "title": "Öffentliche Förderung",
+      "disclaimer": "Die Berliner Beratungsunternehmen, Kreativdienstleistungen und Holzindustrie heben sich deutlich ab.",
       "charts": [
         {
           "id": "public_funding_bar_interactive",
-          "description": "Lorem ipsum",
-          "toggleText": "Lorem ipsum "
+          "description": "Öffentliche Förderungen sind, mit Ausnahme im Bereich der Finanzdienstleistungen, in allen Branchen relevant, wenn auch mit leicht abnehmender Tendenz. Der größte Anteil der Förderungen geht auch in die zahlenmäßig größten Branchen, sowie in den Bereich der Auftrags-FuE.<br><br>Der Bedarf an Förderung aus Landesmitteln ist relativ konstant geblieben, das in Anspruch nehmende Branchenspektrum hat sich jedoch leicht geändert. Eine gestiegene Inanspruchnahme findet sich bei den Medien, den Unternehmensberatungen und den sonstigen Konsumgütern.<br><br>Sowohl bei den Landesmitteln, als auch bei allen anderen öffentlichen Förderern ist die Inanspruchnahme von Seiten der Berliner Großunternehmen deutlich gestiegen, bei den kleineren Unternehmen ist diese hingegen mitunter deutlich gesunken.",
+          "toggleText": "Erhalt öffentlicher Innovationsförderung"
+        }
+      ]
+    },
+    {
+      "type": "chart",
+      "id": "section_10",
+      "title": "Kooperation nach Region der Partner",
+      "disclaimer": "Insgesamt zeigt sich, dass die lokalen Kooperationen in der Region und Gesamt-Deutschland in allen Größenklassen die wichtigsten darstellen. ",
+      "charts": [
+        {
+          "id": "coop_region_bar_interactive",
+          "description": "Der Kooperationsgrad in der Region, in Deutschland und in Europa sinkt moderat, während er bei den wenigen Unternehmen, die fernere Kooperation pflegen konstant bleibt.<br><br>Die räumliche Kooperationspräferenzen und ihre Änderungen sind stark branchenspezifisch. Während die FuE-Branche in allen Regionen kooperationsintensiver ist, sind Kooperationen über große Entfernungen vor allem im Pharma- und Elektrobereich stärker ausgeprägt als bei anderen Branchen. Eine Zunahme regionaler Kooperation gab es nur bei Architektur- und Ingenieurbüros und im Bereich der sonstigen Konsumgüter. In allen anderen Branchen ist der Kooperationsgrad regional wie überregional deutlich gesunken.<br><br>Insgesamt zeigt sich, dass die lokalen Kooperationen in der Region und Gesamt-Deutschland in allen Größenklassen die wichtigsten darstellen. Außer im Medienbereich ist die regionale Verteilung von Kooperationen in allen Branchen ähnlich. Die regionalen Präferenzen der Berliner Wirtschaft bei Kooperationen unterscheiden sich nicht um Größenordnungen von den bundesweit üblichen Präferenzen. Einzelne Ausreißer (bspw. im Bereich der Holzwirtschaft) sind durch wenige oder einzelne Unternehmen mit spezifischem Profil bedingt.<br><br>Die regionalen Präferenzen der Berliner Wirtschaft bei Kooperationen unterscheiden sich nicht um Größenordnungen von den bundesweit üblichen Präferenzen. Einzelne Ausreißer (Holz, sonst. Konsumgüter) sind durch wenige oder einzelne Unternehmen mit spezifischem Profil bedingt.<br><br>Berliner Unternehmen sind etwas kooperationsfreudiger, die regionalen Präferenzen unterscheiden sich jedoch nicht von den in den jeweiligen Größenklassen erwartbaren Präferenzen.",
+          "toggleText": "Kooperationen nach Region"
+        }
+      ]
+    },
+    {
+      "type": "chart",
+      "id": "section_11",
+      "title": "Kooperation nach Art der Partner",
+      "disclaimer": "Außer in Unternehmen mit mehr als 1.000 Beschäftigten ist der Kooperationsgrad sowohl insgesamt, als auch mit der Wissenschaft leicht rückläufig.",
+      "charts": [
+        {
+          "id": "coop_partner_bar_interactive",
+          "description": "Die Kooperation der Berliner Unternehmen insgesamt und mit Hochschulen oder Forschungseinrichtungen ist in den meisten Branchen moderat rückläufig, aber immer noch höher als im deutschen Durchschnitt. Kooperationen mit der öffentlichen Forschung, !?!?!? Worin die bei Wissenschaftskopertionen besteht, steht mit Berichtsjahr 2017 in der I-Erbenung 2018. Der moderate Rückgang im Kooperationsverhalten gilt in vielen Branchen auch für Kooperationen mit anderen Unternehmen, in der Industrie ausgeprägter als im Dienstleistungsgewerbe, wo Kooperationen mit Lieferanten und Wettbewerbern sogar leicht zunahmen In Berlin ist hingegen die Wissenschaft der weit wichtigere Kooperationspartner, im Gegensatz zum bundesweiten Schnitt. Der Kooperationsgrad steigt nur bei Großunternehmen in Berlin, auch mit der Wirtschaft auch hier steigt bestenfalls die Kooperation mit Wettbewerbern. Ein Jahrzehnt der M&A?? Die Kooperation mit Hochschulen und Forschungseinrichtungen ist am Wissenschaftsstandort Berlin sehr viel ausgeprägter als im deutschen Durchschnitt. Moderat ausgeprägter als im deutschen Durchschnitt ist die Kooperation mit Wettbewerbern, während deutschlandweit die Kooperation mit Kunden und Lieferanten  moderat ausgeprägter ist als in Berlin.<br><br>Bei Unternehmen mit Beriebsgrößen, die typisch für erfolgreiche Nach-Gründungsphasen und spätere Wachstumsphasen sind, sind Kundenkooperationen in Berlin häufiger als in Deutschland. Kooperation mit Lieferanten wchein mit zunehmender Betriebsgröße in Berlin deutlich langsamer anzusteigen als im Bund.<br><br>Speziell bei den KMU ist die Kooperation mit der Wissenschaft in Berlin deutlich ausgeprägter.",
+          "toggleText": "Beteiligung Berliner Unternehmen an Kooperationen"
+        }
+      ]
+    },
+    {
+      "type": "chart",
+      "id": "section_14",
+      "title": "Schutz von geistigem Eigentum",
+      "disclaimer": "Großunternehmen betreiben intensivere Schutzrechts-Aktivitäten als kleinere. ",
+      "charts": [
+        {
+          "id": "protection_bar_interactive",
+          "description": "Außer bei der Eintragung von Marken und der Geltendmachung von Urheberrechten verfolgt die Deutsche Wirtschaft den Schutz geistigen Eigentums etwas intensiver. Das hängt mit der Branchenstruktur zusammen. Die Relevanz von Schutzrechts-Aktivitäten ist ausgesprochen branchenspezifisch. Großunternehmen betreiben intensivere Schutzrechts-Aktivitäten als kleinere. Deutschlandweit betreiben Unternehmen ab 250 Beschäftigten deutlich intensivere Schutzrechtsaktivitäten als Berliner Unternehmen mit mehr als 250 Beschäftigten. <br>Unternehmen mit weniger als 250 Mitarbeitern sind in Berlin nur bei Marken und Urheberrechten aktiver als im Bundesschnitt. Das hängt wieder mit der Branchenstruktur zusammen.",
+          "toggleText": "Schutz von geistigem Eigentum"
         }
       ]
     },
