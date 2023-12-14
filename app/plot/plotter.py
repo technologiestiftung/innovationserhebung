@@ -361,6 +361,7 @@ class InteractiveBubblePlotter(InteractivePlotter):
             name="Select unit",
             options=self.config["filters"]["single_choice"],
             margin=(32, 0),
+            css_classes=["single_choice_toggle"],
         )
 
         # Add interactivity
