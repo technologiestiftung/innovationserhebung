@@ -137,11 +137,6 @@ class InteractiveBarPlotter(InteractivePlotter):
                     self.raw_data[code][choice][choice_2]["color"] = custom_palette[
                         : len(x_values)
                     ]
-                    # Split long x-axis in more than one line
-                    for i, label in enumerate(x_values):
-                        self.raw_data[code][choice][choice_2]["x"][i] = "/\n".join(
-                            label.split("/")
-                        )
 
         single_choice_default = self.config["filters_defaults"]["single_choice"]
         single_choice_2_default = self.config["filters_defaults"]["single_choice_2"]
@@ -240,6 +235,11 @@ class InteractiveBubblePlotter(InteractivePlotter):
             single_choice_dict = self.raw_data[code][
                 self.config["filters_defaults"]["single_choice"]
             ]
+
+            # Add tooltip categories
+            n = len(single_choice_dict["x"])
+            tooltip_cat_1_list = [self.config["tooltip"]["tooltip_cat_1"]] * n
+            tooltip_cat_2_list = [self.config["tooltip"]["tooltip_cat_2"]] * n
             source = ColumnDataSource(
                 data={
                     "x": single_choice_dict["x"],
@@ -247,6 +247,8 @@ class InteractiveBubblePlotter(InteractivePlotter):
                     "z": self.scale_values(single_choice_dict["z"]),
                     "color": [n for n in range(len(single_choice_dict["x"]))],
                     "labels": single_choice_dict["labels"],
+                    "tooltip_cat_1": tooltip_cat_1_list,
+                    "tooltip_cat_2": tooltip_cat_2_list,
                 }
             )
             self.fitted_data[code] = source
@@ -269,13 +271,17 @@ class InteractiveBubblePlotter(InteractivePlotter):
             )
 
             tooltip_html = """
-                <div style="padding: .5rem;">
+                <div style="padding: .5rem; display: flex; flex-direction: column; ">
                     <div style="font-size: 1rem; font-weight: bold;">
                         <strong>@labels</strong>
                     </div>
-                    <div style="font-size: 1rem; display:flex; justify-content: space-between; align-items: center; gap:2rem; width: 100%;">
-                        <p style="color: #878786;">insgesamt:</p>
+                    <div style="font-size: 1rem; display:flex; justify-content: space-between; margin-top: 1rem; align-items: center; gap:2rem; width: 100%;">
+                        <p style="color: #878786; margin: 0;">@tooltip_cat_1:</p>
                         <strong>@y Mio. €</strong>
+                    </div>
+                    <div style="font-size: 1rem; display:flex; justify-content: space-between; align-items: center; gap:2rem; width: 100%;">
+                        <p style="color: #878786; margin: 0;">@tooltip_cat_2:</p>
+                        <strong>@z Tsd.</strong>
                     </div>
                 </div>
             """
