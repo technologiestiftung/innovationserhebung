@@ -135,8 +135,8 @@ class InteractiveBarPlotter(InteractivePlotter):
                 for choice_2 in self.config["filters"]["single_choice_2"]:
                     x_values = self.raw_data[code][choice][choice_2]["x"]
                     # Define color palette
-                    self.raw_data[code][choice][choice_2]["color"] = Category20[
-                        len(x_values)
+                    self.raw_data[code][choice][choice_2]["color"] = custom_palette[
+                        : len(x_values)
                     ]
                     # Split long x-axis in more than one line
                     for i, label in enumerate(x_values):
@@ -156,13 +156,38 @@ class InteractiveBarPlotter(InteractivePlotter):
     def create_plot(self):
         for code in self.config["plot_codes"]:
             # Create the figure
-            plot = figure(
-                x_range=self.fitted_data[code].data["x"], **self.config["general"]
-            )
+            x_range = self.fitted_data[code].data["x"]
+            plot = figure(x_range=x_range, **self.config["general"])
 
             # Stretch to full width.
             plot.sizing_mode = "scale_width"
             plot.width_policy = "max"
+
+            # Change background color
+            plot.background_fill_color = self.config["background_fill_color"]
+            plot.border_fill_color = self.config["background_fill_color"]
+            plot.outline_line_color = self.config["background_fill_color"]
+
+            # Hide x grid
+            plot.xgrid.grid_line_color = None
+
+            # # Configure axes
+            plot.yaxis.ticker.desired_num_ticks = 8
+            plot.yaxis.minor_tick_line_color = None
+            plot.yaxis.formatter.use_scientific = False
+            plot.yaxis.axis_label_text_color = "#878786"
+
+            for axis in [plot.xaxis, plot.yaxis]:
+                axis.major_tick_line_color = None
+                axis.axis_label_text_font = self.config["text"]["font"]
+                axis.axis_label_text_font_style = self.config["text"]["font_style"]
+                axis.axis_label_text_font_size = "13px"
+                axis.major_label_text_font = self.config["text"]["font"]
+                axis.major_label_text_color = "#878786"
+                axis.major_label_text_font_style = self.config["text"]["font_style"]
+                axis.axis_line_width = self.config["axis"]["axis_line_width"]
+                axis.axis_line_color = self.config["background_fill_color"]
+                axis.axis_label_text_color = "#3B3B3A"
 
             # Add vertical bars to the figure
             plot.vbar(
@@ -664,7 +689,6 @@ class InteractivePiePlotter(InteractivePlotter):
             # Get x and y values
             x_values = single_choice_dict["x"]
             y_values = single_choice_dict["y"]
-
             # Calculate area for each category in the pie chart
             total = sum(y_values)
             angles = [2 * pi * (y / total) for y in y_values]
