@@ -11,6 +11,7 @@ anyio==3.7.1
     #   fastapi
     #   httpx
     #   starlette
+    #   watchfiles
 bleach==6.1.0
     # via panel
 bokeh==3.3.2
@@ -36,6 +37,8 @@ h11==0.14.0
     #   uvicorn
 httpcore==1.0.2
     # via httpx
+httptools==0.6.1
+    # via uvicorn
 httpx==0.25.2
     # via -r requirements.in
 idna==3.6
@@ -87,13 +90,17 @@ pydantic-core==2.14.5
 python-dateutil==2.8.2
     # via pandas
 python-dotenv==1.0.0
-    # via -r requirements.in
+    # via
+    #   -r requirements.in
+    #   uvicorn
 pytz==2023.3.post1
     # via pandas
 pyviz-comms==3.0.0
     # via panel
 pyyaml==6.0.1
-    # via bokeh
+    # via
+    #   bokeh
+    #   uvicorn
 requests==2.31.0
     # via panel
 six==1.16.0
@@ -122,12 +129,20 @@ uc-micro-py==1.0.2
     # via linkify-it-py
 urllib3==2.1.0
     # via requests
-uvicorn==0.24.0.post1
-    # via -r requirements.in
+uvicorn[standard]==0.24.0.post1
+    # via
+    #   -r requirements.in
+    #   uvicorn
+uvloop==0.19.0
+    # via uvicorn
+watchfiles==0.21.0
+    # via uvicorn
 webencodings==0.5.1
     # via bleach
 websockets==12.0
-    # via -r requirements.in
+    # via
+    #   -r requirements.in
+    #   uvicorn
 xyzservices==2023.10.1
     # via
     #   bokeh
