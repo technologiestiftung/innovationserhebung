@@ -3,5 +3,5 @@ httpx<1
 openpyxl<4
 panel<2
 python-dotenv<2
-uvicorn<1
+uvicorn[standard]<1
 websockets<13
