@@ -1,7 +1,7 @@
 <!doctype html>
 <html class="scroll-smooth text-[18px]" lang="{{ language_code }}">
   <head>
-    <title>Innovationserhebung</title>
+    <title>Innovationsdaten</title>
     <link
       href="{{ url_for('static', path='/css/main.css') }}"
       rel="stylesheet"
@@ -10,6 +10,19 @@
   </head>
   <body class="bg-corporate-blue hyphens-auto">
     {% block content %}{% endblock %}
+    <script type="text/javascript">
+      oldLog = console.info;
+      console.info = function (sender, message) {
+        oldLog.apply(console, arguments)
+        // This looks for the following message in Bokeh logs:
+        //   [bokeh] Websocket connection 0 disconnected, will not attempt to reconnect
+        if (message.includes("disconnected, will not attempt to reconnect")) {
+          if (confirm('Verbindung scheinbar verloren. Seite neu laden?')) {
+            window.location.reload();
+          }
+        }
+      };
+    </script>
     <script
       type="text/javascript"
       src="{{ url_for('static', path='/js/hide-nav-on-top-scroll.js') }}"
