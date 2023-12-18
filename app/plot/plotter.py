@@ -12,13 +12,6 @@ import logging
 logging.basicConfig(level=logging.INFO)
 
 
-PLOT_TYPES = {
-    "bar_interactive": "InteractiveBarPlotter",
-    "bubble_interactive": "InteractiveBubblePlotter",
-    "line_interactive": "InteractiveLinePlotter",
-    "pie_interactive": "InteractivePiePlotter",
-}
-
 custom_palette = [
     "#6CB2E0",
     "#EE4C70",
@@ -42,22 +35,6 @@ custom_palette = [
 ]
 
 
-class PlotterFactory:
-    @staticmethod
-    def create_plotter(raw_data, config):
-        """
-        Create a plotter for a specific plot type.
-
-        :param raw_data: dict, raw_data to plot
-        :param config: dict, configuration for the plot
-        :return: a plotter instance of the specified type
-        """
-        class_name = PLOT_TYPES[config["plot_type"]]
-        cls = globals()[class_name]
-
-        return cls(raw_data, config)
-
-
 class Plotter(ABC):
     def __init__(self, raw_data, config):
         """
@@ -70,6 +47,7 @@ class Plotter(ABC):
         self.config = config
         self.fitted_data = {}
         self.plots = {}
+        self.single_choice_default = self.config["filters_defaults"]["single_choice"]
 
     def generate(self):
         """
@@ -138,10 +116,9 @@ class InteractiveBarPlotter(InteractivePlotter):
                         : len(x_values)
                     ]
 
-        single_choice_default = self.config["filters_defaults"]["single_choice"]
         single_choice_2_default = self.config["filters_defaults"]["single_choice_2"]
         for code in self.config["plot_codes"]:
-            single_choice_dict = self.raw_data[code][single_choice_default][
+            single_choice_dict = self.raw_data[code][self.single_choice_default][
                 single_choice_2_default
             ]
 
@@ -232,9 +209,7 @@ class InteractiveBubblePlotter(InteractivePlotter):
 
     def fit_data(self):
         for code in self.config["plot_codes"]:
-            single_choice_dict = self.raw_data[code][
-                self.config["filters_defaults"]["single_choice"]
-            ]
+            single_choice_dict = self.raw_data[code][self.single_choice_default]
 
             # Add tooltip categories
             n = len(single_choice_dict["x"])
@@ -388,14 +363,11 @@ class InteractiveLinePlotter(InteractivePlotter):
         super().__init__(raw_data, config)
 
     def fit_data(self):
+        selected_lines = ["x"] + self.config["filters"]["multi_choice"]
         for code in self.config["plot_codes"]:
             # Extract data using the single choice filters
-            single_choice_dict = self.raw_data[code][
-                self.config["filters_defaults"]["single_choice"]
-            ]
-
+            single_choice_dict = self.raw_data[code][self.single_choice_default]
             # Get a subset of the lines selected with the multi choice filters
-            selected_lines = ["x"] + self.config["filters"]["multi_choice"]
             initial_data = {line: single_choice_dict[line] for line in selected_lines}
 
             self.fitted_data[code] = ColumnDataSource(initial_data)
@@ -408,9 +380,7 @@ class InteractiveLinePlotter(InteractivePlotter):
 
         for code in self.config["plot_codes"]:
             # Create a Bokeh figure
-            max_value = self.get_max_value(
-                code, self.config["filters_defaults"]["single_choice"]
-            )
+            max_value = self.get_max_value(code, self.single_choice_default)
             self.plots[code] = figure(
                 **self.config["general"],
                 x_range=[x_range[0] - 0.25, x_range[-1] + 0.25],
@@ -453,24 +423,19 @@ class InteractiveLinePlotter(InteractivePlotter):
             # Add lines to the plot
             colors = custom_palette
             for i, line_name in enumerate(self.config["filters"]["multi_choice"]):
+                plot_args = dict(x="x", y=line_name, source=self.fitted_data[code])
                 self.plots[code].line(
-                    x="x",
-                    y=line_name,
-                    source=self.fitted_data[code],
+                    **plot_args,
                     color=colors[i],
                     line_width=4,
                 )
                 self.plots[code].circle(
-                    x="x",
-                    y=line_name,
-                    source=self.fitted_data[code],
+                    **plot_args,
                     color=colors[i],
                     size=16,
                 )
                 self.plots[code].circle(
-                    x="x",
-                    y=line_name,
-                    source=self.fitted_data[code],
+                    **plot_args,
                     color=self.config["background_fill_color"],
                     size=12,
                 )
@@ -555,7 +520,7 @@ class InteractiveLinePlotter(InteractivePlotter):
         """
         all_values = []
         for key in self.config["filters"]["multi_choice"]:
-            all_values.extend(self.raw_data[code][single_choice][key])
+            all_values.append(max(self.raw_data[code][single_choice][key]))
         max_value = max(all_values)
 
         return max_value
@@ -572,9 +537,7 @@ class InteractivePiePlotter(InteractivePlotter):
     def fit_data(self):
         for code in self.config["plot_codes"]:
             # Extract data using the single choice filters
-            single_choice_dict = self.raw_data[code][
-                self.config["filters_defaults"]["single_choice"]
-            ]
+            single_choice_dict = self.raw_data[code][self.single_choice_default]
 
             # Get x and y values
             x_values = single_choice_dict["x"]
@@ -645,12 +608,8 @@ class InteractivePiePlotter(InteractivePlotter):
                 "single_choice_highlight"
             ]
             for key, value, color in zip(
-                self.raw_data[code][self.config["filters_defaults"]["single_choice"]][
-                    "x"
-                ],
-                self.raw_data[code][self.config["filters_defaults"]["single_choice"]][
-                    "y"
-                ],
+                self.raw_data[code][self.single_choice_default]["x"],
+                self.raw_data[code][self.single_choice_default]["y"],
                 self.fitted_data[code].data["color"],
             ):
                 if key == highlight_category:
@@ -725,3 +684,24 @@ class InteractivePiePlotter(InteractivePlotter):
             }
 
             self.fitted_data[code].data = filtered_data
+
+
+PLOT_TYPES = {
+    "bar_interactive": InteractiveBarPlotter,
+    "bubble_interactive": InteractiveBubblePlotter,
+    "line_interactive": InteractiveLinePlotter,
+    "pie_interactive": InteractivePiePlotter,
+}
+
+
+def create_plotter(raw_data, config):
+    """
+    Create a plotter for a specific plot type.
+
+    :param raw_data: dict, raw_data to plot
+    :param config: dict, configuration for the plot
+    :return: a plotter instance of the specified type
+    """
+    cls = PLOT_TYPES[config["plot_type"]]
+
+    return cls(raw_data, config)

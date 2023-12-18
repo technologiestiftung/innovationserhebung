@@ -4,7 +4,7 @@ from panel.layout.flex import FlexBox
 from panel.widgets import Select
 
 from ..importer.config_importer import ConfigImporter
-from .plotter import PlotterFactory
+from .plotter import create_plotter
 
 
 # Load data
@@ -16,7 +16,6 @@ config_importer = ConfigImporter()
 config = config_importer.get_config()
 
 # Initialize plotter factory
-plotter_factory = PlotterFactory()
 chart_collection = {}
 
 
@@ -33,7 +32,7 @@ def update_chart(flex_obj, plotter):
 
 for plot_key in config:
     # Generate plots and filters
-    plotter = plotter_factory.create_plotter(data[plot_key], config[plot_key])
+    plotter = create_plotter(data[plot_key], config[plot_key])
     plotter.generate()
 
     location_toggle = Select(options={"Deutschland": "de", "Berlin": "ber"}, value="de")
