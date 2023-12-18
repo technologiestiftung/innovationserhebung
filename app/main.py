@@ -110,7 +110,7 @@ if PROXY_PANEL_THROUGH_FASTAPI:
     from websockets.exceptions import ConnectionClosedOK
 
     logger = logging.getLogger(__name__)
-    logger.setLevel(logging.WARNING)
+    logger.setLevel(logging.DEBUG)
 
     # Forward the websockets through a bridge
     @app.websocket("/panel/{plot_key}/ws")
@@ -130,26 +130,42 @@ if PROXY_PANEL_THROUGH_FASTAPI:
 
         # Connect internally to the bokeh server, adding the subprotocol list
         uri = f"ws://{SERVER_ADDRESS}:{PANEL_PORT}/{plot_key}/ws"
-        async with websockets.connect(uri, subprotocols=subprotocols) as ws_server:
+        async for ws_server in websockets.connect(uri, subprotocols=subprotocols):
 
             async def listen_to_client():
                 try:
                     while True:
                         data = await ws_client.receive_text()
+                        logger.info(f"Data from client: {data}")
                         await ws_server.send(data)
-                except WebSocketDisconnect:
+                except WebSocketDisconnect as e:
                     await ws_server.close()
+                    raise e
 
             async def listen_to_server():
                 try:
                     while True:
                         data = await ws_server.recv()
+                        logger.info(f"Data from server: {data}")
                         await ws_client.send_text(data)
                 except ConnectionClosedOK:
-                    await ws_client.close()
+                    # await ws_client.close()
+                    pass
 
             # Sync the upstream and downstream websockets through asyncio
-            await asyncio.gather(listen_to_client(), listen_to_server())
+            try:
+                logger.warning("Starting a gather")
+                await asyncio.gather(listen_to_client(), listen_to_server())
+            except WebSocketDisconnect:
+                # In case closed by the client, keep disconnected
+                logger.warning("except to break")
+                break
+            except ConnectionClosedOK:
+                # In case the connection is closed on the way to bokeh, try to reconnect
+                logger.warning("except to reconnect")
+                continue
+            except Exception:
+                logger.warning("other exception")
 
     # Also stream/serve other panel specific content, especifically the autoload.js
     client = httpx.AsyncClient(base_url=f"http://{SERVER_ADDRESS}:{PANEL_PORT}")
