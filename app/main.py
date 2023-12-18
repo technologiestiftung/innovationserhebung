@@ -10,7 +10,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import panel as pn
 
-from .plot.layout import chart_collection
+from .plot.layout import get_config, panels
 from .utils.translation import load_translation
 
 
@@ -67,7 +67,8 @@ async def bkapp_page(request: Request, language: Language = None):
     else:
         server_base_path = f"{request.url.scheme}://{SERVER_ADDRESS}:{PANEL_PORT}"
 
-    for key in chart_collection:
+    config = get_config()
+    for key in config:
         request.app.extra[key] = server_document(f"{server_base_path}/{key}")
 
     script = server_document(f"{server_base_path}/app")
@@ -171,12 +172,17 @@ if PROXY_PANEL_THROUGH_FASTAPI:
             background=BackgroundTask(rp_resp.aclose),
         )
 
+# The later causes panel to not generate a session per user
+# panels={plot_key: get_flex_obj_fn_for_plot_key(plot_key) for plot_key in get_config()}
+# We could suggest passing args to function calls in _eval_panel.py in panel.io.server
+# In the meanwhile, I could not find a better way than to create the single functions
+# see .plot.layout.panels
+
 
 pn.config.css_files.append("static/css/main.css")
 
-
 pn.serve(
-    {key: chart_collection[key].servable() for key in chart_collection},
+    panels=panels,
     port=PANEL_PORT,
     allow_websocket_origin=[
         f"{SERVER_ADDRESS}:{FASTAPI_PORT}",
