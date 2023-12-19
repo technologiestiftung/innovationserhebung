@@ -153,11 +153,11 @@ protection_bar_interactive:
       - "2012"
       - "2020"
     single_choice_2:
-      - Anmeldung von Patenten
-      - Anmeldung von Gebrauchs-mustern
-      - Eintragung von Geschmacks-mustern
-      - Eintragung von Marken
-      - Geltend-machung von Urheber-rechten
+      Anmeldung von Patenten: Anmeldung von Patenten
+      Anmeldung von Gebrauchs-mustern: Anmeldung von Gebrauchsmustern
+      Eintragung von Geschmacks-mustern: Eintragung von Geschmacksmustern
+      Eintragung von Marken: Eintragung von Marken
+      Geltend-machung von Urheber-rechten: Geltendmachung von Urheberrechten
   filters_defaults:
     single_choice: "2012"
     single_choice_2: Anmeldung von Patenten

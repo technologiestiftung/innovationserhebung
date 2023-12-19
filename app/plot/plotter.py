@@ -176,15 +176,19 @@ class InteractiveBarPlotter(InteractivePlotter):
 
     def create_filters(self):
         self.filters["single_choice"] = panel.widgets.RadioButtonGroup(
-            name="Select unit",
             options=self.config["filters"]["single_choice"],
             margin=(32, 0),
         )
 
         # Create single choice highlight filter
-        self.filters["single_choice_2"] = panel.widgets.RadioBoxGroup(
-            name="Select unit", options=self.config["filters"]["single_choice_2"]
-        )
+        if isinstance(self.config["filters"]["single_choice_2"], dict):
+            options = {
+                label: key
+                for key, label in self.config["filters"]["single_choice_2"].items()
+            }
+        else:
+            options = self.config["filters"]["single_choice_2"]
+        self.filters["single_choice_2"] = panel.widgets.RadioBoxGroup(options=options)
 
         # Add interactivity
         self.filters["single_choice"].param.watch(self.update_filters, "value")
@@ -333,7 +337,6 @@ class InteractiveBubblePlotter(InteractivePlotter):
             label: key for key, label in self.config["filters"]["single_choice"].items()
         }
         self.filters["single_choice"] = panel.widgets.RadioButtonGroup(
-            name="Select unit",
             options=options,
             margin=(32, 0),
             css_classes=["single_choice_toggle"],
@@ -446,9 +449,7 @@ class InteractiveLinePlotter(InteractivePlotter):
         options = {
             label: key for key, label in self.config["filters"]["single_choice"].items()
         }
-        filters_single_choice = panel.widgets.RadioBoxGroup(
-            name="Select unit", options=options
-        )
+        filters_single_choice = panel.widgets.RadioBoxGroup(options=options)
 
         options = {
             label: key for key, label in self.config["filters"]["multi_choice"].items()
@@ -658,7 +659,6 @@ class InteractivePiePlotter(InteractivePlotter):
     def create_filters(self):
         # Create single choice filter
         self.filters["single_choice"] = panel.widgets.RadioButtonGroup(
-            name="Select unit",
             options=self.config["filters"]["single_choice"],
             margin=(32, 0),
         )
