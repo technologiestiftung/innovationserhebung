@@ -365,7 +365,7 @@ class InteractiveBubblePlotter(InteractivePlotter):
 
 class InteractiveLinePlotter(InteractivePlotter):
     def fit_data(self):
-        selected_lines = ["x"] + self.config["filters"]["multi_choice"]
+        selected_lines = ["x"] + list(self.config["filters"]["multi_choice"].keys())
         for code in self.config["plot_codes"]:
             # Extract data using the single choice filters
             single_choice_dict = self.raw_data[code][self.single_choice_default]
@@ -443,10 +443,16 @@ class InteractiveLinePlotter(InteractivePlotter):
                 )
 
     def create_filters(self):
+        options = {
+            label: key for key, label in self.config["filters"]["single_choice"].items()
+        }
         filters_single_choice = panel.widgets.RadioBoxGroup(
-            name="Select unit", options=self.config["filters"]["single_choice"]
+            name="Select unit", options=options
         )
 
+        options = {
+            label: key for key, label in self.config["filters"]["multi_choice"].items()
+        }
         filters_multi_choice = panel.Column(
             *[
                 panel.Row(
@@ -457,9 +463,7 @@ class InteractiveLinePlotter(InteractivePlotter):
                         name=option, value=True, css_classes=["legend-checkbox"]
                     ),
                 )
-                for color, option in zip(
-                    custom_palette, self.config["filters"]["multi_choice"]
-                )
+                for color, option in zip(custom_palette, options)
             ]
         )
 
