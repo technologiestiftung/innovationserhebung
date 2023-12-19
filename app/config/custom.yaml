@@ -39,7 +39,7 @@ base_line_interactive:
       innovations_ausgaben_mio: Innovationsausgaben in Mio. €
       fue_ausgaben_mio: FuE-Ausgaben in Mio. €
       umsatz_mio_produkt: Umsatz mit Produktneuheiten in Mio. €
-      umsatz_mio_markt: Umsatz mit Marktneu-heiten in Mio. €
+      umsatz_mio_markt: Umsatz mit Marktneuheiten in Mio. €
     multi_choice:
       nahrung: Nahrung/Getränke/Tabak
       pharma: Pharma/Chemie/Kunststoff
