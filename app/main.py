@@ -147,7 +147,7 @@ if PROXY_PANEL_THROUGH_FASTAPI:
                         data = await ws_server.recv()
                         await ws_client.send_text(data)
                 except ConnectionClosedOK:
-                    await ws_client.close()
+                    pass
 
             # Sync the upstream and downstream websockets through asyncio
             await asyncio.gather(listen_to_client(), listen_to_server())
