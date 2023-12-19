@@ -39,22 +39,22 @@ base_line_interactive:
       innovations_ausgaben_mio: Innovationsausgaben in Mio. €
       fue_ausgaben_mio: FuE-Ausgaben in Mio. €
       umsatz_mio_produkt: Umsatz mit Produktneuheiten in Mio. €
-      umsatz_mio_markt: Umsatz mit Marktneu-heiten in Mio. €
+      umsatz_mio_markt: Umsatz mit Marktneuheiten in Mio. €
     multi_choice:
       nahrung: Nahrung/Getränke/Tabak
       pharma: Pharma/Chemie/Kunststoff
       holz: Holz/Papier/Druck
       metall: Metall/Glas/Steinwaren
       elektroindustrie: Elektroindustrie/Instrumententechnik
-      fahrzeugbau: Maschinen-/Fahrzeugbau
-      sonstige_konsumgueter: sonstige Konsumgüter
+      fahrzeugbau: Maschinen‑/Fahrzeugbau
+      sonstige_konsumgueter: sonstige Konsumgüter
       energie: Energie/Wasser/Entsorgung
       telekommunikation: Verlage/Film/Rundfunk/Telekommunikation
       software: Software/Datenverarbeitung
       finanz: Finanzdienstleistungen
       unternehmensberatung: Unternehmensberatung
-      architektur: Architektur-/Ingenieurbüros/techn. Labore
-      forschung: Forschung und Entwicklung
+      architektur: Architektur‑/Ingenieurbüros/techn. Labore
+      forschung: Forschung und Entwicklung
       kreativ: Kreativdienstleistungen
   filters_defaults:
     single_choice: anzahl_unternehmen_insgesamt
