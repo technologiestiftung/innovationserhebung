@@ -94,7 +94,7 @@ select.bk-input {
 }
 
 .bk-input-group label span {
-  @apply top-0 translate-x-5 text-sm ml-0;
+  @apply top-0 translate-x-5 text-xs ml-0;
 }
 
 /* Accordion */
