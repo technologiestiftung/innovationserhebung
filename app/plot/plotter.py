@@ -103,9 +103,6 @@ class InteractivePlotter(Plotter):
 
 
 class InteractiveBarPlotter(InteractivePlotter):
-    def __init__(self, raw_data, config):
-        super().__init__(raw_data, config)
-
     def fit_data(self):
         for code in self.config["plot_codes"]:
             for choice in self.config["filters"]["single_choice"]:
@@ -204,9 +201,6 @@ class InteractiveBarPlotter(InteractivePlotter):
 
 
 class InteractiveBubblePlotter(InteractivePlotter):
-    def __init__(self, raw_data, config):
-        super().__init__(raw_data, config)
-
     def fit_data(self):
         for code in self.config["plot_codes"]:
             single_choice_dict = self.raw_data[code][self.single_choice_default]
@@ -335,9 +329,12 @@ class InteractiveBubblePlotter(InteractivePlotter):
         return scaled_values
 
     def create_filters(self):
+        options = {
+            label: key for key, label in self.config["filters"]["single_choice"].items()
+        }
         self.filters["single_choice"] = panel.widgets.RadioButtonGroup(
             name="Select unit",
-            options=self.config["filters"]["single_choice"],
+            options=options,
             margin=(32, 0),
             css_classes=["single_choice_toggle"],
         )
@@ -367,11 +364,8 @@ class InteractiveBubblePlotter(InteractivePlotter):
 
 
 class InteractiveLinePlotter(InteractivePlotter):
-    def __init__(self, raw_data, config):
-        super().__init__(raw_data, config)
-
     def fit_data(self):
-        selected_lines = ["x"] + self.config["filters"]["multi_choice"]
+        selected_lines = ["x"] + list(self.config["filters"]["multi_choice"].keys())
         for code in self.config["plot_codes"]:
             # Extract data using the single choice filters
             single_choice_dict = self.raw_data[code][self.single_choice_default]
@@ -449,25 +443,27 @@ class InteractiveLinePlotter(InteractivePlotter):
                 )
 
     def create_filters(self):
+        options = {
+            label: key for key, label in self.config["filters"]["single_choice"].items()
+        }
         filters_single_choice = panel.widgets.RadioBoxGroup(
-            name="Select unit", options=self.config["filters"]["single_choice"]
+            name="Select unit", options=options
         )
 
+        options = {
+            label: key for key, label in self.config["filters"]["multi_choice"].items()
+        }
         filters_multi_choice = panel.Column(
             *[
                 panel.Row(
                     panel.pane.HTML(
-                        '<div class="legend-field" style="background-color:{};"></div>'.format(
-                            color
-                        )
+                        f'<div class="legend-field" style="background-color:{color};"></div>'
                     ),
                     panel.widgets.Checkbox(
                         name=option, value=True, css_classes=["legend-checkbox"]
                     ),
                 )
-                for color, option in zip(
-                    custom_palette, self.config["filters"]["multi_choice"]
-                )
+                for color, option in zip(custom_palette, options)
             ]
         )
 
@@ -540,7 +536,6 @@ class InteractivePiePlotter(InteractivePlotter):
 
         self.center_labels = {}
         self.center_labels_2nd_line = {}
-        self.inner_rings = {}
 
     def fit_data(self):
         for code in self.config["plot_codes"]:
