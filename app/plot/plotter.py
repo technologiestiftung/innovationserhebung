@@ -476,7 +476,7 @@ class InteractiveLinePlotter(InteractivePlotter):
             ("Branchen auswählen", filters_multi_choice), active=[0], **filter_options
         )
         self.filters["single_choice"] = Accordion(
-            ("Einheiten auswählen", filters_single_choice), **filter_options
+            ("Daten auswählen", filters_single_choice), **filter_options
         )
 
         # Add interactivity

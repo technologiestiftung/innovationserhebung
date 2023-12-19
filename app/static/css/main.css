@@ -921,11 +921,6 @@ video {
   scroll-behavior: smooth;
 }
 
-.hyphens-auto {
-  -webkit-hyphens: auto;
-          hyphens: auto;
-}
-
 .\!rounded {
   border-radius: 0.25rem !important;
 }
