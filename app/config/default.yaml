@@ -2,7 +2,7 @@ bar_interactive:
   background_fill_color: "#F6F6F6"
   general:
     toolbar_location: null
-    y_axis_label: Values
+    y_axis_label: in Prozent
     y_range: [0, 100]
   vbar:
     width: 0.5
