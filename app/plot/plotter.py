@@ -329,9 +329,12 @@ class InteractiveBubblePlotter(InteractivePlotter):
         return scaled_values
 
     def create_filters(self):
+        options = {
+            label: key for key, label in self.config["filters"]["single_choice"].items()
+        }
         self.filters["single_choice"] = panel.widgets.RadioButtonGroup(
             name="Select unit",
-            options=self.config["filters"]["single_choice"],
+            options=options,
             margin=(32, 0),
             css_classes=["single_choice_toggle"],
         )
