@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
       )
       accordionList.classList.toggle("max-h-96")
       scrollTopButton.classList.toggle("translate-x-full")
+      scrollTopButton.classList.toggle("hidden")
       closeAccordionButton.classList.toggle("hidden")
       accordionToggle.setAttribute("aria-expanded", !navExpended)
       closeAccordionButton.setAttribute("aria-expanded", !navExpended)
@@ -27,6 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
     closeAccordionButton.addEventListener("click", () => {
       accordionList.classList.remove("max-h-96")
       scrollTopButton.classList.remove("translate-x-full")
+      scrollTopButton.classList.remove("hidden")
       closeAccordionButton.classList.add("hidden")
       accordionToggle.setAttribute("aria-expanded", false)
       closeAccordionButton.setAttribute("aria-expanded", false)
@@ -37,6 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
       link.addEventListener("click", () => {
         accordionList.classList.remove("max-h-96")
         scrollTopButton.classList.remove("translate-x-full")
+        scrollTopButton.classList.remove("hidden")
         closeAccordionButton.classList.add("hidden")
         accordionToggle.setAttribute("aria-expanded", false)
         closeAccordionButton.setAttribute("aria-expanded", false)
