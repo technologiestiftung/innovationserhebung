@@ -9,7 +9,7 @@ from panel.layout.accordion import Accordion
 
 import logging
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.WARNING)
 
 
 custom_palette = [

@@ -3,7 +3,7 @@ import json
 import logging
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.WARNING)
 
 
 # HTML_TAGS = {
