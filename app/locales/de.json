@@ -48,7 +48,7 @@
         {
           "id": "base_line_interactive",
           "description": "Basisdaten zum Innovationsverhalten werden jährlich erhoben und sind hier als Zeitreihe dargestellt. Der explorative Chart ermöglicht Ihnen den eigenen tieferen Blick in die Daten. <br><br>Wir haben die Auswahl Darstellung vorbelegt mit der Darstellung der Forschungsausgaben über alle befragten Branchen. Filtern Sie selbst nach den Branchen und Basisdaten die Sie interessieren. Neben der Ansicht nach <strong>Branchen</strong> bieten wir die Ansicht nach <strong>Größen-</strong> und <strong>Technologieklassen</strong>. Neben der Forschungsausgaben können Sie sich weitere Basisdaten anzeigen lassen, darunter die Innovatorenquote, die Umsätze mit Innovationen oder die Beschäftigtenzahlen. <br><br>Um die Daten besser in Kontext setzen zu können haben Sie die Wahl die Daten aus Berlin mit dem deckungsgleich aufgebauten Datensatz über die bundesweite Entwicklung zu vergleichen. <br>Die genauen Definitionen der Branchen und der erhobenen Daten finden Sie im methodischen Anhang. <br><br>Bitte beachten Sie, dass ein Teil der „Sprünge“ bei den Innovations-Zahlen in 2018 und bei den Beschäftigtenzahlen in 2019 rein methodische Ursachen in Änderungen der Zählweise haben, näher erläutert ebenfalls im methodischen Anhang.",
-          "toggleText": "Innovation nach "
+          "toggleText": "Innovationsgeschehen in "
         }
       ]
     },
@@ -91,7 +91,7 @@
         {
           "id": "growth_bubble_interactive",
           "description": "Im Gegensatz zur Bundesrepublik liegt in <strong>Berlin</strong> ein großer Schwerpunkt auf den Unternehmen der Software und Datenverarbeitung, diese Branche umfasst die größte Anzahl an Beschäftigten und kann den größten Wachstum vorweisen.<br><br>Mit weniger Wachstum, bleibt trotzdem weiterhin die Branche der Pharma-, Chemie- und Kunststoffunternehmen Spitzenreiter im Bereich der Forschungs- und Entwicklungsausgaben. <strong>Bundesweit</strong> hingegen bleiben wenig überraschend die Branchen des Maschinen- und Fahrzeugbaus klar vorn, aber auch die Branchen Elektroindustrie und Instrumententechnik, sowie die Branche der Pharma-, Chemie- und Kunststoffverarbeitenden Betriebe. ",
-          "toggleText": "Welche Innovatoren sind besonders wichtig für "
+          "toggleText": "Welche Innovatoren sind besonders aktiv in"
         }
       ]
     },
@@ -107,11 +107,12 @@
       "type": "chart",
       "id": "section_9",
       "title": "Öffentliche Förderung",
-      "disclaimer": "Öfffentliche Forschungsförderung bleibt relevant für die Berliner Wirtschaft.",
+      "disclaimer": "Öffentliche Forschungsförderung bleibt relevant für die Berliner Wirtschaft.",
       "charts": [
         {
           "id": "public_funding_bar_interactive",
-          "description": "Öffentliche Förderungen sind, mit Ausnahme im Bereich der Finanzdienstleistungen, in allen Branchen relevant, wenn auch mit leicht abnehmender Tendenz. Der größte Anteil der Förderungen geht auch in die zahlenmäßig größten Branchen, sowie in den Bereich der Auftragsforschung. <br><br>Der Bedarf an <strong>Förderung aus Landesmitteln</strong> ist relativ konstant geblieben, das in Anspruch nehmende Branchenspektrum hat sich jedoch leicht geändert. Eine gestiegene Inanspruchnahme findet sich bei den Medien, den Unternehmensberatungen und den Kreativdienstleistern."
+          "description": "Öffentliche Förderungen sind, mit Ausnahme im Bereich der Finanzdienstleistungen, in allen Branchen relevant, wenn auch mit leicht abnehmender Tendenz. Der größte Anteil der Förderungen geht auch in die zahlenmäßig größten Branchen, sowie in den Bereich der Auftragsforschung. <br><br>Der Bedarf an <strong>Förderung aus Landesmitteln</strong> ist relativ konstant geblieben, das in Anspruch nehmende Branchenspektrum hat sich jedoch leicht geändert. Eine gestiegene Inanspruchnahme findet sich bei den Medien, den Unternehmensberatungen und den Kreativdienstleistern.",
+          "toggleText": "Öffentliche Förderung in"
         }
       ]
     },
@@ -124,7 +125,7 @@
         {
           "id": "coop_region_bar_interactive",
           "description": "Der Kooperationsgrad sinkt moderat. Kooperationsgrad und räumliche Kooperationspräferenzen sind stark branchenspezifisch. Die regionalen Präferenzen der Berliner Wirtschaft bei Kooperationen unterscheiden sich nicht ausgeprägt von den bundesweit üblichen Präferenzen. Einzelne „Ausreißer“ sind durch wenige oder einzelne Unternehmen mit spezifischem Profil bedingt.",
-          "toggleText": "Kooperationen nach Region"
+          "toggleText": "Kooperationen nach Region in"
         }
       ]
     },
@@ -137,7 +138,7 @@
         {
           "id": "coop_partner_bar_interactive",
           "description": "Die Kooperation der <strong>Berliner</strong> Unternehmen insgesamt und mit Wissenschaft ist deutlich höher als im deutschen Durchschnitt, wenn auch leicht rückläufig. In Berlin ist die Wissenschaft der wichtigste Kooperationspartner, insbesondere bei KMU. <br><br><strong>Bundesweit</strong> haben Kunden und Lieferanten als Kooperationspartner eine etwas höhere Bedeutung als in Berlin. Branchen- und größenspezifisch unterscheiden sich die Zahlen deutlich.",
-          "toggleText": "Beteiligung Berliner Unternehmen an Kooperationen"
+          "toggleText": "Beteiligung Berliner Unternehmen an Kooperationen in"
         }
       ]
     },
@@ -150,7 +151,7 @@
         {
           "id": "protection_bar_interactive",
           "description": "Unterschiede zwischen Berlin und dem deutschen Durchschnitt, sowie zwischen den Größenklassen der Unternehmen sind teilweise deutlich erkennbar, dürften aber auf die unterschiedliche Branchenzusammensetzung zurückzuführen sein.",
-          "toggleText": "Schutz von geistigem Eigentum"
+          "toggleText": "Schutz von geistigem Eigentum in"
         }
       ]
     },
