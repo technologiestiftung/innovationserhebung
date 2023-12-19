@@ -238,11 +238,14 @@ class InteractiveBubblePlotter(InteractivePlotter):
                 x_range.extend(self.raw_data[code][key]["x"])
                 y_range.extend(self.raw_data[code][key]["y"])
 
+            x_buffer = max(x_range) / 10
+            y_buffer = max(y_range) / 10
+
             # Create the figure
             plot = figure(
                 **self.config["general"],
-                x_range=[min(x_range), max(x_range)],
-                y_range=[min(y_range), max(y_range)],
+                x_range=[min(x_range) - x_buffer, max(x_range) + x_buffer],
+                y_range=[min(y_range) - y_buffer, max(y_range) + y_buffer],
             )
 
             tooltip_html = """
@@ -348,12 +351,17 @@ class InteractiveBubblePlotter(InteractivePlotter):
             single_choice_dict = self.raw_data[code][
                 self.filters["single_choice"].value
             ]
+            n = len(single_choice_dict["x"])
+            tooltip_cat_1_list = [self.config["tooltip"]["tooltip_cat_1"]] * n
+            tooltip_cat_2_list = [self.config["tooltip"]["tooltip_cat_2"]] * n
             data = {
                 "x": single_choice_dict["x"],
                 "y": single_choice_dict["y"],
                 "z": self.scale_values(single_choice_dict["z"]),
                 "color": [n for n in range(len(single_choice_dict["x"]))],
                 "labels": single_choice_dict["labels"],
+                "tooltip_cat_1": tooltip_cat_1_list,
+                "tooltip_cat_2": tooltip_cat_2_list,
             }
             self.fitted_data[code].data = data
 
