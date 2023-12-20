@@ -139,7 +139,7 @@ select.bk-input {
 }
 
 :host(.legend-checkbox) span {
-  @apply text-xs translate-y-1 absolute w-full;
+  @apply text-xs translate-y-1 w-full;
 }
 
 .bk-btn-group {
