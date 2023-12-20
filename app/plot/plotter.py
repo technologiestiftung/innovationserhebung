@@ -253,7 +253,7 @@ class InteractiveBubblePlotter(InteractivePlotter):
                     </div>
                     <div style="font-size: 1rem; display:flex; justify-content: space-between; margin-top: 1rem; align-items: center; gap:2rem; width: 100%;">
                         <p style="color: #878786; margin: 0;">@tooltip_cat_1:</p>
-                        <strong>@y Mio. €</strong>
+                        <strong>@y %</strong>
                     </div>
                     <div style="font-size: 1rem; display:flex; justify-content: space-between; align-items: center; gap:2rem; width: 100%;">
                         <p style="color: #878786; margin: 0;">@tooltip_cat_2:</p>

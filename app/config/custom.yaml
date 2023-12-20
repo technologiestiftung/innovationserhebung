@@ -17,8 +17,8 @@ growth_bubble_interactive:
     - de
   filters:
     single_choice:
-      individual: Umsatz
-      by_company_size: Beschäftigte
+      individual: nach Branche
+      by_company_size: nach Betriebsgröße
   filters_defaults:
     single_choice: individual
 
