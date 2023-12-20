@@ -1,7 +1,7 @@
 growth_bubble_interactive:
   general:
     y_axis_label: Wachstum FuE-Ausgaben 2018-2021 in %
-    x_axis_label: Deutsche FuE-Ausgaben 2021 in Mio. €
+    x_axis_label: FuE-Ausgaben 2021 in Mio. €
   parser_type: growth
   plot_type: bubble_interactive
   tooltip:
