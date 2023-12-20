@@ -1,7 +1,7 @@
 growth_bubble_interactive:
   general:
     y_axis_label: Wachstum FuE-Ausgaben 2018-2021 in %
-    x_axis_label: Deutsche FuE-Ausgaben 2021 in Mio. €
+    x_axis_label: FuE-Ausgaben 2021 in Mio. €
   parser_type: growth
   plot_type: bubble_interactive
   tooltip:
@@ -33,13 +33,13 @@ base_line_interactive:
     - de
   filters:
     single_choice:
+      fue_ausgaben_mio: FuE-Ausgaben in Mio. €
+      innovations_ausgaben_mio: Innovationsausgaben in Mio. €
+      umsatz_mio_produkt: Umsatz mit Produktneuheiten in Mio. €
+      umsatz_mio_markt: Umsatz mit Marktneuheiten in Mio. €
       anzahl_unternehmen_insgesamt: Anzahl aller Unternehmen
       anzahl_innovative_unternehmen: Anzahl innovationsaktiven Unternehmen
       anzahl_innovatoren: Anzahl der Innovatoren
-      innovations_ausgaben_mio: Innovationsausgaben in Mio. €
-      fue_ausgaben_mio: FuE-Ausgaben in Mio. €
-      umsatz_mio_produkt: Umsatz mit Produktneuheiten in Mio. €
-      umsatz_mio_markt: Umsatz mit Marktneuheiten in Mio. €
     multi_choice:
       nahrung: Nahrung/Getränke/Tabak
       pharma: Pharma/Chemie/Kunststoff
@@ -57,7 +57,7 @@ base_line_interactive:
       forschung: Forschung und Entwicklung
       kreativ: Kreativdienstleistungen
   filters_defaults:
-    single_choice: anzahl_unternehmen_insgesamt
+    single_choice: fue_ausgaben_mio
 
 shares_pie_interactive:
   parser_type: shares

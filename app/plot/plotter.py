@@ -367,6 +367,16 @@ class InteractiveBubblePlotter(InteractivePlotter):
 
 
 class InteractiveLinePlotter(InteractivePlotter):
+    def __init__(self, raw_data, config):
+        super().__init__(raw_data, config)
+
+        self.reverse_single_choice_dict = {
+            label: key for key, label in self.config["filters"]["single_choice"].items()
+        }
+        self.reverse_multi_choice_dict = {
+            label: key for key, label in self.config["filters"]["multi_choice"].items()
+        }
+
     def fit_data(self):
         selected_lines = ["x"] + list(self.config["filters"]["multi_choice"].keys())
         for code in self.config["plot_codes"]:
@@ -446,14 +456,9 @@ class InteractiveLinePlotter(InteractivePlotter):
                 )
 
     def create_filters(self):
-        options = {
-            label: key for key, label in self.config["filters"]["single_choice"].items()
-        }
-        filters_single_choice = panel.widgets.RadioBoxGroup(options=options)
-
-        options = {
-            label: key for key, label in self.config["filters"]["multi_choice"].items()
-        }
+        filters_single_choice = panel.widgets.RadioBoxGroup(
+            options=self.reverse_single_choice_dict
+        )
         filters_multi_choice = panel.Column(
             *[
                 panel.Row(
@@ -464,7 +469,7 @@ class InteractiveLinePlotter(InteractivePlotter):
                         name=option, value=True, css_classes=["legend-checkbox"]
                     ),
                 )
-                for color, option in zip(custom_palette, options)
+                for color, option in zip(custom_palette, self.reverse_multi_choice_dict)
             ]
         )
 
@@ -493,7 +498,8 @@ class InteractiveLinePlotter(InteractivePlotter):
             # Re select data based on new selection of filters
             for filter_row in self.filters["multi_choice"][0]:
                 if filter_row[1].value:
-                    selected_lines.append(filter_row[1].name)
+                    line_key = self.reverse_multi_choice_dict[filter_row[1].name]
+                    selected_lines.append(line_key)
             single_choice_dict = self.raw_data[code][
                 self.filters["single_choice"][0].value
             ]

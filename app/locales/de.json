@@ -65,7 +65,7 @@
         {
           "id": "fue_pie_interactive",
           "description": "Berlin ist einer der größten Standorte der öffentlichen Forschung in Hochschulen und außeruniversitären Forschungsinstituten. In <strong>Berlin</strong> entfallen rund 2/3 der gesamten Forschungsausgaben auf die öffentliche Forschung und nur rund 1/3 auf die Industrieforschung. <br><br>Im <strong>Bundesdurchschnitt</strong> ist das genau umgekehrt. Das Wachstum der öffentlichen Forschung konnte mit dem der Industrieforschung mithalten: Innerhalb von 10 Jahren ist das Verhältnis praktisch konstant geblieben.",
-          "toggleText": "Zusammensetzung der FuE-Ausgaben in "
+          "toggleText": "Zusammensetzung der FuE-Ausgaben in"
         }
       ]
     },
@@ -78,7 +78,7 @@
         {
           "id": "shares_pie_interactive",
           "description": "Spitzenreiter in <strong>Berlin</strong> ist die Pharmaforschung. Die Forschung in der Branche Software und Datenverarbeitung hat massiv zugenommen, so dass diese Branche inzwischen den zweiten Platz belegt. Zu den TOP5 gehören in Berlin auch die Elektrotechnik (einschließlich Apparatebau und Optik), der Maschinen- und Fahrzeugbau und die Forschungs- und Entwicklungsdienstleistungen. Für den moderaten Anstieg bei den sonstigen Branchen sind vor allem die Medien, die Finanzdienstleistungen und die Kreativdienstleistungen verantwortlich.<br><br><strong>Bundesweit</strong> verglichen dominiert weiterhin ganz klar der Maschinen- und Fahrzeugbau die  Industrieforschung. Aber auch hier konnte die Softwarebranche ihre Anteile signifikant ausbauen und die TOP5-Branchen der Industrieforschung sind identisch.",
-          "toggleText": "Anteile der Industrieforschung in "
+          "toggleText": "Anteile einzelner Branchen an der Industrieforschung in"
         }
       ]
     },
