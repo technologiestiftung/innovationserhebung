@@ -42,7 +42,9 @@ def get_flex_obj_fn_for_plot_key(plot_key):
     plotter = create_plotter(data[plot_key], config[plot_key])
     plotter.generate()
 
-    location_toggle = Select(options={"Deutschland": "de", "Berlin": "ber"}, value="de")
+    location_toggle = Select(
+        options={"Deutschland": "de", "Berlin": "ber"}, value="ber"
+    )
 
     # Place plots and filters in the layout
     flex_obj = FlexBox(
