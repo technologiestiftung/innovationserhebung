@@ -190,6 +190,16 @@
           "description": "<strong>8. Datensätze und Publikationen der Einzeljahrgänge</strong><br><br>Die Auswertung der Innovationserhebung Berlin in den Einzeljahrgängen publiziert die Technologiestiftung regelmäßig gedruckt und online.<br>Die Datensätze des ZEW zu den Einzeljahrgängen der Innovationserhebung Berlin publiziert die Technologiestiftung regelmäßig zur freien Nutzung unter Datenlizenz Deutschland.<br>Weiterführende Daten zu den Innovationserhebung einschließlich der Rohdaten hält das ZEW in seinem Forschungsdatenzentrum vor. Diese sind aus Gründen des Statistikgeheimnisses allerdings nur Forschenden aus wissenschaftlichen Einrichtungen auf Antrag zugänglich.<br><br><br>"
         }
       ]
+    },
+    {
+      "type": "chart",
+      "id": "section_12",
+      "title": "Inhaltsrechte",
+      "charts": [
+        {
+          "description": "Textinhalte, Diagramme und Tabellen dieses Werkes können genutzt und geteilt werden unter einer Creative Commons – Lizenz Namensnennung – Weitergabe unter gleichen Bedingungen 3.0 Deutschland<br><br><img src='https://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-sa.svg' width='96px' style='text-decoration: underline'><br>Nähere Informationen unter <a href='https://creativecommons.org/licenses/by-sa/3.0/de/'> https://creativecommons.org/licenses/by-sa/3.0/de/</a>"
+        }
+      ]
     }
   ]
 }
