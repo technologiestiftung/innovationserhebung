@@ -253,7 +253,7 @@ class InteractiveBubblePlotter(InteractivePlotter):
                     </div>
                     <div style="font-size: 1rem; display:flex; justify-content: space-between; margin-top: 1rem; align-items: center; gap:2rem; width: 100%;">
                         <p style="color: #878786; margin: 0;">@tooltip_cat_1:</p>
-                        <strong>@y Mio. €</strong>
+                        <strong>@y %</strong>
                     </div>
                     <div style="font-size: 1rem; display:flex; justify-content: space-between; align-items: center; gap:2rem; width: 100%;">
                         <p style="color: #878786; margin: 0;">@tooltip_cat_2:</p>
@@ -422,6 +422,9 @@ class InteractiveLinePlotter(InteractivePlotter):
             self.plots[code].yaxis.minor_tick_line_color = None
             self.plots[code].yaxis.formatter.use_scientific = False
             self.plots[code].yaxis.axis_label_text_color = "#878786"
+
+            # Remove Y-Axis label until it is dynamic
+            self.plots[code].yaxis.axis_label = None
 
             for axis in [self.plots[code].xaxis, self.plots[code].yaxis]:
                 axis.major_tick_line_color = None
