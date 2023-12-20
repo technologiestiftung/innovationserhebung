@@ -46,15 +46,15 @@ base_line_interactive:
       holz: Holz/Papier/Druck
       metall: Metall/Glas/Steinwaren
       elektroindustrie: Elektroindustrie/Instrumententechnik
-      fahrzeugbau: Maschinen‑/Fahrzeugbau
-      sonstige_konsumgueter: sonstige Konsumgüter
+      fahrzeugbau: Maschinen-/Fahrzeugbau
+      sonstige_konsumgueter: sonstige Konsumgüter
       energie: Energie/Wasser/Entsorgung
       telekommunikation: Verlage/Film/Rundfunk/Telekommunikation
       software: Software/Datenverarbeitung
       finanz: Finanzdienstleistungen
       unternehmensberatung: Unternehmensberatung
-      architektur: Architektur‑/Ingenieurbüros/techn. Labore
-      forschung: Forschung und Entwicklung
+      architektur: Architektur-/Ingenieurbüros/techn. Labore
+      forschung: Forschung und Entwicklung
       kreativ: Kreativdienstleistungen
   filters_defaults:
     single_choice: fue_ausgaben_mio
