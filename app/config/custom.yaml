@@ -137,7 +137,7 @@ coop_region_bar_interactive:
       - anderen Ländern
   filters_defaults:
     single_choice: "2012"
-    single_choice_2: Asien
+    single_choice_2: der Region
 
 protection_bar_interactive:
   parser_type: bar
