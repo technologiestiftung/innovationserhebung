@@ -657,6 +657,10 @@ video {
   margin-top: 3.5rem;
 }
 
+.mt-24 {
+  margin-top: 6rem;
+}
+
 .mt-3\/5 {
   margin-top: 60vh;
 }
@@ -717,8 +721,12 @@ video {
   max-height: 0px;
 }
 
-.max-h-screen {
-  max-height: 100vh;
+.max-h-96 {
+  max-height: 24rem;
+}
+
+.min-h-\[60vh\] {
+  min-height: 60vh;
 }
 
 .w-0 {
@@ -783,6 +791,10 @@ video {
 
 .max-w-80 {
   max-width: 20rem;
+}
+
+.max-w-\[80vw\] {
+  max-width: 80vw;
 }
 
 .max-w-full {
@@ -1159,6 +1171,10 @@ video {
   line-height: 2rem;
 }
 
+.text-\[1\.125rem\] {
+  font-size: 1.125rem;
+}
+
 .text-\[18px\] {
   font-size: 18px;
 }
@@ -1189,6 +1205,11 @@ video {
   line-height: 1.25rem;
 }
 
+.text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
 .\!font-normal {
   font-weight: 400 !important;
 }
@@ -1205,8 +1226,8 @@ video {
   line-height: 1.5rem !important;
 }
 
-.leading-10 {
-  line-height: 2.5rem;
+.leading-\[2rem\] {
+  line-height: 2rem;
 }
 
 .leading-h2 {
@@ -1432,7 +1453,6 @@ select.bk-input:hover {
 }
 
 .bk-input-group {
-  width: 180px;
   margin: auto;
 }
 
@@ -1499,8 +1519,8 @@ select.bk-input:hover {
   margin-left: 0px;
   --tw-translate-x: 1.25rem;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
 }
 
 /* Accordion */
@@ -1639,6 +1659,15 @@ select.bk-input:hover {
     padding-left: 4.75rem;
     padding-right: 4.75rem;
   }
+
+  .tablet\:text-2xl {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+
+  .tablet\:leading-10 {
+    line-height: 2.5rem;
+  }
 }
 
 @media (min-width: 1280px) {
@@ -1693,5 +1722,14 @@ select.bk-input:hover {
 
   .desktop\:pt-0 {
     padding-top: 0px;
+  }
+
+  .desktop\:text-2xl {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+
+  .desktop\:leading-10 {
+    line-height: 2.5rem;
   }
 }
