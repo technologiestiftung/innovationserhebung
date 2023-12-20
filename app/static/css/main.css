@@ -1238,6 +1238,10 @@ video {
   line-height: 1.5rem;
 }
 
+.leading-10 {
+  line-height: 2.5rem;
+}
+
 .\!text-corporate-blue {
   --tw-text-opacity: 1 !important;
   color: rgb(30 55 145 / var(--tw-text-opacity)) !important;
