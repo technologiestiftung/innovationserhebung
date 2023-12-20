@@ -47,7 +47,7 @@
       "charts": [
         {
           "id": "base_line_interactive",
-          "description": "Basisdaten zum Innovationsverhalten werden jährlich erhoben und sind hier als Zeitreihe dargestellt. Der explorative Chart ermöglicht Ihnen den eigenen tieferen Blick in die Daten. <br><br>Wir haben die Auswahl-Darstellung vorbelegt mit der Darstellung der Forschungsausgaben über alle befragten Branchen. Filtern Sie selbst nach den Branchen und Basisdaten, die Sie interessieren. Neben der Ansicht nach <strong>Branchen</strong> bieten wir die Ansicht nach <strong>Größen-</strong> und <strong>Technologieklassen</strong>. Neben der Forschungsausgaben können Sie sich weitere Basisdaten anzeigen lassen, darunter die Innovatorenquote, die Umsätze mit Innovationen oder die Beschäftigtenzahlen. <br><br>Um die Daten besser in Kontext setzen zu können, haben Sie die Wahl die Daten aus Berlin mit dem deckungsgleich aufgebauten Datensatz über die bundesweite Entwicklung zu vergleichen. <br>Die genauen Definitionen der Branchen und der erhobenen Daten finden Sie im methodischen Anhang. <br><br>Bitte beachten Sie, dass ein Teil der „Sprünge“ bei den Innovations-Zahlen in 2018 und bei den Beschäftigtenzahlen in 2019 rein methodische Ursachen in Änderungen der Zählweise haben, näher erläutert ebenfalls im methodischen Anhang.",
+          "description": "Basisdaten zum Innovationsverhalten werden jährlich erhoben und sind hier als Zeitreihe dargestellt. Der explorative Chart ermöglicht Ihnen den eigenen tieferen Blick in die Daten. <br><br>Wir haben die Auswahl vorbelegt mit der Darstellung der Forschungsausgaben über alle befragten Branchen. Filtern Sie selbst nach den Branchen und Basisdaten, die Sie interessieren. Neben der Ansicht nach <strong>Branchen</strong> bieten wir die Ansicht nach <strong>Größen-</strong> und <strong>Technologieklassen</strong>. Neben den Forschungsausgaben können Sie sich weitere Basisdaten anzeigen lassen, darunter die Innovatorenquote, die Umsätze mit Innovationen oder die Beschäftigtenzahlen. <br><br>Um die Daten besser in Kontext setzen zu können, haben Sie die Wahl die Daten aus Berlin mit dem deckungsgleich aufgebauten Datensatz über die bundesweite Entwicklung zu vergleichen. <br>Die genauen Definitionen der Branchen und der erhobenen Daten finden Sie im methodischen Anhang. <br><br>Bitte beachten Sie, dass ein Teil der „Sprünge“ bei den Innovations-Zahlen in 2018 und bei den Beschäftigtenzahlen in 2019 rein methodische Ursachen in Änderungen der Zählweise hat, näher erläutert ebenfalls im methodischen Anhang.",
           "toggleText": "Innovationsgeschehen in "
         }
       ]
@@ -73,7 +73,7 @@
       "type": "chart",
       "id": "section_3",
       "title": "Anteile der Branchen an der Industrieforschung",
-      "disclaimer": "Die Forschung in der Branche Software und Datenverarbeitung hat massiv zugenommen, sodass diese Branche inzwischen den zweiten Platz belegt.",
+      "disclaimer": "Die Forschung in der Branche Software und Datenverarbeitung hat massiv zugenommen, sodass diese Branche in Berlin inzwischen den zweiten Platz belegt.",
       "charts": [
         {
           "id": "shares_pie_interactive",
@@ -86,11 +86,11 @@
       "type": "chart",
       "id": "section_4",
       "title": "Welche Innovatoren sind besonders aktiv in Industrieforschung?",
-      "disclaimer": "Berlin entwickelt sich zunehmend zum Software-Standort, während bundesweit weiterhin der Maschinen- und Fahrzeugbau dominiert.",
+      "disclaimer": "Berlin entwickelt sich zunehmend zum Softwarestandort, während bundesweit weiterhin der Maschinen- und Fahrzeugbau dominiert",
       "charts": [
         {
           "id": "growth_bubble_interactive",
-          "description": "Im Gegensatz zur Bundesrepublik liegt in <strong>Berlin</strong> ein großer Schwerpunkt auf den Unternehmen der Software und Datenverarbeitung, diese Branche umfasst die größte Anzahl an Beschäftigten und kann den größten Wachstum vorweisen.<br><br>Mit weniger Wachstum, bleibt trotzdem weiterhin die Branche der Pharma-, Chemie- und Kunststoffunternehmen Spitzenreiter im Bereich der Forschungs- und Entwicklungsausgaben. <strong>Bundesweit</strong> hingegen bleiben wenig überraschend die Branchen des Maschinen- und Fahrzeugbaus klar vorn, aber auch die Branchen Elektroindustrie und Instrumententechnik, sowie die Branche der Pharma-, Chemie- und Kunststoffverarbeitenden Betriebe. ",
+          "description": "Im Gegensatz zur Bundesrepublik liegt in <strong>Berlin</strong> ein großer Schwerpunkt auf den Unternehmen der Software und Datenverarbeitung. Diese Branche umfasst die größte Anzahl an Beschäftigten und kann das größte Wachstum vorweisen.<br><br>Mit weniger Wachstum, bleibt trotzdem weiterhin die Branche der Pharma-, Chemie- und Kunststoffunternehmen Spitzenreiter im Bereich der Forschungs- und Entwicklungsausgaben. <strong>Bundesweit</strong> hingegen bleiben wenig überraschend die Branchen des Maschinen- und Fahrzeugbaus klar vorn, aber auch die Branchen Elektroindustrie und Instrumententechnik, sowie die Branche der Pharma-, Chemie- und Kunststoffverarbeitenden Betriebe. ",
           "toggleText": "Welche Innovatoren sind besonders aktiv in"
         }
       ]
@@ -188,6 +188,9 @@
         },
         {
           "description": "<strong>8. Datensätze und Publikationen der Einzeljahrgänge</strong><br><br>Die Auswertung der Innovationserhebung Berlin in den Einzeljahrgängen publiziert die Technologiestiftung regelmäßig gedruckt und online.<br>Die Datensätze des ZEW zu den Einzeljahrgängen der Innovationserhebung Berlin publiziert die Technologiestiftung regelmäßig zur freien Nutzung unter Datenlizenz Deutschland.<br>Weiterführende Daten zu den Innovationserhebung einschließlich der Rohdaten hält das ZEW in seinem Forschungsdatenzentrum vor. Diese sind aus Gründen des Statistikgeheimnisses allerdings nur Forschenden aus wissenschaftlichen Einrichtungen auf Antrag zugänglich."
+        },
+        {
+          "description": "<strong>9. Datenquellen</strong><br><br>Datenquelle für den Chart „Anteile der Wirtschaft an der gesamten Forschung“ ist das statistische Landesamt Baden-Württemberg. Abweichend von allen anderen Charts sind FuE-Ausgaben hier die internen FuE-Ausgaben (d.h. ohne Forschungsaufträge an Dritte).<br><br>Für alle anderen Charts ist die Datenquelle der jeweilige Jahrgang der Innovationserhebung Berlin. FuE-Ausgaben sind hier inclusive der Forschungaufträge an Dritte."
         }
       ]
     },
