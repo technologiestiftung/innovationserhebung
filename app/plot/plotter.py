@@ -423,6 +423,9 @@ class InteractiveLinePlotter(InteractivePlotter):
             self.plots[code].yaxis.formatter.use_scientific = False
             self.plots[code].yaxis.axis_label_text_color = "#878786"
 
+            # Remove Y-Axis label until it is dynamic
+            self.plots[code].yaxis.axis_label = None
+
             for axis in [self.plots[code].xaxis, self.plots[code].yaxis]:
                 axis.major_tick_line_color = None
                 axis.axis_label_text_font = self.config["text"]["font"]
