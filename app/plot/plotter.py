@@ -155,7 +155,7 @@ class InteractiveBarPlotter(InteractivePlotter):
                 axis.major_label_text_font_style = self.config["text"]["font_style"]
                 axis.axis_line_width = self.config["axis"]["axis_line_width"]
                 axis.axis_line_color = self.config["background_fill_color"]
-                axis.axis_label_text_color = "#8787863B3B3A"
+                axis.axis_label_text_color = "#878786"
 
             # Add vertical bars to the figure
             plot.vbar(
