@@ -47,8 +47,8 @@ module.exports = {
         4: "1rem",
       },
       padding: {
-        mobile: "1.5rem",
-        desktop: "4.75rem",
+        mobile: "1.3rem",
+        desktop: "4rem",
       },
       screens: {
         desktop: "1280px",

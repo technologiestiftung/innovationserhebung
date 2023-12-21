@@ -1059,7 +1059,7 @@ video {
 }
 
 .p-mobile {
-  padding: 1.5rem;
+  padding: 1.3rem;
 }
 
 .\!px-4 {
@@ -1083,13 +1083,13 @@ video {
 }
 
 .px-desktop {
-  padding-left: 4.75rem;
-  padding-right: 4.75rem;
+  padding-left: 4rem;
+  padding-right: 4rem;
 }
 
 .px-mobile {
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+  padding-left: 1.3rem;
+  padding-right: 1.3rem;
 }
 
 .py-0 {
@@ -1660,8 +1660,8 @@ select.bk-input:hover {
   }
 
   .tablet\:px-desktop {
-    padding-left: 4.75rem;
-    padding-right: 4.75rem;
+    padding-left: 4rem;
+    padding-right: 4rem;
   }
 
   .tablet\:text-2xl {
