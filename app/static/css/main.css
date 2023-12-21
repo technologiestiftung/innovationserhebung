@@ -1072,6 +1072,11 @@ video {
   padding-bottom: 0.25rem !important;
 }
 
+.px-0 {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
 .px-8 {
   padding-left: 2rem;
   padding-right: 2rem;
@@ -1095,6 +1100,11 @@ video {
 .py-0 {
   padding-top: 0px;
   padding-bottom: 0px;
+}
+
+.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
 }
 
 .py-16 {
@@ -1122,6 +1132,14 @@ video {
 
 .pb-5 {
   padding-bottom: 1.25rem;
+}
+
+.pl-2 {
+  padding-left: 0.5rem;
+}
+
+.pr-12 {
+  padding-right: 3rem;
 }
 
 .pt-1 {
@@ -1431,7 +1449,11 @@ body {
 }
 
 select.bk-input {
+  margin-left: auto;
+  margin-right: auto;
   display: inline;
+  width: -moz-fit-content;
+  width: fit-content;
   cursor: pointer;
   border-radius: 0px;
   border-width: 0px;
@@ -1453,6 +1475,14 @@ select.bk-input {
 select.bk-input:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(235 236 240 / var(--tw-bg-opacity));
+}
+
+select.bk-input:nth-child(n) {
+  margin-bottom: 2rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0.5rem;
+  padding-right: 3rem;
 }
 
 .bk-input-group {
