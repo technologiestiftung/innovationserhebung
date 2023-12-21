@@ -143,7 +143,7 @@ class InteractiveBarPlotter(InteractivePlotter):
             plot.yaxis.ticker.desired_num_ticks = 8
             plot.yaxis.minor_tick_line_color = None
             plot.yaxis.formatter.use_scientific = False
-            plot.yaxis.axis_label_text_color = "#878786"
+            plot.yaxis.axis_label_text_color = "#3B3B3A"
 
             for axis in [plot.xaxis, plot.yaxis]:
                 axis.major_tick_line_color = None
@@ -151,11 +151,11 @@ class InteractiveBarPlotter(InteractivePlotter):
                 axis.axis_label_text_font_style = self.config["text"]["font_style"]
                 axis.axis_label_text_font_size = "13px"
                 axis.major_label_text_font = self.config["text"]["font"]
-                axis.major_label_text_color = "#878786"
+                axis.major_label_text_color = "#3B3B3A"
                 axis.major_label_text_font_style = self.config["text"]["font_style"]
                 axis.axis_line_width = self.config["axis"]["axis_line_width"]
                 axis.axis_line_color = self.config["background_fill_color"]
-                axis.axis_label_text_color = "#3B3B3A"
+                axis.axis_label_text_color = "#878786"
 
             # Add vertical bars to the figure
             plot.vbar(
@@ -285,7 +285,7 @@ class InteractiveBubblePlotter(InteractivePlotter):
             # # Configure axes
             plot.yaxis.ticker.desired_num_ticks = 8
             plot.yaxis.formatter.use_scientific = False
-            plot.yaxis.axis_label_text_color = "#878786"
+            plot.yaxis.axis_label_text_color = "#3B3B3A"
 
             for axis in [plot.xaxis, plot.yaxis]:
                 axis.minor_tick_line_color = None
@@ -294,11 +294,11 @@ class InteractiveBubblePlotter(InteractivePlotter):
                 axis.axis_label_text_font_style = self.config["text"]["font_style"]
                 axis.axis_label_text_font_size = "13px"
                 axis.major_label_text_font = self.config["text"]["font"]
-                axis.major_label_text_color = "#878786"
+                axis.major_label_text_color = "#3B3B3A"
                 axis.major_label_text_font_style = self.config["text"]["font_style"]
                 axis.axis_line_width = self.config["axis"]["axis_line_width"]
                 axis.axis_line_color = self.config["background_fill_color"]
-                axis.axis_label_text_color = "#3B3B3A"
+                axis.axis_label_text_color = "#878786"
 
             # Add circles to the plot
             mapper = linear_cmap(
@@ -421,7 +421,7 @@ class InteractiveLinePlotter(InteractivePlotter):
             self.plots[code].yaxis.ticker.desired_num_ticks = 8
             self.plots[code].yaxis.minor_tick_line_color = None
             self.plots[code].yaxis.formatter.use_scientific = False
-            self.plots[code].yaxis.axis_label_text_color = "#878786"
+            self.plots[code].yaxis.axis_label_text_color = "#3B3B3A"
 
             # Remove Y-Axis label until it is dynamic
             self.plots[code].yaxis.axis_label = None
@@ -432,11 +432,11 @@ class InteractiveLinePlotter(InteractivePlotter):
                 axis.axis_label_text_font_style = self.config["text"]["font_style"]
                 axis.axis_label_text_font_size = "13px"
                 axis.major_label_text_font = self.config["text"]["font"]
-                axis.major_label_text_color = "#878786"
+                axis.major_label_text_color = "#3B3B3A"
                 axis.major_label_text_font_style = self.config["text"]["font_style"]
                 axis.axis_line_width = self.config["axis"]["axis_line_width"]
                 axis.axis_line_color = self.config["background_fill_color"]
-                axis.axis_label_text_color = "#3B3B3A"
+                axis.axis_label_text_color = "#878786"
 
             # Add lines to the plot
             colors = custom_palette
