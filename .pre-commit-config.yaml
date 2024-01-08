@@ -19,7 +19,7 @@ repos:
         args: ['--no-ensure-ascii', '--no-sort-keys', '--autofix']
         exclude: '^package.*json'
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.1.7
+    rev: v0.1.11
     hooks:
       # Run the linter.
       - id: ruff
