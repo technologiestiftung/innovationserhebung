@@ -53,6 +53,8 @@ class DataParser(ABC):
 
 
 class BaseDataParser(DataParser):
+    sheet_basis_prefix = "basis_"
+
     def parse(self, sheets, config):
         # Extract basis data
         data = self.extract(sheets)
@@ -74,10 +76,13 @@ class BaseDataParser(DataParser):
         extracted = init_nested_dict()
 
         for sheet_key in sheets:
-            if "basis" not in sheet_key:
+            if not sheet_key.startswith(self.sheet_basis_prefix):
                 continue
 
-            basis, year, area = sheet_key.split("_")
+            year, area = sheet_key[len(self.sheet_basis_prefix) :].split("_")
+            # The year given in the tabs of the sheets are the year of analysis,
+            # the data analysed is always of the previous year!
+            year = str(int(year) - 1)
             df = sheets[sheet_key]
 
             for branch in mapping_branches:
