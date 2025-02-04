@@ -57,6 +57,24 @@ mapping_branches = {
     "beschaeftigte_1000": "beschaeftigte_1000",
 }
 
+mapping_branch_types = {
+    "nahrung": "industrie",
+    "pharma": "industrie",
+    "holz": "industrie",
+    "metall": "industrie",
+    "elektroindustrie": "industrie",
+    "fahrzeugbau": "industrie",
+    "sonstige_konsumgueter": "industrie",
+    "energie": "industrie",
+    "telekommunikation": "dienstleistungen",
+    "software": "industrie",
+    "finanz": "industrie",
+    "unternehmensberatung": "industrie",
+    "architektur": "industrie",
+    "forschung": "industrie",
+    "kreativ": "industrie",
+}
+
 mapping_employees_n = {
     "5-9": "beschaeftigte_5_9",
     "10-19": "beschaeftigte_10_19",
@@ -76,4 +94,30 @@ mapping_units = {
     "Umsatz mit Marktneu-heiten in Mio. €": "umsatz_mio_markt",
     "Innovations-ausgaben in Mio. €": "innovations_ausgaben_mio",
     "FuE-Ausgaben in Mio. €": "fue_ausgaben_mio",
+
+    "Innovations-aktive Unternehmen": "innovations_aktive_unternehmen",
+    "Innovatoren": "innovatoren",
+    "Produkt-innovatoren": "produkt_innovatoren",
+    "Prozess-innovatoren": "prozess_innovatoren",
+
+    "Unternehmen mit Produkt-innovationen im Bereich physischer Waren": "unternehmen_produkt_physisch",
+    "Unternehmen mit Produkt-innovationen im Bereich Dienst-leistungen": "unternehmen_produkt_dienstleistung",
+    "Unternehmen mit Markt-neuheiten": "unternehmen_markt_neuheiten",
+    "Unternehmen mit Prozess-innovationen im Bereich Produktions-verfahren, Verfahren zur Dienst-leistungs-erbringung": "unternehmen_prozess_produktion",
+    "Unternehmen mit Prozess-innovationen im Bereich logistische Verfahren": "unternehmen_prozess_logistik",
+    "Unternehmen mit Prozess-innovationen im Bereich Informations-verarbeitung": "unternehmen_prozess_informationsverarbeitung",
+    "Unternehmen mit Prozess-innovationen im Bereich unterstüt-zende Ver-fahren für Verwaltung/ Adminis-tration": "unternehmen_prozess_verwaltung",
+    "Unternehmen mit Prozess-innovationen im Bereich Organisation von Geschäfts-prozessen": "unternehmen_prozess_organisation",
+    "Unternehmen mit Prozess-innovationen im Bereich Arbeits-organisation": "unternehmen_prozess_arbeitsorganisation",
+    "Unternehmen mit Prozess-innovationen im Bereich Marketing": "unternehmen_prozess_marketing",
+    "Unternehmen mit kosten-senkenden Prozess-innovationen": "unternehmen_prozess_kostensenkung",
+
+    "Unternehmen mit kontinuierlicher FuE-Tätigkeit": "unternehmen_fue_kontinuierlich",
+    "Unternehmen mit gelegentlicher FuE-Tätigkeit": "unternehmen_fue_gelegentlich",
+    "Unternehmen mit Vergabe von FuE-Aufträgen an Dritte": "unternehmen_fue_auftraege",
+
+    "Umsatzanteil von Produkt-neuheiten": "umsatz_produkt_neuheiten",
+    "Umsatzanteil von Markt-neuheiten": "umsatz_markt_neuheiten",
+    "Umsatzanteil von Nach-ahmer-innovationen": "umsatz_nachahmer_innovationen",
+    "Kostensen-kungsanteil durch Prozess-innovationen": "kostensenkung_prozess_innovationen",
 }
