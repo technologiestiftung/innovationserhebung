@@ -203,7 +203,7 @@ class BaseDataParser(DataParser):
             )
         else:
             return row["Wirtschaftsgliederung"]
-        
+
     def add_berlin_percentage(self, data):
         """
         Add percentage of Berlin with respect to Germany.
@@ -217,15 +217,22 @@ class BaseDataParser(DataParser):
                 else:
                     percentages = []
                     for i, value in enumerate(data["ber"][unit][branch]):
-                        if data["ber"][unit][branch][i] == 0 or data["de"][unit][branch][i] == 0:
+                        if (
+                            data["ber"][unit][branch][i] == 0
+                            or data["de"][unit][branch][i] == 0
+                        ):
                             percentage = 0
                         else:
-                            percentage = data["ber"][unit][branch][i] / data["de"][unit][branch][i] * 100
+                            percentage = (
+                                data["ber"][unit][branch][i]
+                                / data["de"][unit][branch][i]
+                                * 100
+                            )
                         percentages.append(round(percentage, 2))
                     ber_de_percentages[unit][branch] = percentages
-        
+
         data["ber_de_percentages"] = ber_de_percentages
-    
+
     def add_investment_return(self, data):
         """
         Add calculations for return on investment.
@@ -236,20 +243,26 @@ class BaseDataParser(DataParser):
             for denominator in ["umsatz_mio_produkt", "umsatz_mio", "fue_ausgaben"]:
                 if denominator in data[area]:
                     investment_returns[denominator] = init_nested_dict()
-                    investment_returns[denominator]["x"] = data[area]["innovations_ausgaben_mio"]["x"]
+                    investment_returns[denominator]["x"] = data[area][
+                        "innovations_ausgaben_mio"
+                    ]["x"]
 
                     for i, branch in enumerate(data[area]["innovations_ausgaben_mio"]):
                         if branch != "x":
                             investment_returns[denominator][branch] = []
-                            for i, value in enumerate(data[area]["innovations_ausgaben_mio"][branch]):
-                                if value == 0 or data[area][denominator][branch][i] == 0:
+                            for i, value in enumerate(
+                                data[area]["innovations_ausgaben_mio"][branch]
+                            ):
+                                if (
+                                    value == 0
+                                    or data[area][denominator][branch][i] == 0
+                                ):
                                     result = 0
                                 else:
                                     result = value / data[area][denominator][branch][i]
                                 investment_returns[denominator][branch].append(result)
 
             data[area]["investment_returns"] = investment_returns
-
 
 
 class BarDataParser(DataParser):

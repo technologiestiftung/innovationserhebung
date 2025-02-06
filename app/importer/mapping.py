@@ -94,12 +94,10 @@ mapping_units = {
     "Umsatz mit Marktneu-heiten in Mio. €": "umsatz_mio_markt",
     "Innovations-ausgaben in Mio. €": "innovations_ausgaben_mio",
     "FuE-Ausgaben in Mio. €": "fue_ausgaben_mio",
-
     "Innovations-aktive Unternehmen": "innovations_aktive_unternehmen",
     "Innovatoren": "innovatoren",
     "Produkt-innovatoren": "produkt_innovatoren",
     "Prozess-innovatoren": "prozess_innovatoren",
-
     "Unternehmen mit Produkt-innovationen im Bereich physischer Waren": "unternehmen_produkt_physisch",
     "Unternehmen mit Produkt-innovationen im Bereich Dienst-leistungen": "unternehmen_produkt_dienstleistung",
     "Unternehmen mit Markt-neuheiten": "unternehmen_markt_neuheiten",
@@ -111,11 +109,9 @@ mapping_units = {
     "Unternehmen mit Prozess-innovationen im Bereich Arbeits-organisation": "unternehmen_prozess_arbeitsorganisation",
     "Unternehmen mit Prozess-innovationen im Bereich Marketing": "unternehmen_prozess_marketing",
     "Unternehmen mit kosten-senkenden Prozess-innovationen": "unternehmen_prozess_kostensenkung",
-
     "Unternehmen mit kontinuierlicher FuE-Tätigkeit": "unternehmen_fue_kontinuierlich",
     "Unternehmen mit gelegentlicher FuE-Tätigkeit": "unternehmen_fue_gelegentlich",
     "Unternehmen mit Vergabe von FuE-Aufträgen an Dritte": "unternehmen_fue_auftraege",
-
     "Umsatzanteil von Produkt-neuheiten": "umsatz_produkt_neuheiten",
     "Umsatzanteil von Markt-neuheiten": "umsatz_markt_neuheiten",
     "Umsatzanteil von Nach-ahmer-innovationen": "umsatz_nachahmer_innovationen",

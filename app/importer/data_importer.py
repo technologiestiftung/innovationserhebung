@@ -27,7 +27,7 @@ class DataImporter:
             parser_type = config[plot]["parser_type"]
             parser = data_parser_factory.create_parser(parser_type)
             output[plot] = parser.parse(sheets, config[plot])
-        
+
         # Add tags for branches
         output["branch_types"] = mapping_branch_types
 
