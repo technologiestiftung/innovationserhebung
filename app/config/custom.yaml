@@ -1,3 +1,7 @@
+anteil:
+  parser_type: anteil
+  plot_type: bar_interactive
+
 growth_bubble_interactive:
   general:
     y_axis_label: Wachstum FuE-Ausgaben 2018-2021 in %

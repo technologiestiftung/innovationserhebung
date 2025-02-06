@@ -4,6 +4,7 @@ from openpyxl import load_workbook
 import pandas as pd
 
 from .config_importer import ConfigImporter
+from .mapping import mapping_branch_types
 from .parser import DataParserFactory
 
 
@@ -26,6 +27,9 @@ class DataImporter:
             parser_type = config[plot]["parser_type"]
             parser = data_parser_factory.create_parser(parser_type)
             output[plot] = parser.parse(sheets, config[plot])
+
+        # Add tags for branches
+        output["branch_types"] = mapping_branch_types
 
         self.save_to_json(output, outfile_path)
 

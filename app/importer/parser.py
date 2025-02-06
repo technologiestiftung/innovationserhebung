@@ -5,6 +5,7 @@ from .mapping import branch_groups, mapping_branches, mapping_employees_n, mappi
 
 
 PARSER_TYPES = {
+    "anteil": "AnteilDataParser",
     "bar": "BarDataParser",
     "base": "BaseDataParser",
     "fue": "FUEDataParser",
@@ -52,6 +53,67 @@ class DataParser(ABC):
         pass
 
 
+class AnteilDataParser(DataParser):
+    sheet_basis_prefix = "anteil_"
+
+    def parse(self, sheets, config):
+        # Extract Anteil data
+        data = self.extract(sheets)
+
+        return data
+
+    def extract(self, sheets):
+        """
+        Extract Anteil data.
+
+        :param sheets: dict, where keys are names of sheets and values are pandas DataFrames
+        :return: nested dict, with the following shape {area: {year: {unit: {branch: value}}}}
+        """
+        extracted = init_nested_dict()
+
+        for sheet_key in sheets:
+            if not sheet_key.startswith(self.sheet_basis_prefix):
+                continue
+
+            type, year, area = sheet_key[len(self.sheet_basis_prefix) :].split("_")
+            df = sheets[sheet_key]
+
+            for branch in mapping_branches:
+                # Add the number of employees to those branches which refer to the company size
+                df["Wirtschaftsgliederung"] = df.apply(self.apply_mapping, axis=1)
+
+                # Process each non-empty row
+                row = df.loc[df["Wirtschaftsgliederung"] == branch]
+                if row.empty:
+                    continue
+
+                # Else extract value for each certain unit from the row
+                mapped_branch = mapping_branches[branch]
+                for unit in mapping_units:
+                    if unit in row:
+                        mapped_unit = mapping_units[unit]
+                        value = row.iloc[0][unit]
+                        extracted[area][year][mapped_unit][mapped_branch] = value
+
+        return extracted
+
+    def apply_mapping(self, row):
+        """
+        Helper function.
+        Apply conditional mapping to rows aggregating companies by size,
+        so the name specifies the number of employees.
+
+        :param row: pandas.DataFrame, a data row
+        :return: pandas.DataFrame, a data row after applying the mapping
+        """
+        if row["Wirtschaftsgliederung"] == "Beschäftigte":
+            return mapping_employees_n.get(
+                row["Nr. der Klassifikation"], row["Wirtschaftsgliederung"]
+            )
+        else:
+            return row["Wirtschaftsgliederung"]
+
+
 class BaseDataParser(DataParser):
     sheet_basis_prefix = "basis_"
 
@@ -63,6 +125,10 @@ class BaseDataParser(DataParser):
         for area in data:
             for unit in data[area]:
                 data[area][unit] = self.reshape(data[area][unit])
+
+        # Add calculations for Berlin/Germany percentage and return on investment
+        self.add_berlin_percentage(data)
+        self.add_investment_return(data)
 
         return data
 
@@ -80,9 +146,6 @@ class BaseDataParser(DataParser):
                 continue
 
             year, area = sheet_key[len(self.sheet_basis_prefix) :].split("_")
-            # The year given in the tabs of the sheets are the year of analysis,
-            # the data analysed is always of the previous year!
-            year = str(int(year) - 1)
             df = sheets[sheet_key]
 
             for branch in mapping_branches:
@@ -136,10 +199,70 @@ class BaseDataParser(DataParser):
         """
         if row["Wirtschaftsgliederung"] == "Beschäftigte":
             return mapping_employees_n.get(
-                row["Nr. der Klas-\nsifikation"], row["Wirtschaftsgliederung"]
+                row["Nr. der Klassifikation"], row["Wirtschaftsgliederung"]
             )
         else:
             return row["Wirtschaftsgliederung"]
+
+    def add_berlin_percentage(self, data):
+        """
+        Add percentage of Berlin with respect to Germany.
+        """
+        ber_de_percentages = init_nested_dict()
+
+        for unit in data["ber"]:
+            for branch in data["ber"][unit]:
+                if branch == "x":
+                    ber_de_percentages[unit]["x"] = data["ber"][unit]["x"]
+                else:
+                    percentages = []
+                    for i, value in enumerate(data["ber"][unit][branch]):
+                        if (
+                            data["ber"][unit][branch][i] == 0
+                            or data["de"][unit][branch][i] == 0
+                        ):
+                            percentage = 0
+                        else:
+                            percentage = (
+                                data["ber"][unit][branch][i]
+                                / data["de"][unit][branch][i]
+                                * 100
+                            )
+                        percentages.append(round(percentage, 2))
+                    ber_de_percentages[unit][branch] = percentages
+
+        data["ber_de_percentages"] = ber_de_percentages
+
+    def add_investment_return(self, data):
+        """
+        Add calculations for return on investment.
+        """
+        for area in data:
+            investment_returns = init_nested_dict()
+
+            for denominator in ["umsatz_mio_produkt", "umsatz_mio", "fue_ausgaben"]:
+                if denominator in data[area]:
+                    investment_returns[denominator] = init_nested_dict()
+                    investment_returns[denominator]["x"] = data[area][
+                        "innovations_ausgaben_mio"
+                    ]["x"]
+
+                    for i, branch in enumerate(data[area]["innovations_ausgaben_mio"]):
+                        if branch != "x":
+                            investment_returns[denominator][branch] = []
+                            for i, value in enumerate(
+                                data[area]["innovations_ausgaben_mio"][branch]
+                            ):
+                                if (
+                                    value == 0
+                                    or data[area][denominator][branch][i] == 0
+                                ):
+                                    result = 0
+                                else:
+                                    result = value / data[area][denominator][branch][i]
+                                investment_returns[denominator][branch].append(result)
+
+            data[area]["investment_returns"] = investment_returns
 
 
 class BarDataParser(DataParser):
