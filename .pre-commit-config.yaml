@@ -6,7 +6,7 @@ ci:
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
+    rev: v5.0.0
     hooks:
       - id: check-added-large-files
       - id: check-ast
@@ -19,14 +19,14 @@ repos:
         args: ['--no-ensure-ascii', '--no-sort-keys', '--autofix']
         exclude: '^package.*json'
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.1.7
+    rev: v0.9.6
     hooks:
       # Run the linter.
       - id: ruff
       # Run the formatter.
       - id: ruff-format
   - repo: https://github.com/jazzband/pip-tools
-    rev: 7.3.0
+    rev: 7.4.1
     hooks:
       - id: pip-compile
         name: pip-compile requirements.in
